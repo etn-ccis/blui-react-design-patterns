@@ -1,0 +1,44 @@
+# Dependencies
+**/**/node_modules
+**/**/npm-debug.log*
+**/**/yarn-error.log*
+**/**/*.log
+**/**/*.tmp
+**/**/*.tmp.*
+
+
+# Compiled output
+/dist
+/tmp
+/out-tsc
+/build
+
+# Testing
+/coverage
+fake-api-server/fake-db/data
+test-api-port
+
+# IDE - VSCode
+.vscode/*
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.idea/
+.devcontainer/devcontainer.json
+
+# System Files
+**/**/.DS_Store
+**/**/Thumbs.db
+
+# Local Environment Config
+**/**/.env.local
+**/**/.env.development.local
+**/**/.env.test.local
+**/**/.env.production.local
+junit.xml
+eslint.json
+.envrc
+
+
+# Linting
+.eslintcache

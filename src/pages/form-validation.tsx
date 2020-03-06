@@ -4,8 +4,6 @@ import MenuIcon from '@material-ui/icons/Menu';
 import { Close, Done } from '@material-ui/icons';
 import * as Colors from '@pxblue/colors';
 
-
-
 export const FormValidation = (): JSX.Element => {
 	const [chars, setChars] = useState('');
 	const [input, setInput] = useState('');
@@ -26,10 +24,10 @@ export const FormValidation = (): JSX.Element => {
 	const [confirmPasswordError, setConfirmPasswordError] = useState();
 	const [passwordErrors, setPasswordErrors] = useState({
 		minLengthRequired: "required",
-		atleast1UpperCharRequired: "required",
-		atleast1LowerCharRequired: "required",
-		atleast1NumberRequired: "required",
-		atleast1SplCharRequired: "required",
+		atLeast1UpperCharRequired: "required",
+		atLeast1LowerCharRequired: "required",
+		atLeast1NumberRequired: "required",
+		atLeast1SplCharRequired: "required",
 	});
 	const upperCharRegex = new RegExp(/[A-Z]+/);
 	const lowerCharRegex = new RegExp(/[a-z]+/);
@@ -60,24 +58,23 @@ export const FormValidation = (): JSX.Element => {
 		</>
 	);
 
-	const onChange = (e: any): void => {
-		setChars(e.target.value);
+	const validateInput = (): void => {
+		const tempInput = input;
+		let tempInputError = null;
+		if (!tempInput.trim()) {
+			tempInputError = "required";
+		}
+		setInputError(tempInputError);
 	}
 
-	const validateInput = (): void => {
-		setInputError(null);
-		if (!input.trim()) {
-			setInputError("required");
-		}
+	const onChange = (event: any): void => {
+		setChars(event.target.value);
+		validateInput();
 	}
 
 	const onInputChange = (event: any): void => {
 		setInput(event.target.value);
-		if (inputError) {
-			validateInput();
-		} else {
-			setInputError(null)
-		}
+		validateInput();
 	};
 
 	const validateEmail = (): void => {
@@ -154,10 +151,10 @@ export const FormValidation = (): JSX.Element => {
 	const validatePasswordCriteria = (): void => {
 		const tempPasswordErrors = {
 			minLengthRequired: newPassword.length >= 8 ? "" : "required",
-			atleast1UpperCharRequired: upperCharRegex.test(newPassword) ? "" : "required",
-			atleast1LowerCharRequired: lowerCharRegex.test(newPassword) ? "" : "required",
-			atleast1NumberRequired: numberRegex.test(newPassword) ? "" : "required",
-			atleast1SplCharRequired: splCharRegex.test(newPassword) ? "" : "required",
+			atLeast1UpperCharRequired: upperCharRegex.test(newPassword) ? "" : "required",
+			atLeast1LowerCharRequired: lowerCharRegex.test(newPassword) ? "" : "required",
+			atLeast1NumberRequired: numberRegex.test(newPassword) ? "" : "required",
+			atLeast1SplCharRequired: splCharRegex.test(newPassword) ? "" : "required",
 
 		}
 		setPasswordErrors(tempPasswordErrors);
@@ -170,8 +167,8 @@ export const FormValidation = (): JSX.Element => {
 	}
 
 
-	const onNewPasswordChange = (e: any): void => {
-		setNewPassword(e.target.value)
+	const onNewPasswordChange = (event: any): void => {
+		setNewPassword(event.target.value)
 		validatePasswordCriteria();
 		
 	}
@@ -352,19 +349,19 @@ export const FormValidation = (): JSX.Element => {
 								At least 8 characters in length
                             </ListItem>
 							<ListItem>
-								{getValidationIcon(passwordErrors.atleast1NumberRequired)}
+								{getValidationIcon(passwordErrors.atLeast1NumberRequired)}
 								At least 1 digit
                             </ListItem>
 							<ListItem>
-								{getValidationIcon(passwordErrors.atleast1UpperCharRequired)}
+								{getValidationIcon(passwordErrors.atLeast1UpperCharRequired)}
 								At least 1 uppercase letter
                             </ListItem>
 							<ListItem>
-								{getValidationIcon(passwordErrors.atleast1LowerCharRequired)}
+								{getValidationIcon(passwordErrors.atLeast1LowerCharRequired)}
 								At least 1 lowercase letter
                             </ListItem>
 							<ListItem>
-								{getValidationIcon(passwordErrors.atleast1SplCharRequired)}
+								{getValidationIcon(passwordErrors.atLeast1SplCharRequired)}
 
 								At least 1 special character: (valid: ! @ # $ ^ &)
                             </ListItem>

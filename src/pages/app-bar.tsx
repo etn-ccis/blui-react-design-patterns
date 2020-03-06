@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react';
 
 // Material-UI components
 
@@ -26,22 +26,22 @@ const styles = (theme: any) => ({
         backgroundBlendMode: 'soft-light',
         minHeight: theme.spacing.unit * 34,
         color: '#fff',
-        padding: theme.spacing.unit * 8 + ' 0'
+        padding: theme.spacing.unit * 8 + ' 0',
     },
     bannerMain: {
         flexDirection: 'column',
-        alignItems: 'flex-start'
+        alignItems: 'flex-start',
     },
     content: {
         marginLeft: theme.spacing.unit * 8,
     },
     h5: {
-        margin: theme.spacing.unit * 8 + ' 0'
+        margin: theme.spacing.unit * 8 + ' 0',
     },
     flexCenter: {
         display: 'flex',
         justifyContent: 'space-between',
-        width: '100%'
+        width: '100%',
     },
     header: {
         position: 'fixed',
@@ -49,14 +49,14 @@ const styles = (theme: any) => ({
         left: 'auto',
         right: 'auto',
         transform: 'translateY(-100%)',
-        transition: 'all 0.5s ease-in-out'
+        transition: 'all 0.5s ease-in-out',
     },
     top: {
-        transform: 'translateY(0%)'
+        transform: 'translateY(0%)',
     },
     noPadLeft: {
-        paddingLeft: '0px'
-    }
+        paddingLeft: '0px',
+    },
 });
 
 export const CollapsibleAppBar = (): JSX.Element => {
@@ -68,7 +68,7 @@ export const CollapsibleAppBar = (): JSX.Element => {
         window.addEventListener('scroll', () => {
             setOpacity(window.pageYOffset);
             if (window.pageYOffset > 70) {
-                setActiveClass('top')
+                setActiveClass('top');
             } else {
                 setActiveClass('');
             }
@@ -76,15 +76,15 @@ export const CollapsibleAppBar = (): JSX.Element => {
     });
 
     const classes = {
-        banner: "App-banner-1",
-        bannerMain: "App-bannerMain-2",
-        content: "App-content-3",
-        h5: "App-h5-4",
-        flexCenter: "App-flexCenter-5",
-        header: "App-header-6",
-        top: "App-top-7",
-        noPadLeft: "App-noPadLeft-8"
-    }
+        banner: 'App-banner-1',
+        bannerMain: 'App-bannerMain-2',
+        content: 'App-content-3',
+        h5: 'App-h5-4',
+        flexCenter: 'App-flexCenter-5',
+        header: 'App-header-6',
+        top: 'App-top-7',
+        noPadLeft: 'App-noPadLeft-8',
+    };
 
     return (
         <div>
@@ -97,15 +97,14 @@ export const CollapsibleAppBar = (): JSX.Element => {
                         <div style={{ flex: 1 }}>
                             <Typography variant="h6" color="inherit">
                                 President
-              </Typography>
+                            </Typography>
                             <Typography className="sub-text" variant="body1" color="inherit">
                                 Leader of the Free World
-              </Typography>
+                            </Typography>
                         </div>
                         <IconButton color="inherit">
                             <MoreVertIcon />
                         </IconButton>
-
                     </Toolbar>
                 </AppBar>
                 <div className={classes.banner}>
@@ -121,21 +120,20 @@ export const CollapsibleAppBar = (): JSX.Element => {
                         <div className={classes.content} style={{ opacity: 1 - opacity / 200 }}>
                             <Typography variant="h4" color="inherit">
                                 President
-              </Typography>
+                            </Typography>
                             <Typography variant="h5" className={classes.h5} color="inherit">
                                 Commander in Chief
-              </Typography>
+                            </Typography>
                             <Typography variant="h6" color="inherit">
                                 Leader of the Free World
-              </Typography>
+                            </Typography>
                         </div>
-
                     </Toolbar>
                 </div>
                 <List component="nav">
-                    {
-                        list.map(function (item, i) {
-                            return (<ListItem key={`item-${i}`}>
+                    {list.map(function(item, i) {
+                        return (
+                            <ListItem key={`item-${i}`}>
                                 <ListItemIcon>
                                     <PersonIcon />
                                 </ListItemIcon>
@@ -143,11 +141,11 @@ export const CollapsibleAppBar = (): JSX.Element => {
                                     <ListItemText primary={item.president} secondary={item.party} />
                                     <ListItemText className={classes.noPadLeft} secondary={item.took_office} />
                                 </div>
-                            </ListItem>)
-                        })
-                    }
+                            </ListItem>
+                        );
+                    })}
                 </List>
             </div>
         </div>
-    )
+    );
 };

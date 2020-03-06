@@ -1,11 +1,7 @@
 import React from 'react';
 
 export const MultiSelectList = (): JSX.Element => {
-    const taco = "taco";
+    const taco = 'taco';
 
-    return (
-        <div>
-            {taco}
-        </div>
-    )
+    return <div>{taco}</div>;
 };

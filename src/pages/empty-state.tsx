@@ -1,9 +1,7 @@
-import {AppBar, Button, Tab, Tabs, Toolbar, Typography} from "@material-ui/core";
+import {AppBar, Button, Toolbar, Typography} from "@material-ui/core";
 import {EmptyState} from "@pxblue/react-components";
 import React from 'react';
-
 import DevicesIcon from '@material-ui/icons/Devices'
-
 import AddIcon from '@material-ui/icons/AddCircleOutlined'
 
 // @ts-ignore
@@ -25,10 +23,10 @@ export const EmptyStatePage = (): JSX.Element => (
 
          <div
             style={{
-               height: '100%',
                display: 'flex',
                flexDirection: 'column',
-               padding: '20px'
+               padding: '20px',
+               height: 'calc(100vh - 80px)'
             }}
          >
             <EmptyState

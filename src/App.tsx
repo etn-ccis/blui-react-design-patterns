@@ -45,6 +45,14 @@ export const App: React.FC = () => {
             icon: <MoveToInboxIcon />,
             active: selected === 'form-validation',
         },
+        {
+            title: 'Multiselect List',
+            onClick: (): void => {
+                navigate('multiselect-list');
+            },
+            icon: <MoveToInboxIcon />,
+            active: selected === 'multiselect-list',
+        },
     ];
 
     const drawer = (

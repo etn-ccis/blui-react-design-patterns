@@ -44,7 +44,7 @@ export const App: React.FC = () => {
             },
             icon: <MoveToInboxIcon />,
             active: selected === 'form-validation',
-        }
+        },
     ];
 
     const drawer = (

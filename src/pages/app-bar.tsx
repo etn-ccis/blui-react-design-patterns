@@ -24,19 +24,15 @@ const useStyles = makeStyles((theme: any) => ({
         backgroundRepeat: 'no-repeat',
         backgroundPosition: 'right',
         backgroundBlendMode: 'soft-light',
-        minHeight: theme.spacing.unit * 34,
+        minHeight: theme.spacing(34),
         color: '#fff',
-        padding: theme.spacing.unit * 8 + ' 0',
     },
     bannerMain: {
         flexDirection: 'column',
         alignItems: 'flex-start',
     },
     content: {
-        marginLeft: theme.spacing.unit * 8,
-    },
-    h5: {
-        margin: theme.spacing.unit * 8 + ' 0',
+        marginLeft: theme.spacing(8),
     },
     flexCenter: {
         display: 'flex',
@@ -44,7 +40,7 @@ const useStyles = makeStyles((theme: any) => ({
         width: '100%',
     },
     header: {
-        position: 'fixed',
+        position: 'relative',
         top: 'auto',
         left: 'auto',
         right: 'auto',
@@ -52,7 +48,7 @@ const useStyles = makeStyles((theme: any) => ({
         transition: 'all 0.5s ease-in-out',
     },
     top: {
-        transform: 'translateY(0%)',
+        transform: 'translateY(0)',
     },
     noPadLeft: {
         paddingLeft: '0px',
@@ -61,7 +57,7 @@ const useStyles = makeStyles((theme: any) => ({
 
 export const CollapsibleAppBar = (props: any): JSX.Element => {
     const classes = useStyles(props);
-    const [list, setList] = useState(listItems);
+    const [list] = useState(listItems);
     const [activeClass, setActiveClass] = useState('');
     const [opacity, setOpacity] = useState(1);
 
@@ -74,12 +70,12 @@ export const CollapsibleAppBar = (props: any): JSX.Element => {
                 setActiveClass('');
             }
         });
-    });
+    }, []);
 
     return (
         <div>
             <div>
-                <AppBar className={classes.header + [activeClass ? classes.top : '']}>
+                <AppBar className={`${classes.header} ${[activeClass ? classes.top : '']}`}>
                     <Toolbar>
                         <IconButton color="inherit">
                             <MenuIcon />
@@ -111,7 +107,7 @@ export const CollapsibleAppBar = (props: any): JSX.Element => {
                             <Typography variant="h4" color="inherit">
                                 President
                             </Typography>
-                            <Typography variant="h5" className={classes.h5} color="inherit">
+                            <Typography variant="h5" color="inherit">
                                 Commander in Chief
                             </Typography>
                             <Typography variant="h6" color="inherit">
@@ -121,19 +117,18 @@ export const CollapsibleAppBar = (props: any): JSX.Element => {
                     </Toolbar>
                 </div>
                 <List component="nav">
-                    {list.map(function(item, i) {
-                        return (
-                            <ListItem key={`item-${i}`}>
-                                <ListItemIcon>
-                                    <PersonIcon />
-                                </ListItemIcon>
-                                <div>
-                                    <ListItemText primary={item.president} secondary={item.party} />
-                                    <ListItemText className={classes.noPadLeft} secondary={item.took_office} />
-                                </div>
-                            </ListItem>
-                        );
-                    })}
+                    {list.map((item, i) => (
+                        <ListItem key={`item-${i}`}>
+                            <ListItemIcon>
+                                <PersonIcon />
+                            </ListItemIcon>
+                            <div>
+                                <ListItemText primary={item.president} secondary={item.party} />
+                                <ListItemText className={classes.noPadLeft} secondary={item.took_office} />
+                            </div>
+                        </ListItem>
+                    ))}
+                    )
                 </List>
             </div>
         </div>

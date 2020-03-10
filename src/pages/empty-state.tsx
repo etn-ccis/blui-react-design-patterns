@@ -39,7 +39,7 @@ const deviceConstants = [
     { id: 203, performance: 'Excellent', battery: '96%' },
 ];
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
     deviceCard: {
         minWidth: '200px',
         width: '100%',

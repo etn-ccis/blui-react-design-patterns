@@ -14,9 +14,9 @@ import { listItems } from '../assets/list';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import { AppBar } from '@material-ui/core';
-import { withStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 
-const styles = (theme: any) => ({
+const useStyles = makeStyles((theme: any) => ({
     banner: {
         // IE 11 does not support background blend mode. To see the image, you need to reverse the order of the image and gradient in the background property below.
         background:
@@ -57,9 +57,10 @@ const styles = (theme: any) => ({
     noPadLeft: {
         paddingLeft: '0px',
     },
-});
+}));
 
-export const CollapsibleAppBar = (): JSX.Element => {
+export const CollapsibleAppBar = (props: any): JSX.Element => {
+    const classes = useStyles(props);
     const [list, setList] = useState(listItems);
     const [activeClass, setActiveClass] = useState('');
     const [opacity, setOpacity] = useState(1);
@@ -74,17 +75,6 @@ export const CollapsibleAppBar = (): JSX.Element => {
             }
         });
     });
-
-    const classes = {
-        banner: 'App-banner-1',
-        bannerMain: 'App-bannerMain-2',
-        content: 'App-content-3',
-        h5: 'App-h5-4',
-        flexCenter: 'App-flexCenter-5',
-        header: 'App-header-6',
-        top: 'App-top-7',
-        noPadLeft: 'App-noPadLeft-8',
-    };
 
     return (
         <div>

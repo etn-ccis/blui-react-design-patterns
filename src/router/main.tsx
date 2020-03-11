@@ -4,6 +4,7 @@ import { CollapsibleAppBar } from '../pages/app-bar';
 import { EmptyStatePage } from '../pages/empty-state';
 import { FormValidation } from '../pages/form-validation';
 import { ValidationForm } from '../pages/form-validation-class';
+import { ActionList } from '../pages/action-list';
 
 // Different App Pages/Routes
 import Home from '../pages/home';
@@ -12,8 +13,9 @@ import Home from '../pages/home';
 The main page body, which contains the route definitions
 */
 const Main = (): JSX.Element => (
-    <div style={{ padding: '16px' }}>
+    <div>
         <Switch>
+            <Route exact path="/action-list" component={ActionList} />
             <Route exact path="/app-bar" component={CollapsibleAppBar} />
             <Route exact path="/empty-state" component={EmptyStatePage} />
             <Route exact path="/form-validation" component={FormValidation} />

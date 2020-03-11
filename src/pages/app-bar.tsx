@@ -53,6 +53,19 @@ const useStyles = makeStyles((theme: any) => ({
     noPadLeft: {
         paddingLeft: '0px',
     },
+    main: {
+        display: 'flex',
+    },
+    mainContent: {
+        flex: '4',
+        padding: '16px'
+    },
+    rightSideBar: {
+        flex: '1',
+        borderLeft: '1px solid rgba(0, 0, 0, 0.12)',
+        padding: '16px',
+        minWidth: '200px'
+    }
 }));
 
 export const CollapsibleAppBar = (props: any): JSX.Element => {
@@ -61,20 +74,24 @@ export const CollapsibleAppBar = (props: any): JSX.Element => {
     const [activeClass, setActiveClass] = useState('');
     const [opacity, setOpacity] = useState(1);
 
+
     useEffect(() => {
-        window.addEventListener('scroll', () => {
-            setOpacity(window.pageYOffset);
-            if (window.pageYOffset > 70) {
-                setActiveClass('top');
-            } else {
-                setActiveClass('');
-            }
-        });
+        const scrollArea = document.getElementById("scroll-area");
+        if (scrollArea) {
+            scrollArea.addEventListener('scroll', () => {
+                setOpacity(window.pageYOffset);
+                if (window.pageYOffset > 70) {
+                    setActiveClass('top');
+                } else {
+                    setActiveClass('');
+                }
+            });
+        }
     }, []);
 
     return (
-        <div>
-            <div>
+        <div id="scroll-area" className={classes.main}>
+            <div className={classes.mainContent}>
                 <AppBar className={`${classes.header} ${[activeClass ? classes.top : '']}`}>
                     <Toolbar>
                         <IconButton color="inherit">
@@ -128,8 +145,10 @@ export const CollapsibleAppBar = (props: any): JSX.Element => {
                             </div>
                         </ListItem>
                     ))}
-                    )
                 </List>
+            </div>
+            <div className={classes.rightSideBar}>
+                Some info about the app bar...
             </div>
         </div>
     );

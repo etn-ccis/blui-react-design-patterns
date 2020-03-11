@@ -7,8 +7,7 @@ import React, { useState } from 'react';
 import { useHistory } from 'react-router';
 import Main from './router/main';
 import './style.css';
-
-const EatonLogo = require('./assets/EatonLogo.svg');
+import EatonLogo from './assets/EatonLogo.svg';
 
 export const App: React.FC = () => {
     const history = useHistory();
@@ -21,6 +20,14 @@ export const App: React.FC = () => {
     };
 
     const navItems = [
+        {
+            title: 'Action List',
+            onClick: (): void => {
+                navigate('action-list');
+            },
+            icon: <MoveToInboxIcon />,
+            active: selected === 'action-list',
+        },
         {
             title: 'App Bar',
             onClick: (): void => {
@@ -37,16 +44,16 @@ export const App: React.FC = () => {
             icon: <MoveToInboxIcon />,
             active: selected === 'empty-state',
         },
+        // {
+        //     title: 'Form Validation Fn',
+        //     onClick: (): void => {
+        //         navigate('form-validation');
+        //     },
+        //     icon: <MoveToInboxIcon />,
+        //     active: selected === 'form-validation',
+        // },
         {
-            title: 'Form Validation Fn',
-            onClick: (): void => {
-                navigate('form-validation');
-            },
-            icon: <MoveToInboxIcon />,
-            active: selected === 'form-validation',
-        },
-        {
-            title: 'Form Validation Class',
+            title: 'Form Validation',
             onClick: (): void => {
                 navigate('form-validation-class');
             },

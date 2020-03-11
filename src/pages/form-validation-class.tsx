@@ -108,7 +108,7 @@ export class ValidationForm extends React.Component {
 
     onNewPasswordChange = (e: any): void => {
         this.setState({ newPassword: e.target.value }, () => {
-            this.validatePasswordCriteria(e);
+            this.validatePasswordCriteria();
         });
     };
 
@@ -121,7 +121,7 @@ export class ValidationForm extends React.Component {
         this.setState({ newPasswordError });
     };
 
-    validatePasswordCriteria = (e: any): void => {
+    validatePasswordCriteria = (): void => {
         const { newPassword } = this.state;
         const passwordErrors = {
             minLengthRequired: newPassword.length >= 8 ? '' : 'required',
@@ -209,7 +209,7 @@ export class ValidationForm extends React.Component {
         this.setState({ [id]: value });
     };
 
-    render() {
+    render(): any {
         const headerBlock = (
             <AppBar position="static">
                 <Toolbar>
@@ -409,11 +409,21 @@ export class ValidationForm extends React.Component {
             </div>
         );
         return (
-            <div>
-                {headerBlock}
-                {formFieldsBlock}
-                {characterLimitsBlock}
-                {passwordValidationBlock}
+            <div style={{ display: 'flex' }}>
+                <div style={{ flex: '4', padding: '16px' }}>
+                    {headerBlock}
+                    {formFieldsBlock}
+                    {characterLimitsBlock}
+                    {passwordValidationBlock}
+                </div>
+                <div style={{
+                    flex: '1',
+                    borderLeft: '1px solid rgba(0, 0, 0, 0.12)',
+                    padding: '16px',
+                    minWidth: '200px'
+                }}>
+                    Some info about form validation...
+                </div>
             </div>
         );
     }

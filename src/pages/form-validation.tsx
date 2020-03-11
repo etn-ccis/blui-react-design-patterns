@@ -16,23 +16,24 @@ import { Close, Done } from '@material-ui/icons';
 import * as Colors from '@pxblue/colors';
 
 export const FormValidation = (): JSX.Element => {
-    const [chars, setChars] = useState('');
     const [input, setInput] = useState('');
-    const [inputError, setInputError] = useState();
+    const [inputError, setInputError] = useState<any>();
     const [email, setEmail] = useState('');
-    const [emailError, setEmailError] = useState();
+    const [emailError, setEmailError] = useState<any>();
     const [phoneNumber, setPhoneNumber] = useState('');
-    const [phoneNumberError, setPhoneNumberError] = useState();
-    const MAX_CHARS_LIMIT = 30;
-    const emailRegex = new RegExp(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i);
+    const [phoneNumberError, setPhoneNumberError] = useState<any>();
     const phoneNumberRegex = new RegExp(/((\(\d{3}\)?)|(\d{3}))([\s-./]?)(\d{3})([\s-./]?)(\d{4})/);
 
+    const [chars, setChars] = useState('');
+    const MAX_CHARS_LIMIT = 30;
+
+    const emailRegex = new RegExp(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i);
     const [oldPassword, setOldPassword] = useState('');
-    const [oldPasswordError, setOldPasswordError] = useState();
+    const [oldPasswordError, setOldPasswordError] = useState<any>();
     const [newPassword, setNewPassword] = useState('');
-    const [newPasswordError, setNewPasswordError] = useState();
+    const [newPasswordError, setNewPasswordError] = useState<any>();
     const [confirmPassword, setConfirmPassword] = useState('');
-    const [confirmPasswordError, setConfirmPasswordError] = useState();
+    const [confirmPasswordError, setConfirmPasswordError] = useState<any>();
     const [passwordErrors, setPasswordErrors] = useState({
         minLengthRequired: 'required',
         atLeast1UpperCharRequired: 'required',
@@ -68,8 +69,8 @@ export const FormValidation = (): JSX.Element => {
         </>
     );
 
-    const validateInput = (): void => {
-        const tempInput = input;
+    const validateInput = (value: string): void => {
+        const tempInput = value;
         let tempInputError = null;
         if (!tempInput.trim()) {
             tempInputError = 'required';
@@ -79,16 +80,20 @@ export const FormValidation = (): JSX.Element => {
 
     const onChange = (event: any): void => {
         setChars(event.target.value);
-        validateInput();
+        validateInput(event.target.value);
     };
 
     const onInputChange = (event: any): void => {
         setInput(event.target.value);
-        validateInput();
+        validateInput(event.target.value);
     };
 
-    const validateEmail = (): void => {
-        const tempEmail = email;
+    const onInputBlur = (): void => {
+        validateInput(input);
+    }
+
+    const validateEmail = (value: string): void => {
+        const tempEmail = value;
         let tempEmailError = '';
         if (!tempEmail.trim()) {
             tempEmailError = 'required';
@@ -100,13 +105,16 @@ export const FormValidation = (): JSX.Element => {
 
     const onEmailChange = (event: any): void => {
         setEmail(event.target.value);
-
         if (emailError) {
-            validateEmail();
+            validateEmail(event.target.value);
         } else {
             setEmailError(null);
         }
     };
+
+    const onEmailBlur = (): void => {
+        validateEmail(email);
+    }
 
     const validatePhoneNumber = (): void => {
         const tempPhoneNumber = phoneNumber;
@@ -229,7 +237,7 @@ export const FormValidation = (): JSX.Element => {
                                 value={input}
                                 onChange={onInputChange}
                                 error={Boolean(inputError)}
-                                onBlur={validateInput}
+                                onBlur={onInputBlur}
                                 InputProps={{
                                     endAdornment: (
                                         <InputAdornment position="end">
@@ -249,7 +257,7 @@ export const FormValidation = (): JSX.Element => {
                                 value={email}
                                 error={Boolean(emailError)}
                                 onChange={onEmailChange}
-                                onBlur={validateEmail}
+                                onBlur={onEmailBlur}
                                 InputProps={{
                                     endAdornment: (
                                         <InputAdornment position="end">
@@ -324,12 +332,12 @@ export const FormValidation = (): JSX.Element => {
                                 id="oldPassword"
                                 label="Old Password"
                                 type="password"
+                                onChange={onOldPasswordChange}
                                 value={oldPassword}
                                 error={Boolean(oldPasswordError)}
+                                onBlur={validateOldPassword}
                                 required
                                 fullWidth
-                                onChange={onOldPasswordChange}
-                                onBlur={validateOldPassword}
                             />
 
                             <TextField

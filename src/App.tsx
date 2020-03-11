@@ -38,12 +38,20 @@ export const App: React.FC = () => {
             active: selected === 'empty-state',
         },
         {
-            title: 'Form Validation',
+            title: 'Form Validation Fn',
             onClick: (): void => {
                 navigate('form-validation');
             },
             icon: <MoveToInboxIcon />,
             active: selected === 'form-validation',
+        },
+        {
+            title: 'Form Validation Class',
+            onClick: (): void => {
+                navigate('form-validation-class');
+            },
+            icon: <MoveToInboxIcon />,
+            active: selected === 'form-validation-class',
         },
     ];
 

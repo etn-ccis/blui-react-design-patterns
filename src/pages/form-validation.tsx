@@ -90,7 +90,7 @@ export const FormValidation = (): JSX.Element => {
 
     const onInputBlur = (): void => {
         validateInput(input);
-    }
+    };
 
     const validateEmail = (value: string): void => {
         const tempEmail = value;
@@ -114,7 +114,7 @@ export const FormValidation = (): JSX.Element => {
 
     const onEmailBlur = (): void => {
         validateEmail(email);
-    }
+    };
 
     const validatePhoneNumber = (): void => {
         const tempPhoneNumber = phoneNumber;

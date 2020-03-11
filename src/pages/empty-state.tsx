@@ -59,14 +59,14 @@ const useStyles = makeStyles(() => ({
     },
     mainContent: {
         flex: '4',
-        padding: '16px'
+        padding: '16px',
     },
     rightSideBar: {
         flex: '1',
         borderLeft: '1px solid rgba(0, 0, 0, 0.12)',
         padding: '16px',
-        minWidth: '200px'
-    }
+        minWidth: '200px',
+    },
 }));
 
 // @ts-ignore
@@ -111,8 +111,8 @@ export const EmptyStatePage = (props): JSX.Element => {
                                 actions={
                                     <Button variant="contained" color="primary" style={{ margin: '10px' }}>
                                         <AddIcon style={{ marginRight: '5px' }} />
-                                Add Device
-                            </Button>
+                                        Add Device
+                                    </Button>
                                 }
                             />
                         </div>
@@ -148,7 +148,7 @@ export const EmptyStatePage = (props): JSX.Element => {
                                 actions={
                                     <Button variant="outlined" size="small" color="primary" style={{ margin: '10px' }}>
                                         Learn More
-                            </Button>
+                                    </Button>
                                 }
                             />
                         </div>
@@ -170,34 +170,38 @@ export const EmptyStatePage = (props): JSX.Element => {
                                             {!deviceOutput.performance ? (
                                                 <EmptyState
                                                     title="No Data"
-                                                    icon={<DevicesIcon style={{ fontSize: '30px', margin: '10px 0 5px 0' }} />}
+                                                    icon={
+                                                        <DevicesIcon
+                                                            style={{ fontSize: '30px', margin: '10px 0 5px 0' }}
+                                                        />
+                                                    }
                                                 />
                                             ) : (
-                                                    <List style={{ padding: '0px' }} dense={true}>
-                                                        <ListItem>
-                                                            <ListItemText primary={'Performance'} />
-                                                            <ListItemText
-                                                                style={{ textAlign: 'right' }}
-                                                                primary={deviceOutput.performance}
-                                                            />
-                                                        </ListItem>
-                                                        <ListItem>
-                                                            <ListItemText primary={'Battery Life'} />
-                                                            <ListItemText
-                                                                style={{ textAlign: 'right' }}
-                                                                primary={deviceOutput.battery}
-                                                            />
-                                                        </ListItem>
-                                                        <CardActions style={{ float: 'right' }}>
-                                                            <Button size="small" color="primary">
-                                                                Report
-                                                </Button>
-                                                            <Button size="small" color="primary">
-                                                                Learn More
-                                                </Button>
-                                                        </CardActions>
-                                                    </List>
-                                                )}
+                                                <List style={{ padding: '0px' }} dense={true}>
+                                                    <ListItem>
+                                                        <ListItemText primary={'Performance'} />
+                                                        <ListItemText
+                                                            style={{ textAlign: 'right' }}
+                                                            primary={deviceOutput.performance}
+                                                        />
+                                                    </ListItem>
+                                                    <ListItem>
+                                                        <ListItemText primary={'Battery Life'} />
+                                                        <ListItemText
+                                                            style={{ textAlign: 'right' }}
+                                                            primary={deviceOutput.battery}
+                                                        />
+                                                    </ListItem>
+                                                    <CardActions style={{ float: 'right' }}>
+                                                        <Button size="small" color="primary">
+                                                            Report
+                                                        </Button>
+                                                        <Button size="small" color="primary">
+                                                            Learn More
+                                                        </Button>
+                                                    </CardActions>
+                                                </List>
+                                            )}
                                         </CardContent>
                                     </Card>
                                 </Grid>
@@ -207,7 +211,9 @@ export const EmptyStatePage = (props): JSX.Element => {
                 </div>
             </div>
             <div className={classes.rightSideBar}>
-                Some info about empty state...
+                The EmptyState component is an element that can be used as a placeholder when no data is present (such
+                as an empty list, or a placeholder page for future content). This is only used when no data is
+                available, rather than during loading.
             </div>
         </div>
     );

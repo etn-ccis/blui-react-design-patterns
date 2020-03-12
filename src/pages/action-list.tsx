@@ -12,6 +12,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
+import Hidden from '@material-ui/core/Hidden';
 // import './style.css';
 
 const options = ['Delete', 'View Details'];
@@ -163,16 +164,18 @@ export class ActionList extends React.Component {
                         ))}
                     </Menu>
                 </div>
-                <div
-                    style={{
-                        flex: '1',
-                        borderLeft: '1px solid rgba(0, 0, 0, 0.12)',
-                        padding: '16px',
-                        minWidth: '200px',
-                    }}
-                >
-                    Action list demonstrates how to build a list with actions available on individual list items.
-                </div>
+                <Hidden smDown>
+                    <div
+                        style={{
+                            flex: '1',
+                            borderLeft: '1px solid rgba(0, 0, 0, 0.12)',
+                            padding: '16px',
+                            minWidth: '200px',
+                        }}
+                    >
+                        Action list demonstrates how to build a list with actions available on individual list items.
+                    </div>
+                </Hidden>
             </div>
         );
     }

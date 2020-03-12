@@ -15,6 +15,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import { AppBar } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import Hidden from '@material-ui/core/Hidden';
 
 const useStyles = makeStyles((theme: any) => ({
     banner: {
@@ -58,13 +59,13 @@ const useStyles = makeStyles((theme: any) => ({
     main: {
         display: 'flex',
         height: '100vh',
-        overflowY: 'hidden'
+        overflowY: 'hidden',
     },
     mainContent: {
         flex: '4',
         padding: '16px',
         height: '100vh',
-        overflowY: 'scroll'
+        overflowY: 'scroll',
     },
     rightSideBar: {
         flex: '1',
@@ -152,7 +153,9 @@ export const CollapsibleAppBar = (props: any): JSX.Element => {
                     ))}
                 </List>
             </div>
-            <div className={classes.rightSideBar}>Some info about the app bar...</div>
+            <Hidden smDown>
+                <div className={classes.rightSideBar}>Some info about the app bar...</div>
+            </Hidden>
         </div>
     );
 };

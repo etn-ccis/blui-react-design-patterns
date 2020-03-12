@@ -14,6 +14,7 @@ import Grid from '@material-ui/core/Grid';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
+import Hidden from '@material-ui/core/Hidden';
 
 function TabPanel(props: any): any {
     const { children, value, index, ...other } = props;
@@ -57,13 +58,13 @@ const useStyles = makeStyles(() => ({
     main: {
         display: 'flex',
         height: '100vh',
-        overflowY: 'hidden'
+        overflowY: 'hidden',
     },
     mainContent: {
         flex: '4',
         padding: '16px',
         height: '100vh',
-        overflowY: 'scroll'
+        overflowY: 'scroll',
     },
     rightSideBar: {
         flex: '1',
@@ -214,11 +215,13 @@ export const EmptyStatePage = (props): JSX.Element => {
                     </TabPanel>
                 </div>
             </div>
-            <div className={classes.rightSideBar}>
-                The EmptyState component is an element that can be used as a placeholder when no data is present (such
-                as an empty list, or a placeholder page for future content). This is only used when no data is
-                available, rather than during loading.
-            </div>
+            <Hidden smDown>
+                <div className={classes.rightSideBar}>
+                    The EmptyState component is an element that can be used as a placeholder when no data is present
+                    (such as an empty list, or a placeholder page for future content). This is only used when no data is
+                    available, rather than during loading.
+                </div>
+            </Hidden>
         </div>
     );
 };

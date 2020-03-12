@@ -13,6 +13,7 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import MenuIcon from '@material-ui/icons/Menu';
 import * as Colors from '@pxblue/colors';
+import Hidden from '@material-ui/core/Hidden';
 
 const MAX_CHARS_LIMIT = 30;
 const upperCharRegex = new RegExp(/[A-Z]+/);
@@ -416,16 +417,18 @@ export class ValidationForm extends React.Component {
                     {characterLimitsBlock}
                     {passwordValidationBlock}
                 </div>
-                <div
-                    style={{
-                        flex: '1',
-                        borderLeft: '1px solid rgba(0, 0, 0, 0.12)',
-                        padding: '16px',
-                        minWidth: '200px',
-                    }}
-                >
-                    Some info about form validation...
-                </div>
+                <Hidden smDown>
+                    <div
+                        style={{
+                            flex: '1',
+                            borderLeft: '1px solid rgba(0, 0, 0, 0.12)',
+                            padding: '16px',
+                            minWidth: '200px',
+                        }}
+                    >
+                        Some info about form validation...
+                    </div>
+                </Hidden>
             </div>
         );
     }

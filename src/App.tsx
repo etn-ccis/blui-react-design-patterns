@@ -25,6 +25,10 @@ export const App: React.FC = () => {
             setSelected('action-list');
         } else if (window.location.href.includes('app-bar')) {
             setSelected('app-bar');
+        } else if (window.location.href.includes('bottom-sheet')) {
+            setSelected('bottom-sheet');
+        } else if (window.location.href.includes('data-list')) {
+            setSelected('data-list');
         } else if (window.location.href.includes('empty-state')) {
             setSelected('empty-state');
         } else if (window.location.href.includes('form-validation-class')) {
@@ -48,6 +52,22 @@ export const App: React.FC = () => {
             },
             icon: <MoveToInboxIcon />,
             active: selected === 'app-bar',
+        },
+        {
+            title: 'Bottom Sheet',
+            onClick: (): void => {
+                navigate('bottom-sheet');
+            },
+            icon: <MoveToInboxIcon />,
+            active: selected === 'bottom-sheet',
+        },
+        {
+            title: 'Data List',
+            onClick: (): void => {
+                navigate('data-list');
+            },
+            icon: <MoveToInboxIcon />,
+            active: selected === 'data-list',
         },
         {
             title: 'Empty State',
@@ -114,6 +134,8 @@ export const App: React.FC = () => {
                     >
                         {selected === 'action-list' ? 'Some info about action list...' : ''}
                         {selected === 'app-bar' ? 'Some info about app bar...' : ''}
+                        {selected === 'bottom-sheet' ? 'Some info about bottom sheet...' : ''}
+                        {selected === 'data-list' ? 'Some info about data list...' : ''}
                         {selected === 'empty-state'
                             ? 'The EmptyState component is an element that can be used as a placeholder when no data is present (such as an empty list, or a placeholder page for future content). This is only used when no data is available, rather than during loading.'
                             : ''}

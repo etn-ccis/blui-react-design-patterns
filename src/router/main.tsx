@@ -5,6 +5,8 @@ import { EmptyStatePage } from '../pages/empty-state';
 import { FormValidation } from '../pages/form-validation';
 import { ValidationForm } from '../pages/form-validation-class';
 import { ActionList } from '../pages/action-list';
+import { AlarmList } from '../pages/bottom-sheet';
+import { ListValues } from '../pages/data-list';
 
 // Different App Pages/Routes
 import Home from '../pages/home';
@@ -17,6 +19,8 @@ const Main = (): JSX.Element => (
         <Switch>
             <Route exact path="/action-list" component={ActionList} />
             <Route exact path="/app-bar" component={CollapsibleAppBar} />
+            <Route exact path="/bottom-sheet" component={AlarmList} />
+            <Route exact path="/data-list" component={ListValues} />
             <Route exact path="/empty-state" component={EmptyStatePage} />
             <Route exact path="/form-validation" component={FormValidation} />
             <Route exact path="/form-validation-class" component={ValidationForm} />

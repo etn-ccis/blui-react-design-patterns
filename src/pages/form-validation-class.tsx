@@ -1,3 +1,5 @@
+/* eslint-disable eqeqeq */
+/* eslint-disable no-eq-null */
 import React from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Card from '@material-ui/core/Card';
@@ -13,7 +15,6 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import MenuIcon from '@material-ui/icons/Menu';
 import * as Colors from '@pxblue/colors';
-import Hidden from '@material-ui/core/Hidden';
 
 const MAX_CHARS_LIMIT = 30;
 const upperCharRegex = new RegExp(/[A-Z]+/);
@@ -28,7 +29,7 @@ const getValidationIcon = (error: any): any => {
         return <Close style={{ color: Colors.red[500] }} />;
     } else if (error === '') {
         return <Done style={{ color: Colors.green[500] }} />;
-    } else {
+    } else if (!error) {
         return '';
     }
 };
@@ -410,25 +411,11 @@ export class ValidationForm extends React.Component {
             </div>
         );
         return (
-            <div style={{ display: 'flex', height: '100vh', overflowY: 'hidden' }}>
-                <div style={{ flex: '4', padding: '16px', height: '100vh', overflowY: 'scroll' }}>
-                    {headerBlock}
-                    {formFieldsBlock}
-                    {characterLimitsBlock}
-                    {passwordValidationBlock}
-                </div>
-                <Hidden smDown>
-                    <div
-                        style={{
-                            flex: '1',
-                            borderLeft: '1px solid rgba(0, 0, 0, 0.12)',
-                            padding: '16px',
-                            minWidth: '200px',
-                        }}
-                    >
-                        Some info about form validation...
-                    </div>
-                </Hidden>
+            <div>
+                {headerBlock}
+                {formFieldsBlock}
+                {characterLimitsBlock}
+                {passwordValidationBlock}
             </div>
         );
     }

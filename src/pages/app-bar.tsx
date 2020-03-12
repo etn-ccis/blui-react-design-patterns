@@ -15,7 +15,6 @@ import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import { AppBar } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import Hidden from '@material-ui/core/Hidden';
 
 const useStyles = makeStyles((theme: any) => ({
     banner: {
@@ -56,23 +55,6 @@ const useStyles = makeStyles((theme: any) => ({
     noPadLeft: {
         paddingLeft: '0px',
     },
-    main: {
-        display: 'flex',
-        height: '100vh',
-        overflowY: 'hidden',
-    },
-    mainContent: {
-        flex: '4',
-        padding: '16px',
-        height: '100vh',
-        overflowY: 'scroll',
-    },
-    rightSideBar: {
-        flex: '1',
-        borderLeft: '1px solid rgba(0, 0, 0, 0.12)',
-        padding: '16px',
-        minWidth: '200px',
-    },
 }));
 
 export const CollapsibleAppBar = (props: any): JSX.Element => {
@@ -96,66 +78,61 @@ export const CollapsibleAppBar = (props: any): JSX.Element => {
     }, []);
 
     return (
-        <div id="scroll-area" className={classes.main}>
-            <div className={classes.mainContent}>
-                <AppBar className={`${classes.header} ${[activeClass ? classes.top : '']}`}>
-                    <Toolbar>
+        <div id="scroll-area">
+            <AppBar className={`${classes.header} ${[activeClass ? classes.top : '']}`}>
+                <Toolbar>
+                    <IconButton color="inherit">
+                        <MenuIcon />
+                    </IconButton>
+                    <div style={{ flex: 1 }}>
+                        <Typography variant="h6" color="inherit">
+                            President
+                        </Typography>
+                        <Typography className="sub-text" variant="body1" color="inherit">
+                            Leader of the Free World
+                        </Typography>
+                    </div>
+                    <IconButton color="inherit">
+                        <MoreVertIcon />
+                    </IconButton>
+                </Toolbar>
+            </AppBar>
+            <div className={classes.banner}>
+                <Toolbar className={classes.bannerMain}>
+                    <div className={classes.flexCenter}>
                         <IconButton color="inherit">
                             <MenuIcon />
                         </IconButton>
-                        <div style={{ flex: 1 }}>
-                            <Typography variant="h6" color="inherit">
-                                President
-                            </Typography>
-                            <Typography className="sub-text" variant="body1" color="inherit">
-                                Leader of the Free World
-                            </Typography>
-                        </div>
                         <IconButton color="inherit">
                             <MoreVertIcon />
                         </IconButton>
-                    </Toolbar>
-                </AppBar>
-                <div className={classes.banner}>
-                    <Toolbar className={classes.bannerMain}>
-                        <div className={classes.flexCenter}>
-                            <IconButton color="inherit">
-                                <MenuIcon />
-                            </IconButton>
-                            <IconButton color="inherit">
-                                <MoreVertIcon />
-                            </IconButton>
-                        </div>
-                        <div className={classes.content} style={{ opacity: 1 - opacity / 200 }}>
-                            <Typography variant="h4" color="inherit">
-                                President
-                            </Typography>
-                            <Typography variant="h5" color="inherit">
-                                Commander in Chief
-                            </Typography>
-                            <Typography variant="h6" color="inherit">
-                                Leader of the Free World
-                            </Typography>
-                        </div>
-                    </Toolbar>
-                </div>
-                <List component="nav">
-                    {list.map((item, i) => (
-                        <ListItem key={`item-${i}`}>
-                            <ListItemIcon>
-                                <PersonIcon />
-                            </ListItemIcon>
-                            <div>
-                                <ListItemText primary={item.president} secondary={item.party} />
-                                <ListItemText className={classes.noPadLeft} secondary={item.took_office} />
-                            </div>
-                        </ListItem>
-                    ))}
-                </List>
+                    </div>
+                    <div className={classes.content} style={{ opacity: 1 - opacity / 200 }}>
+                        <Typography variant="h4" color="inherit">
+                            President
+                        </Typography>
+                        <Typography variant="h5" color="inherit">
+                            Commander in Chief
+                        </Typography>
+                        <Typography variant="h6" color="inherit">
+                            Leader of the Free World
+                        </Typography>
+                    </div>
+                </Toolbar>
             </div>
-            <Hidden smDown>
-                <div className={classes.rightSideBar}>Some info about the app bar...</div>
-            </Hidden>
+            <List component="nav">
+                {list.map((item, i) => (
+                    <ListItem key={`item-${i}`}>
+                        <ListItemIcon>
+                            <PersonIcon />
+                        </ListItemIcon>
+                        <div>
+                            <ListItemText primary={item.president} secondary={item.party} />
+                            <ListItemText className={classes.noPadLeft} secondary={item.took_office} />
+                        </div>
+                    </ListItem>
+                ))}
+            </List>
         </div>
     );
 };

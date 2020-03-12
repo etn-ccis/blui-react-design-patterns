@@ -12,7 +12,6 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
-import Hidden from '@material-ui/core/Hidden';
 // import './style.css';
 
 const options = ['Delete', 'View Details'];
@@ -96,86 +95,72 @@ export class ActionList extends React.Component {
         const { menuPosition } = this.state;
 
         return (
-            <div style={{ display: 'flex', height: '100vh', overflowY: 'hidden' }}>
-                <div style={{ flex: '4', padding: '16px', height: '100vh', overflowY: 'scroll' }}>
-                    <AppBar position="static">
-                        <Toolbar data-cy="pxb-toolbar">
-                            <Typography variant="h6" color="inherit">
-                                Action List
-                            </Typography>
-                            <div style={{ flex: '1 1 0px' }} />
-                            <IconButton
-                                data-cy="toolbar-delete"
-                                color="inherit"
-                                aria-label="Delete"
-                                onClick={(): void => {
-                                    this.onRemoveAll();
-                                }}
-                            >
-                                <DeleteIcon />
+            <div>
+                <AppBar position="static">
+                    <Toolbar data-cy="pxb-toolbar">
+                        <Typography variant="h6" color="inherit">
+                            Action List
+                        </Typography>
+                        <div style={{ flex: '1 1 0px' }} />
+                        <IconButton
+                            data-cy="toolbar-delete"
+                            color="inherit"
+                            aria-label="Delete"
+                            onClick={(): void => {
+                                this.onRemoveAll();
+                            }}
+                        >
+                            <DeleteIcon />
+                        </IconButton>
+                        <IconButton
+                            data-cy="toolbar-add"
+                            color="inherit"
+                            aria-label="add"
+                            onClick={(): void => {
+                                this.onAddItem();
+                            }}
+                        >
+                            <AddIcon />
+                        </IconButton>
+                    </Toolbar>
+                </AppBar>
+                {this.state.list.length < 1 && this.getEmptyComponent()}
+                <List className="list" data-cy="list-content" style={{ paddingTop: '0px' }} component="nav">
+                    {this.state.list.map((item: any, i: number): any => (
+                        <ListItem
+                            key={`item_${i}`}
+                            button
+                            className={this.isSelected(i) ? 'selected' : ''}
+                            onClick={(): any => this.onSelected(i)}
+                        >
+                            <ListItemText primary={item.name} secondary={item.details}></ListItemText>
+                            <IconButton data-cy="action-menu" onClick={(evt: any): any => this.onMenuClick(evt, i)}>
+                                <MoreVertIcon />
                             </IconButton>
-                            <IconButton
-                                data-cy="toolbar-add"
-                                color="inherit"
-                                aria-label="add"
-                                onClick={(): void => {
-                                    this.onAddItem();
-                                }}
-                            >
-                                <AddIcon />
-                            </IconButton>
-                        </Toolbar>
-                    </AppBar>
-                    {this.state.list.length < 1 && this.getEmptyComponent()}
-                    <List className="list" data-cy="list-content" style={{ paddingTop: '0px' }} component="nav">
-                        {this.state.list.map((item: any, i: number): any => (
-                            <ListItem
-                                key={`item_${i}`}
-                                button
-                                className={this.isSelected(i) ? 'selected' : ''}
-                                onClick={(): any => this.onSelected(i)}
-                            >
-                                <ListItemText primary={item.name} secondary={item.details}></ListItemText>
-                                <IconButton data-cy="action-menu" onClick={(evt: any): any => this.onMenuClick(evt, i)}>
-                                    <MoreVertIcon />
-                                </IconButton>
-                            </ListItem>
-                        ))}
-                    </List>
-                    <Menu
-                        id="long-menu"
-                        anchorEl={menuPosition}
-                        open={Boolean(menuPosition)}
-                        onClose={this.onMenuClose.bind(this)}
-                        PaperProps={{
-                            style: {
-                                maxHeight: ITEM_HEIGHT * 4.5,
-                                width: 200,
-                            },
-                        }}
-                    >
-                        {options.map((option) => (
-                            <MenuItem
-                                key={option}
-                                onClick={(): void => this.onMenuItemClick(option, this.state.activeMenu)}
-                            >
-                                {option}
-                            </MenuItem>
-                        ))}
-                    </Menu>
-                </div>
-                <Hidden smDown>
-                    <div
-                        style={{
-                            flex: '1',
-                            borderLeft: '1px solid rgba(0, 0, 0, 0.12)',
-                            padding: '16px',
-                            minWidth: '200px',
-                        }}
-                    >
-                        Action list demonstrates how to build a list with actions available on individual list items.
-                    </div>
-                </Hidden>
+                        </ListItem>
+                    ))}
+                </List>
+                <Menu
+                    id="long-menu"
+                    anchorEl={menuPosition}
+                    open={Boolean(menuPosition)}
+                    onClose={this.onMenuClose.bind(this)}
+                    PaperProps={{
+                        style: {
+                            maxHeight: ITEM_HEIGHT * 4.5,
+                            width: 200,
+                        },
+                    }}
+                >
+                    {options.map((option) => (
+                        <MenuItem
+                            key={option}
+                            onClick={(): void => this.onMenuItemClick(option, this.state.activeMenu)}
+                        >
+                            {option}
+                        </MenuItem>
+                    ))}
+                </Menu>
             </div>
         );
     }

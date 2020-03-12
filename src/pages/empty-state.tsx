@@ -14,7 +14,6 @@ import Grid from '@material-ui/core/Grid';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
-import Hidden from '@material-ui/core/Hidden';
 
 function TabPanel(props: any): any {
     const { children, value, index, ...other } = props;
@@ -55,23 +54,6 @@ const useStyles = makeStyles(() => ({
         backgroundColor: PXBColors.blue[500],
         color: 'white',
     },
-    main: {
-        display: 'flex',
-        height: '100vh',
-        overflowY: 'hidden',
-    },
-    mainContent: {
-        flex: '4',
-        padding: '16px',
-        height: '100vh',
-        overflowY: 'scroll',
-    },
-    rightSideBar: {
-        flex: '1',
-        borderLeft: '1px solid rgba(0, 0, 0, 0.12)',
-        padding: '16px',
-        minWidth: '200px',
-    },
 }));
 
 // @ts-ignore
@@ -84,144 +66,133 @@ export const EmptyStatePage = (props): JSX.Element => {
     };
 
     return (
-        <div className={classes.main}>
-            <div className={classes.mainContent}>
-                <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
-                    <AppBar position="static" color="primary">
-                        <Toolbar>
-                            <Typography variant="h6">Empty States</Typography>
-                        </Toolbar>
+        <div>
+            <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
+                <AppBar position="static" color="primary">
+                    <Toolbar>
+                        <Typography variant="h6">Empty States</Typography>
+                    </Toolbar>
 
-                        <Tabs value={value} onChange={handleChange} aria-label="simple tabs example">
-                            <Tab label="Action" />
-                            <Tab label="Text Only" />
-                            <Tab label="Placeholder" />
-                            <Tab label="Subcontent" />
-                        </Tabs>
-                    </AppBar>
+                    <Tabs value={value} onChange={handleChange} aria-label="simple tabs example">
+                        <Tab label="Action" />
+                        <Tab label="Text Only" />
+                        <Tab label="Placeholder" />
+                        <Tab label="Subcontent" />
+                    </Tabs>
+                </AppBar>
 
-                    <TabPanel value={value} index={0}>
-                        <div
-                            style={{
-                                display: 'flex',
-                                flexDirection: 'column',
-                                padding: '20px',
-                                height: 'calc(100vh - 128px)',
-                            }}
-                        >
-                            <EmptyState
-                                //@ts-ignore
-                                icon={<DevicesIcon style={{ fontSize: '100px', marginBottom: '15px' }} />}
-                                title={'No Devices'}
-                                actions={
-                                    <Button variant="contained" color="primary" style={{ margin: '10px' }}>
-                                        <AddIcon style={{ marginRight: '5px' }} />
-                                        Add Device
-                                    </Button>
-                                }
-                            />
-                        </div>
-                    </TabPanel>
-                    <TabPanel value={value} index={1}>
-                        <div
-                            style={{
-                                display: 'flex',
-                                flexDirection: 'column',
-                                padding: '20px',
-                                height: 'calc(100vh - 128px)',
-                            }}
-                        >
-                            <EmptyState
-                                icon={<AlertIcon style={{ fontSize: '100px', marginBottom: '15px' }} />}
-                                title={'No Alarms Found'}
-                            />
-                        </div>
-                    </TabPanel>
-                    <TabPanel value={value} index={2}>
-                        <div
-                            style={{
-                                display: 'flex',
-                                flexDirection: 'column',
-                                padding: '20px',
-                                height: 'calc(100vh - 128px)',
-                            }}
-                        >
-                            <EmptyState
-                                icon={<TrendingUpIcon style={{ fontSize: '100px', marginBottom: '15px' }} />}
-                                title={'Predictions Page Coming Soon'}
-                                description={'A fully redesigned predictions page is coming in our next release!'}
-                                actions={
-                                    <Button variant="outlined" size="small" color="primary" style={{ margin: '10px' }}>
-                                        Learn More
-                                    </Button>
-                                }
-                            />
-                        </div>
-                    </TabPanel>
-                    <TabPanel value={value} index={3}>
-                        <Grid container spacing={4}>
-                            {deviceConstants.map((deviceOutput, index) => (
-                                <Grid item xs={12} sm={6} md={3} key={index.toString()}>
-                                    <Card className={classes.deviceCard}>
-                                        <CardHeader
-                                            className={classes.cardHeader}
-                                            title={
-                                                <Typography variant="subtitle1" color="inherit">
-                                                    Device {deviceOutput.id}
-                                                </Typography>
-                                            }
-                                        />
-                                        <CardContent style={{ flex: '1 1 0px', padding: '0px', height: 0 }}>
-                                            {!deviceOutput.performance ? (
-                                                <EmptyState
-                                                    title="No Data"
-                                                    icon={
-                                                        <DevicesIcon
-                                                            style={{ fontSize: '30px', margin: '10px 0 5px 0' }}
-                                                        />
-                                                    }
-                                                />
-                                            ) : (
-                                                <List style={{ padding: '0px' }} dense={true}>
-                                                    <ListItem>
-                                                        <ListItemText primary={'Performance'} />
-                                                        <ListItemText
-                                                            style={{ textAlign: 'right' }}
-                                                            primary={deviceOutput.performance}
-                                                        />
-                                                    </ListItem>
-                                                    <ListItem>
-                                                        <ListItemText primary={'Battery Life'} />
-                                                        <ListItemText
-                                                            style={{ textAlign: 'right' }}
-                                                            primary={deviceOutput.battery}
-                                                        />
-                                                    </ListItem>
-                                                    <CardActions style={{ float: 'right' }}>
-                                                        <Button size="small" color="primary">
-                                                            Report
-                                                        </Button>
-                                                        <Button size="small" color="primary">
-                                                            Learn More
-                                                        </Button>
-                                                    </CardActions>
-                                                </List>
-                                            )}
-                                        </CardContent>
-                                    </Card>
-                                </Grid>
-                            ))}
-                        </Grid>
-                    </TabPanel>
-                </div>
+                <TabPanel value={value} index={0}>
+                    <div
+                        style={{
+                            display: 'flex',
+                            flexDirection: 'column',
+                            padding: '20px',
+                            height: 'calc(100vh - 128px)',
+                        }}
+                    >
+                        <EmptyState
+                            //@ts-ignore
+                            icon={<DevicesIcon style={{ fontSize: '100px', marginBottom: '15px' }} />}
+                            title={'No Devices'}
+                            actions={
+                                <Button variant="contained" color="primary" style={{ margin: '10px' }}>
+                                    <AddIcon style={{ marginRight: '5px' }} />
+                                    Add Device
+                                </Button>
+                            }
+                        />
+                    </div>
+                </TabPanel>
+                <TabPanel value={value} index={1}>
+                    <div
+                        style={{
+                            display: 'flex',
+                            flexDirection: 'column',
+                            padding: '20px',
+                            height: 'calc(100vh - 128px)',
+                        }}
+                    >
+                        <EmptyState
+                            icon={<AlertIcon style={{ fontSize: '100px', marginBottom: '15px' }} />}
+                            title={'No Alarms Found'}
+                        />
+                    </div>
+                </TabPanel>
+                <TabPanel value={value} index={2}>
+                    <div
+                        style={{
+                            display: 'flex',
+                            flexDirection: 'column',
+                            padding: '20px',
+                            height: 'calc(100vh - 128px)',
+                        }}
+                    >
+                        <EmptyState
+                            icon={<TrendingUpIcon style={{ fontSize: '100px', marginBottom: '15px' }} />}
+                            title={'Predictions Page Coming Soon'}
+                            description={'A fully redesigned predictions page is coming in our next release!'}
+                            actions={
+                                <Button variant="outlined" size="small" color="primary" style={{ margin: '10px' }}>
+                                    Learn More
+                                </Button>
+                            }
+                        />
+                    </div>
+                </TabPanel>
+                <TabPanel value={value} index={3}>
+                    <Grid container spacing={4}>
+                        {deviceConstants.map((deviceOutput, index) => (
+                            <Grid item xs={12} sm={6} md={3} key={index.toString()}>
+                                <Card className={classes.deviceCard}>
+                                    <CardHeader
+                                        className={classes.cardHeader}
+                                        title={
+                                            <Typography variant="subtitle1" color="inherit">
+                                                Device {deviceOutput.id}
+                                            </Typography>
+                                        }
+                                    />
+                                    <CardContent style={{ flex: '1 1 0px', padding: '0px', height: 0 }}>
+                                        {!deviceOutput.performance ? (
+                                            <EmptyState
+                                                title="No Data"
+                                                icon={
+                                                    <DevicesIcon style={{ fontSize: '30px', margin: '10px 0 5px 0' }} />
+                                                }
+                                            />
+                                        ) : (
+                                            <List style={{ padding: '0px' }} dense={true}>
+                                                <ListItem>
+                                                    <ListItemText primary={'Performance'} />
+                                                    <ListItemText
+                                                        style={{ textAlign: 'right' }}
+                                                        primary={deviceOutput.performance}
+                                                    />
+                                                </ListItem>
+                                                <ListItem>
+                                                    <ListItemText primary={'Battery Life'} />
+                                                    <ListItemText
+                                                        style={{ textAlign: 'right' }}
+                                                        primary={deviceOutput.battery}
+                                                    />
+                                                </ListItem>
+                                                <CardActions style={{ float: 'right' }}>
+                                                    <Button size="small" color="primary">
+                                                        Report
+                                                    </Button>
+                                                    <Button size="small" color="primary">
+                                                        Learn More
+                                                    </Button>
+                                                </CardActions>
+                                            </List>
+                                        )}
+                                    </CardContent>
+                                </Card>
+                            </Grid>
+                        ))}
+                    </Grid>
+                </TabPanel>
             </div>
-            <Hidden smDown>
-                <div className={classes.rightSideBar}>
-                    The EmptyState component is an element that can be used as a placeholder when no data is present
-                    (such as an empty list, or a placeholder page for future content). This is only used when no data is
-                    available, rather than during loading.
-                </div>
-            </Hidden>
         </div>
     );
 };

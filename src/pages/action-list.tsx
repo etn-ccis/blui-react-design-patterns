@@ -95,8 +95,8 @@ export class ActionList extends React.Component {
         const { menuPosition } = this.state;
 
         return (
-            <div style={{ display: 'flex' }}>
-                <div style={{ flex: '4', padding: '16px' }}>
+            <div style={{ display: 'flex', height: '100vh', overflowY: 'hidden' }}>
+                <div style={{ flex: '4', padding: '16px', height: '100vh', overflowY: 'scroll' }}>
                     <AppBar position="static">
                         <Toolbar data-cy="pxb-toolbar">
                             <Typography variant="h6" color="inherit">
@@ -171,7 +171,7 @@ export class ActionList extends React.Component {
                         minWidth: '200px',
                     }}
                 >
-                    Some info about the action list...
+                    Action list demonstrates how to build a list with actions available on individual list items.
                 </div>
             </div>
         );

@@ -409,19 +409,21 @@ export class ValidationForm extends React.Component {
             </div>
         );
         return (
-            <div style={{ display: 'flex' }}>
-                <div style={{ flex: '4', padding: '16px' }}>
+            <div style={{ display: 'flex', height: '100vh', overflowY: 'hidden' }}>
+                <div style={{ flex: '4', padding: '16px', height: '100vh', overflowY: 'scroll' }}>
                     {headerBlock}
                     {formFieldsBlock}
                     {characterLimitsBlock}
                     {passwordValidationBlock}
                 </div>
-                <div style={{
-                    flex: '1',
-                    borderLeft: '1px solid rgba(0, 0, 0, 0.12)',
-                    padding: '16px',
-                    minWidth: '200px'
-                }}>
+                <div
+                    style={{
+                        flex: '1',
+                        borderLeft: '1px solid rgba(0, 0, 0, 0.12)',
+                        padding: '16px',
+                        minWidth: '200px',
+                    }}
+                >
                     Some info about form validation...
                 </div>
             </div>

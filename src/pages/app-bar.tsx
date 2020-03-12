@@ -26,6 +26,7 @@ const useStyles = makeStyles((theme: any) => ({
         backgroundBlendMode: 'soft-light',
         minHeight: theme.spacing(34),
         color: '#fff',
+        marginTop: '-32px',
     },
     bannerMain: {
         flexDirection: 'column',
@@ -41,7 +42,7 @@ const useStyles = makeStyles((theme: any) => ({
     },
     header: {
         position: 'relative',
-        top: 'auto',
+        top: '-26px',
         left: 'auto',
         right: 'auto',
         transform: 'translateY(-100%)',
@@ -49,23 +50,28 @@ const useStyles = makeStyles((theme: any) => ({
     },
     top: {
         transform: 'translateY(0)',
+        top: '0',
     },
     noPadLeft: {
         paddingLeft: '0px',
     },
     main: {
         display: 'flex',
+        height: '100vh',
+        overflowY: 'hidden'
     },
     mainContent: {
         flex: '4',
-        padding: '16px'
+        padding: '16px',
+        height: '100vh',
+        overflowY: 'scroll'
     },
     rightSideBar: {
         flex: '1',
         borderLeft: '1px solid rgba(0, 0, 0, 0.12)',
         padding: '16px',
-        minWidth: '200px'
-    }
+        minWidth: '200px',
+    },
 }));
 
 export const CollapsibleAppBar = (props: any): JSX.Element => {
@@ -74,9 +80,8 @@ export const CollapsibleAppBar = (props: any): JSX.Element => {
     const [activeClass, setActiveClass] = useState('');
     const [opacity, setOpacity] = useState(1);
 
-
     useEffect(() => {
-        const scrollArea = document.getElementById("scroll-area");
+        const scrollArea = document.getElementById('scroll-area');
         if (scrollArea) {
             scrollArea.addEventListener('scroll', () => {
                 setOpacity(window.pageYOffset);
@@ -147,9 +152,7 @@ export const CollapsibleAppBar = (props: any): JSX.Element => {
                     ))}
                 </List>
             </div>
-            <div className={classes.rightSideBar}>
-                Some info about the app bar...
-            </div>
+            <div className={classes.rightSideBar}>Some info about the app bar...</div>
         </div>
     );
 };

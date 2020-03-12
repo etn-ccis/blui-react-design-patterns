@@ -56,10 +56,14 @@ const useStyles = makeStyles(() => ({
     },
     main: {
         display: 'flex',
+        height: '100vh',
+        overflowY: 'hidden'
     },
     mainContent: {
         flex: '4',
         padding: '16px',
+        height: '100vh',
+        overflowY: 'scroll'
     },
     rightSideBar: {
         flex: '1',

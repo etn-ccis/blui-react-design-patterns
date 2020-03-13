@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import IconButton from '@material-ui/core/IconButton';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -12,158 +12,155 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
-// import './style.css';
+import { EmptyState } from '@pxblue/react-components';
 
 const options = ['Delete', 'View Details'];
-
 const ITEM_HEIGHT = 48;
 
-export class ActionList extends React.Component {
-    state: any;
+export const ActionList = (): JSX.Element => {
+    const createItem = (index: number): any => ({ id: index, name: `Item ${index}`, details: `Item ${index} occured` });
 
-    constructor(props: any) {
-        super(props);
-        const list = [];
-        /*
-        Here we manually create the elements in the list using createItem(). Using onAddItem() would lead to an error ("cannot call setState on an unmounted component"). In the constructor, the component has not yet finished mounting, so we are unable to modify the state via setState (it hasn't been initialized yet). The details of the setState call also include a re-render of the component, which cannot happen if the component has not finished initializing. So we have to directly instantiate the value of the list in the constructor. 
-        */
-        for (let i = 0; i < 10; i++) {
-            list.push(this.createRandomItem());
-        }
-        this.state = {
-            list: list,
-            menuPosition: null,
-            selectedIndex: null,
-            activeMenu: null,
-        };
-    }
-
-    onAddItem(): void {
-        const tempList = this.state.list;
-        tempList.push(this.createRandomItem());
-        this.setState({ list: tempList });
-    }
-    createItem(index: number): any {
-        return { id: index, name: `Item ${index}`, details: `Item ${index} occured` };
-    }
-    createRandomItem(): any {
+    const createRandomItem = (): any => {
         const int = parseInt(`${Math.random() * 100}`, 10);
-        return this.createItem(int);
+        return createItem(int);
+    };
+
+    const generatedList = [];
+
+    for (let i = 0; i < 10; i++) {
+        generatedList.push(createRandomItem());
     }
 
-    onMenuClick(event: any, i: number): void {
-        this.setState({ menuPosition: event.currentTarget, activeMenu: i });
-    }
+    const [list, setList] = useState<any[]>(generatedList);
+    const [menuPosition, setMenuPosition] = useState<any>(null);
+    const [selectedIndex, setSelectedIndex] = useState<any>(null);
+    const [activeMenu, setActiveMenu] = useState<any>(null);
 
-    onMenuItemClick(option: any, i: number): void {
+    const onAddItem = (): void => {
+        setList([...list, createRandomItem()]);
+    };
+
+    const onMenuClick = (event: any, i: number): void => {
+        setMenuPosition(event.currentTarget);
+        setActiveMenu(i);
+    };
+
+    const onMenuClose = (): void => {
+        setMenuPosition(null);
+        setActiveMenu(null);
+    };
+
+    const onMenuItemClick = (option: any, i: number): void => {
         if (option === 'Delete') {
-            const tempList = this.state.list;
+            const tempList = list;
             tempList.splice(i, 1);
-            this.setState({ list: tempList });
+            setList(tempList);
         }
-        this.onMenuClose();
-    }
+        onMenuClose();
+    };
 
-    onMenuClose(): void {
-        this.setState({ menuPosition: null, activeMenu: null });
-    }
+    const onRemoveAll = (): void => {
+        setList([]);
+    };
 
-    onRemoveAll(): void {
-        this.setState({ list: [] });
-    }
+    const onSelected = (item: any): void => {
+        setSelectedIndex(item);
+    };
 
-    onSelected(item: any): void {
-        this.setState({ selectedIndex: item });
-    }
+    const isSelected = (item: any): any => selectedIndex === item;
 
-    isSelected(item: any): any {
-        return this.state.selectedIndex === item;
-    }
+    const getEmptyComponent = (): any => (
+        <div
+            style={{
+                display: 'flex',
+                flexDirection: 'column',
+                padding: '20px',
+                height: 'calc(100vh - 128px)',
+            }}
+        >
+            <EmptyState
+                title={'No Items Found'}
+                actions={
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        style={{ margin: '10px' }}
+                        onClick={(): void => onAddItem()}
+                    >
+                        <AddIcon style={{ marginRight: '5px' }} />
+                        Add an Item
+                    </Button>
+                }
+            />
+        </div>
+    );
 
-    getEmptyComponent(): any {
-        return (
-            <div style={{ paddingLeft: '10px' }}>
-                <Typography variant="h4">No Items Found</Typography>
-                <Button data-cy="add-item" variant="contained" onClick={(): void => this.onAddItem()}>
-                    Add an Item
-                </Button>
-            </div>
-        );
-    }
-
-    render(): any {
-        const { menuPosition } = this.state;
-
-        return (
-            <div>
-                <AppBar position="static">
-                    <Toolbar data-cy="pxb-toolbar">
-                        <Typography variant="h6" color="inherit">
-                            Action List
-                        </Typography>
-                        <div style={{ flex: '1 1 0px' }} />
-                        <IconButton
-                            data-cy="toolbar-delete"
-                            color="inherit"
-                            aria-label="Delete"
-                            onClick={(): void => {
-                                this.onRemoveAll();
-                            }}
-                        >
-                            <DeleteIcon />
+    return (
+        <div>
+            <AppBar position="static">
+                <Toolbar data-cy="pxb-toolbar">
+                    <Typography variant="h6" color="inherit">
+                        Action List
+                    </Typography>
+                    <div style={{ flex: '1 1 0px' }} />
+                    <IconButton
+                        data-cy="toolbar-delete"
+                        color="inherit"
+                        aria-label="Delete"
+                        onClick={(): void => {
+                            onRemoveAll();
+                        }}
+                    >
+                        <DeleteIcon />
+                    </IconButton>
+                    <IconButton
+                        data-cy="toolbar-add"
+                        color="inherit"
+                        aria-label="add"
+                        onClick={(): void => {
+                            onAddItem();
+                        }}
+                    >
+                        <AddIcon />
+                    </IconButton>
+                </Toolbar>
+            </AppBar>
+            {list.length < 1 && getEmptyComponent()}
+            <List className="list" data-cy="list-content" style={{ paddingTop: '0px' }} component="nav">
+                {list.map((item: any, i: number): any => (
+                    <ListItem
+                        key={`item_${i}`}
+                        button
+                        className={isSelected(i) ? 'selected' : ''}
+                        onClick={(): any => onSelected(i)}
+                    >
+                        <ListItemText primary={item.name} secondary={item.details}></ListItemText>
+                        <IconButton data-cy="action-menu" onClick={(evt: any): any => onMenuClick(evt, i)}>
+                            <MoreVertIcon />
                         </IconButton>
-                        <IconButton
-                            data-cy="toolbar-add"
-                            color="inherit"
-                            aria-label="add"
-                            onClick={(): void => {
-                                this.onAddItem();
-                            }}
-                        >
-                            <AddIcon />
-                        </IconButton>
-                    </Toolbar>
-                </AppBar>
-                {this.state.list.length < 1 && this.getEmptyComponent()}
-                <List className="list" data-cy="list-content" style={{ paddingTop: '0px' }} component="nav">
-                    {this.state.list.map((item: any, i: number): any => (
-                        <ListItem
-                            key={`item_${i}`}
-                            button
-                            className={this.isSelected(i) ? 'selected' : ''}
-                            onClick={(): any => this.onSelected(i)}
-                        >
-                            <ListItemText primary={item.name} secondary={item.details}></ListItemText>
-                            <IconButton data-cy="action-menu" onClick={(evt: any): any => this.onMenuClick(evt, i)}>
-                                <MoreVertIcon />
-                            </IconButton>
-                        </ListItem>
-                    ))}
-                </List>
-                <Menu
-                    id="long-menu"
-                    anchorEl={menuPosition}
-                    open={Boolean(menuPosition)}
-                    onClose={this.onMenuClose.bind(this)}
-                    PaperProps={{
-                        style: {
-                            maxHeight: ITEM_HEIGHT * 4.5,
-                            width: 200,
-                        },
-                    }}
-                >
-                    {options.map((option) => (
-                        <MenuItem
-                            key={option}
-                            onClick={(): void => this.onMenuItemClick(option, this.state.activeMenu)}
-                        >
-                            {option}
-                        </MenuItem>
-                    ))}
-                </Menu>
-            </div>
-        );
-    }
-}
+                    </ListItem>
+                ))}
+            </List>
+            <Menu
+                id="long-menu"
+                anchorEl={menuPosition}
+                open={Boolean(menuPosition)}
+                onClose={onMenuClose}
+                PaperProps={{
+                    style: {
+                        maxHeight: ITEM_HEIGHT * 4.5,
+                        width: 200,
+                    },
+                }}
+            >
+                {options.map((option) => (
+                    <MenuItem key={option} onClick={(): void => onMenuItemClick(option, activeMenu)}>
+                        {option}
+                    </MenuItem>
+                ))}
+            </Menu>
+        </div>
+    );
+};
 
 export default ActionList;

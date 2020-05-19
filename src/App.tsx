@@ -1,18 +1,30 @@
-// import Drawer from '@material-ui/core/Drawer';
-import { Divider } from '@material-ui/core';
-import { Menu } from '@material-ui/icons';
-import MoveToInboxIcon from '@material-ui/icons/MoveToInbox';
-import { Drawer, DrawerBody, DrawerFooter, DrawerHeader, DrawerLayout, DrawerNavGroup } from '@pxblue/react-components';
-import React, { useState, useEffect } from 'react';
+import { Divider, useMediaQuery, useTheme } from '@material-ui/core';
+import {
+    Drawer,
+    DrawerBody,
+    DrawerFooter,
+    DrawerHeader,
+    DrawerLayout,
+    DrawerNavGroup,
+    NavItem,
+} from '@pxblue/react-components';
+import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router';
-import Main from './router/main';
+import { Main } from './router/main';
 import './style.css';
 import EatonLogo from './assets/EatonLogo.svg';
-import Hidden from '@material-ui/core/Hidden';
+import { PAGES, RouteMetaData } from './router/routes';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppState } from './redux/reducers';
+import { TOGGLE_DRAWER } from './redux/actions';
 
 export const App: React.FC = () => {
     const history = useHistory();
-    const [open, setOpen] = useState(true);
+    const open = useSelector((state: AppState) => state.app.drawerOpen);
+    const theme = useTheme();
+    const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+    const dispatch = useDispatch();
+
     const [selected, setSelected] = useState('');
 
     const navigate = (id: string): void => {
@@ -21,7 +33,7 @@ export const App: React.FC = () => {
     };
 
     useEffect(() => {
-        if (window.location.href.includes('action-list')) {
+        /*    if (window.location.href.includes('action-list')) {
             setSelected('action-list');
         } else if (window.location.href.includes('app-bar')) {
             setSelected('app-bar');
@@ -33,72 +45,51 @@ export const App: React.FC = () => {
             setSelected('empty-state');
         } else if (window.location.href.includes('form-validation-class')) {
             setSelected('form-validation-class');
-        }
+        } */
     }, []);
 
-    const navItems = [
-        {
-            title: 'Action List',
+    const navItems: NavItem[] = [];
+
+    const createRoute = (page: RouteMetaData): NavItem => {
+        const subItems: NavItem[] = [];
+        Object.keys(page).map((key: string) => {
+            // @ts-ignore
+            const subRoute = page[key];
+            if (typeof subRoute === 'object') {
+                subItems.push(createRoute(subRoute));
+            }
+        });
+        return {
+            title: page.title,
+            itemID: page.route || page.title,
+            items: subItems.length > 0 ? subItems : undefined,
             onClick: (): void => {
-                navigate('action-list');
+                if (page.route) {
+                    navigate(page.route);
+                }
             },
-            icon: <MoveToInboxIcon />,
-            active: selected === 'action-list',
-        },
-        {
-            title: 'App Bar',
-            onClick: (): void => {
-                navigate('app-bar');
-            },
-            icon: <MoveToInboxIcon />,
-            active: selected === 'app-bar',
-        },
-        {
-            title: 'Bottom Sheet',
-            onClick: (): void => {
-                navigate('bottom-sheet');
-            },
-            icon: <MoveToInboxIcon />,
-            active: selected === 'bottom-sheet',
-        },
-        {
-            title: 'Data List',
-            onClick: (): void => {
-                navigate('data-list');
-            },
-            icon: <MoveToInboxIcon />,
-            active: selected === 'data-list',
-        },
-        {
-            title: 'Empty State',
-            onClick: (): void => {
-                navigate('empty-state');
-            },
-            icon: <MoveToInboxIcon />,
-            active: selected === 'empty-state',
-        },
-        {
-            title: 'Form Validation',
-            onClick: (): void => {
-                navigate('form-validation-class');
-            },
-            icon: <MoveToInboxIcon />,
-            active: selected === 'form-validation-class',
-        },
-    ];
+        };
+    };
+
+    // @ts-ignore
+    Object.keys(PAGES).map((key) => navItems.push(createRoute(PAGES[key])));
 
     const drawer = (
-        <Drawer open={open}>
-            <DrawerHeader
-                icon={<Menu />}
-                title={'PX Blue Design Patterns'}
-                subtitle={'Common situations, copy paste that code'}
-                onIconClick={(): void => {
-                    setOpen(!open);
-                }}
-            />
+        <Drawer
+            open={open}
+            width={270}
+            ModalProps={{
+                onBackdropClick: (): void => {
+                    dispatch({ type: TOGGLE_DRAWER, payload: !open });
+                },
+            }}
+            activeItemBackgroundColor={theme.palette.primary.light}
+            itemFontColor={theme.palette.text.primary}
+            variant={isMobile ? 'temporary' : 'permanent'}
+        >
+            <DrawerHeader title={'PX Blue'} subtitle={'React Design Patterns'} />
             <DrawerBody>
-                <DrawerNavGroup items={navItems} title={'Design Patterns'} />
+                <DrawerNavGroup items={navItems} hidePadding activeItem={selected} />
             </DrawerBody>
             <DrawerFooter>
                 <Divider />
@@ -111,38 +102,7 @@ export const App: React.FC = () => {
 
     return (
         <DrawerLayout drawer={drawer}>
-            <div style={{ display: 'flex', height: '100vh', overflowY: 'hidden' }}>
-                <div
-                    style={{
-                        flex: '4',
-                        padding: '16px',
-                        height: '100vh',
-                        overflowY: 'scroll',
-                        boxSizing: 'border-box',
-                    }}
-                >
-                    <Main />
-                </div>
-                <Hidden smDown>
-                    <div
-                        style={{
-                            flex: '1',
-                            borderLeft: '1px solid rgba(0, 0, 0, 0.12)',
-                            padding: '16px',
-                            minWidth: '200px',
-                        }}
-                    >
-                        {selected === 'action-list' ? 'Some info about action list...' : ''}
-                        {selected === 'app-bar' ? 'Some info about app bar...' : ''}
-                        {selected === 'bottom-sheet' ? 'Some info about bottom sheet...' : ''}
-                        {selected === 'data-list' ? 'Some info about data list...' : ''}
-                        {selected === 'empty-state'
-                            ? 'The EmptyState component is an element that can be used as a placeholder when no data is present (such as an empty list, or a placeholder page for future content). This is only used when no data is available, rather than during loading.'
-                            : ''}
-                        {selected === 'form-validation-class' ? 'Some info about form validation...' : ''}
-                    </div>
-                </Hidden>
-            </div>
+            <Main />
         </DrawerLayout>
     );
 };

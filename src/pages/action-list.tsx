@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import IconButton from '@material-ui/core/IconButton';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -13,11 +13,17 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import { EmptyState } from '@pxblue/react-components';
+import { useDispatch } from 'react-redux';
+import { TOGGLE_DRAWER } from '../redux/actions';
+import { Menu as MenuIcon } from '@material-ui/icons';
+import { Hidden } from '@material-ui/core';
 
 const options = ['Delete', 'View Details'];
 const ITEM_HEIGHT = 48;
 
 export const ActionList = (): JSX.Element => {
+    const dispatch = useDispatch();
+
     const createItem = (index: number): any => ({ id: index, name: `Item ${index}`, details: `Item ${index} occured` });
 
     const createRandomItem = (): any => {
@@ -79,6 +85,7 @@ export const ActionList = (): JSX.Element => {
             }}
         >
             <EmptyState
+                icon={<div>what</div>}
                 title={'No Items Found'}
                 actions={
                     <Button
@@ -99,6 +106,20 @@ export const ActionList = (): JSX.Element => {
         <div>
             <AppBar position="static">
                 <Toolbar data-cy="pxb-toolbar">
+                    <Hidden mdUp={true}>
+                        <IconButton
+                            color={'inherit'}
+                            onClick={(): void => {
+                                dispatch({ type: TOGGLE_DRAWER, payload: true });
+                            }}
+                            style={{
+                                display: 'flex',
+                                alignItems: 'center',
+                            }}
+                        >
+                            <MenuIcon />
+                        </IconButton>
+                    </Hidden>
                     <Typography variant="h6" color="inherit">
                         Action List
                     </Typography>
@@ -162,5 +183,3 @@ export const ActionList = (): JSX.Element => {
         </div>
     );
 };
-
-export default ActionList;

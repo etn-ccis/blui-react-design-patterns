@@ -96,7 +96,7 @@ export type RouteMetaData = {
     route?: string;
 };
 
-type Routes = {
+export type Routes = {
     APP_BAR: RouteMetaData & {
         COLLAPSIBLE: RouteMetaData;
         SEARCH: RouteMetaData;

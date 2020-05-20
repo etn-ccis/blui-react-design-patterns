@@ -13,7 +13,7 @@ import { useHistory } from 'react-router';
 import { Main } from './router/main';
 import './style.css';
 import EatonLogo from './assets/EatonLogo.svg';
-import { PAGES, RouteMetaData } from './router/routes';
+import {PAGES, RouteMetaData, Routes} from './router/routes';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppState } from './redux/reducers';
 import { TOGGLE_DRAWER } from './redux/actions';
@@ -33,19 +33,10 @@ export const App: React.FC = () => {
     };
 
     useEffect(() => {
-        /*    if (window.location.href.includes('action-list')) {
-            setSelected('action-list');
-        } else if (window.location.href.includes('app-bar')) {
-            setSelected('app-bar');
-        } else if (window.location.href.includes('bottom-sheet')) {
-            setSelected('bottom-sheet');
-        } else if (window.location.href.includes('data-list')) {
-            setSelected('data-list');
-        } else if (window.location.href.includes('empty-state')) {
-            setSelected('empty-state');
-        } else if (window.location.href.includes('form-validation-class')) {
-            setSelected('form-validation-class');
-        } */
+        const pathname = window.location.pathname;
+        if (pathname) {
+            setSelected(pathname.replace('/', ''));
+        }
     }, []);
 
     const navItems: NavItem[] = [];
@@ -53,8 +44,7 @@ export const App: React.FC = () => {
     const createRoute = (page: RouteMetaData): NavItem => {
         const subItems: NavItem[] = [];
         Object.keys(page).map((key: string) => {
-            // @ts-ignore
-            const subRoute = page[key];
+            const subRoute = page[key as keyof RouteMetaData];
             if (typeof subRoute === 'object') {
                 subItems.push(createRoute(subRoute));
             }
@@ -63,16 +53,13 @@ export const App: React.FC = () => {
             title: page.title,
             itemID: page.route || page.title,
             items: subItems.length > 0 ? subItems : undefined,
-            onClick: (): void => {
-                if (page.route) {
-                    navigate(page.route);
-                }
-            },
+            onClick: page.route ? (): void => {
+                if (page.route) navigate(page.route); // this extra if shouldn't be necessary, but TS doesn't understand that it can't be undefined because of the ternary operator.
+            } : undefined,
         };
     };
 
-    // @ts-ignore
-    Object.keys(PAGES).map((key) => navItems.push(createRoute(PAGES[key])));
+    Object.keys(PAGES).forEach((key: string) => navItems.push(createRoute(PAGES[key as keyof Routes])));
 
     const drawer = (
         <Drawer

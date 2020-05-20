@@ -37,7 +37,7 @@ export const App: React.FC = () => {
         if (pathname) {
             setSelected(pathname.replace('/', ''));
         }
-    }, []);
+    }, [window.location.pathname]);
 
     const navItems: NavItem[] = [];
 
@@ -51,7 +51,7 @@ export const App: React.FC = () => {
         });
         return {
             title: page.title,
-            itemID: page.route || page.title,
+            itemID: page.route || '',
             items: subItems.length > 0 ? subItems : undefined,
             onClick: page.route ? (): void => {
                 if (page.route) navigate(page.route); // this extra if shouldn't be necessary, but TS doesn't understand that it can't be undefined because of the ternary operator.

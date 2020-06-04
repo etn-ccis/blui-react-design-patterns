@@ -5,6 +5,7 @@
 **/**/*.log
 **/**/*.tmp
 **/**/*.tmp.*
+package-lock.json
 
 
 # Compiled output

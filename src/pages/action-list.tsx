@@ -115,6 +115,7 @@ export const ActionList = (): JSX.Element => {
                             style={{
                                 display: 'flex',
                                 alignItems: 'center',
+                                marginLeft: '-12px'
                             }}
                         >
                             <MenuIcon />
@@ -125,6 +126,7 @@ export const ActionList = (): JSX.Element => {
                     </Typography>
                     <div style={{ flex: '1 1 0px' }} />
                     <IconButton
+                        id="remove-all-button"
                         data-cy="toolbar-delete"
                         color="inherit"
                         aria-label="Delete"
@@ -135,6 +137,7 @@ export const ActionList = (): JSX.Element => {
                         <DeleteIcon />
                     </IconButton>
                     <IconButton
+                        id="add-item-button"
                         data-cy="toolbar-add"
                         color="inherit"
                         aria-label="add"

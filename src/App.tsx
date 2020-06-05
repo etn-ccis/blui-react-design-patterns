@@ -37,17 +37,18 @@ export const App: React.FC = () => {
         if (pathname) {
             setSelected(pathname.replace('/', ''));
         }
-    }, [window.location.pathname]);
+    }, []);
 
     const navItems: NavItem[] = [];
 
     const createRoute = (page: RouteMetaData): NavItem => {
         const subItems: NavItem[] = [];
-        Object.keys(page).map((key: string) => {
+        Object.keys(page).map((key: string): any => {
             const subRoute = page[key as keyof RouteMetaData];
             if (typeof subRoute === 'object') {
                 subItems.push(createRoute(subRoute));
             }
+            return null;
         });
         return {
             title: page.title,

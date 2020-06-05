@@ -4,12 +4,11 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-
 import ListItemText from '@material-ui/core/ListItemText';
 import { IconButton, Hidden } from '@material-ui/core';
 import { Menu as MenuIcon } from '@material-ui/icons';
 import { useDispatch } from 'react-redux';
-import { TOGGLE_DRAWER } from '../redux/actions';
+import { TOGGLE_DRAWER } from '../../redux/actions';
 
 export function unCamelCase(val: any): any {
     return val
@@ -61,14 +60,12 @@ export const DataList = (): JSX.Element => {
                     </Typography>
                 </Toolbar>
             </AppBar>
-            {list.length < 1}
             <List style={{ paddingTop: '0px' }} component="nav">
                 {list.map((item: { key: string | number | undefined; value: React.ReactNode }) => (
                     <ListItem key={item.key} style={{ display: 'flex', flexDirection: 'row' }}>
                         <ListItemText style={{ flex: '1' }} primary={unCamelCase(item.key)}></ListItemText>
                         <ListItemText
                             style={{ flex: '1', textAlign: 'end' }}
-                            className="lastColumn"
                             secondary={item.value}
                         ></ListItemText>
                     </ListItem>

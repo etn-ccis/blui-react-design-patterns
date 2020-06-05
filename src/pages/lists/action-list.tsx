@@ -14,7 +14,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import { EmptyState } from '@pxblue/react-components';
 import { useDispatch } from 'react-redux';
-import { TOGGLE_DRAWER } from '../redux/actions';
+import { TOGGLE_DRAWER } from '../../redux/actions';
 import { Menu as MenuIcon } from '@material-ui/icons';
 import { Hidden } from '@material-ui/core';
 

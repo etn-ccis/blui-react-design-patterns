@@ -6,6 +6,10 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 
 import ListItemText from '@material-ui/core/ListItemText';
+import { IconButton, Hidden } from '@material-ui/core';
+import { Menu as MenuIcon } from '@material-ui/icons';
+import { useDispatch } from 'react-redux';
+import { TOGGLE_DRAWER } from '../redux/actions';
 
 export function unCamelCase(val: any): any {
     return val
@@ -21,7 +25,8 @@ export function ObjectToList(obj: any): any {
     return list;
 }
 
-export const ListValues = (): JSX.Element => {
+export const DataList = (): JSX.Element => {
+    const dispatch = useDispatch();
     const items = {
         georgeWashington: 1789,
         johnAdams: 1796,
@@ -36,8 +41,23 @@ export const ListValues = (): JSX.Element => {
         <div>
             <AppBar position="static">
                 <Toolbar>
+                <Hidden mdUp={true}>
+                        <IconButton
+                            color={'inherit'}
+                            onClick={(): void => {
+                                dispatch({ type: TOGGLE_DRAWER, payload: true });
+                            }}
+                            style={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                marginLeft: '-12px'
+                            }}
+                        >
+                            <MenuIcon />
+                        </IconButton>
+                    </Hidden>
                     <Typography variant="h6" color="inherit">
-                        Key Value List
+                        Data List
                     </Typography>
                 </Toolbar>
             </AppBar>

@@ -115,7 +115,7 @@ export const ActionList = (): JSX.Element => {
                             style={{
                                 display: 'flex',
                                 alignItems: 'center',
-                                marginLeft: '-12px'
+                                marginLeft: '-12px',
                             }}
                         >
                             <MenuIcon />

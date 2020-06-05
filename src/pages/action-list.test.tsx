@@ -12,34 +12,52 @@ Enzyme.configure({ adapter: new Adapter() });
 const store = createStore(Reducer());
 
 it('renders without crashing', () => {
-  const div = document.createElement('div');
-  ReactDOM.render(<Provider store={store}>
-    <ActionList />
-  </Provider>, div);
-  ReactDOM.unmountComponentAtNode(div);
+    const div = document.createElement('div');
+    ReactDOM.render(
+        <Provider store={store}>
+            <ActionList />
+        </Provider>,
+        div
+    );
+    ReactDOM.unmountComponentAtNode(div);
 });
 
 it('renders a single list component', () => {
-  const actionList = mount(<Provider store={store}>
-    <ActionList />
-  </Provider>);
-  expect(actionList.find('.list').hostNodes()).toHaveLength(1);
+    const actionList = mount(
+        <Provider store={store}>
+            <ActionList />
+        </Provider>
+    );
+    expect(actionList.find('.list').hostNodes()).toHaveLength(1);
 });
 
 it('renders 10 items by default', () => {
-  const actionList = mount(<Provider store={store}>
-    <ActionList />
-  </Provider>);
-  expect(actionList.find('.list').hostNodes().children(ListItem)).toHaveLength(10);
+    const actionList = mount(
+        <Provider store={store}>
+            <ActionList />
+        </Provider>
+    );
+    expect(
+        actionList
+            .find('.list')
+            .hostNodes()
+            .children(ListItem)
+    ).toHaveLength(10);
 });
 
 it('add item functions correctly', () => {
-  const actionList = mount(<Provider store={store}>
-    <ActionList />
-  </Provider>);
-  expect(actionList.find('#add-item-button').hostNodes()).toHaveLength(1);
-  actionList.find('#add-item-button').hostNodes().at(0).simulate('click');
-  expect(actionList.find('.list').children(ListItem)).toHaveLength(11);
+    const actionList = mount(
+        <Provider store={store}>
+            <ActionList />
+        </Provider>
+    );
+    expect(actionList.find('#add-item-button').hostNodes()).toHaveLength(1);
+    actionList
+        .find('#add-item-button')
+        .hostNodes()
+        .at(0)
+        .simulate('click');
+    expect(actionList.find('.list').children(ListItem)).toHaveLength(11);
 });
 
 // @TODO: figure out how to do this for a functional component
@@ -63,10 +81,16 @@ it('add item functions correctly', () => {
 // });
 
 it('remove all clears the list', () => {
-  const actionList = mount(<Provider store={store}>
-    <ActionList />
-  </Provider>);
-  expect(actionList.find('#remove-all-button').hostNodes()).toHaveLength(1);
-  actionList.find('#remove-all-button').hostNodes().at(0).simulate('click');
-  expect(actionList.find('.list').children(ListItem)).toHaveLength(0);
+    const actionList = mount(
+        <Provider store={store}>
+            <ActionList />
+        </Provider>
+    );
+    expect(actionList.find('#remove-all-button').hostNodes()).toHaveLength(1);
+    actionList
+        .find('#remove-all-button')
+        .hostNodes()
+        .at(0)
+        .simulate('click');
+    expect(actionList.find('.list').children(ListItem)).toHaveLength(0);
 });

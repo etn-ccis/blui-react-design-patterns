@@ -13,7 +13,7 @@ import { useHistory } from 'react-router';
 import { Main } from './router/main';
 import './style.css';
 import EatonLogo from './assets/EatonLogo.svg';
-import {PAGES, RouteMetaData, Routes} from './router/routes';
+import { PAGES, RouteMetaData, Routes } from './router/routes';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppState } from './redux/reducers';
 import { TOGGLE_DRAWER } from './redux/actions';
@@ -53,9 +53,11 @@ export const App: React.FC = () => {
             title: page.title,
             itemID: page.route || '',
             items: subItems.length > 0 ? subItems : undefined,
-            onClick: page.route ? (): void => {
-                if (page.route) navigate(page.route); // this extra if shouldn't be necessary, but TS doesn't understand that it can't be undefined because of the ternary operator.
-            } : undefined,
+            onClick: page.route
+                ? (): void => {
+                      if (page.route) navigate(page.route); // this extra if shouldn't be necessary, but TS doesn't understand that it can't be undefined because of the ternary operator.
+                  }
+                : undefined,
         };
     };
 

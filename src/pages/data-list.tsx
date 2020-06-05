@@ -41,7 +41,7 @@ export const DataList = (): JSX.Element => {
         <div>
             <AppBar position="static">
                 <Toolbar>
-                <Hidden mdUp={true}>
+                    <Hidden mdUp={true}>
                         <IconButton
                             color={'inherit'}
                             onClick={(): void => {
@@ -50,7 +50,7 @@ export const DataList = (): JSX.Element => {
                             style={{
                                 display: 'flex',
                                 alignItems: 'center',
-                                marginLeft: '-12px'
+                                marginLeft: '-12px',
                             }}
                         >
                             <MenuIcon />

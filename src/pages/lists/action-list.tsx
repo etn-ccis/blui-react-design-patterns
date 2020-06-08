@@ -9,6 +9,7 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import AddIcon from '@material-ui/icons/Add';
 import DeleteIcon from '@material-ui/icons/Delete';
+import ComputerIcon from '@material-ui/icons/Computer';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -85,7 +86,7 @@ export const ActionList = (): JSX.Element => {
             }}
         >
             <EmptyState
-                icon={<div>what</div>}
+                icon={<ComputerIcon style={{ fontSize: '100px' }}/>}
                 title={'No Items Found'}
                 actions={
                     <Button

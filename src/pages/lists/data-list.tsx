@@ -3,15 +3,12 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
 import ComputerIcon from '@material-ui/icons/Computer';
+import MenuIcon from '@material-ui/icons/Menu';
 import { IconButton, Hidden } from '@material-ui/core';
-import { Menu as MenuIcon } from '@material-ui/icons';
 import { useDispatch } from 'react-redux';
 import { TOGGLE_DRAWER } from '../../redux/actions';
-import { EmptyState } from '@pxblue/react-components';
-
+import { EmptyState, InfoListItem } from '@pxblue/react-components';
 
 export type KeyValuePair = {
     [key: string]: number;
@@ -37,7 +34,7 @@ export const DataList = (): JSX.Element => {
             }}
         >
             <EmptyState
-                icon={<ComputerIcon style={{ fontSize: '100px' }}/>}
+                icon={<ComputerIcon style={{ fontSize: '100px' }} />}
                 title={'No Items Found'}
             />
         </div>
@@ -70,13 +67,7 @@ export const DataList = (): JSX.Element => {
             {presidentsList.length < 1 && getEmptyComponent()}
             <List style={{ paddingTop: '0px' }} component="nav">
                 {Object.keys(presidentsList).map((president) => (
-                    <ListItem key={president} style={{ display: 'flex', flexDirection: 'row' }}>
-                        <ListItemText style={{ flex: '1' }} primary={(president)}></ListItemText>
-                        <ListItemText
-                            style={{ flex: '1', textAlign: 'end' }}
-                            secondary={presidentsList[president]}
-                        ></ListItemText>
-                    </ListItem>
+                    <InfoListItem hidePadding key={president} title={president} rightComponent={<div>{presidentsList[president]}</div>}></InfoListItem>
                 ))}
             </List>
         </div>

@@ -43,7 +43,7 @@ export const App: React.FC = () => {
 
     const createRoute = (page: RouteMetaData): NavItem => {
         const subItems: NavItem[] = [];
-        Object.keys(page).map((key: string): any => {
+        Object.keys(page).forEach((key: string): JSX.Element | null => {
             const subRoute = page[key as keyof RouteMetaData];
             if (typeof subRoute === 'object') {
                 subItems.push(createRoute(subRoute));

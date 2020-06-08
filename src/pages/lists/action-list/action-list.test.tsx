@@ -6,7 +6,7 @@ import Adapter from 'enzyme-adapter-react-16';
 import ListItem from '@material-ui/core/ListItem';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
-import { Reducer } from '../../redux/reducers';
+import { Reducer } from '../../../redux/reducers';
 
 Enzyme.configure({ adapter: new Adapter() });
 const store = createStore(Reducer());

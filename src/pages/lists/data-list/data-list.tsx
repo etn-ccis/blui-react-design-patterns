@@ -7,22 +7,44 @@ import ComputerIcon from '@material-ui/icons/Computer';
 import MenuIcon from '@material-ui/icons/Menu';
 import { IconButton, Hidden } from '@material-ui/core';
 import { useDispatch } from 'react-redux';
-import { TOGGLE_DRAWER } from '../../redux/actions';
-import { EmptyState, InfoListItem } from '@pxblue/react-components';
+import { TOGGLE_DRAWER } from '../../../redux/actions';
+import { EmptyState, InfoListItem, ChannelValue } from '@pxblue/react-components';
 
-export type KeyValuePair = {
-    [key: string]: number;
+export type ListItem = {
+    firstName: string;
+    lastName: string;
+    year: number;
 }
 
 export const DataList = (): JSX.Element => {
     const dispatch = useDispatch();
-    const presidentsList: KeyValuePair = {
-        "George Washington": 1789,
-        "John Adams": 1796,
-        "Thomas Jefferson": 1800,
-        "James Madison": 1808,
-        "James Monroe": 1812,
-    };
+    const presidentsList: ListItem[] = [
+        {
+            firstName: "George",
+            lastName: "Washington",
+            year: 1789
+        },
+        {
+            firstName: "John",
+            lastName: "Adams",
+            year: 1796
+        },
+        {
+            firstName: "Thomas",
+            lastName: "Jefferson",
+            year: 1800
+        },
+        {
+            firstName: "James",
+            lastName: "Madison",
+            year: 1808
+        },
+        {
+            firstName: "James",
+            lastName: "Monroe",
+            year: 1812
+        },
+    ]
 
     const getEmptyComponent = (): any => (
         <div
@@ -66,8 +88,8 @@ export const DataList = (): JSX.Element => {
             </AppBar>
             {presidentsList.length < 1 && getEmptyComponent()}
             <List style={{ paddingTop: '0px' }} component="nav">
-                {Object.keys(presidentsList).map((president) => (
-                    <InfoListItem hidePadding key={president} title={president} rightComponent={<div>{presidentsList[president]}</div>}></InfoListItem>
+                {presidentsList.map((president) => (
+                    <InfoListItem hidePadding key={president.firstName} title={`${president.firstName} ${president.lastName}`} rightComponent={<ChannelValue value={president.year}></ChannelValue>}></InfoListItem>
                 ))}
             </List>
         </div>

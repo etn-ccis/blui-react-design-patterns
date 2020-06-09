@@ -14,7 +14,7 @@ export type ListItem = {
   id: number;
   name: string;
   details: string;
-  check?: boolean;
+  checked: boolean;
 }
 
 const useStyles = makeStyles(() =>
@@ -57,7 +57,8 @@ export const MultiselectList = (): JSX.Element => {
     return {
       id: index,
       name: `Item ${index}`,
-      details: `Status: ${randomStatus}`
+      details: `Status: ${randomStatus}`,
+      checked: false,
     };
   }
 
@@ -108,7 +109,7 @@ export const MultiselectList = (): JSX.Element => {
 
   function onCancel(): void {
     list.forEach((item: ListItem): void => {
-      item.check = false;
+      item.checked = false;
     })
     setSelectedItems([]);
   }

@@ -10,7 +10,7 @@ import { useDispatch } from 'react-redux';
 import { TOGGLE_DRAWER } from '../../../redux/actions';
 import { EmptyState, InfoListItem, ChannelValue } from '@pxblue/react-components';
 
-export type ListItem = {
+export type President = {
     firstName: string;
     lastName: string;
     year: number;
@@ -18,7 +18,7 @@ export type ListItem = {
 
 export const DataList = (): JSX.Element => {
     const dispatch = useDispatch();
-    const presidentsList: ListItem[] = [
+    const presidentsList: President[] = [
         {
             firstName: "George",
             lastName: "Washington",
@@ -46,7 +46,7 @@ export const DataList = (): JSX.Element => {
         },
     ]
 
-    const getEmptyComponent = (): any => (
+    const getEmptyComponent = (): JSX.Element => (
         <div
             style={{
                 display: 'flex',
@@ -89,7 +89,7 @@ export const DataList = (): JSX.Element => {
             {presidentsList.length < 1 && getEmptyComponent()}
             <List style={{ paddingTop: '0px' }} component="nav">
                 {presidentsList.map((president) => (
-                    <InfoListItem hidePadding key={president.firstName} title={`${president.firstName} ${president.lastName}`} rightComponent={<ChannelValue value={president.year}></ChannelValue>}></InfoListItem>
+                    <InfoListItem hidePadding key={president.lastName} title={`${president.firstName} ${president.lastName}`} rightComponent={<ChannelValue value={president.year}></ChannelValue>}></InfoListItem>
                 ))}
             </List>
         </div>

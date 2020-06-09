@@ -41,8 +41,8 @@ const useStyles = makeStyles((theme: Theme) =>
             background: '#fff',
             transition: 'all 0.2s cubic- bezier(0.4, 0.0, 0.2, 1)',
             opacity: 0,
-            padding: '4px',
-            paddingLeft: '32px',
+            padding: theme.spacing(0.5),
+            paddingLeft: theme.spacing(4),
             visibility: 'hidden',
             boxShadow: theme.shadows[10],
             [theme.breakpoints.down('sm')]: {

@@ -105,7 +105,7 @@ export const ActionList = (): JSX.Element => {
 
     return (
         <div>
-            <AppBar position="static">
+            <AppBar position="sticky">
                 <Toolbar data-cy="pxb-toolbar">
                     <Hidden mdUp={true}>
                         <IconButton
@@ -113,11 +113,7 @@ export const ActionList = (): JSX.Element => {
                             onClick={(): void => {
                                 dispatch({ type: TOGGLE_DRAWER, payload: true });
                             }}
-                            style={{
-                                display: 'flex',
-                                alignItems: 'center',
-                                marginLeft: '-12px',
-                            }}
+                            edge={'start'}
                         >
                             <MenuIcon />
                         </IconButton>

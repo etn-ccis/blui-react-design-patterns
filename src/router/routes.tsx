@@ -36,8 +36,8 @@ export const PAGES: Routes = {
             route: 'data-list',
         },
         MULTISELECT_LIST: {
-            title: 'Selection List',
-            route: 'selection-list',
+            title: 'Multiselect List',
+            route: 'multiselect-list',
         },
         SORTABLE_LIST: {
             title: 'Sortable List',

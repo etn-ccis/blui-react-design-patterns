@@ -11,6 +11,7 @@ import {
     IconButton,
     Hidden,
     Button,
+    Theme,
 } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 import CancelIcon from '@material-ui/icons/Cancel';
@@ -20,7 +21,7 @@ import ComputerIcon from '@material-ui/icons/Computer';
 import { TOGGLE_DRAWER } from '../../../redux/actions';
 import { useDispatch } from 'react-redux';
 import clsx from 'clsx';
-import { EmptyState, InfoListItem } from '@pxblue/react-components';
+import { EmptyState, InfoListItem, Spacer } from '@pxblue/react-components';
 
 export type ListItem = {
     id: number;
@@ -29,21 +30,27 @@ export type ListItem = {
     checked: boolean;
 };
 
-const useStyles = makeStyles(() =>
+const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         footer: {
             maxWidth: '500px',
+            boxSizing: 'border-box',
             position: 'fixed',
             bottom: 0,
             left: '50%',
             background: '#fff',
-            transform: 'translateX(-50%, 100%)',
             transition: 'all 0.2s cubic- bezier(0.4, 0.0, 0.2, 1)',
             opacity: 0,
             padding: '4px',
             paddingLeft: '32px',
             visibility: 'hidden',
-            boxShadow: '0px -8px 28px rgba(0, 0, 0, 0.25), 0px 10px 10px rgba(0, 0, 0, 0.22)',
+            boxShadow: theme.shadows[10],
+            [theme.breakpoints.down('sm')]: {
+              width: '100%',
+              left: 0,
+              right: 0,
+              maxWidth: 'none'
+          },
         },
         snackbar: {
             display: 'flex',
@@ -54,9 +61,14 @@ const useStyles = makeStyles(() =>
         },
         active: {
             opacity: 1,
-            transform: 'translateX(-50%, 0)',
             visibility: 'visible',
         },
+        emptyStateContainer: {
+          display: 'flex',
+          flexDirection: 'column',
+          padding: '20px',
+          height: 'calc(100vh - 128px)'
+        }
     })
 );
 
@@ -86,10 +98,10 @@ export const MultiselectList = (): JSX.Element => {
     }
 
     const [list, setList] = useState<ListItem[]>(generatedList);
-    const [selectedItems, setSelectedItems] = useState<any>([]);
+    const [selectedItems, setSelectedItems] = useState<ListItem[]>([]);
 
     function onSelect(item: ListItem): void {
-        if (selectedItems.indexOf(item) === -1) {
+        if (!selectedItems.includes(item)) {
             setSelectedItems([...selectedItems, item]);
         } else {
             const index = selectedItems.indexOf(item);
@@ -98,7 +110,7 @@ export const MultiselectList = (): JSX.Element => {
     }
 
     function isSelected(item: ListItem): boolean {
-        return selectedItems.indexOf(item) !== -1;
+        return selectedItems.includes(item);
     }
 
     function onAddItem(): void {
@@ -125,14 +137,7 @@ export const MultiselectList = (): JSX.Element => {
     }
 
     const getEmptyComponent = (): JSX.Element => (
-        <div
-            style={{
-                display: 'flex',
-                flexDirection: 'column',
-                padding: '20px',
-                height: 'calc(100vh - 128px)',
-            }}
-        >
+        <div className={classes.emptyStateContainer}>
             <EmptyState
                 icon={<ComputerIcon style={{ fontSize: '100px' }} />}
                 title={'No Items Found'}
@@ -141,7 +146,7 @@ export const MultiselectList = (): JSX.Element => {
                         variant="contained"
                         color="primary"
                         style={{ margin: '10px' }}
-                        onClick={(): void => onAddItem()}
+                        onClick={onAddItem}
                     >
                         <AddIcon style={{ marginRight: '5px' }} />
                         Add an Item
@@ -152,8 +157,8 @@ export const MultiselectList = (): JSX.Element => {
     );
 
     return (
-        <div style={{ overflow: 'hidden' }}>
-            <AppBar position="static">
+        <div>
+            <AppBar position="sticky">
                 <Toolbar>
                     <Hidden mdUp={true}>
                         <IconButton
@@ -161,27 +166,22 @@ export const MultiselectList = (): JSX.Element => {
                             onClick={(): void => {
                                 dispatch({ type: TOGGLE_DRAWER, payload: true });
                             }}
-                            style={{
-                                display: 'flex',
-                                alignItems: 'center',
-                                marginLeft: '-12px',
-                            }}
+                            edge={'start'}
                         >
                             <MenuIcon />
                         </IconButton>
                     </Hidden>
                     <Typography variant="h6" data-cy="pxb-toolbar" color="inherit">
-                        Multiselect list
+                        Multiselect List
                     </Typography>
-                    <div style={{ flex: '1 1 0px' }} />
+                    <Spacer />
                     <IconButton
+                        edge={'end'}
                         id="add-item-button"
                         data-cy="toolbar-add"
                         color="inherit"
                         aria-label="add"
-                        onClick={(): void => {
-                            onAddItem();
-                        }}
+                        onClick={onAddItem}
                     >
                         <AddIcon />
                     </IconButton>
@@ -210,11 +210,7 @@ export const MultiselectList = (): JSX.Element => {
             </List>
             <footer
                 data-cy="snackbar"
-                className={
-                    selectedItems.length > 0
-                        ? clsx(classes.snackbar, classes.active, classes.footer)
-                        : clsx(classes.snackbar, classes.footer)
-                }
+                className={clsx(classes.snackbar, selectedItems.length > 0 && classes.active, classes.footer)}
             >
                 <Typography>{selectedItems.length} selected items</Typography>
                 <div>

@@ -64,7 +64,7 @@ export const DataList = (): JSX.Element => {
 
     return (
         <div>
-            <AppBar position="static">
+            <AppBar position="sticky">
                 <Toolbar>
                     <Hidden mdUp={true}>
                         <IconButton
@@ -72,11 +72,7 @@ export const DataList = (): JSX.Element => {
                             onClick={(): void => {
                                 dispatch({ type: TOGGLE_DRAWER, payload: true });
                             }}
-                            style={{
-                                display: 'flex',
-                                alignItems: 'center',
-                                marginLeft: '-12px',
-                            }}
+                            edge={'start'}
                         >
                             <MenuIcon />
                         </IconButton>

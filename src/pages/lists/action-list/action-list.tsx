@@ -9,12 +9,13 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import AddIcon from '@material-ui/icons/Add';
 import DeleteIcon from '@material-ui/icons/Delete';
+import ComputerIcon from '@material-ui/icons/Computer';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import { EmptyState } from '@pxblue/react-components';
 import { useDispatch } from 'react-redux';
-import { TOGGLE_DRAWER } from '../redux/actions';
+import { TOGGLE_DRAWER } from '../../../redux/actions';
 import { Menu as MenuIcon } from '@material-ui/icons';
 import { Hidden } from '@material-ui/core';
 
@@ -85,7 +86,7 @@ export const ActionList = (): JSX.Element => {
             }}
         >
             <EmptyState
-                icon={<div>what</div>}
+                icon={<ComputerIcon style={{ fontSize: '100px' }}/>}
                 title={'No Items Found'}
                 actions={
                     <Button
@@ -115,7 +116,7 @@ export const ActionList = (): JSX.Element => {
                             style={{
                                 display: 'flex',
                                 alignItems: 'center',
-                                marginLeft: '-12px'
+                                marginLeft: '-12px',
                             }}
                         >
                             <MenuIcon />

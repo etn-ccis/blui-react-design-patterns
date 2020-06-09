@@ -8,6 +8,7 @@ import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import { InfoListItem } from '@pxblue/react-components';
 import { Reducer } from '../../../redux/reducers';
+import { Checkbox } from '@material-ui/core';
 
 Enzyme.configure({ adapter: new Adapter() });
 const store = createStore(Reducer());
@@ -51,50 +52,49 @@ it('should add an item', () => {
     expect(multiselectList.find('.list').children(InfoListItem)).toHaveLength(11);
 });
 
-// @TODO: fix the following tests after doing a deeper dive into testing functional components
+it('should remove item', () => {
+  const multiselectList = mount(
+    <Provider store={store}>
+      <MultiselectList />
+    </Provider>
+  );
 
-// it('should remove item', () => {
-//   const multiselectList = mount(
-//     <Provider store={store}>
-//       <MultiselectList />
-//     </Provider>
-//   );
+  let boxes = multiselectList.find(Checkbox);
+  const firstBox = boxes.at(0);
+  const cb = firstBox.find('input');
+  cb.simulate('change', {target: {checked: true}});
+  boxes = multiselectList.find(Checkbox);
 
-//   // @TODO click checkbox or setstate of selected items directly
-//   multiselectList.find('.checkbox').hostNodes().at(0).simulate('click');
+  expect(multiselectList.find('#remove-items-button').hostNodes()).toHaveLength(1);
+  multiselectList
+    .find('#remove-items-button')
+    .hostNodes()
+    .at(0)
+    .simulate('click');
+  expect(multiselectList.find('.list').children(InfoListItem)).toHaveLength(9);
+});
 
-//   act(() => {
-//     multiselectList.find('.checkbox').hostNodes().at(0).simulate('click');
-//     multiselectList.find('.checkbox').at(0).props().checked=true;
-//     multiselectList.find('.checkbox').hostNodes().at(0).simulate('change',{ currentTarget: { checked: true } });
-//     multiselectList.find(Checkbox).at(0).prop('onChange')({}, true);
-//   });
+it('should cancel selected items', () => {
+  const multiselectList = mount(
+    <Provider store={store}>
+      <MultiselectList />
+    </Provider>
+  );
 
-//   expect(multiselectList.find('#remove-items-button').hostNodes()).toHaveLength(1);
-//   multiselectList
-//     .find('#remove-items-button')
-//     .hostNodes()
-//     .at(0)
-//     .simulate('click');
-//   expect(multiselectList.find('.list').children(InfoListItem)).toHaveLength(9);
-// });
+  let boxes = multiselectList.find(Checkbox);
+  const firstBox = boxes.at(0);
+  const cb = firstBox.find('input');
+  cb.simulate('change', {target: {checked: true}});
+  boxes = multiselectList.find(Checkbox);
 
-// it('should cancel selected items', () => {
-//   const multiselectList = mount(
-//     <Provider store={store}>
-//       <MultiselectList />
-//     </Provider>
-//   );
+  expect(multiselectList.find('#cancel-button').hostNodes()).toHaveLength(1);
+  multiselectList
+    .find('#cancel-button')
+    .hostNodes()
+    .at(0)
+    .simulate('click');
+  expect(multiselectList.find('.list').children(InfoListItem)).toHaveLength(10);
 
-//   // @TODO click checkbox or set state of selected items directly
-
-//   expect(multiselectList.find('#cancel-button').hostNodes()).toHaveLength(1);
-//   multiselectList
-//     .find('#cancel-button')
-//     .hostNodes()
-//     .at(0)
-//     .simulate('click');
-//   expect(multiselectList.find('.list').children(ListItem)).toHaveLength(10);
-
-//   //  @TODO check that there are no selected items
-// });
+  boxes = multiselectList.find(Checkbox);
+  expect(boxes.at(0).props().checked).toBeFalsy();
+});

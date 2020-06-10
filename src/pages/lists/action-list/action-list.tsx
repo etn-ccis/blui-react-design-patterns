@@ -13,7 +13,7 @@ import ComputerIcon from '@material-ui/icons/Computer';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
-import { EmptyState } from '@pxblue/react-components';
+import { EmptyState, Spacer } from '@pxblue/react-components';
 import { useDispatch } from 'react-redux';
 import { TOGGLE_DRAWER } from '../../../redux/actions';
 import { Menu as MenuIcon } from '@material-ui/icons';
@@ -105,7 +105,7 @@ export const ActionList = (): JSX.Element => {
 
     return (
         <div>
-            <AppBar position="static">
+            <AppBar position="sticky">
                 <Toolbar data-cy="pxb-toolbar">
                     <Hidden mdUp={true}>
                         <IconButton
@@ -113,11 +113,7 @@ export const ActionList = (): JSX.Element => {
                             onClick={(): void => {
                                 dispatch({ type: TOGGLE_DRAWER, payload: true });
                             }}
-                            style={{
-                                display: 'flex',
-                                alignItems: 'center',
-                                marginLeft: '-12px',
-                            }}
+                            edge={'start'}
                         >
                             <MenuIcon />
                         </IconButton>
@@ -125,7 +121,7 @@ export const ActionList = (): JSX.Element => {
                     <Typography variant="h6" color="inherit">
                         Action List
                     </Typography>
-                    <div style={{ flex: '1 1 0px' }} />
+                    <Spacer />
                     <IconButton
                         id="remove-all-button"
                         data-cy="toolbar-delete"

@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { AppBar, Toolbar, Typography, List, ListItem, Hidden, IconButton } from '@material-ui/core';
 import HomeIcon from '@material-ui/icons/Home';
 import MenuIcon from '@material-ui/icons/Menu';
 import { useDispatch } from 'react-redux';
 import { TOGGLE_DRAWER } from '../../../redux/actions';
 import { InfoListItem } from '@pxblue/react-components';
+import * as colors from '@pxblue/colors';
 
 export type ListItem = {
     id: number;
@@ -29,13 +30,11 @@ export const StatusList = (): JSX.Element => {
         return createItem(int, randomStatus);
     };
 
-    const generatedList = [];
+    const list: ListItem[] = [];
 
     for (let i = 0; i < 10; i++) {
-        generatedList.push(createRandomItem());
+        list.push(createRandomItem());
     }
-
-    const [list] = useState<ListItem[]>(generatedList);
 
     return (
         <div>
@@ -62,14 +61,12 @@ export const StatusList = (): JSX.Element => {
                 {list.map((item, i) => (
                     <InfoListItem
                         key={`item_${i}`}
-                        icon={<HomeIcon />}
-                        iconColor="#424e54"
+                        icon={<HomeIcon/>}
+                        iconColor={colors.black[500]}
                         title={item.name}
                         subtitle={item.details}
-                        statusColor={item.status === 'alarm' ? 'red' : 'transparent'}
-                    >
-                        {' '}
-                    </InfoListItem>
+                        statusColor={item.status === 'alarm' ? colors.red[500] : 'transparent'}
+                    />
                 ))}
             </List>
         </div>

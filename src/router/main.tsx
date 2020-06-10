@@ -6,6 +6,7 @@ import { PAGES } from './routes';
 import { ActionList } from '../pages/lists/action-list/action-list';
 import { DataList } from '../pages/lists/data-list/data-list';
 import { MultiselectList } from '../pages/lists/multiselect-list/multiselect-list';
+import { StatusList } from '../pages/lists/status-list/status-list';
 /*
 The main page body, which contains the route definitions
 */
@@ -14,5 +15,6 @@ export const Main = (): JSX.Element => (
         <Route exact path={`/${PAGES.LISTS.ACTION_LIST.route}`} component={ActionList} />
         <Route exact path={`/${PAGES.LISTS.DATA_LIST.route}`} component={DataList} />
         <Route exact path={`/${PAGES.LISTS.MULTISELECT_LIST.route}`} component={MultiselectList} />
+        <Route exact path={`/${PAGES.LISTS.STATUS_LIST.route}`} component={StatusList} />
     </Switch>
 );

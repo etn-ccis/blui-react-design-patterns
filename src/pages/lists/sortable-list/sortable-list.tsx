@@ -6,25 +6,7 @@ import { InfoListItem, ChannelValue } from '@pxblue/react-components';
 import { TOGGLE_DRAWER } from '../../../redux/actions';
 import { useDispatch } from 'react-redux';
 import MenuIcon from '@material-ui/icons/Menu';
-
-export type President = {
-  firstName: string;
-  lastName: string;
-  year: number;
-}
-
-export type SortableListItemProps = {
-  president: President;
-};
-
-export type SortableListEditProps = {
-  presidents: President[];
-};
-
-export type OnSortEndProps = {
-  oldIndex: number;
-  newIndex: number;
-}
+import { President, SortableListItemProps, SortableListEditProps, OnSortEndProps } from '../../overlays/bottom-sheet/models';
 
 const presidentsList: President[] = [
   {
@@ -117,7 +99,7 @@ export const SortableList = (): JSX.Element => {
         />
       }
       {!sortable &&
-        <List className="list" style={{ paddingTop: '0px' }} component="nav">
+        <List className="list" disablePadding component="nav">
           {
             list.map((president: President, i: number) => (
               <InfoListItem

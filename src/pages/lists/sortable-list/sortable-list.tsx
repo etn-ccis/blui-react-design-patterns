@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { arrayMove, SortableHandle, SortableElement, SortableContainer } from 'react-sortable-hoc';
 import { DragIndicator } from '@material-ui/icons';
 import { List, AppBar, Toolbar, Typography, Button, Hidden, IconButton } from '@material-ui/core';
@@ -6,7 +6,7 @@ import { InfoListItem, ChannelValue } from '@pxblue/react-components';
 import { TOGGLE_DRAWER } from '../../../redux/actions';
 import { useDispatch } from 'react-redux';
 import MenuIcon from '@material-ui/icons/Menu';
-import { President, SortableListItemProps, SortableListEditProps, OnSortEndProps } from '../../overlays/bottom-sheet/models';
+import { President, SortableListItemProps, SortableListEditProps, OnSortEndProps } from './types';
 
 const presidentsList: President[] = [
   {
@@ -62,9 +62,9 @@ export const SortableList = (): JSX.Element => {
   const [list, setList] = useState<any[]>(presidentsList);
   const [sortable, setSortable] = useState<boolean>(false);
 
-  const onSortEnd = ({ oldIndex, newIndex }: OnSortEndProps): void => {
+  const onSortEnd = useCallback(({ oldIndex, newIndex }: OnSortEndProps): void => {
     setList(arrayMove(list, oldIndex, newIndex));
-  }
+  }, [setList]);
 
   return (
     <div>

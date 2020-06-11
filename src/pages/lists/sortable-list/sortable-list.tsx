@@ -2,7 +2,7 @@ import React, { useState, useCallback } from 'react';
 import { arrayMove, SortableHandle, SortableElement, SortableContainer } from 'react-sortable-hoc';
 import { DragIndicator } from '@material-ui/icons';
 import { List, AppBar, Toolbar, Typography, Button, Hidden, IconButton } from '@material-ui/core';
-import { InfoListItem, ChannelValue } from '@pxblue/react-components';
+import { InfoListItem, ChannelValue, Spacer } from '@pxblue/react-components';
 import { TOGGLE_DRAWER } from '../../../redux/actions';
 import { useDispatch } from 'react-redux';
 import MenuIcon from '@material-ui/icons/Menu';
@@ -84,11 +84,10 @@ export const SortableList = (): JSX.Element => {
           <Typography variant="h6" color="inherit">
             Sortable List
             </Typography>
-          <div style={{ flex: '1 1 0px', textAlign: 'right', marginRight: '-14px' }}>
+            <Spacer />
             <Button style={{ color: 'white' }} onClick={(): void => setSortable(!sortable)}>
               {sortable ? 'Save' : 'Edit'}
             </Button>
-          </div>
         </Toolbar>
       </AppBar>
       {sortable &&

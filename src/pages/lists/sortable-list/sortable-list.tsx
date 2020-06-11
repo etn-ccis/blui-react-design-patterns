@@ -64,7 +64,7 @@ export const SortableList = (): JSX.Element => {
 
   const onSortEnd = useCallback(({ oldIndex, newIndex }: OnSortEndProps): void => {
     setList(arrayMove(list, oldIndex, newIndex));
-  }, [setList]);
+  }, [list, setList]);
 
   return (
     <div>

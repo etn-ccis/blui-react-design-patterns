@@ -49,7 +49,7 @@ const SortableListItem = SortableElement(({ president }: SortableListItemProps) 
 ));
 
 export const SortableListEdit = SortableContainer(({ presidents }: SortableListEditProps) => (
-  <List style={{ paddingTop: '0px' }} component="nav">
+  <List disablePadding component="nav">
     {
       presidents.map((president: President, i: number) => (<SortableListItem key={`item-${i}`} index={i} president={president} />))
     }

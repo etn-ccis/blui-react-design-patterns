@@ -61,7 +61,7 @@ export const StatusList = (): JSX.Element => {
                 {list.map((item, i) => (
                     <InfoListItem
                         key={`item_${i}`}
-                        icon={<HomeIcon/>}
+                        icon={<HomeIcon />}
                         iconColor={colors.black[500]}
                         title={item.name}
                         subtitle={item.details}

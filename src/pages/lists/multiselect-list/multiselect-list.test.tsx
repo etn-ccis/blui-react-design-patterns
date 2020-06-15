@@ -53,48 +53,48 @@ it('should add an item', () => {
 });
 
 it('should remove item', () => {
-  const multiselectList = mount(
-    <Provider store={store}>
-      <MultiselectList />
-    </Provider>
-  );
+    const multiselectList = mount(
+        <Provider store={store}>
+            <MultiselectList />
+        </Provider>
+    );
 
-  let boxes = multiselectList.find(Checkbox);
-  const firstBox = boxes.at(0);
-  const cb = firstBox.find('input');
-  cb.simulate('change', {target: {checked: true}});
-  boxes = multiselectList.find(Checkbox);
+    let boxes = multiselectList.find(Checkbox);
+    const firstBox = boxes.at(0);
+    const cb = firstBox.find('input');
+    cb.simulate('change', { target: { checked: true } });
+    boxes = multiselectList.find(Checkbox);
 
-  expect(multiselectList.find('#remove-items-button').hostNodes()).toHaveLength(1);
-  multiselectList
-    .find('#remove-items-button')
-    .hostNodes()
-    .at(0)
-    .simulate('click');
-  expect(multiselectList.find('.list').children(InfoListItem)).toHaveLength(9);
+    expect(multiselectList.find('#remove-items-button').hostNodes()).toHaveLength(1);
+    multiselectList
+        .find('#remove-items-button')
+        .hostNodes()
+        .at(0)
+        .simulate('click');
+    expect(multiselectList.find('.list').children(InfoListItem)).toHaveLength(9);
 });
 
 it('should cancel selected items', () => {
-  const multiselectList = mount(
-    <Provider store={store}>
-      <MultiselectList />
-    </Provider>
-  );
+    const multiselectList = mount(
+        <Provider store={store}>
+            <MultiselectList />
+        </Provider>
+    );
 
-  let boxes = multiselectList.find(Checkbox);
-  const firstBox = boxes.at(0);
-  const cb = firstBox.find('input');
-  cb.simulate('change', {target: {checked: true}});
-  boxes = multiselectList.find(Checkbox);
+    let boxes = multiselectList.find(Checkbox);
+    const firstBox = boxes.at(0);
+    const cb = firstBox.find('input');
+    cb.simulate('change', { target: { checked: true } });
+    boxes = multiselectList.find(Checkbox);
 
-  expect(multiselectList.find('#cancel-button').hostNodes()).toHaveLength(1);
-  multiselectList
-    .find('#cancel-button')
-    .hostNodes()
-    .at(0)
-    .simulate('click');
-  expect(multiselectList.find('.list').children(InfoListItem)).toHaveLength(10);
+    expect(multiselectList.find('#cancel-button').hostNodes()).toHaveLength(1);
+    multiselectList
+        .find('#cancel-button')
+        .hostNodes()
+        .at(0)
+        .simulate('click');
+    expect(multiselectList.find('.list').children(InfoListItem)).toHaveLength(10);
 
-  boxes = multiselectList.find(Checkbox);
-  expect(boxes.at(0).props().checked).toBeFalsy();
+    boxes = multiselectList.find(Checkbox);
+    expect(boxes.at(0).props().checked).toBeFalsy();
 });

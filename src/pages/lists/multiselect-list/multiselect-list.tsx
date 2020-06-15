@@ -46,11 +46,11 @@ const useStyles = makeStyles((theme: Theme) =>
             visibility: 'hidden',
             boxShadow: theme.shadows[10],
             [theme.breakpoints.down('sm')]: {
-              width: '100%',
-              left: 0,
-              right: 0,
-              maxWidth: 'none'
-          },
+                width: '100%',
+                left: 0,
+                right: 0,
+                maxWidth: 'none',
+            },
         },
         snackbar: {
             display: 'flex',
@@ -64,11 +64,11 @@ const useStyles = makeStyles((theme: Theme) =>
             visibility: 'visible',
         },
         emptyStateContainer: {
-          display: 'flex',
-          flexDirection: 'column',
-          padding: '20px',
-          height: 'calc(100vh - 128px)'
-        }
+            display: 'flex',
+            flexDirection: 'column',
+            padding: '20px',
+            height: 'calc(100vh - 128px)',
+        },
     })
 );
 
@@ -142,12 +142,7 @@ export const MultiselectList = (): JSX.Element => {
                 icon={<ComputerIcon style={{ fontSize: '100px' }} />}
                 title={'No Items Found'}
                 actions={
-                    <Button
-                        variant="contained"
-                        color="primary"
-                        style={{ margin: '10px' }}
-                        onClick={onAddItem}
-                    >
+                    <Button variant="contained" color="primary" style={{ margin: '10px' }} onClick={onAddItem}>
                         <AddIcon style={{ marginRight: '5px' }} />
                         Add an Item
                     </Button>

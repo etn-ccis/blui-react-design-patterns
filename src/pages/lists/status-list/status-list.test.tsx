@@ -23,15 +23,15 @@ it('renders without crashing', () => {
 });
 
 it('should render 10 list items by default', () => {
-  const multiselectList = mount(
-      <Provider store={store}>
-          <StatusList />
-      </Provider>
-  );
-  expect(
-      multiselectList
-          .find('.list')
-          .hostNodes()
-          .children(InfoListItem)
-  ).toHaveLength(10);
+    const multiselectList = mount(
+        <Provider store={store}>
+            <StatusList />
+        </Provider>
+    );
+    expect(
+        multiselectList
+            .find('.list')
+            .hostNodes()
+            .children(InfoListItem)
+    ).toHaveLength(10);
 });

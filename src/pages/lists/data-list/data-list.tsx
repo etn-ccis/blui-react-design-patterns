@@ -14,37 +14,37 @@ export type President = {
     firstName: string;
     lastName: string;
     year: number;
-}
+};
 
 export const DataList = (): JSX.Element => {
     const dispatch = useDispatch();
     const presidentsList: President[] = [
         {
-            firstName: "George",
-            lastName: "Washington",
-            year: 1789
+            firstName: 'George',
+            lastName: 'Washington',
+            year: 1789,
         },
         {
-            firstName: "John",
-            lastName: "Adams",
-            year: 1796
+            firstName: 'John',
+            lastName: 'Adams',
+            year: 1796,
         },
         {
-            firstName: "Thomas",
-            lastName: "Jefferson",
-            year: 1800
+            firstName: 'Thomas',
+            lastName: 'Jefferson',
+            year: 1800,
         },
         {
-            firstName: "James",
-            lastName: "Madison",
-            year: 1808
+            firstName: 'James',
+            lastName: 'Madison',
+            year: 1808,
         },
         {
-            firstName: "James",
-            lastName: "Monroe",
-            year: 1812
+            firstName: 'James',
+            lastName: 'Monroe',
+            year: 1812,
         },
-    ]
+    ];
 
     const getEmptyComponent = (): JSX.Element => (
         <div
@@ -55,10 +55,7 @@ export const DataList = (): JSX.Element => {
                 height: 'calc(100vh - 128px)',
             }}
         >
-            <EmptyState
-                icon={<ComputerIcon style={{ fontSize: '100px' }} />}
-                title={'No Items Found'}
-            />
+            <EmptyState icon={<ComputerIcon style={{ fontSize: '100px' }} />} title={'No Items Found'} />
         </div>
     );
 
@@ -85,7 +82,12 @@ export const DataList = (): JSX.Element => {
             {presidentsList.length < 1 && getEmptyComponent()}
             <List style={{ paddingTop: '0px' }} component="nav">
                 {presidentsList.map((president) => (
-                    <InfoListItem hidePadding key={president.lastName} title={`${president.firstName} ${president.lastName}`} rightComponent={<ChannelValue value={president.year}></ChannelValue>}></InfoListItem>
+                    <InfoListItem
+                        hidePadding
+                        key={president.lastName}
+                        title={`${president.firstName} ${president.lastName}`}
+                        rightComponent={<ChannelValue value={president.year}></ChannelValue>}
+                    ></InfoListItem>
                 ))}
             </List>
         </div>

@@ -16,6 +16,7 @@ import {
     Typography,
     Hidden,
     Tooltip,
+    Snackbar,
 } from '@material-ui/core';
 import { makeStyles, useTheme, Theme } from '@material-ui/core/styles';
 import { useDispatch } from 'react-redux';
@@ -26,7 +27,7 @@ import clsx from 'clsx';
 import BoltIcon from '@material-ui/icons/OfflineBolt';
 import MenuIcon from '@material-ui/icons/Menu';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
-import CartIcon from '@material-ui/icons/ShoppingCart';
+import CartIcon from '@material-ui/icons/AddShoppingCart';
 import CancelIcon from '@material-ui/icons/Cancel';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import HomeIcon from '@material-ui/icons/Home';
@@ -38,6 +39,7 @@ import MenuOpenIcon from '@material-ui/icons/MenuOpen';
 
 import { english } from './translations/english';
 import './translations/i18n';
+import './index.css';
 require('typeface-noto-sans');
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -52,26 +54,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         padding: '16px',
     },
     snackbar: {
-        boxSizing: 'border-box',
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        maxWidth: 500,
-        width: '100%',
-        position: 'fixed',
-        bottom: 0,
         left: 'calc((100vw - 270px)/2 + 270px);',
-        background: theme.palette.background.paper,
-        transform: 'translate(-50%, 100%)',
-        transition: 'all 0.2s cubic-bezier(0.4, 0, 0.2, 1)',
-        opacity: 0,
-        padding: 4,
-        paddingLeft: 32,
-        boxShadow: theme.shadows[12],
-        '&.active': {
-            opacity: 1,
-            transform: 'translate(-50%, 0)',
-        },
         [theme.breakpoints.down('sm')]: {
             left: '50%',
         },
@@ -99,10 +82,15 @@ const useStyles = makeStyles((theme: Theme) => ({
         justifyContent: 'flex-end',
     },
     RTL: { transform: 'scaleX(-1)' },
+    RTLButtonStartIcon: {
+        marginRight: theme.spacing(-0.5),
+        marginLeft: theme.spacing(),
+    },
 }));
 
 export const I18N = (): JSX.Element => {
-    const classes = useStyles(useTheme());
+    const theme = useTheme();
+    const classes = useStyles(theme);
     const { t, i18n } = useTranslation();
     const fruits = english.translations.FRUITS;
     const menuItems = english.translations.MENU_ITEMS;
@@ -149,7 +137,7 @@ export const I18N = (): JSX.Element => {
                 <div className={classes.flexVert} style={{ height: '100%', width: '100%' }}>
                     <div dir={getDirection()} className={clsx(classes.flexVertBottom, classes.header)}>
                         <BoltIcon style={{ fontSize: '64px', transform: 'rotate(42deg)' }} />
-                        <div style={{ padding: '4px' }}>
+                        <div style={{ padding: theme.spacing(0.5) }}>
                             <Typography variant="h5" color="inherit">
                                 PX {t('BLUE')}
                             </Typography>
@@ -158,7 +146,7 @@ export const I18N = (): JSX.Element => {
                             </Typography>
                         </div>
                     </div>
-                    <div style={{ flex: '1 1 0px', overflowY: 'auto' }}>
+                    <div>
                         <List dir={getDirection()} disablePadding>
                             {Object.keys(menuItems).map((menuItem, index) => (
                                 <ListItem
@@ -218,7 +206,7 @@ export const I18N = (): JSX.Element => {
                 <Select
                     value={lang}
                     onChange={(event): void => changeLanguage(String(event.target.value))}
-                    style={{ padding: 4, width: 180, marginLeft: 4 }}
+                    style={{ padding: theme.spacing(0.5), minWidth: theme.spacing(20), marginLeft: theme.spacing(0.5) }}
                 >
                     <MenuItem value={'en'}>{t('LANGUAGES.ENGLISH')}</MenuItem>
                     <MenuItem value={'es'}>{t('LANGUAGES.SPANISH')}</MenuItem>
@@ -228,8 +216,13 @@ export const I18N = (): JSX.Element => {
                     <MenuItem value={'pt'}>{t('LANGUAGES.PORTUGUESE')}</MenuItem>
                     <MenuItem value={'zh'}>{t('LANGUAGES.CHINESE')}</MenuItem>
                 </Select>
-                <Button variant="contained" color="primary" style={{ margin: '10px', textTransform: 'none' }}>
-                    <CartIcon className={clsx(classes.icon, isRTL() && classes.RTL)} />
+                <Button
+                    variant="contained"
+                    color="primary"
+                    style={{ margin: theme.spacing(2) }}
+                    classes={isRTL() ? { startIcon: classes.RTLButtonStartIcon } : undefined}
+                    startIcon={<CartIcon className={clsx(classes.icon, isRTL() && classes.RTL)} />}
+                >
                     <Typography noWrap color="inherit">
                         {t('ADD_TO_CART')}
                     </Typography>
@@ -251,26 +244,29 @@ export const I18N = (): JSX.Element => {
                 ))}
             </List>
 
-            <footer
-                className={clsx(selectedItems.size > 0 && 'active', classes.snackbar)}
-                style={isRTL() ? { paddingRight: '32px', paddingLeft: '4px' } : undefined}
-            >
-                <Typography>{`${selectedItems.size} ${t('ITEMS')}`}</Typography>
-                <div>
-                    <Tooltip title={t('DELETE_ALL') || ''}>
-                        <IconButton
-                            onClick={(): void => {
-                                setSelectedItems(new Set());
-                            }}
-                        >
-                            <CancelIcon />
+            <Snackbar
+                open={selectedItems.size > 0}
+                action={
+                    <>
+                        <Tooltip title={t('DELETE_ALL') || ''}>
+                            <IconButton
+                                onClick={(): void => {
+                                    setSelectedItems(new Set());
+                                }}
+                                color={'inherit'}
+                            >
+                                <CancelIcon />
+                            </IconButton>
+                        </Tooltip>
+                        <IconButton color={'inherit'}>
+                            <MoreVertIcon />
                         </IconButton>
-                    </Tooltip>
-                    <IconButton>
-                        <MoreVertIcon />
-                    </IconButton>
-                </div>
-            </footer>
+                    </>
+                }
+                className={isRTL() ? 'RTL' : ''}
+                classes={{ root: classes.snackbar }}
+                message={`${selectedItems.size} ${t('ITEMS')}`}
+            />
         </div>
     );
 };

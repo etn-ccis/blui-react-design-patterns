@@ -1,0 +1,10 @@
+/* MUI's Snackbar does not offer classes override for the action 
+ * items directly through their API. Using a CSS style here until 
+ * they provide better internationalization support.
+ */
+.RTL .MuiSnackbarContent-action {
+    margin-right: auto;
+    margin-left: -8px;
+    padding-right: 16px;
+    padding-left: 0;
+}

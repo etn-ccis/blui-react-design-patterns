@@ -19,23 +19,23 @@ import MoreVert from '@material-ui/icons/MoreVert';
 import Notifications from '@material-ui/icons/Notifications';
 import NotificationsActive from '@material-ui/icons/NotificationsActive';
 
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, Theme } from '@material-ui/core/styles';
 import * as PXBColors from '@pxblue/colors';
 
 import alarms, { formatDate } from '../assets/alarmData';
 
-const styles: any = makeStyles((theme: any): any => ({
+const useStyles = makeStyles((theme: Theme) => ({
     list: {
         paddingTop: 0,
-        marginTop: theme.spacing.unit * 8,
+        marginTop: theme.spacing(8),
         [theme.breakpoints.down('xs')]: {
-            marginTop: theme.spacing.unit * 7,
+            marginTop: theme.spacing(7),
         },
     },
     alarmRow: {
-        borderLeft: `${theme.spacing.unit * 0.5}px solid transparent`,
+        borderLeft: `${theme.spacing(0.5)}px solid transparent`,
         '&$active': {
-            borderColor: '#ff3333', //PXBColors.red['500']
+            borderColor: PXBColors.red['500'],
         },
     },
     avatar: {
@@ -43,13 +43,13 @@ const styles: any = makeStyles((theme: any): any => ({
         background: 'transparent',
         '&$active': {
             color: 'white',
-            background: '#ff3333', //PXBColors.red['500']
+            background: PXBColors.red['500'],
         },
     },
     alarmText: {
-        fontWeight: '600',
+        fontWeight: 600,
         '&$active': {
-            color: '#ff3333', //PXBColors.red['500']
+            color: PXBColors.red['500'],
         },
     },
     active: {},
@@ -68,10 +68,10 @@ const styles: any = makeStyles((theme: any): any => ({
     },
 }));
 
-export const AlarmList = (props: any): JSX.Element => {
+export const AlarmList = (): JSX.Element => {
     const [showMenu, setShowMenu] = useState(false);
 
-    const classes = styles(props);
+    const classes = useStyles();
 
     return (
         <React.Fragment>
@@ -110,7 +110,6 @@ export const AlarmList = (props: any): JSX.Element => {
                 transitionDuration={250}
                 open={showMenu}
                 onClose={(): void => setShowMenu(false)}
-                className={classes.drawer}
                 classes={{ paper: classes.paper }}
             >
                 <List style={{ padding: 0 }}>

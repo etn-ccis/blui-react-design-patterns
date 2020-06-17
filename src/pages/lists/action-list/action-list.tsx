@@ -25,7 +25,6 @@ type Item = {
 };
 
 const options: Option[] = ['Delete', 'View Details'];
-const ITEM_HEIGHT = 48;
 
 export const ActionList = (): JSX.Element => {
     const dispatch = useDispatch();
@@ -179,7 +178,6 @@ export const ActionList = (): JSX.Element => {
                 onClose={onMenuClose}
                 PaperProps={{
                     style: {
-                        maxHeight: ITEM_HEIGHT * 4.5,
                         width: 200,
                     },
                 }}

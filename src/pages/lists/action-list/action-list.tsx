@@ -153,11 +153,14 @@ export const ActionList = (): JSX.Element => {
                 {list.map(
                     (item: any, i: number): JSX.Element => (
                         <InfoListItem
+                            key={i}
                             hidePadding
                             ripple
                             title={item.name}
                             subtitle={item.details}
-                            onClick={(): void => {}}
+                            onClick={(): void => {
+                                /* handle item onClick */
+                            }}
                             rightComponent={
                                 <IconButton
                                     data-cy="action-menu"

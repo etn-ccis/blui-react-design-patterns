@@ -34,5 +34,7 @@ export const english: SampleTranslation = {
             SETTINGS: 'Settings',
             HELP: 'Help',
         },
+        VIEW_I18N_SIDE_NAV: 'View I18N Side Nav',
+        DELETE_ALL: 'Delete all',
     },
 };

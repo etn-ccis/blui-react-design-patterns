@@ -34,5 +34,7 @@ export const portuguese: SampleTranslation = {
             SETTINGS: 'Definições',
             HELP: 'Socorro',
         },
+        VIEW_I18N_SIDE_NAV: 'Visualizar Navegação Lateral I18N',
+        DELETE_ALL: 'Excluir tudo',
     },
 };

@@ -34,5 +34,7 @@ export const chinese: SampleTranslation = {
             SETTINGS: '设定',
             HELP: '帮助',
         },
+        VIEW_I18N_SIDE_NAV: '查看I18N的侧导航栏',
+        DELETE_ALL: '全部删除',
     },
 };

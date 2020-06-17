@@ -18,10 +18,9 @@ import {
     Tooltip,
 } from '@material-ui/core';
 import { makeStyles, useTheme, Theme } from '@material-ui/core/styles';
-import { InfoListItem } from '@pxblue/react-components';
 import { useDispatch } from 'react-redux';
 import { TOGGLE_DRAWER } from '../../redux/actions';
-import { Spacer } from '@pxblue/react-components';
+import { InfoListItem, Spacer } from '@pxblue/react-components';
 import clsx from 'clsx';
 
 import BoltIcon from '@material-ui/icons/OfflineBolt';
@@ -129,11 +128,16 @@ export const I18N = (): JSX.Element => {
 
     const selectFruit = (fruit: string): void => {
         const selected = new Set(selectedItems);
-        selected.has(fruit) ? selected.delete(fruit) : selected.add(fruit);
+        if (selected.has(fruit)) {
+            selected.delete(fruit);
+        } else {
+            selected.add(fruit);
+        }
         setSelectedItems(selected);
     };
 
     const getDrawer = (): ReactNode => {
+        // eslint-disable-next-line react/jsx-key
         const iconArray = [<HomeIcon />, <FolderIcon />, <ErrorIcon />, <SettingsIcon />, <HelpIcon />];
         return (
             <Drawer
@@ -197,7 +201,7 @@ export const I18N = (): JSX.Element => {
                         {t('I18N')}
                     </Typography>
                     <Spacer />
-                    <Tooltip title={'View I18N Side Nav'}>
+                    <Tooltip title={t('VIEW_I18N_SIDE_NAV') || ''}>
                         <IconButton
                             color="inherit"
                             onClick={(): void => setDrawerOpen(!drawerOpen)}
@@ -253,13 +257,15 @@ export const I18N = (): JSX.Element => {
             >
                 <Typography>{`${selectedItems.size} ${t('ITEMS')}`}</Typography>
                 <div>
-                    <IconButton
-                        onClick={(): void => {
-                            setSelectedItems(new Set());
-                        }}
-                    >
-                        <CancelIcon />
-                    </IconButton>
+                    <Tooltip title={t('DELETE_ALL') || ''}>
+                        <IconButton
+                            onClick={(): void => {
+                                setSelectedItems(new Set());
+                            }}
+                        >
+                            <CancelIcon />
+                        </IconButton>
+                    </Tooltip>
                     <IconButton>
                         <MoreVertIcon />
                     </IconButton>

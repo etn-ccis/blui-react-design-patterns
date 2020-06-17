@@ -34,5 +34,7 @@ export const spanish: SampleTranslation = {
             SETTINGS: 'Ajustes',
             HELP: 'Ayuda',
         },
+        VIEW_I18N_SIDE_NAV: 'Ver navegación lateral I18N',
+        DELETE_ALL: 'Eliminar todos',
     },
 };

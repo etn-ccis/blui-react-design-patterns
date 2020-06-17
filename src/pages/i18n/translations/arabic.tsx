@@ -34,5 +34,7 @@ export const arabic: SampleTranslation = {
             SETTINGS: 'إعدادات',
             HELP: 'مساعدة',
         },
+        VIEW_I18N_SIDE_NAV: 'عرض التنقل جانب التدويل',
+        DELETE_ALL: 'حذف الكل',
     },
 };

@@ -11,23 +11,32 @@ import AddIcon from '@material-ui/icons/Add';
 import DeleteIcon from '@material-ui/icons/Delete';
 import ComputerIcon from '@material-ui/icons/Computer';
 import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import { EmptyState, Spacer } from '@pxblue/react-components';
+import { EmptyState, Spacer, InfoListItem } from '@pxblue/react-components';
 import { useDispatch } from 'react-redux';
 import { TOGGLE_DRAWER } from '../../../redux/actions';
 import { Menu as MenuIcon } from '@material-ui/icons';
 import { Hidden } from '@material-ui/core';
 
-const options = ['Delete', 'View Details'];
+type Option = 'Delete' | 'View Details';
+type Item = {
+    id: number;
+    name: string;
+    details: string;
+};
+
+const options: Option[] = ['Delete', 'View Details'];
 const ITEM_HEIGHT = 48;
 
 export const ActionList = (): JSX.Element => {
     const dispatch = useDispatch();
 
-    const createItem = (index: number): any => ({ id: index, name: `Item ${index}`, details: `Item ${index} occured` });
+    const createItem = (index: number): Item => ({
+        id: index,
+        name: `Item ${index}`,
+        details: `Item ${index} occured`,
+    });
 
-    const createRandomItem = (): any => {
+    const createRandomItem = (): Item => {
         const int = parseInt(`${Math.random() * 100}`, 10);
         return createItem(int);
     };
@@ -38,10 +47,9 @@ export const ActionList = (): JSX.Element => {
         generatedList.push(createRandomItem());
     }
 
-    const [list, setList] = useState<any[]>(generatedList);
+    const [list, setList] = useState<Item[]>(generatedList);
     const [menuPosition, setMenuPosition] = useState<any>(null);
-    const [selectedIndex, setSelectedIndex] = useState<any>(null);
-    const [activeMenu, setActiveMenu] = useState<any>(null);
+    const [activeMenu, setActiveMenu] = useState<number>(-1);
 
     const onAddItem = (): void => {
         setList([...list, createRandomItem()]);
@@ -54,10 +62,10 @@ export const ActionList = (): JSX.Element => {
 
     const onMenuClose = (): void => {
         setMenuPosition(null);
-        setActiveMenu(null);
+        setActiveMenu(-1);
     };
 
-    const onMenuItemClick = (option: any, i: number): void => {
+    const onMenuItemClick = (option: Option, i: number): void => {
         if (option === 'Delete') {
             const tempList = list;
             tempList.splice(i, 1);
@@ -70,13 +78,7 @@ export const ActionList = (): JSX.Element => {
         setList([]);
     };
 
-    const onSelected = (item: any): void => {
-        setSelectedIndex(item);
-    };
-
-    const isSelected = (item: any): any => selectedIndex === item;
-
-    const getEmptyComponent = (): any => (
+    const getEmptyComponent = (): JSX.Element => (
         <div
             style={{
                 display: 'flex',
@@ -86,7 +88,7 @@ export const ActionList = (): JSX.Element => {
             }}
         >
             <EmptyState
-                icon={<ComputerIcon style={{ fontSize: '100px' }}/>}
+                icon={<ComputerIcon style={{ fontSize: '100px' }} />}
                 title={'No Items Found'}
                 actions={
                     <Button
@@ -138,6 +140,7 @@ export const ActionList = (): JSX.Element => {
                         data-cy="toolbar-add"
                         color="inherit"
                         aria-label="add"
+                        edge={'end'}
                         onClick={(): void => {
                             onAddItem();
                         }}
@@ -147,20 +150,27 @@ export const ActionList = (): JSX.Element => {
                 </Toolbar>
             </AppBar>
             {list.length < 1 && getEmptyComponent()}
-            <List className="list" data-cy="list-content" style={{ paddingTop: '0px' }} component="nav">
-                {list.map((item: any, i: number): any => (
-                    <ListItem
-                        key={`item_${i}`}
-                        button
-                        className={isSelected(i) ? 'selected' : ''}
-                        onClick={(): any => onSelected(i)}
-                    >
-                        <ListItemText primary={item.name} secondary={item.details}></ListItemText>
-                        <IconButton data-cy="action-menu" onClick={(evt: any): any => onMenuClick(evt, i)}>
-                            <MoreVertIcon />
-                        </IconButton>
-                    </ListItem>
-                ))}
+            <List className="list" data-cy="list-content" disablePadding component="nav">
+                {list.map(
+                    (item: any, i: number): JSX.Element => (
+                        <InfoListItem
+                            hidePadding
+                            ripple
+                            title={item.name}
+                            subtitle={item.details}
+                            onClick={(): void => {}}
+                            rightComponent={
+                                <IconButton
+                                    data-cy="action-menu"
+                                    onClick={(evt: any): void => onMenuClick(evt, i)}
+                                    edge={'end'}
+                                >
+                                    <MoreVertIcon />
+                                </IconButton>
+                            }
+                        />
+                    )
+                )}
             </List>
             <Menu
                 id="long-menu"

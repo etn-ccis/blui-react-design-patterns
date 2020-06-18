@@ -40,11 +40,11 @@ export const splCharRegex = new RegExp(/(!|@|#|\$|\^|&)+/);
 
 export const FormValidation = (): JSX.Element => {
     const [input, setInput] = useState('');
-    const [inputError, setInputError] = useState<any>();
+    const [inputError, setInputError] = useState<FormError>(null);
     const [email, setEmail] = useState('');
-    const [emailError, setEmailError] = useState<any>();
+    const [emailError, setEmailError] = useState<FormError>(null);
     const [phoneNumber, setPhoneNumber] = useState('');
-    const [phoneNumberError, setPhoneNumberError] = useState<any>();
+    const [phoneNumberError, setPhoneNumberError] = useState<FormError>(null);
 
     const [chars, setChars] = useState('');
     const MAX_CHARS_LIMIT = 30;
@@ -67,19 +67,19 @@ export const FormValidation = (): JSX.Element => {
     const classes = useStyles(theme);
     const dispatch = useDispatch();
 
-    const getValidationIcon = (error: FormError): JSX.Element | undefined => {
+    const getValidationIcon = (error: FormError): JSX.Element => {
         if (error && error.length > 0) {
             return <Close style={{ color: theme.palette.error.main, marginRight: 8 }} />;
         } else if (error === '') {
             return <Done style={{ color: theme.palette.primary.main, marginRight: 8 }} />;
         }
-        return;
+        return <></>;
     };
 
     const getHelperText = (error: FormError): FormError => {
-        if (error === 'required') {
-            return null;
-        }
+        // if (error === 'required') {
+        //     return null;
+        // }
         return error;
     };
 
@@ -269,6 +269,7 @@ export const FormValidation = (): JSX.Element => {
                                 id="input"
                                 label="Input"
                                 fullWidth
+                                helperText={getHelperText(inputError) || 'This is a regular input field.'}
                                 required
                                 value={input}
                                 onChange={onInputChange}
@@ -276,9 +277,7 @@ export const FormValidation = (): JSX.Element => {
                                 onBlur={onInputBlur}
                                 InputProps={{
                                     endAdornment: (
-                                        <InputAdornment position="end">
-                                            {getValidationIcon(inputError || '')}
-                                        </InputAdornment>
+                                        <InputAdornment position="end">{getValidationIcon(inputError)}</InputAdornment>
                                     ),
                                 }}
                             />
@@ -287,7 +286,10 @@ export const FormValidation = (): JSX.Element => {
                                 className={classes.marginedField}
                                 id="email"
                                 label="Enter Your Email"
-                                helperText={getHelperText(emailError)}
+                                helperText={
+                                    getHelperText(emailError) ||
+                                    'This field throws an error if the email format is incorrect.'
+                                }
                                 fullWidth
                                 required
                                 value={email}
@@ -296,9 +298,7 @@ export const FormValidation = (): JSX.Element => {
                                 onBlur={onEmailBlur}
                                 InputProps={{
                                     endAdornment: (
-                                        <InputAdornment position="end">
-                                            {getValidationIcon(emailError || '')}
-                                        </InputAdornment>
+                                        <InputAdornment position="end">{getValidationIcon(emailError)}</InputAdornment>
                                     ),
                                 }}
                             />
@@ -307,7 +307,10 @@ export const FormValidation = (): JSX.Element => {
                                 className={classes.marginedField}
                                 id="phoneNumber"
                                 label="Phone Number"
-                                helperText={getHelperText(phoneNumberError)}
+                                helperText={
+                                    getHelperText(phoneNumberError) ||
+                                    'This field throws an error if the phone number format is incorrect.'
+                                }
                                 fullWidth
                                 required
                                 value={phoneNumber}
@@ -317,7 +320,7 @@ export const FormValidation = (): JSX.Element => {
                                 InputProps={{
                                     endAdornment: (
                                         <InputAdornment position="end">
-                                            {getValidationIcon(phoneNumberError || '')}
+                                            {getValidationIcon(phoneNumberError)}
                                         </InputAdornment>
                                     ),
                                 }}

@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from 'react';
 import { arrayMove, SortableHandle, SortableElement, SortableContainer } from 'react-sortable-hoc';
-import { DragIndicator } from '@material-ui/icons';
+import { DragHandle as DragHandleIcon } from '@material-ui/icons';
 import { List, AppBar, Toolbar, Typography, Button, Hidden, IconButton } from '@material-ui/core';
 import { InfoListItem, ChannelValue, Spacer } from '@pxblue/react-components';
 import { TOGGLE_DRAWER } from '../../../redux/actions';
@@ -37,7 +37,7 @@ const presidentsList: President[] = [
 ];
 
 // Sortable Components Definitions
-const DragHandle = SortableHandle(() => <DragIndicator style={{ height: '20px', width: '20px', cursor: 'pointer' }} />);
+const DragHandle = SortableHandle(() => <DragHandleIcon style={{ cursor: 'pointer' }} />);
 
 const SortableListItem = SortableElement(({ president }: SortableListItemProps) => (
     <InfoListItem
@@ -86,7 +86,11 @@ export const SortableList = (): JSX.Element => {
                         Sortable List
                     </Typography>
                     <Spacer />
-                    <Button style={{ color: 'white' }} onClick={(): void => setSortable(!sortable)}>
+                    <Button
+                        style={{ color: 'white', borderColor: 'white' }}
+                        onClick={(): void => setSortable(!sortable)}
+                        variant={'outlined'}
+                    >
                         {sortable ? 'Save' : 'Edit'}
                     </Button>
                 </Toolbar>
@@ -99,7 +103,7 @@ export const SortableList = (): JSX.Element => {
                             hidePadding
                             key={`president-${i}`}
                             title={`${president.firstName} ${president.lastName}`}
-                            rightComponent={<ChannelValue value={president.year}></ChannelValue>}
+                            rightComponent={<ChannelValue value={president.year} />}
                         ></InfoListItem>
                     ))}
                 </List>

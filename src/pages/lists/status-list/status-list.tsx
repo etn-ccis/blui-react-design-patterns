@@ -2,9 +2,11 @@ import React from 'react';
 import { AppBar, Toolbar, Typography, List, ListItem, Hidden, IconButton } from '@material-ui/core';
 import HomeIcon from '@material-ui/icons/Home';
 import MenuIcon from '@material-ui/icons/Menu';
+import NotificationIcon from '@material-ui/icons/Notifications';
+import WarningIcon from '@material-ui/icons/Warning';
 import { useDispatch } from 'react-redux';
 import { TOGGLE_DRAWER } from '../../../redux/actions';
-import { InfoListItem } from '@pxblue/react-components';
+import { InfoListItem, ListItemTag } from '@pxblue/react-components';
 import * as colors from '@pxblue/colors';
 
 export type ListItem = {
@@ -12,27 +14,37 @@ export type ListItem = {
     name: string;
     details: string;
     status: string;
+    tag?: string;
 };
 
 export const StatusList = (): JSX.Element => {
     const dispatch = useDispatch();
 
-    const createItem = (index: number, randomStatus: string): ListItem => ({
+    const createItem = (index: number, randomStatus: string, tag?: boolean): ListItem => ({
         id: index,
         name: `Item ${index}`,
         details: `Status: ${randomStatus}`,
         status: randomStatus,
+        tag: tag ? `new` : undefined,
     });
 
     const createRandomItem = (): ListItem => {
         const int = parseInt(`${Math.random() * 100}`, 10);
-        const randomStatus = Math.random() >= 0.3 ? 'normal' : 'alarm';
-        return createItem(int, randomStatus);
+        switch (Math.floor(Math.random() * 5)) {
+            case 0:
+                return createItem(int, 'alarm');
+            case 1:
+                return createItem(int, 'alarm', true);
+            case 2:
+                return createItem(int, 'warning');
+            default:
+                return createItem(int, 'normal');
+        }
     };
 
     const list: ListItem[] = [];
 
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < 20; i++) {
         list.push(createRandomItem());
     }
 
@@ -57,17 +69,68 @@ export const StatusList = (): JSX.Element => {
                     <div />
                 </Toolbar>
             </AppBar>
-            <List className="list" style={{ padding: 0 }}>
-                {list.map((item, i) => (
-                    <InfoListItem
-                        key={`item_${i}`}
-                        icon={<HomeIcon />}
-                        iconColor={colors.black[500]}
-                        title={item.name}
-                        subtitle={item.details}
-                        statusColor={item.status === 'alarm' ? colors.red[500] : 'transparent'}
-                    />
-                ))}
+            <List className="list" disablePadding>
+                {list.map((item, i) => {
+                    switch (item.status) {
+                        case 'alarm':
+                            if (item.tag) {
+                                return (
+                                    <InfoListItem
+                                        key={`item_${i}`}
+                                        icon={<NotificationIcon />}
+                                        iconColor={colors.white[50]}
+                                        title={item.name}
+                                        subtitle={item.details}
+                                        avatar
+                                        statusColor={colors.red[500]}
+                                        rightComponent={
+                                            <ListItemTag label={item.tag} backgroundColor={colors.red[500]} />
+                                        }
+                                        divider={'partial'}
+                                    />
+                                );
+                            } else {
+                                return (
+                                    <InfoListItem
+                                        key={`item_${i}`}
+                                        icon={<NotificationIcon />}
+                                        iconColor={colors.red[500]}
+                                        title={item.name}
+                                        subtitle={item.details}
+                                        avatar
+                                        statusColor={'transparent'}
+                                        divider={'partial'}
+                                    />
+                                );
+                            }
+                        case 'warning':
+                            return (
+                                <InfoListItem
+                                    key={`item_${i}`}
+                                    icon={<WarningIcon />}
+                                    iconColor={colors.orange[500]}
+                                    title={item.name}
+                                    subtitle={item.details}
+                                    avatar
+                                    statusColor={'transparent'}
+                                    divider={'partial'}
+                                />
+                            );
+                        default:
+                            return (
+                                <InfoListItem
+                                    key={`item_${i}`}
+                                    icon={<HomeIcon />}
+                                    iconColor={colors.black[500]}
+                                    title={item.name}
+                                    subtitle={item.details}
+                                    avatar
+                                    statusColor={'transparent'}
+                                    divider={'partial'}
+                                />
+                            );
+                    }
+                })}
             </List>
         </div>
     );

@@ -22,7 +22,7 @@ it('renders without crashing', () => {
     ReactDOM.unmountComponentAtNode(div);
 });
 
-it('should render 10 list items by default', () => {
+it('should render 20 list items by default', () => {
     const multiselectList = mount(
         <Provider store={store}>
             <StatusList />
@@ -33,5 +33,5 @@ it('should render 10 list items by default', () => {
             .find('.list')
             .hostNodes()
             .children(InfoListItem)
-    ).toHaveLength(10);
+    ).toHaveLength(20);
 });

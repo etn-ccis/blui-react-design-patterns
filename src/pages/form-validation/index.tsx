@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     AppBar,
     Toolbar,
@@ -32,7 +32,7 @@ type FormError = undefined | null | string;
 type OnChangeHandler = InputProps['onChange'];
 
 export const emailRegex = new RegExp(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i);
-export const phoneNumberRegex = new RegExp(/((\(\d{3}\)?)|(\d{3}))([\s-./]?)(\d{3})([\s-./]?)(\d{4})/);
+export const phoneNumberRegex = new RegExp(/^((\(\d{3}\)?)|(\d{3}))([\s-./]?)(\d{3})([\s-./]?)(\d{4})$/);
 export const upperCharRegex = new RegExp(/[A-Z]+/);
 export const lowerCharRegex = new RegExp(/[a-z]+/);
 export const numberRegex = new RegExp(/[0-9]+/);
@@ -74,13 +74,6 @@ export const FormValidation = (): JSX.Element => {
             return <Done style={{ color: theme.palette.primary.main, marginRight: 8 }} />;
         }
         return <></>;
-    };
-
-    const getHelperText = (error: FormError): FormError => {
-        // if (error === 'required') {
-        //     return null;
-        // }
-        return error;
     };
 
     const characterLimitsHelperText = (
@@ -187,6 +180,14 @@ export const FormValidation = (): JSX.Element => {
     };
 
     const validatePasswordCriteria = (): void => {
+        if (newPasswordError) {
+            validateNewPassword();
+        } else {
+            setNewPasswordError(null);
+        }
+    };
+
+    useEffect(() => {
         const tempPasswordErrors = {
             minLengthRequired: newPassword.length >= 8 ? '' : 'required',
             atLeast1UpperCharRequired: upperCharRegex.test(newPassword) ? '' : 'required',
@@ -195,13 +196,7 @@ export const FormValidation = (): JSX.Element => {
             atLeast1SplCharRequired: splCharRegex.test(newPassword) ? '' : 'required',
         };
         setPasswordErrors(tempPasswordErrors);
-
-        if (newPasswordError) {
-            validateNewPassword();
-        } else {
-            setNewPasswordError(null);
-        }
-    };
+    }, [newPassword]);
 
     const onNewPasswordChange: OnChangeHandler = (event) => {
         setNewPassword(event.target.value);
@@ -269,7 +264,7 @@ export const FormValidation = (): JSX.Element => {
                                 id="input"
                                 label="Input"
                                 fullWidth
-                                helperText={getHelperText(inputError) || 'This is a regular input field.'}
+                                helperText={inputError || 'This is a regular input field.'}
                                 required
                                 value={input}
                                 onChange={onInputChange}
@@ -287,8 +282,7 @@ export const FormValidation = (): JSX.Element => {
                                 id="email"
                                 label="Enter Your Email"
                                 helperText={
-                                    getHelperText(emailError) ||
-                                    'This field throws an error if the email format is incorrect.'
+                                    emailError || 'This field throws an error if the email format is incorrect.'
                                 }
                                 fullWidth
                                 required
@@ -308,8 +302,8 @@ export const FormValidation = (): JSX.Element => {
                                 id="phoneNumber"
                                 label="Phone Number"
                                 helperText={
-                                    getHelperText(phoneNumberError) ||
-                                    'This field throws an error if the phone number format is incorrect.'
+                                    phoneNumberError ||
+                                    'This field throws an error if the phone number format is incorrect. (Needs to be a valid U.S. number)'
                                 }
                                 fullWidth
                                 required
@@ -394,7 +388,7 @@ export const FormValidation = (): JSX.Element => {
                                 id="confirmPassword"
                                 label="Confirm Password"
                                 type="password"
-                                helperText={getHelperText(confirmPasswordError)}
+                                helperText={confirmPasswordError}
                                 onChange={onConfirmPasswordChange}
                                 value={confirmPassword}
                                 error={Boolean(confirmPasswordError)}

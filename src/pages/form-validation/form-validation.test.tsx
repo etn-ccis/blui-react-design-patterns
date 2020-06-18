@@ -46,7 +46,7 @@ it('recognizes emails correctly', () => {
 
 it('recognizes phone numbers correctly', () => {
     const correctPhoneNumbers = ['1111111111', '123-123-1234', '(123) 123 1234', '123 123 1234', '123.123.1234'];
-    const incorrectPhoneNumbers = ['', '1', '+', ' ', '          ', '   -   -    ', '123(123)1234'];
+    const incorrectPhoneNumbers = ['', '1', '+', ' ', '          ', '   -   -    ', '123(123)1234', '111 111 11111'];
     correctPhoneNumbers.forEach((val): void => {
         expect(phoneNumberRegex.test(val)).toBeTruthy();
     });

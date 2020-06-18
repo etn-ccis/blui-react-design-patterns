@@ -15,7 +15,6 @@ import {
 } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import { Close, Done } from '@material-ui/icons';
-import * as Colors from '@pxblue/colors';
 import { makeStyles, useTheme, Theme } from '@material-ui/core/styles';
 import { useDispatch } from 'react-redux';
 import { TOGGLE_DRAWER } from '../../redux/actions';
@@ -32,6 +31,13 @@ const useStyles = makeStyles((theme: Theme) => ({
 type FormError = undefined | null | string;
 type OnChangeHandler = InputProps['onChange'];
 
+export const emailRegex = new RegExp(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i);
+export const phoneNumberRegex = new RegExp(/((\(\d{3}\)?)|(\d{3}))([\s-./]?)(\d{3})([\s-./]?)(\d{4})/);
+export const upperCharRegex = new RegExp(/[A-Z]+/);
+export const lowerCharRegex = new RegExp(/[a-z]+/);
+export const numberRegex = new RegExp(/[0-9]+/);
+export const splCharRegex = new RegExp(/(!|@|#|\$|\^|&)+/);
+
 export const FormValidation = (): JSX.Element => {
     const [input, setInput] = useState('');
     const [inputError, setInputError] = useState<any>();
@@ -39,12 +45,10 @@ export const FormValidation = (): JSX.Element => {
     const [emailError, setEmailError] = useState<any>();
     const [phoneNumber, setPhoneNumber] = useState('');
     const [phoneNumberError, setPhoneNumberError] = useState<any>();
-    const phoneNumberRegex = new RegExp(/((\(\d{3}\)?)|(\d{3}))([\s-./]?)(\d{3})([\s-./]?)(\d{4})/);
 
     const [chars, setChars] = useState('');
     const MAX_CHARS_LIMIT = 30;
 
-    const emailRegex = new RegExp(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i);
     const [oldPassword, setOldPassword] = useState('');
     const [oldPasswordError, setOldPasswordError] = useState<FormError>();
     const [newPassword, setNewPassword] = useState('');
@@ -58,10 +62,6 @@ export const FormValidation = (): JSX.Element => {
         atLeast1NumberRequired: 'required',
         atLeast1SplCharRequired: 'required',
     });
-    const upperCharRegex = new RegExp(/[A-Z]+/);
-    const lowerCharRegex = new RegExp(/[a-z]+/);
-    const numberRegex = new RegExp(/[0-9]+/);
-    const splCharRegex = new RegExp(/(!|@|#|\$|\^|&)+/);
 
     const theme = useTheme();
     const classes = useStyles(theme);
@@ -71,7 +71,7 @@ export const FormValidation = (): JSX.Element => {
         if (error && error.length > 0) {
             return <Close style={{ color: theme.palette.error.main, marginRight: 8 }} />;
         } else if (error === '') {
-            return <Done style={{ color: Colors.blue[500], marginRight: 8 }} />;
+            return <Done style={{ color: theme.palette.primary.main, marginRight: 8 }} />;
         }
         return;
     };

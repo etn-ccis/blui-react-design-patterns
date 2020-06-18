@@ -89,20 +89,19 @@ export const StatusList = (): JSX.Element => {
                                         divider={'partial'}
                                     />
                                 );
-                            } else {
-                                return (
-                                    <InfoListItem
-                                        key={`item_${i}`}
-                                        icon={<NotificationIcon />}
-                                        iconColor={colors.red[500]}
-                                        title={item.name}
-                                        subtitle={item.details}
-                                        avatar
-                                        statusColor={'transparent'}
-                                        divider={'partial'}
-                                    />
-                                );
                             }
+                            return (
+                                <InfoListItem
+                                    key={`item_${i}`}
+                                    icon={<NotificationIcon />}
+                                    iconColor={colors.red[500]}
+                                    title={item.name}
+                                    subtitle={item.details}
+                                    avatar
+                                    statusColor={'transparent'}
+                                    divider={'partial'}
+                                />
+                            );
                         case 'warning':
                             return (
                                 <InfoListItem

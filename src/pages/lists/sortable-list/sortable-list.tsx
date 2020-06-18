@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from 'react';
 import { arrayMove, SortableHandle, SortableElement, SortableContainer } from 'react-sortable-hoc';
 import { DragHandle as DragHandleIcon } from '@material-ui/icons';
-import { List, AppBar, Toolbar, Typography, Button, Hidden, IconButton } from '@material-ui/core';
+import { List, AppBar, Toolbar, Typography, Button, Hidden, IconButton, useTheme } from '@material-ui/core';
 import { InfoListItem, ChannelValue, Spacer } from '@pxblue/react-components';
 import { TOGGLE_DRAWER } from '../../../redux/actions';
 import { useDispatch } from 'react-redux';
@@ -57,6 +57,7 @@ export const SortableListEdit = SortableContainer(({ presidents }: SortableListE
 
 export const SortableList = (): JSX.Element => {
     const dispatch = useDispatch();
+    const theme = useTheme();
     const [list, setList] = useState<any[]>(presidentsList);
     const [sortable, setSortable] = useState<boolean>(false);
 
@@ -68,8 +69,8 @@ export const SortableList = (): JSX.Element => {
     );
 
     return (
-        <div>
-            <AppBar position="static">
+        <div style={{ backgroundColor: theme.palette.background.paper, minHeight: '100vh' }}>
+            <AppBar position="sticky">
                 <Toolbar>
                     <Hidden mdUp={true}>
                         <IconButton

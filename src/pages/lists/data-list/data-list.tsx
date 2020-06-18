@@ -5,7 +5,7 @@ import Typography from '@material-ui/core/Typography';
 import List from '@material-ui/core/List';
 import ComputerIcon from '@material-ui/icons/Computer';
 import MenuIcon from '@material-ui/icons/Menu';
-import { IconButton, Hidden } from '@material-ui/core';
+import { IconButton, Hidden, useTheme } from '@material-ui/core';
 import { useDispatch } from 'react-redux';
 import { TOGGLE_DRAWER } from '../../../redux/actions';
 import { EmptyState, InfoListItem, ChannelValue } from '@pxblue/react-components';
@@ -18,6 +18,7 @@ export type President = {
 
 export const DataList = (): JSX.Element => {
     const dispatch = useDispatch();
+    const theme = useTheme();
     const presidentsList: President[] = [
         {
             firstName: 'George',
@@ -60,7 +61,7 @@ export const DataList = (): JSX.Element => {
     );
 
     return (
-        <div>
+        <div style={{ backgroundColor: theme.palette.background.paper, minHeight: '100vh' }}>
             <AppBar position="sticky">
                 <Toolbar>
                     <Hidden mdUp={true}>

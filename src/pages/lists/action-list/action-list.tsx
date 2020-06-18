@@ -15,7 +15,7 @@ import { EmptyState, Spacer, InfoListItem } from '@pxblue/react-components';
 import { useDispatch } from 'react-redux';
 import { TOGGLE_DRAWER } from '../../../redux/actions';
 import { Menu as MenuIcon } from '@material-ui/icons';
-import { Hidden } from '@material-ui/core';
+import { Hidden, useTheme } from '@material-ui/core';
 
 type Option = 'Delete' | 'View Details';
 type Item = {
@@ -28,6 +28,7 @@ const options: Option[] = ['Delete', 'View Details'];
 
 export const ActionList = (): JSX.Element => {
     const dispatch = useDispatch();
+    const theme = useTheme();
 
     const createItem = (index: number): Item => ({
         id: index,
@@ -105,7 +106,7 @@ export const ActionList = (): JSX.Element => {
     );
 
     return (
-        <div>
+        <div style={{ backgroundColor: theme.palette.background.paper, minHeight: '100vh' }}>
             <AppBar position="sticky">
                 <Toolbar data-cy="pxb-toolbar">
                     <Hidden mdUp={true}>

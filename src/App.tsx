@@ -73,7 +73,9 @@ export const App: React.FC = () => {
                     dispatch({ type: TOGGLE_DRAWER, payload: !open });
                 },
             }}
-            activeItemBackgroundColor={theme.palette.primary.light}
+            activeItemBackgroundColor={
+                theme.palette.type === 'dark' ? theme.palette.primary.main : theme.palette.primary.light
+            }
             itemFontColor={theme.palette.text.primary}
             variant={isMobile ? 'temporary' : 'permanent'}
         >

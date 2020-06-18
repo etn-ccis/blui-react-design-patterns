@@ -169,7 +169,7 @@ export const I18N = (): JSX.Element => {
     };
 
     return (
-        <div dir={getDirection()}>
+        <div dir={getDirection()} style={{ backgroundColor: theme.palette.background.paper, minHeight: '100vh' }}>
             <AppBar position="sticky">
                 {getDrawer()}
                 <Toolbar>

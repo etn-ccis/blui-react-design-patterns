@@ -12,6 +12,7 @@ import {
     Hidden,
     Button,
     Theme,
+    useTheme,
 } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 import CancelIcon from '@material-ui/icons/Cancel';
@@ -38,7 +39,8 @@ const useStyles = makeStyles((theme: Theme) =>
             position: 'fixed',
             bottom: 0,
             left: '50%',
-            background: '#fff',
+            background: theme.palette.background.paper,
+            color: theme.palette.text.primary,
             transition: 'all 0.2s cubic- bezier(0.4, 0.0, 0.2, 1)',
             opacity: 0,
             padding: theme.spacing(0.5),
@@ -75,6 +77,7 @@ const useStyles = makeStyles((theme: Theme) =>
 export const MultiselectList = (): JSX.Element => {
     const classes = useStyles();
     const dispatch = useDispatch();
+    const theme = useTheme();
 
     function createItem(index: number, randomStatus: string): ListItem {
         return {
@@ -152,7 +155,7 @@ export const MultiselectList = (): JSX.Element => {
     );
 
     return (
-        <div>
+        <div style={{ backgroundColor: theme.palette.background.paper, minHeight: '100vh' }}>
             <AppBar position="sticky">
                 <Toolbar>
                     <Hidden mdUp={true}>

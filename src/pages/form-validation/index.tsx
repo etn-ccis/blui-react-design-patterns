@@ -10,10 +10,27 @@ import {
     InputAdornment,
     List,
     ListItem,
+    InputProps,
+    Hidden,
 } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import { Close, Done } from '@material-ui/icons';
 import * as Colors from '@pxblue/colors';
+import { makeStyles, useTheme, Theme } from '@material-ui/core/styles';
+import { useDispatch } from 'react-redux';
+import { TOGGLE_DRAWER } from '../../redux/actions';
+
+const useStyles = makeStyles((theme: Theme) => ({
+    marginedField: {
+        marginTop: theme.spacing(2),
+    },
+    block: {
+        padding: theme.spacing(2),
+    },
+}));
+
+type FormError = undefined | null | string;
+type OnChangeHandler = InputProps['onChange'];
 
 export const FormValidation = (): JSX.Element => {
     const [input, setInput] = useState('');
@@ -29,11 +46,11 @@ export const FormValidation = (): JSX.Element => {
 
     const emailRegex = new RegExp(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i);
     const [oldPassword, setOldPassword] = useState('');
-    const [oldPasswordError, setOldPasswordError] = useState<any>();
+    const [oldPasswordError, setOldPasswordError] = useState<FormError>();
     const [newPassword, setNewPassword] = useState('');
-    const [newPasswordError, setNewPasswordError] = useState<any>();
+    const [newPasswordError, setNewPasswordError] = useState<FormError>();
     const [confirmPassword, setConfirmPassword] = useState('');
-    const [confirmPasswordError, setConfirmPasswordError] = useState<any>();
+    const [confirmPasswordError, setConfirmPasswordError] = useState<FormError>();
     const [passwordErrors, setPasswordErrors] = useState({
         minLengthRequired: 'required',
         atLeast1UpperCharRequired: 'required',
@@ -46,16 +63,20 @@ export const FormValidation = (): JSX.Element => {
     const numberRegex = new RegExp(/[0-9]+/);
     const splCharRegex = new RegExp(/(!|@|#|\$|\^|&)+/);
 
-    const getValidationIcon = (error: any): any => {
+    const theme = useTheme();
+    const classes = useStyles(theme);
+    const dispatch = useDispatch();
+
+    const getValidationIcon = (error: FormError): JSX.Element | undefined => {
         if (error && error.length > 0) {
-            return <Close style={{ color: Colors.red[500] }} />;
+            return <Close style={{ color: theme.palette.error.main, marginRight: 8 }} />;
         } else if (error === '') {
-            return <Done style={{ color: Colors.green[500] }} />;
+            return <Done style={{ color: Colors.blue[500], marginRight: 8 }} />;
         }
         return;
     };
 
-    const getHelperText = (error: any): any => {
+    const getHelperText = (error: FormError): FormError => {
         if (error === 'required') {
             return null;
         }
@@ -78,12 +99,12 @@ export const FormValidation = (): JSX.Element => {
         setInputError(tempInputError);
     };
 
-    const onChange = (event: any): void => {
+    const onChange: OnChangeHandler = (event) => {
         setChars(event.target.value);
         validateInput(event.target.value);
     };
 
-    const onInputChange = (event: any): void => {
+    const onInputChange: OnChangeHandler = (event) => {
         setInput(event.target.value);
         validateInput(event.target.value);
     };
@@ -103,7 +124,7 @@ export const FormValidation = (): JSX.Element => {
         setEmailError(tempEmailError);
     };
 
-    const onEmailChange = (event: any): void => {
+    const onEmailChange: OnChangeHandler = (event) => {
         setEmail(event.target.value);
         if (emailError) {
             validateEmail(event.target.value);
@@ -127,7 +148,7 @@ export const FormValidation = (): JSX.Element => {
         setPhoneNumberError(tempPhoneNumberError);
     };
 
-    const onPhoneNumberChange = (event: any): void => {
+    const onPhoneNumberChange: OnChangeHandler = (event) => {
         let { value } = event.target;
         value = value.replace(/[a-zA-Z]+/, '');
         setPhoneNumber(value);
@@ -147,8 +168,8 @@ export const FormValidation = (): JSX.Element => {
         setOldPasswordError(tempOldPasswordError);
     };
 
-    const onOldPasswordChange = (event: any): void => {
-        setOldPassword(event.target);
+    const onOldPasswordChange: OnChangeHandler = (event) => {
+        setOldPassword(event.target.value);
         if (oldPasswordError) {
             validateOldPassword();
         } else {
@@ -182,7 +203,7 @@ export const FormValidation = (): JSX.Element => {
         }
     };
 
-    const onNewPasswordChange = (event: any): void => {
+    const onNewPasswordChange: OnChangeHandler = (event) => {
         setNewPassword(event.target.value);
         validatePasswordCriteria();
     };
@@ -198,7 +219,7 @@ export const FormValidation = (): JSX.Element => {
         setConfirmPasswordError(tempConfirmPasswordError);
     };
 
-    const onConfirmPasswordChange = (event: any): void => {
+    const onConfirmPasswordChange: OnChangeHandler = (event) => {
         setConfirmPassword(event.target.value);
         if (confirmPasswordError) {
             validateConfirmPassword();
@@ -208,17 +229,33 @@ export const FormValidation = (): JSX.Element => {
     };
 
     return (
-        <div>
-            <AppBar position="static">
+        <div
+            style={{
+                backgroundColor: theme.palette.background.default,
+                color: theme.palette.text.primary,
+                minHeight: '100vh',
+            }}
+        >
+            <AppBar position="sticky">
                 <Toolbar>
-                    <IconButton edge="start" color="inherit" aria-label="Menu">
-                        <MenuIcon />
-                    </IconButton>
-                    <Typography variant="h6">Form Validation</Typography>
+                    <Hidden mdUp>
+                        <IconButton
+                            color={'inherit'}
+                            onClick={(): void => {
+                                dispatch({ type: TOGGLE_DRAWER, payload: true });
+                            }}
+                            edge={'start'}
+                        >
+                            <MenuIcon />
+                        </IconButton>
+                    </Hidden>
+                    <Typography variant="h6" color="inherit">
+                        Form Validation
+                    </Typography>
                 </Toolbar>
             </AppBar>
 
-            <div style={{ padding: 20 }}>
+            <div className={classes.block}>
                 <Typography variant="h6">Basic Form Fields</Typography>
                 <Typography variant="body2">
                     The following example shows how to perform validation on various input types. The error icon on
@@ -229,7 +266,6 @@ export const FormValidation = (): JSX.Element => {
                     <CardContent>
                         <div>
                             <TextField
-                                style={{ paddingBottom: 40 }}
                                 id="input"
                                 label="Input"
                                 fullWidth
@@ -248,7 +284,7 @@ export const FormValidation = (): JSX.Element => {
                             />
 
                             <TextField
-                                style={{ paddingBottom: 40 }}
+                                className={classes.marginedField}
                                 id="email"
                                 label="Enter Your Email"
                                 helperText={getHelperText(emailError)}
@@ -268,7 +304,7 @@ export const FormValidation = (): JSX.Element => {
                             />
 
                             <TextField
-                                style={{ paddingBottom: 40 }}
+                                className={classes.marginedField}
                                 id="phoneNumber"
                                 label="Phone Number"
                                 helperText={getHelperText(phoneNumberError)}
@@ -285,15 +321,13 @@ export const FormValidation = (): JSX.Element => {
                                         </InputAdornment>
                                     ),
                                 }}
-                                // eslint-disable-next-line react/jsx-no-duplicate-props
-                                inputProps={{ maxLength: 22 }}
                             />
                         </div>
                     </CardContent>
                 </Card>
             </div>
 
-            <div style={{ padding: 20 }}>
+            <div className={classes.block}>
                 <Typography variant="h6">Character Limits</Typography>
                 <Typography variant="body2">
                     The following example shows how to restrict the length of an input field. In these cases, you should
@@ -317,7 +351,7 @@ export const FormValidation = (): JSX.Element => {
                 </Card>
             </div>
 
-            <div style={{ padding: 20 }}>
+            <div className={classes.block}>
                 <Typography variant="h6">Password Validation</Typography>
                 <Typography variant="body2">
                     The following example shows how to enforce password strength restrictions and confirmation field
@@ -328,7 +362,6 @@ export const FormValidation = (): JSX.Element => {
                     <CardContent>
                         <form>
                             <TextField
-                                style={{ paddingBottom: 40 }}
                                 id="oldPassword"
                                 label="Old Password"
                                 type="password"
@@ -341,7 +374,7 @@ export const FormValidation = (): JSX.Element => {
                             />
 
                             <TextField
-                                style={{ paddingBottom: 40 }}
+                                className={classes.marginedField}
                                 id="newPassword"
                                 label="New Password"
                                 type="password"
@@ -354,7 +387,7 @@ export const FormValidation = (): JSX.Element => {
                             />
 
                             <TextField
-                                style={{ paddingBottom: 40 }}
+                                className={classes.marginedField}
                                 id="confirmPassword"
                                 label="Confirm Password"
                                 type="password"
@@ -367,27 +400,32 @@ export const FormValidation = (): JSX.Element => {
                                 fullWidth
                             />
                         </form>
-                        <p>A Password must contain the following:</p>
-                        <List component="nav">
+                        <Typography className={classes.marginedField} variant={'body1'}>
+                            A password must contain the following:
+                        </Typography>
+
+                        <List component="ul">
                             <ListItem>
                                 {getValidationIcon(passwordErrors.minLengthRequired)}
-                                At least 8 characters in length
+                                <Typography variant={'body2'}>At least 8 characters in length</Typography>
                             </ListItem>
                             <ListItem>
                                 {getValidationIcon(passwordErrors.atLeast1NumberRequired)}
-                                At least 1 digit
+                                <Typography variant={'body2'}>At least 1 digit</Typography>
                             </ListItem>
                             <ListItem>
                                 {getValidationIcon(passwordErrors.atLeast1UpperCharRequired)}
-                                At least 1 uppercase letter
+                                <Typography variant={'body2'}>At least 1 uppercase letter</Typography>
                             </ListItem>
                             <ListItem>
                                 {getValidationIcon(passwordErrors.atLeast1LowerCharRequired)}
-                                At least 1 lowercase letter
+                                <Typography variant={'body2'}>At least 1 lowercase letter</Typography>
                             </ListItem>
                             <ListItem>
                                 {getValidationIcon(passwordErrors.atLeast1SplCharRequired)}
-                                At least 1 special character: (valid: ! @ # $ ^ &)
+                                <Typography variant={'body2'}>
+                                    At least 1 special character: (valid: ! @ # $ ^ &)
+                                </Typography>
                             </ListItem>
                         </List>
                     </CardContent>

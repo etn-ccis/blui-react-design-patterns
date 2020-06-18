@@ -10,6 +10,8 @@ import {
     makeStyles,
     createStyles,
     Avatar,
+    useTheme,
+    Theme,
 } from '@material-ui/core';
 import { MoreVert, NotificationsActive, Notifications, Done, GetApp, Close } from '@material-ui/icons';
 import MenuIcon from '@material-ui/icons/Menu';
@@ -19,7 +21,7 @@ import { InfoListItem, Spacer } from '@pxblue/react-components';
 import { useDispatch } from 'react-redux';
 import { TOGGLE_DRAWER } from '../../../redux/actions';
 
-const useStyles = makeStyles(() =>
+const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         paper: {
             width: '100%',
@@ -30,11 +32,11 @@ const useStyles = makeStyles(() =>
         },
         active: {},
         avatar: {
-            color: colors.black[500],
+            color: theme.palette.text.primary,
             background: 'transparent',
             '&$active': {
                 color: colors.white[50],
-                background: colors.red[500],
+                background: theme.palette.error.main,
             },
         },
     })
@@ -42,11 +44,12 @@ const useStyles = makeStyles(() =>
 
 export const BottomSheet = (): JSX.Element => {
     const dispatch = useDispatch();
+    const theme = useTheme();
     const classes = useStyles();
     const [showMenu, setShowMenu] = useState<boolean>(false);
 
     return (
-        <div>
+        <div style={{ backgroundColor: theme.palette.background.paper, minHeight: '100vh' }}>
             <AppBar position="sticky">
                 <Toolbar>
                     <Hidden mdUp={true}>

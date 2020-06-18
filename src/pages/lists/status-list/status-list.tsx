@@ -1,5 +1,5 @@
 import React from 'react';
-import { AppBar, Toolbar, Typography, List, ListItem, Hidden, IconButton } from '@material-ui/core';
+import { AppBar, Toolbar, Typography, List, ListItem, Hidden, IconButton, useTheme } from '@material-ui/core';
 import HomeIcon from '@material-ui/icons/Home';
 import MenuIcon from '@material-ui/icons/Menu';
 import NotificationIcon from '@material-ui/icons/Notifications';
@@ -19,6 +19,7 @@ export type ListItem = {
 
 export const StatusList = (): JSX.Element => {
     const dispatch = useDispatch();
+    const theme = useTheme();
 
     const createItem = (index: number, randomStatus: string, tag?: boolean): ListItem => ({
         id: index,
@@ -49,7 +50,7 @@ export const StatusList = (): JSX.Element => {
     }
 
     return (
-        <div>
+        <div style={{ backgroundColor: theme.palette.background.paper, minHeight: '100vh' }}>
             <AppBar position="sticky">
                 <Toolbar>
                     <Hidden mdUp={true}>

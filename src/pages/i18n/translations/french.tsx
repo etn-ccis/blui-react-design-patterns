@@ -35,6 +35,6 @@ export const french: SampleTranslation = {
             HELP: 'Aidez-moi',
         },
         VIEW_I18N_SIDE_NAV: "Afficher la navigation latérale d'I18N",
-        DELETE_ALL: 'Tout supprimer',
+        DESELECT_ALL: 'Tout déselectionner',
     },
 };

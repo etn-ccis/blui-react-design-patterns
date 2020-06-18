@@ -35,6 +35,6 @@ export const english: SampleTranslation = {
             HELP: 'Help',
         },
         VIEW_I18N_SIDE_NAV: 'View I18N Side Nav',
-        DELETE_ALL: 'Delete all',
+        DESELECT_ALL: 'Deselect all',
     },
 };

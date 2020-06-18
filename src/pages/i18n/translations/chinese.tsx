@@ -35,6 +35,6 @@ export const chinese: SampleTranslation = {
             HELP: '帮助',
         },
         VIEW_I18N_SIDE_NAV: '查看I18N的侧导航栏',
-        DELETE_ALL: '全部删除',
+        DESELECT_ALL: '取消选择',
     },
 };

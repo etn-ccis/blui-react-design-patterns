@@ -29,7 +29,6 @@ import MenuIcon from '@material-ui/icons/Menu';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import CartIcon from '@material-ui/icons/AddShoppingCart';
 import CancelIcon from '@material-ui/icons/Cancel';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
 import HomeIcon from '@material-ui/icons/Home';
 import FolderIcon from '@material-ui/icons/Folder';
 import ErrorIcon from '@material-ui/icons/Error';
@@ -229,7 +228,7 @@ export const I18N = (): JSX.Element => {
                 </Button>
             </Toolbar>
 
-            <List>
+            <List id={'item-list'}>
                 {Object.keys(fruits).map((fruit, index) => (
                     <InfoListItem
                         key={index}
@@ -248,19 +247,18 @@ export const I18N = (): JSX.Element => {
                 open={selectedItems.size > 0}
                 action={
                     <>
-                        <Tooltip title={t('DELETE_ALL') || ''}>
+                        <Tooltip title={t('DESELECT_ALL') || ''}>
                             <IconButton
                                 onClick={(): void => {
                                     setSelectedItems(new Set());
                                 }}
                                 color={'inherit'}
+                                id="deselect-all-button"
+                                data-cy="snackbar-deselect-all"
                             >
                                 <CancelIcon />
                             </IconButton>
                         </Tooltip>
-                        <IconButton color={'inherit'}>
-                            <MoreVertIcon />
-                        </IconButton>
                     </>
                 }
                 className={isRTL() ? 'RTL' : ''}

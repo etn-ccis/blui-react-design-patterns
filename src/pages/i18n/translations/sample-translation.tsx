@@ -33,6 +33,6 @@ export type SampleTranslation = {
         I18N: string;
         BLUE: string;
         VIEW_I18N_SIDE_NAV: string;
-        DELETE_ALL: string;
+        DESELECT_ALL: string;
     };
 };

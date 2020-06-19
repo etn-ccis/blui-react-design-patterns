@@ -59,8 +59,8 @@ export const PAGES: Routes = {
             route: 'dialog',
         },
         BOTTOM_SHEET: {
-            title: 'Bottom Sheet',
-            route: 'bottom-sheet',
+            title: 'Basic Bottom Sheet',
+            route: 'basic-bottom-sheet',
         },
         COMPLEX_BOTTOM_SHEET: {
             title: 'Complex Bottom Sheet',

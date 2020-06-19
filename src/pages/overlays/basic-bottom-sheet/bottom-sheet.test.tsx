@@ -4,7 +4,7 @@ import Enzyme from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
-import { BottomSheet } from './bottom-sheet';
+import { BottomSheet } from '.';
 import { Reducer } from '../../../redux/reducers';
 
 Enzyme.configure({ adapter: new Adapter() });

@@ -1,5 +1,5 @@
 import React from 'react';
-import { DataList } from './data-list';
+import { DataList } from '.';
 import ReactDOM from 'react-dom';
 import Enzyme from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';

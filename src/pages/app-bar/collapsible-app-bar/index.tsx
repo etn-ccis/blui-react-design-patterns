@@ -12,6 +12,7 @@ import {
     Hidden,
     makeStyles,
     Theme,
+    useTheme,
 } from '@material-ui/core';
 import { Person as PersonIcon, MoreVert as MoreVertIcon, Menu as MenuIcon } from '@material-ui/icons';
 import { Spacer } from '@pxblue/react-components';
@@ -80,8 +81,8 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
 }));
 
-export const CollapsibleAppBar = (props: any): JSX.Element => {
-    const classes = useStyles(props);
+export const CollapsibleAppBar = (): JSX.Element => {
+    const classes = useStyles(useTheme());
     const [list] = useState(listItems);
     const [headerActive, setHeaderActive] = useState(false);
     const [opacity, setOpacity] = useState(1);

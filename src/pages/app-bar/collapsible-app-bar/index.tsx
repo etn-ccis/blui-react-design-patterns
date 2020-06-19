@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
 // Material-UI components
 
@@ -10,13 +10,16 @@ import ListItemText from '@material-ui/core/ListItemText';
 import PersonIcon from '@material-ui/icons/Person';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import MenuIcon from '@material-ui/icons/Menu';
-import { listItems } from '../assets/list';
+import { listItems } from '../../../assets/list';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
-import { AppBar } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
+import { AppBar, Hidden } from '@material-ui/core';
+import { makeStyles, Theme } from '@material-ui/core/styles';
+import { useDispatch } from 'react-redux';
+import { TOGGLE_DRAWER } from '../../../redux/actions';
+import { Spacer } from '@pxblue/react-components';
 
-const useStyles = makeStyles((theme: any) => ({
+const useStyles = makeStyles((theme: Theme) => ({
     banner: {
         // IE 11 does not support background blend mode. To see the image, you need to reverse the order of the image and gradient in the background property below.
         background:
@@ -26,7 +29,6 @@ const useStyles = makeStyles((theme: any) => ({
         backgroundBlendMode: 'soft-light',
         minHeight: theme.spacing(34),
         color: '#fff',
-        marginTop: '-32px',
     },
     bannerMain: {
         flexDirection: 'column',
@@ -41,8 +43,7 @@ const useStyles = makeStyles((theme: any) => ({
         width: '100%',
     },
     header: {
-        position: 'relative',
-        top: '-26px',
+        top: 0,
         left: 'auto',
         right: 'auto',
         transform: 'translateY(-100%)',
@@ -62,7 +63,19 @@ export const CollapsibleAppBar = (props: any): JSX.Element => {
     const [list] = useState(listItems);
     const [activeClass, setActiveClass] = useState('');
     const [opacity, setOpacity] = useState(1);
+    const dispatch = useDispatch();
 
+    const onScrollHandler = () => {
+        setOpacity(window.pageYOffset);
+        console.log(window.pageYOffset);
+        if (window.pageYOffset > 70) {
+            setActiveClass('top');
+        } else {
+            setActiveClass('');
+        }
+    };
+
+    /* 
     useEffect(() => {
         const scrollArea = document.getElementById('scroll-area');
         if (scrollArea) {
@@ -76,14 +89,23 @@ export const CollapsibleAppBar = (props: any): JSX.Element => {
             });
         }
     }, []);
+    */
 
     return (
-        <div id="scroll-area">
+        <div id="scroll-area" onScroll={onScrollHandler}>
             <AppBar className={`${classes.header} ${[activeClass ? classes.top : '']}`}>
                 <Toolbar>
-                    <IconButton color="inherit">
-                        <MenuIcon />
-                    </IconButton>
+                    <Hidden mdUp>
+                        <IconButton
+                            color="inherit"
+                            onClick={(): void => {
+                                dispatch({ type: TOGGLE_DRAWER, payload: true });
+                            }}
+                            edge={'start'}
+                        >
+                            <MenuIcon />
+                        </IconButton>
+                    </Hidden>
                     <div style={{ flex: 1 }}>
                         <Typography variant="h6" color="inherit">
                             President
@@ -92,18 +114,27 @@ export const CollapsibleAppBar = (props: any): JSX.Element => {
                             Leader of the Free World
                         </Typography>
                     </div>
-                    <IconButton color="inherit">
+                    <IconButton color="inherit" edge={'end'}>
                         <MoreVertIcon />
                     </IconButton>
                 </Toolbar>
             </AppBar>
             <div className={classes.banner}>
                 <Toolbar className={classes.bannerMain}>
-                    <div className={classes.flexCenter}>
-                        <IconButton color="inherit">
-                            <MenuIcon />
-                        </IconButton>
-                        <IconButton color="inherit">
+                    <div style={{ display: 'flex', width: '100%', minHeight: 64 }}>
+                        <Hidden mdUp>
+                            <IconButton
+                                color="inherit"
+                                onClick={(): void => {
+                                    dispatch({ type: TOGGLE_DRAWER, payload: true });
+                                }}
+                                edge={'start'}
+                            >
+                                <MenuIcon />
+                            </IconButton>
+                        </Hidden>
+                        <Spacer />
+                        <IconButton color="inherit" edge={'end'}>
                             <MoreVertIcon />
                         </IconButton>
                     </div>

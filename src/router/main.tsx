@@ -3,6 +3,7 @@ import { Switch, Route } from 'react-router-dom';
 
 // Different App Pages/Routes
 import { PAGES } from './routes';
+import { LoadingStates } from '../pages/loading-states';
 import { I18N } from '../pages/i18n';
 import { FormValidation } from '../pages/form-validation';
 import { ActionList } from '../pages/lists/action-list/action-list';
@@ -16,6 +17,7 @@ The main page body, which contains the route definitions
 */
 export const Main = (): JSX.Element => (
     <Switch>
+        <Route exact path={`/${PAGES.EMPTY_STATES.LOADING.route}`} component={LoadingStates} />
         <Route exact path={`/${PAGES.FORM_VALIDATION.route}`} component={FormValidation} />
         <Route exact path={`/${PAGES.I18N.route}`} component={I18N} />
 

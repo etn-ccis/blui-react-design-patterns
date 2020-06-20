@@ -47,9 +47,9 @@ export const PAGES: Routes = {
             title: 'Status List',
             route: 'status-list',
         },
-        TABLES: {
-            title: 'Tables',
-            route: 'tables',
+        RESPONSIVE_TABLE: {
+            title: 'Responsive Table',
+            route: 'responsive-table',
         },
     },
     OVERLAYS: {
@@ -112,7 +112,7 @@ export type Routes = {
         MULTISELECT_LIST: RouteMetaData;
         SORTABLE_LIST: RouteMetaData;
         STATUS_LIST: RouteMetaData;
-        TABLES: RouteMetaData;
+        RESPONSIVE_TABLE: RouteMetaData;
     };
     OVERLAYS: RouteMetaData & {
         DIALOG: RouteMetaData;

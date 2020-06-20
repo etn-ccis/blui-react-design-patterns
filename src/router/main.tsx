@@ -13,6 +13,7 @@ import { DataList } from '../pages/lists/data-list';
 import { MultiselectList } from '../pages/lists/multiselect-list';
 import { StatusList } from '../pages/lists/status-list';
 import { SortableList } from '../pages/lists/sortable-list';
+import { ResponsiveTable } from '../pages/lists/responsive-table';
 import { BottomSheet } from '../pages/overlays/basic-bottom-sheet';
 /*
 The main page body, which contains the route definitions
@@ -31,6 +32,7 @@ export const Main = (): JSX.Element => (
         <Route exact path={`/${PAGES.LISTS.MULTISELECT_LIST.route}`} component={MultiselectList} />
         <Route exact path={`/${PAGES.LISTS.STATUS_LIST.route}`} component={StatusList} />
         <Route exact path={`/${PAGES.LISTS.SORTABLE_LIST.route}`} component={SortableList} />
+        <Route exact path={`/${PAGES.LISTS.RESPONSIVE_TABLE.route}`} component={ResponsiveTable} />
 
         <Route exact path={`/${PAGES.OVERLAYS.BOTTOM_SHEET.route}`} component={BottomSheet} />
     </Switch>

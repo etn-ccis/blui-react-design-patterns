@@ -1,5 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { AppBar, Toolbar, IconButton, Typography, Card, Grid, List, Hidden, Tooltip } from '@material-ui/core';
+import {
+    AppBar,
+    Toolbar,
+    IconButton,
+    Typography,
+    Card,
+    Grid,
+    List,
+    Hidden,
+    Tooltip,
+    CircularProgress,
+} from '@material-ui/core';
 import { Refresh, Menu as MenuIcon } from '@material-ui/icons';
 import { Battery, Pie } from '@pxblue/react-progress-icons';
 import { makeStyles, useTheme, Theme } from '@material-ui/core/styles';
@@ -92,11 +103,14 @@ export const LoadingStates = (): JSX.Element => {
                         Loading States
                     </Typography>
                     <Spacer />
-                    <Tooltip title={'Refresh this page'}>
-                        <IconButton edge={'end'} color={'inherit'} onClick={refreshData}>
-                            <Refresh />
-                        </IconButton>
-                    </Tooltip>
+                    {data[0].data && (
+                        <Tooltip title={'Refresh this page'}>
+                            <IconButton edge={'end'} color={'inherit'} onClick={refreshData}>
+                                <Refresh />
+                            </IconButton>
+                        </Tooltip>
+                    )}
+                    {!data[0].data && <CircularProgress color={'inherit'} size={theme.spacing(3)} />}
                 </Toolbar>
             </AppBar>
 

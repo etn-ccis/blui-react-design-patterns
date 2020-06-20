@@ -14,8 +14,7 @@ import {
     Theme,
     useTheme,
 } from '@material-ui/core';
-import { Person as PersonIcon, MoreVert as MoreVertIcon, Menu as MenuIcon } from '@material-ui/icons';
-import { Spacer } from '@pxblue/react-components';
+import { Person as PersonIcon, Menu as MenuIcon } from '@material-ui/icons';
 import clsx from 'clsx';
 import { listItems } from '../../../assets/list';
 import { useDispatch } from 'react-redux';
@@ -131,10 +130,6 @@ export const CollapsibleAppBar = (): JSX.Element => {
                             Leader of the Free World
                         </Typography>
                     </div>
-                    <Spacer />
-                    <IconButton color="inherit" edge={'end'}>
-                        <MoreVertIcon />
-                    </IconButton>
                 </Toolbar>
             </AppBar>
             <div className={clsx(classes.banner, classes.alignTopContent)}>
@@ -151,10 +146,6 @@ export const CollapsibleAppBar = (): JSX.Element => {
                                 <MenuIcon />
                             </IconButton>
                         </Hidden>
-                        <Spacer />
-                        <IconButton color="inherit" edge={'end'}>
-                            <MoreVertIcon />
-                        </IconButton>
                     </div>
                 </Toolbar>
                 <div className={classes.content} style={{ opacity: 1 - opacity / MAX_APP_BAR_HEIGHT }}>

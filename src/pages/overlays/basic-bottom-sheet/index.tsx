@@ -42,7 +42,7 @@ const useStyles = makeStyles((theme: Theme) =>
     })
 );
 
-export const BottomSheet = (): JSX.Element => {
+export const BasicBottomSheet = (): JSX.Element => {
     const dispatch = useDispatch();
     const theme = useTheme();
     const classes = useStyles();

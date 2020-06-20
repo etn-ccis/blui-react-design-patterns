@@ -14,7 +14,8 @@ import { MultiselectList } from '../pages/lists/multiselect-list';
 import { StatusList } from '../pages/lists/status-list';
 import { SortableList } from '../pages/lists/sortable-list';
 import { ResponsiveTable } from '../pages/lists/responsive-table';
-import { BottomSheet } from '../pages/overlays/basic-bottom-sheet';
+import { BasicBottomSheet } from '../pages/overlays/basic-bottom-sheet';
+import { ComplexBottomSheet } from '../pages/overlays/complex-bottom-sheet';
 /*
 The main page body, which contains the route definitions
 */
@@ -34,6 +35,7 @@ export const Main = (): JSX.Element => (
         <Route exact path={`/${PAGES.LISTS.SORTABLE_LIST.route}`} component={SortableList} />
         <Route exact path={`/${PAGES.LISTS.RESPONSIVE_TABLE.route}`} component={ResponsiveTable} />
 
-        <Route exact path={`/${PAGES.OVERLAYS.BOTTOM_SHEET.route}`} component={BottomSheet} />
+        <Route exact path={`/${PAGES.OVERLAYS.BASIC_BOTTOM_SHEET.route}`} component={BasicBottomSheet} />
+        <Route exact path={`/${PAGES.OVERLAYS.COMPLEX_BOTTOM_SHEET.route}`} component={ComplexBottomSheet} />
     </Switch>
 );

@@ -58,7 +58,7 @@ export const PAGES: Routes = {
             title: 'Dialog',
             route: 'dialog',
         },
-        BOTTOM_SHEET: {
+        BASIC_BOTTOM_SHEET: {
             title: 'Basic Bottom Sheet',
             route: 'basic-bottom-sheet',
         },
@@ -116,7 +116,7 @@ export type Routes = {
     };
     OVERLAYS: RouteMetaData & {
         DIALOG: RouteMetaData;
-        BOTTOM_SHEET: RouteMetaData;
+        BASIC_BOTTOM_SHEET: RouteMetaData;
         COMPLEX_BOTTOM_SHEET: RouteMetaData;
     };
     STEPPERS: RouteMetaData & {

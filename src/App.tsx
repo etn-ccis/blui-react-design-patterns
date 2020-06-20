@@ -76,10 +76,6 @@ export const App: React.FC = () => {
                     dispatch({ type: TOGGLE_DRAWER, payload: !open });
                 },
             }}
-            activeItemBackgroundColor={
-                theme.palette.type === 'dark' ? theme.palette.primary.main : theme.palette.primary.light
-            }
-            itemFontColor={theme.palette.text.primary}
             variant={isMobile ? 'temporary' : 'permanent'}
         >
             <DrawerHeader title={'PX Blue'} subtitle={'React Design Patterns'} />
@@ -87,7 +83,6 @@ export const App: React.FC = () => {
                 <DrawerNavGroup items={navItems} hidePadding activeItem={selected} />
                 <Spacer />
                 <DrawerNavGroup
-                    // title={'More Resources'}
                     titleContent={<Typography variant={'overline'}>More Resources</Typography>}
                     items={[
                         {

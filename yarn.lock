@@ -1261,11 +1261,6 @@
   resolved "https://registry.yarnpkg.com/@nodelib/fs.stat/-/fs.stat-1.1.3.tgz#2b5a3ab3f918cca48a8c754c08168e3f03eba61b"
   integrity sha512-shAmDyaQC4H92APFoIaVDHCx5bStIocgvbwQyxPRrbUY20V1EYTbSDchWbuwlMG3V17cprZhA6+78JfB+3DTPw==
 
-"@pxblue/colors@^2.0.0":
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/@pxblue/colors/-/colors-2.0.0.tgz#fa7d2abde80485537f26521df4c3f6e56dd93361"
-  integrity sha512-1JoCVC17nHmC6bbqg2nCAHJgJLHAWNIAmS/UZ3h8u0TnvU5C6qI+CpCrn/sP6bNSQ3LLhEkdVpjKna1kxCXdhg==
-
 "@pxblue/colors@^2.0.1":
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/@pxblue/colors/-/colors-2.0.1.tgz#d24dae5bc6c3b9755b52a22738aa567bfeea3b8c"
@@ -1295,12 +1290,12 @@
   resolved "https://registry.yarnpkg.com/@pxblue/prettier-config/-/prettier-config-1.0.2.tgz#fb00503df6557b66c3d91d43c9101e614c35d2ec"
   integrity sha512-/3cLBoTjZs3kV1ATPA/Sp0tsL7XmlV/b8HW/qt0jqR/uP5+cdXL2YIhMXQngLRa7PhpSkEiRIYK5sl0rKsXTUg==
 
-"@pxblue/react-components@^3.0.2":
-  version "3.0.4"
-  resolved "https://registry.yarnpkg.com/@pxblue/react-components/-/react-components-3.0.4.tgz#7b5273da7142991e43d168b2a43e9101866369c4"
-  integrity sha512-J+VQZsMsJfEqs6kX6qhZN6CiSEqEzs8UFFk2MlXVJSi/Avv38g+T7rR+Dh3SUm8xi9VreGCBJ1qYyMEgiqZ3XQ==
+"@pxblue/react-components@^4.0.1":
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/@pxblue/react-components/-/react-components-4.0.1.tgz#08c83302e3ec15157a6266558fb6455b2e982e4a"
+  integrity sha512-jEjnv/riMg1l1r/S0wKSdZlfJ64+8peh5i1um3ZWXwEYWsacmgeUFL9pNeGYRg7m+ljakxrkr885i12qsrBKcQ==
   dependencies:
-    "@pxblue/colors" "^2.0.0"
+    "@pxblue/colors" "^3.0.0"
     color "^3.1.2"
 
 "@pxblue/react-progress-icons@^2.0.0":

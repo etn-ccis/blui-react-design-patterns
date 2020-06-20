@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom';
 import { ActionList } from '.';
 import Enzyme, { mount } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
-import InfoListItem from '@pxblue/react-components';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import { Reducer } from '../../../redux/reducers';
@@ -22,30 +21,16 @@ it('renders without crashing', () => {
     ReactDOM.unmountComponentAtNode(div);
 });
 
-it('renders a single list component', () => {
-    const actionList = mount(
-        <Provider store={store}>
-            <ActionList />
-        </Provider>
-    );
-    expect(actionList.find('.list').hostNodes()).toHaveLength(1);
-});
-
 it('renders 10 items by default', () => {
     const actionList = mount(
         <Provider store={store}>
             <ActionList />
         </Provider>
     );
-    expect(
-        actionList
-            .find('.list')
-            .hostNodes()
-            .children(InfoListItem)
-    ).toHaveLength(10);
+    expect(actionList.find('.info-list-items').hostNodes()).toHaveLength(10);
 });
 
-it('add item functions correctly', () => {
+it('adds an item correctly', () => {
     const actionList = mount(
         <Provider store={store}>
             <ActionList />
@@ -57,7 +42,7 @@ it('add item functions correctly', () => {
         .hostNodes()
         .at(0)
         .simulate('click');
-    expect(actionList.find('.list').children(InfoListItem)).toHaveLength(11);
+    expect(actionList.find('.info-list-items').hostNodes()).toHaveLength(11);
 });
 
 // @TODO: figure out how to do this for a functional component
@@ -80,7 +65,7 @@ it('add item functions correctly', () => {
 //   expect(list.filter((item) => item.id === todelete.id).length).toEqual(count -1);
 // });
 
-it('remove all clears the list', () => {
+it('removes all and clears the list', () => {
     const actionList = mount(
         <Provider store={store}>
             <ActionList />
@@ -92,5 +77,5 @@ it('remove all clears the list', () => {
         .hostNodes()
         .at(0)
         .simulate('click');
-    expect(actionList.find('.list').children(InfoListItem)).toHaveLength(0);
+    expect(actionList.find('.info-list-items').hostNodes()).toHaveLength(0);
 });

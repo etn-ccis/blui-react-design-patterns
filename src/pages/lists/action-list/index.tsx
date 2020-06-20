@@ -150,9 +150,9 @@ export const ActionList = (): JSX.Element => {
                 </Toolbar>
             </AppBar>
             {list.length < 1 && getEmptyComponent()}
-            <List className="list" data-cy="list-content" disablePadding component="nav">
+            <List data-cy="list-content" disablePadding component="nav">
                 {list.map(
-                    (item: any, i: number): JSX.Element => (
+                    (item, i): JSX.Element => (
                         <InfoListItem
                             key={i}
                             hidePadding
@@ -162,6 +162,7 @@ export const ActionList = (): JSX.Element => {
                             onClick={(): void => {
                                 /* handle item onClick */
                             }}
+                            className={'info-list-items'}
                             rightComponent={
                                 <IconButton
                                     data-cy="action-menu"

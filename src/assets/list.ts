@@ -1,4 +1,14 @@
-export const listItems = [
+export type President = {
+    number: number;
+    president: string;
+    birth_year: number;
+    death_year: number | null;
+    took_office: string;
+    left_office: string | null;
+    party: string;
+};
+
+export const listItems: President[] = [
     {
         number: 1,
         president: 'George Washington',

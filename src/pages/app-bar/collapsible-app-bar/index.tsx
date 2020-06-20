@@ -82,7 +82,8 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 export const CollapsibleAppBar = (): JSX.Element => {
-    const classes = useStyles(useTheme());
+    const theme = useTheme();
+    const classes = useStyles(theme);
     const [list] = useState(listItems);
     const [headerActive, setHeaderActive] = useState(false);
     const [opacity, setOpacity] = useState(1);
@@ -104,7 +105,11 @@ export const CollapsibleAppBar = (): JSX.Element => {
     });
 
     return (
-        <div id="scroll-area" onWheel={styleHeaderAndBanner}>
+        <div
+            id="scroll-area"
+            onWheel={styleHeaderAndBanner}
+            style={{ backgroundColor: theme.palette.background.paper, minHeight: '100vh' }}
+        >
             <AppBar className={clsx(classes.header, headerActive && classes.top)} position={'sticky'}>
                 <Toolbar>
                     <Hidden mdUp>

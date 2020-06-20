@@ -37,6 +37,7 @@ import HelpIcon from '@material-ui/icons/Help';
 import MenuOpenIcon from '@material-ui/icons/MenuOpen';
 
 import { english } from './translations/english';
+import { DRAWER_WIDTH } from '../../assets/constants';
 import './translations/i18n';
 import './index.css';
 require('typeface-noto-sans');
@@ -50,10 +51,10 @@ const useStyles = makeStyles((theme: Theme) => ({
         height: '180px',
         color: 'white',
         background: theme.palette.primary.main,
-        padding: '16px',
+        padding: theme.spacing(2),
     },
     snackbar: {
-        left: 'calc((100vw - 270px)/2 + 270px);',
+        left: `calc((100vw - ${DRAWER_WIDTH}px)/2 + ${DRAWER_WIDTH}px);`,
         [theme.breakpoints.down('sm')]: {
             left: '50%',
         },

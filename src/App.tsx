@@ -17,6 +17,7 @@ import { PAGES, RouteMetaData, Routes } from './router/routes';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppState } from './redux/reducers';
 import { TOGGLE_DRAWER } from './redux/actions';
+import { DRAWER_WIDTH } from './assets/constants';
 
 export const App: React.FC = () => {
     const history = useHistory();
@@ -67,7 +68,7 @@ export const App: React.FC = () => {
     const drawer = (
         <Drawer
             open={open}
-            width={270}
+            width={DRAWER_WIDTH}
             ModalProps={{
                 onBackdropClick: (): void => {
                     dispatch({ type: TOGGLE_DRAWER, payload: !open });

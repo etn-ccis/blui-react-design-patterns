@@ -59,7 +59,7 @@ export const SortableListEdit = SortableContainer(({ presidents }: SortableListE
 export const SortableList = (): JSX.Element => {
     const dispatch = useDispatch();
     const theme = useTheme();
-    const [list, setList] = useState<any[]>(presidentsList);
+    const [list, setList] = useState<President[]>(presidentsList);
     const [sortable, setSortable] = useState<boolean>(false);
 
     const onSortEnd = useCallback(

@@ -1,5 +1,6 @@
 import React, { useState, useCallback } from 'react';
-import { arrayMove, SortableHandle, SortableElement, SortableContainer } from 'react-sortable-hoc';
+import { SortableHandle, SortableElement, SortableContainer } from 'react-sortable-hoc';
+import arrayMove from 'array-move';
 import { DragHandle as DragHandleIcon } from '@material-ui/icons';
 import { List, AppBar, Toolbar, Typography, Button, Hidden, IconButton, useTheme } from '@material-ui/core';
 import { InfoListItem, ChannelValue, Spacer } from '@pxblue/react-components';

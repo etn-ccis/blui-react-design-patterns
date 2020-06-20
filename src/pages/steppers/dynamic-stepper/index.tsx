@@ -113,7 +113,7 @@ export const DynamicStepper = (): JSX.Element => {
                     </Typography>
                     <Spacer />
                     <Tooltip title={'Remove All Steps'}>
-                        <IconButton color={'inherit'} edge={'end'} onClick={(): void => setSteps([])}>
+                        <IconButton color={'inherit'} edge={'end'} onClick={(): void => setSteps([])} id={'remove-all'}>
                             <Delete />
                         </IconButton>
                     </Tooltip>

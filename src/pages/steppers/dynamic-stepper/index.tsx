@@ -20,6 +20,7 @@ import Button from '@material-ui/core/Button';
 
 import Add from '@material-ui/icons/AddCircle';
 import Delete from '@material-ui/icons/Delete';
+import DeleteSweep from '@material-ui/icons/DeleteSweep';
 import IconButton from '@material-ui/core/IconButton';
 import Menu from '@material-ui/icons/Menu';
 
@@ -114,7 +115,7 @@ export const DynamicStepper = (): JSX.Element => {
                     <Spacer />
                     <Tooltip title={'Remove All Steps'}>
                         <IconButton color={'inherit'} edge={'end'} onClick={(): void => setSteps([])} id={'remove-all'}>
-                            <Delete />
+                            <DeleteSweep />
                         </IconButton>
                     </Tooltip>
                 </Toolbar>

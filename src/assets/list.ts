@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/camelcase */
 export type President = {
     number: number;
     president: string;

@@ -64,6 +64,37 @@ const useStyles = makeStyles((theme: Theme) =>
     })
 );
 
+export const searchResults = (searchString: string): President[] => {
+    const q = searchString.toLowerCase().trim();
+    return reversedPresidentList.filter((item: President): boolean => {
+        if (
+            item.president
+                .toLowerCase()
+                .trim()
+                .includes(q)
+        ) {
+            return true;
+        }
+        if (
+            item.party
+                .toLowerCase()
+                .trim()
+                .includes(q)
+        ) {
+            return true;
+        }
+        if (
+            item.took_office
+                .toLowerCase()
+                .trim()
+                .includes(q)
+        ) {
+            return true;
+        }
+        return false;
+    });
+};
+
 export const SearchBar = (): JSX.Element => {
     const theme = useTheme();
     const classes = useStyles(theme);
@@ -72,37 +103,6 @@ export const SearchBar = (): JSX.Element => {
     const [list, setList] = useState(reversedPresidentList);
     const [searchActive, setSearchActive] = useState(false);
     const [query, setQuery] = useState('');
-
-    const searchResults = (searchString: string): President[] => {
-        const q = searchString.toLowerCase().trim();
-        return reversedPresidentList.filter((item: President): boolean => {
-            if (
-                item.president
-                    .toLowerCase()
-                    .trim()
-                    .indexOf(q) >= 0
-            ) {
-                return true;
-            }
-            if (
-                item.party
-                    .toLowerCase()
-                    .trim()
-                    .indexOf(q) >= 0
-            ) {
-                return true;
-            }
-            if (
-                item.took_office
-                    .toLowerCase()
-                    .trim()
-                    .indexOf(q) >= 0
-            ) {
-                return true;
-            }
-            return false;
-        });
-    };
 
     useEffect(() => {
         if (searchActive) {
@@ -117,6 +117,7 @@ export const SearchBar = (): JSX.Element => {
     useEffect(() => {
         if (!searchActive) {
             setQuery('');
+            setList(reversedPresidentList);
         }
     }, [searchActive]);
 
@@ -177,25 +178,23 @@ export const SearchBar = (): JSX.Element => {
 
             {/* List */}
             <List disablePadding>
-                {list.map((item, index) => {
-                    return (
-                        <ListItem key={`item-${index}`}>
-                            <ListItemIcon>
-                                <Person />
-                            </ListItemIcon>
-                            <ListItemText
-                                primary={item.president}
-                                secondary={
-                                    <>
-                                        <Typography variant={'body2'}>{item.party}</Typography>
-                                        <Typography variant={'body2'}>{item.took_office}</Typography>
-                                    </>
-                                }
-                                secondaryTypographyProps={{ component: 'div' }}
-                            />
-                        </ListItem>
-                    );
-                })}
+                {list.map((item, index) => (
+                    <ListItem key={`item-${index}`}>
+                        <ListItemIcon>
+                            <Person />
+                        </ListItemIcon>
+                        <ListItemText
+                            primary={item.president}
+                            secondary={
+                                <>
+                                    <Typography variant={'body2'}>{item.party}</Typography>
+                                    <Typography variant={'body2'}>{item.took_office}</Typography>
+                                </>
+                            }
+                            secondaryTypographyProps={{ component: 'div' }}
+                        />
+                    </ListItem>
+                ))}
                 {list.length < 1 && (
                     <InfoListItem icon={<Error />} title={'0 results'} subtitle={'No matching presidents'} />
                 )}

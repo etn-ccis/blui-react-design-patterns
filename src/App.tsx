@@ -1,4 +1,4 @@
-import { Divider, useMediaQuery, useTheme } from '@material-ui/core';
+import { Divider, useMediaQuery, useTheme, Typography } from '@material-ui/core';
 import {
     Drawer,
     DrawerBody,
@@ -7,7 +7,9 @@ import {
     DrawerLayout,
     DrawerNavGroup,
     NavItem,
+    Spacer,
 } from '@pxblue/react-components';
+import { OpenInNew } from '@material-ui/icons';
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router';
 import { Main } from './router/main';
@@ -83,6 +85,32 @@ export const App: React.FC = () => {
             <DrawerHeader title={'PX Blue'} subtitle={'React Design Patterns'} />
             <DrawerBody>
                 <DrawerNavGroup items={navItems} hidePadding activeItem={selected} />
+                <Spacer />
+                <DrawerNavGroup
+                    // title={'More Resources'}
+                    titleContent={<Typography variant={'overline'}>More Resources</Typography>}
+                    items={[
+                        {
+                            title: 'PX Blue React Components',
+                            subtitle: '@pxblue/react-component-library',
+                            itemID: 'comp lib',
+                            onClick: (): void => {
+                                window.open('https://pxblue-components.github.io/react/', '_blank');
+                            },
+                            rightComponent: <OpenInNew />,
+                        },
+                        {
+                            title: 'PX Blue React Guide',
+                            itemID: 'react guide',
+                            onClick: (): void => {
+                                window.open('https://pxblue.github.io/development/frameworks-web/react', '_blank');
+                            },
+                            rightComponent: <OpenInNew />,
+                            divider: false,
+                        },
+                    ]}
+                    hidePadding
+                />
             </DrawerBody>
             <DrawerFooter>
                 <Divider />

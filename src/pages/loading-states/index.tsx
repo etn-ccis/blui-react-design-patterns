@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { AppBar, Toolbar, IconButton, Typography, Card, Grid, List, Hidden, Tooltip } from '@material-ui/core';
 import { Refresh, Menu as MenuIcon } from '@material-ui/icons';
 import { Battery, Pie } from '@pxblue/react-progress-icons';
@@ -29,7 +29,10 @@ export const LoadingStates = (): JSX.Element => {
             setData(deviceList);
         }, 3000);
     };
-    fetchData();
+
+    useEffect(() => {
+        fetchData();
+    }, []);
 
     const refreshData = (): void => {
         setData(emptyDeviceList);

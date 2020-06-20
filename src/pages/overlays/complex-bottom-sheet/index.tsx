@@ -217,6 +217,7 @@ export const ComplexBottomSheet = (): JSX.Element => {
                             fontColor={event.active ? theme.palette.error.main : undefined}
                             avatar
                             statusColor={event.active ? theme.palette.error.main : 'transparent'}
+                            iconColor={event.active ? undefined : theme.palette.text.primary}
                         />
                     ))}
                 </List>

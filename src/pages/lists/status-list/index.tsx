@@ -121,7 +121,7 @@ export const StatusList = (): JSX.Element => {
                                 <InfoListItem
                                     key={`item_${i}`}
                                     icon={<HomeIcon />}
-                                    iconColor={colors.black[500]}
+                                    iconColor={theme.palette.text.primary}
                                     title={item.name}
                                     subtitle={item.details}
                                     avatar

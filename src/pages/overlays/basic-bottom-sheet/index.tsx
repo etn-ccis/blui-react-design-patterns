@@ -76,7 +76,7 @@ export const BasicBottomSheet = (): JSX.Element => {
                 {alarms.map((alarm: Alarm, i: number) => (
                     <InfoListItem
                         key={`alarm_${i}`}
-                        statusColor={alarm.active ? colors.red[500] : 'inherit'}
+                        statusColor={alarm.active ? theme.palette.error.main : 'inherit'}
                         title={`${alarm.active ? 'ACTIVE: ' : ''}${alarm.details}`}
                         subtitle={formatDate(alarm.date)}
                         icon={

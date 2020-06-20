@@ -70,8 +70,8 @@ export const PAGES: Routes = {
     STEPPERS: {
         title: 'Steppers',
         DYNAMIC: {
-            title: 'Dynamic',
-            route: 'dynamic',
+            title: 'Dynamic Stepper',
+            route: 'dynamic-stepper',
         },
     },
     VISUALIZATIONS: {

@@ -75,20 +75,20 @@ export const DynamicStepper = (): JSX.Element => {
     };
 
     const addStep = (): void => {
-        let newSteps = [...steps];
+        const newSteps = [...steps];
         newSteps.push(-1);
         setSteps(newSteps);
         setActiveStep(newSteps.length - 1);
     };
 
     const removeStep = (): void => {
-        let newSteps = [...steps];
+        const newSteps = [...steps];
         newSteps.splice(activeStep, 1);
         setSteps(newSteps);
         setActiveStep(steps.length);
     };
 
-    const reset = () => {
+    const reset = (): void => {
         setSteps([-1]);
         setActiveStep(0);
         setFinished(false);
@@ -146,7 +146,7 @@ export const DynamicStepper = (): JSX.Element => {
                                     disabled={choice === -1 && index !== steps.length - 1}
                                 >
                                     <StepButton
-                                        onClick={() => {
+                                        onClick={(): void => {
                                             setActiveStep(index);
                                         }}
                                     >
@@ -171,7 +171,9 @@ export const DynamicStepper = (): JSX.Element => {
                                                 aria-label="action"
                                                 name={`action_${index}`}
                                                 value={steps[index]}
-                                                onChange={(evt) => changeStepValue(index, parseInt(evt.target.value))}
+                                                onChange={(evt): void =>
+                                                    changeStepValue(index, parseInt(evt.target.value))
+                                                }
                                             >
                                                 {stepOptions.map((option, i) => (
                                                     <FormControlLabel
@@ -200,7 +202,7 @@ export const DynamicStepper = (): JSX.Element => {
                                             }
                                         />
                                     }
-                                    onClick={() => addStep()}
+                                    onClick={(): void => addStep()}
                                 >
                                     <Typography variant={'body1'}>Add a Step</Typography>
                                 </StepButton>
@@ -211,7 +213,7 @@ export const DynamicStepper = (): JSX.Element => {
                             data-cy="done"
                             color={'primary'}
                             style={{ marginLeft: 24 }}
-                            onClick={() => setFinished(true)}
+                            onClick={(): void => setFinished(true)}
                         >
                             Done
                         </Button>

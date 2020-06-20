@@ -102,20 +102,17 @@ export const sortedEvents = (events: Event[], sortby: string): Event[] => {
                     return -1;
                 } else if (a.type > b.type) {
                     return 1;
-                } else {
-                    // secondary sort by alarm active and/or date
-                    if (a.type !== FILTERS.ALARM) {
-                        return b.date - a.date;
-                    } else {
-                        if (a.active && !b.active) {
-                            return -1;
-                        } else if (b.active && !a.active) {
-                            return 1;
-                        } else {
-                            return b.date - a.date;
-                        }
-                    }
                 }
+                // secondary sort by alarm active and/or date
+                if (a.type !== FILTERS.ALARM) {
+                    return b.date - a.date;
+                }
+                if (a.active && !b.active) {
+                    return -1;
+                } else if (b.active && !a.active) {
+                    return 1;
+                }
+                return b.date - a.date;
             });
         case TYPES.TIME:
         default:
@@ -191,7 +188,12 @@ export const ComplexBottomSheet = (): JSX.Element => {
                         Complex Bottom Sheet
                     </Typography>
                     <Spacer />
-                    <IconButton data-cy="action-menu" color={'inherit'} onClick={() => setShowMenu(true)} edge={'end'}>
+                    <IconButton
+                        data-cy="action-menu"
+                        color={'inherit'}
+                        onClick={(): void => setShowMenu(true)}
+                        edge={'end'}
+                    >
                         <MoreVert />
                     </IconButton>
                 </Toolbar>
@@ -227,7 +229,7 @@ export const ComplexBottomSheet = (): JSX.Element => {
                 anchor={'bottom'}
                 transitionDuration={250}
                 open={showMenu}
-                onClose={() => setShowMenu(false)}
+                onClose={(): void => setShowMenu(false)}
                 classes={{ paper: classes.paper }}
             >
                 <List disablePadding>
@@ -239,7 +241,7 @@ export const ComplexBottomSheet = (): JSX.Element => {
                             <IconToggle
                                 iconComponent={<AccessTime />}
                                 label={'Time'}
-                                onClick={() => setCurrentSort(TYPES.TIME)}
+                                onClick={(): void => setCurrentSort(TYPES.TIME)}
                                 active={currentSort === TYPES.TIME}
                             />
                             <IconToggle
@@ -260,31 +262,31 @@ export const ComplexBottomSheet = (): JSX.Element => {
                                 iconComponent={<NotificationsActive />}
                                 label="Active Alarms"
                                 data-cy="active-alarms"
-                                onClick={() => setShowActiveAlarms(!showActiveAlarms)}
+                                onClick={(): void => setShowActiveAlarms(!showActiveAlarms)}
                                 active={showActiveAlarms}
                             />
                             <IconToggle
                                 iconComponent={<Notifications />}
                                 label={FILTERS.ALARM}
-                                onClick={() => setShowAlarms(!showAlarms)}
+                                onClick={(): void => setShowAlarms(!showAlarms)}
                                 active={showAlarms}
                             />
                             <IconToggle
                                 iconComponent={<Settings />}
                                 label={FILTERS.SETTINGS}
-                                onClick={() => setShowSettings(!showSettings)}
+                                onClick={(): void => setShowSettings(!showSettings)}
                                 active={showSettings}
                             />
                             <IconToggle
                                 iconComponent={<Update />}
                                 label={FILTERS.SESSION}
-                                onClick={() => setShowSessions(!showSessions)}
+                                onClick={(): void => setShowSessions(!showSessions)}
                                 active={showSessions}
                             />
                         </Grid>
                     </ListItem>
                     <Divider />
-                    <InfoListItem icon={<Close />} title={'Close'} dense onClick={() => setShowMenu(false)} />
+                    <InfoListItem icon={<Close />} title={'Close'} dense onClick={(): void => setShowMenu(false)} />
                 </List>
             </Drawer>
         </div>

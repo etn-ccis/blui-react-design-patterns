@@ -6,7 +6,7 @@ import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import { Reducer } from '../../../redux/reducers';
 
-import { ComplexBottomSheet, sortedEvents, filteredEvents, TYPES, FILTERS } from '.';
+import { ComplexBottomSheet, sortedEvents, filteredEvents, TYPES } from '.';
 import { Event } from './alarmData';
 
 Enzyme.configure({ adapter: new Adapter() });

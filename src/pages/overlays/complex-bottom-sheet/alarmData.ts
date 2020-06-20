@@ -14,7 +14,7 @@ const DEVICES = ['MX Power Pro', 'PXL DG1', 'Pentair Aurora'];
 const DETAILS = ['Over Voltage Fault', 'Over Current Fault', 'Under Voltage Fault', 'Under Current Fault'];
 
 export function formatDate(timestamp: number): string {
-    let date = new Date(timestamp);
+    const date = new Date(timestamp);
     return `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`;
 }
 
@@ -51,7 +51,7 @@ function getRandomData(): Event {
 }
 
 function getEventList(count: number): Event[] {
-    let data = [];
+    const data = [];
     for (let i = 0; i < count; i++) {
         data.push(getRandomData());
     }

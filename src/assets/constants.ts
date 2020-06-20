@@ -1,4 +1,4 @@
 /**
  * Global Drawer Width.
  */
-export const DRAWER_WIDTH = 300;
+export const DRAWER_WIDTH = 270;

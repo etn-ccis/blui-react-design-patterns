@@ -1,112 +1,100 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-
-import Enzyme, { shallow } from 'enzyme';
+import Enzyme from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
-import App from './App';
+import { createStore } from 'redux';
+import { Provider } from 'react-redux';
+import { Reducer } from '../../../redux/reducers';
+
+import { ComplexBottomSheet, sortedEvents, filteredEvents, TYPES, FILTERS } from '.';
+import { Event } from './alarmData';
 
 Enzyme.configure({ adapter: new Adapter() });
+const store = createStore(Reducer());
 
 it('renders without crashing', () => {
     const div = document.createElement('div');
-    ReactDOM.render(<App />, div);
+    ReactDOM.render(
+        <Provider store={store}>
+            <ComplexBottomSheet />
+        </Provider>,
+        div
+    );
     ReactDOM.unmountComponentAtNode(div);
 });
 
 it('sorts events correctly', () => {
-    const wrapper = shallow(<App></App>)
-        .dive()
-        .instance();
-    const data = [
-        { type: 'alarm', date: 0, active: 0 },
-        { type: 'alarm', date: 10, active: 1 },
-        { type: 'settings', date: 4 },
-        { type: 'session', date: 8 },
+    const data: Event[] = [
+        { type: 'alarm', date: 0, active: false, location: '', device: '', details: '' },
+        { type: 'alarm', date: 10, active: true, location: '', device: '', details: '' },
+        { type: 'settings', date: 4, location: '', device: '', details: '' },
+        { type: 'session', date: 8, location: '', device: '', details: '' },
     ];
-    const sortedTime = [
-        { type: 'alarm', date: 10, active: 1 },
-        { type: 'session', date: 8 },
-        { type: 'settings', date: 4 },
-        { type: 'alarm', date: 0, active: 0 },
+    const sortedTime: Event[] = [
+        { type: 'alarm', date: 10, active: true, location: '', device: '', details: '' },
+        { type: 'session', date: 8, location: '', device: '', details: '' },
+        { type: 'settings', date: 4, location: '', device: '', details: '' },
+        { type: 'alarm', date: 0, active: false, location: '', device: '', details: '' },
     ];
-    const sortedType = [
-        { type: 'alarm', date: 10, active: 1 },
-        { type: 'alarm', date: 0, active: 0 },
-        { type: 'session', date: 8 },
-        { type: 'settings', date: 4 },
+    const sortedType: Event[] = [
+        { type: 'alarm', date: 10, active: true, location: '', device: '', details: '' },
+        { type: 'alarm', date: 0, active: false, location: '', device: '', details: '' },
+        { type: 'session', date: 8, location: '', device: '', details: '' },
+        { type: 'settings', date: 4, location: '', device: '', details: '' },
     ];
-    wrapper.state = {
-        showMenu: false,
-        alarmList: data,
-        currentSort: 'time',
-    };
-    let sorted = wrapper.sortedEvents();
-    expect(sorted).toEqual(sortedTime);
-    wrapper.setState({ currentSort: 'type' });
-    sorted = wrapper.sortedEvents();
-    expect(sorted).toEqual(sortedType);
+
+    expect(sortedEvents(data, TYPES.TIME)).toStrictEqual(sortedTime);
+    expect(sortedEvents(data, TYPES.TYPE)).toStrictEqual(sortedType);
 });
 
 it('filters events correctly', () => {
-    const wrapper = shallow(<App></App>)
-        .dive()
-        .instance();
-    const data = [
-        { type: 'alarm', date: 0, active: 0 },
-        { type: 'alarm', date: 10, active: 1 },
-        { type: 'settings', date: 4 },
-        { type: 'session', date: 8 },
+    const data: Event[] = [
+        { type: 'alarm', date: 0, active: false, location: '', device: '', details: '' },
+        { type: 'alarm', date: 10, active: true, location: '', device: '', details: '' },
+        { type: 'settings', date: 4, location: '', device: '', details: '' },
+        { type: 'session', date: 8, location: '', device: '', details: '' },
     ];
 
     // show all
-    const all = [
-        { type: 'alarm', date: 10, active: 1 },
-        { type: 'alarm', date: 0, active: 0 },
-        { type: 'session', date: 8 },
-        { type: 'settings', date: 4 },
+    const all: Event[] = [
+        { type: 'alarm', date: 0, active: false, location: '', device: '', details: '' },
+        { type: 'alarm', date: 10, active: true, location: '', device: '', details: '' },
+        { type: 'settings', date: 4, location: '', device: '', details: '' },
+        { type: 'session', date: 8, location: '', device: '', details: '' },
     ];
 
     // show alarms
-    const alarms = [
-        { type: 'alarm', date: 10, active: 1 },
-        { type: 'alarm', date: 0, active: 0 },
+    const alarms: Event[] = [
+        { type: 'alarm', date: 0, active: false, location: '', device: '', details: '' },
+        { type: 'alarm', date: 10, active: true, location: '', device: '', details: '' },
     ];
 
     // show sessions
-    const sessions = [{ type: 'session', date: 8 }];
+    const sessions: Event[] = [{ type: 'session', date: 8, location: '', device: '', details: '' }];
 
     // show settings and active alarms
-    const settingsandactive = [
-        { type: 'alarm', date: 10, active: 1 },
-        { type: 'settings', date: 4 },
+    const settingsandactive: Event[] = [
+        { type: 'alarm', date: 10, active: true, location: '', device: '', details: '' },
+        { type: 'settings', date: 4, location: '', device: '', details: '' },
     ];
 
-    wrapper.state = {
-        showMenu: false,
-        alarmList: data,
-        currentSort: 'type',
-        showAlarms: true,
-        showActiveAlarms: true,
-        showEvents: true,
-        showSessions: true,
-    };
-
     // all
-    let sorted = wrapper.filteredEvents(wrapper.sortedEvents());
-    expect(sorted).toEqual(all);
+    expect(
+        filteredEvents(data, { showAlarms: true, showActiveAlarms: true, showSettings: true, showSessions: true })
+    ).toStrictEqual(all);
 
     // alarms
-    wrapper.setState({ showAlarms: true, showActiveAlarms: true, showEvents: false, showSessions: false });
-    sorted = wrapper.filteredEvents(wrapper.sortedEvents());
-    expect(sorted).toEqual(alarms);
+    expect(
+        filteredEvents(data, { showAlarms: true, showActiveAlarms: true, showSettings: false, showSessions: false })
+    ).toStrictEqual(alarms);
 
     // sessions
-    wrapper.setState({ showAlarms: false, showActiveAlarms: false, showEvents: false, showSessions: true });
-    sorted = wrapper.filteredEvents(wrapper.sortedEvents());
-    expect(sorted).toEqual(sessions);
+    expect(
+        filteredEvents(data, { showAlarms: false, showActiveAlarms: false, showSettings: false, showSessions: true })
+    ).toStrictEqual(sessions);
 
     // settings and active
-    wrapper.setState({ showAlarms: false, showActiveAlarms: true, showEvents: true, showSessions: false });
-    sorted = wrapper.filteredEvents(wrapper.sortedEvents());
-    expect(sorted).toEqual(settingsandactive);
+    expect(
+        filteredEvents(data, { showAlarms: false, showActiveAlarms: true, showSettings: true, showSessions: false })
+    ).toStrictEqual(settingsandactive);
 });

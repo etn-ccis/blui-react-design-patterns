@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { ActionList } from '.';
 import Enzyme, { mount } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
-import ListItem from '@material-ui/core/ListItem';
+import InfoListItem from '@pxblue/react-components';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import { Reducer } from '../../../redux/reducers';
@@ -41,7 +41,7 @@ it('renders 10 items by default', () => {
         actionList
             .find('.list')
             .hostNodes()
-            .children(ListItem)
+            .children(InfoListItem)
     ).toHaveLength(10);
 });
 
@@ -57,7 +57,7 @@ it('add item functions correctly', () => {
         .hostNodes()
         .at(0)
         .simulate('click');
-    expect(actionList.find('.list').children(ListItem)).toHaveLength(11);
+    expect(actionList.find('.list').children(InfoListItem)).toHaveLength(11);
 });
 
 // @TODO: figure out how to do this for a functional component
@@ -92,5 +92,5 @@ it('remove all clears the list', () => {
         .hostNodes()
         .at(0)
         .simulate('click');
-    expect(actionList.find('.list').children(ListItem)).toHaveLength(0);
+    expect(actionList.find('.list').children(InfoListItem)).toHaveLength(0);
 });

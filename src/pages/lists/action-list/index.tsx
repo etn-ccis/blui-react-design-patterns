@@ -84,7 +84,7 @@ export const ActionList = (): JSX.Element => {
                 display: 'flex',
                 flexDirection: 'column',
                 padding: '20px',
-                height: 'calc(100vh - 128px)',
+                height: 'calc(100vh - 64px)',
             }}
         >
             <EmptyState

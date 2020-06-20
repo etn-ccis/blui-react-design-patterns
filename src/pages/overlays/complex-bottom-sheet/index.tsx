@@ -12,6 +12,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 
 import Close from '@material-ui/icons/Close';
+import Error from '@material-ui/icons/Error';
 import Menu from '@material-ui/icons/Menu';
 import MoreVert from '@material-ui/icons/MoreVert';
 import Notifications from '@material-ui/icons/Notifications';
@@ -26,20 +27,22 @@ import { TOGGLE_DRAWER } from '../../../redux/actions';
 
 import { IconToggle } from './IconToggle';
 import { makeStyles, useTheme, Theme, createStyles } from '@material-ui/core/styles';
-import { Spacer, InfoListItem } from '@pxblue/react-components';
+import { Spacer, InfoListItem, EmptyState } from '@pxblue/react-components';
 
 import getEvents, { formatDate, Event } from './alarmData';
 
-const FILTERS = {
+export const TYPES = {
     TIME: 'time',
     TYPE: 'type',
 };
 
-const TYPES = {
+export const FILTERS = {
     ALARM: 'alarm',
     SESSION: 'session',
     SETTINGS: 'settings',
 };
+
+const eventList = getEvents(20);
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -82,10 +85,62 @@ const useStyles = makeStyles((theme: Theme) =>
                 backgroundColor: theme.palette.background.default,
             },
         },
+        emptyStateContainer: {
+            display: 'flex',
+            height: `calc(100vh - ${theme.spacing(8)}px)`,
+            justifyContent: 'center',
+        },
     })
 );
 
-const eventList = getEvents(20);
+export const sortedEvents = (events: Event[], sortby: string): Event[] => {
+    switch (sortby) {
+        case TYPES.TYPE:
+            return events.sort((a, b) => {
+                // primary sort by type
+                if (a.type < b.type) {
+                    return -1;
+                } else if (a.type > b.type) {
+                    return 1;
+                } else {
+                    // secondary sort by alarm active and/or date
+                    if (a.type !== FILTERS.ALARM) {
+                        return b.date - a.date;
+                    } else {
+                        if (a.active && !b.active) {
+                            return -1;
+                        } else if (b.active && !a.active) {
+                            return 1;
+                        } else {
+                            return b.date - a.date;
+                        }
+                    }
+                }
+            });
+        case TYPES.TIME:
+        default:
+            return events.sort((a, b) => b.date - a.date);
+    }
+};
+
+export const filteredEvents = (events: Event[], config: any): Event[] => {
+    const { showActiveAlarms, showAlarms, showSettings, showSessions } = config;
+    return events.filter((item) => {
+        if (!showActiveAlarms && item.type === FILTERS.ALARM && item.active) {
+            return false;
+        }
+        if (!showAlarms && item.type === FILTERS.ALARM && !item.active) {
+            return false;
+        }
+        if (!showSettings && item.type === FILTERS.SETTINGS) {
+            return false;
+        }
+        if (!showSessions && item.type === FILTERS.SESSION) {
+            return false;
+        }
+        return true;
+    });
+};
 
 export const ComplexBottomSheet = (): JSX.Element => {
     const dispatch = useDispatch();
@@ -100,61 +155,22 @@ export const ComplexBottomSheet = (): JSX.Element => {
     const [showSettings, setShowSettings] = useState(true);
     const [showSessions, setShowSessions] = useState(true);
 
-    const sortedEvents = (events: Event[]): Event[] => {
-        switch (currentSort) {
-            case FILTERS.TYPE:
-                return events.sort((a, b) => {
-                    // primary sort by type
-                    if (a.type < b.type) {
-                        return -1;
-                    } else if (a.type > b.type) {
-                        return 1;
-                    } else {
-                        // secondary sort by alarm active and/or date
-                        if (a.type !== TYPES.ALARM) {
-                            return b.date - a.date;
-                        } else {
-                            if (a.active && !b.active) {
-                                return -1;
-                            } else if (b.active && !a.active) {
-                                return 1;
-                            } else {
-                                return b.date - a.date;
-                            }
-                        }
-                    }
-                });
-            case FILTERS.TIME:
-            default:
-                return events.sort((a, b) => b.date - a.date);
-        }
-    };
-
-    const filteredEvents = (events: Event[]): Event[] => {
-        return events.filter((item) => {
-            if (!showActiveAlarms && item.type === TYPES.ALARM && item.active) {
-                return false;
-            }
-            if (!showAlarms && item.type === TYPES.ALARM && !item.active) {
-                return false;
-            }
-            if (!showSettings && item.type === TYPES.SETTINGS) {
-                return false;
-            }
-            if (!showSessions && item.type === TYPES.SESSION) {
-                return false;
-            }
-            return true;
-        });
-    };
-
     useEffect(() => {
-        setList(sortedEvents(list));
-    }, [currentSort]);
+        setList(
+            filteredEvents(sortedEvents(eventList, currentSort), {
+                showActiveAlarms,
+                showAlarms,
+                showSettings,
+                showSessions,
+            })
+        );
+    }, [currentSort, showActiveAlarms, showAlarms, showSettings, showSessions]);
 
-    // useEffect(() => {
-    //     setList(filteredEvents(list));
-    // }, [showActiveAlarms, showAlarms, showSettings, showSessions, filteredEvents, list]);
+    const getEmptyState = (): JSX.Element => (
+        <div className={classes.emptyStateContainer}>
+            <EmptyState icon={<Error style={{ fontSize: theme.spacing(12) }} />} title={'No events available'} />
+        </div>
+    );
 
     return (
         <div style={{ backgroundColor: theme.palette.background.paper, minHeight: '100vh' }}>
@@ -171,7 +187,7 @@ export const ComplexBottomSheet = (): JSX.Element => {
                             <Menu />
                         </IconButton>
                     </Hidden>
-                    <Typography variant="h6" color="inherit">
+                    <Typography variant="h6" color="inherit" noWrap>
                         Complex Bottom Sheet
                     </Typography>
                     <Spacer />
@@ -181,26 +197,30 @@ export const ComplexBottomSheet = (): JSX.Element => {
                 </Toolbar>
             </AppBar>
 
-            <List data-cy="list-content" disablePadding>
-                {list.map((event, i) => (
-                    <InfoListItem
-                        key={i}
-                        icon={
-                            <>
-                                {event.type === 'alarm' && event.active && <NotificationsActive />}
-                                {event.type === 'alarm' && !event.active && <Notifications />}
-                                {event.type === 'settings' && <Settings />}
-                                {event.type === 'session' && <Update />}
-                            </>
-                        }
-                        title={`${event.active ? 'ACTIVE: ' : ''}${event.details}`}
-                        subtitle={formatDate(event.date)}
-                        fontColor={event.active ? theme.palette.error.main : undefined}
-                        avatar
-                        statusColor={event.active ? theme.palette.error.main : 'transparent'}
-                    />
-                ))}
-            </List>
+            {list.length > 0 && (
+                <List data-cy="list-content" disablePadding>
+                    {list.map((event, i) => (
+                        <InfoListItem
+                            key={i}
+                            icon={
+                                <>
+                                    {event.type === 'alarm' && event.active && <NotificationsActive />}
+                                    {event.type === 'alarm' && !event.active && <Notifications />}
+                                    {event.type === 'settings' && <Settings />}
+                                    {event.type === 'session' && <Update />}
+                                </>
+                            }
+                            title={`${event.active ? 'ACTIVE: ' : ''}${event.details}`}
+                            subtitle={formatDate(event.date)}
+                            fontColor={event.active ? theme.palette.error.main : undefined}
+                            avatar
+                            statusColor={event.active ? theme.palette.error.main : 'transparent'}
+                        />
+                    ))}
+                </List>
+            )}
+
+            {list.length === 0 && getEmptyState()}
 
             {/* Custom/Complex Bottom Sheet Definition */}
             <Drawer
@@ -208,7 +228,6 @@ export const ComplexBottomSheet = (): JSX.Element => {
                 transitionDuration={250}
                 open={showMenu}
                 onClose={() => setShowMenu(false)}
-                // className={classes.drawer}
                 classes={{ paper: classes.paper }}
             >
                 <List disablePadding>
@@ -220,14 +239,14 @@ export const ComplexBottomSheet = (): JSX.Element => {
                             <IconToggle
                                 iconComponent={<AccessTime />}
                                 label={'Time'}
-                                onClick={() => setCurrentSort(FILTERS.TIME)}
-                                active={currentSort === FILTERS.TIME}
+                                onClick={() => setCurrentSort(TYPES.TIME)}
+                                active={currentSort === TYPES.TIME}
                             />
                             <IconToggle
                                 iconComponent={<Info />}
                                 label={'Type'}
-                                onClick={(): void => setCurrentSort(FILTERS.TYPE)}
-                                active={currentSort === FILTERS.TYPE}
+                                onClick={(): void => setCurrentSort(TYPES.TYPE)}
+                                active={currentSort === TYPES.TYPE}
                             />
                         </Grid>
                     </ListItem>
@@ -246,19 +265,19 @@ export const ComplexBottomSheet = (): JSX.Element => {
                             />
                             <IconToggle
                                 iconComponent={<Notifications />}
-                                label={TYPES.ALARM}
+                                label={FILTERS.ALARM}
                                 onClick={() => setShowAlarms(!showAlarms)}
                                 active={showAlarms}
                             />
                             <IconToggle
                                 iconComponent={<Settings />}
-                                label={TYPES.SETTINGS}
+                                label={FILTERS.SETTINGS}
                                 onClick={() => setShowSettings(!showSettings)}
                                 active={showSettings}
                             />
                             <IconToggle
                                 iconComponent={<Update />}
-                                label={TYPES.SESSION}
+                                label={FILTERS.SESSION}
                                 onClick={() => setShowSessions(!showSessions)}
                                 active={showSessions}
                             />

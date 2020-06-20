@@ -91,8 +91,7 @@ export const App: React.FC = () => {
                     titleContent={<Typography variant={'overline'}>More Resources</Typography>}
                     items={[
                         {
-                            title: 'PX Blue React Components',
-                            subtitle: '@pxblue/react-component-library',
+                            title: 'PX Blue Components',
                             itemID: 'comp lib',
                             onClick: (): void => {
                                 window.open('https://pxblue-components.github.io/react/', '_blank');

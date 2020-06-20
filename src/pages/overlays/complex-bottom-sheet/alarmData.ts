@@ -1,8 +1,6 @@
-type AlertType = 'alarm' | 'settings' | 'session';
-
 export type Event = {
     date: number;
-    type: AlertType;
+    type: string;
     active?: boolean;
     location: string;
     device: string;
@@ -10,7 +8,7 @@ export type Event = {
 };
 
 const NOW = Date.now();
-const TYPES: AlertType[] = ['alarm', 'settings', 'session'];
+const TYPES = ['alarm', 'settings', 'session'];
 const LOCATIONS = ['Dos Valley Field', 'Jameson Field', 'Parker Field West', 'Parker Field East', 'North Park Garden'];
 const DEVICES = ['MX Power Pro', 'PXL DG1', 'Pentair Aurora'];
 const DETAILS = ['Over Voltage Fault', 'Over Current Fault', 'Under Voltage Fault', 'Under Current Fault'];

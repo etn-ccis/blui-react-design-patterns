@@ -13,15 +13,17 @@ import {
     Button,
     Theme,
     useTheme,
+    Snackbar,
+    Tooltip,
 } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 import CancelIcon from '@material-ui/icons/Cancel';
 import AddIcon from '@material-ui/icons/Add';
 import MenuIcon from '@material-ui/icons/Menu';
-import ComputerIcon from '@material-ui/icons/Computer';
+import ErrorIcon from '@material-ui/icons/Error';
 import { TOGGLE_DRAWER } from '../../../redux/actions';
 import { useDispatch } from 'react-redux';
-import clsx from 'clsx';
+import { DRAWER_WIDTH } from '../../../assets/constants';
 import { EmptyState, InfoListItem, Spacer } from '@pxblue/react-components';
 
 export type ListItem = {
@@ -33,43 +35,16 @@ export type ListItem = {
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
-        footer: {
-            maxWidth: '500px',
-            boxSizing: 'border-box',
-            position: 'fixed',
-            bottom: 0,
-            left: '50%',
-            background: theme.palette.background.paper,
-            color: theme.palette.text.primary,
-            transition: 'all 0.2s cubic- bezier(0.4, 0.0, 0.2, 1)',
-            opacity: 0,
-            padding: theme.spacing(0.5),
-            paddingLeft: theme.spacing(4),
-            visibility: 'hidden',
-            boxShadow: theme.shadows[10],
-            [theme.breakpoints.down('sm')]: {
-                width: '100%',
-                left: 0,
-                right: 0,
-                maxWidth: 'none',
-            },
-        },
         snackbar: {
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            lineHeight: '36px',
-            opacity: 1,
-        },
-        active: {
-            opacity: 1,
-            visibility: 'visible',
+            left: `calc((100vw - ${DRAWER_WIDTH}px)/2 + ${DRAWER_WIDTH}px);`,
+            [theme.breakpoints.down('sm')]: {
+                left: 'unset',
+            },
         },
         emptyStateContainer: {
             display: 'flex',
             flexDirection: 'column',
-            padding: '20px',
-            height: 'calc(100vh - 128px)',
+            height: `calc(100vh - ${theme.spacing(8)}px)`,
         },
     })
 );
@@ -142,11 +117,16 @@ export const MultiselectList = (): JSX.Element => {
     const getEmptyComponent = (): JSX.Element => (
         <div className={classes.emptyStateContainer}>
             <EmptyState
-                icon={<ComputerIcon style={{ fontSize: '100px' }} />}
+                icon={<ErrorIcon style={{ fontSize: '100px' }} />}
                 title={'No Items Found'}
                 actions={
-                    <Button variant="contained" color="primary" style={{ margin: '10px' }} onClick={onAddItem}>
-                        <AddIcon style={{ marginRight: '5px' }} />
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        style={{ margin: theme.spacing() }}
+                        onClick={onAddItem}
+                        startIcon={<AddIcon />}
+                    >
                         Add an Item
                     </Button>
                 }
@@ -173,16 +153,18 @@ export const MultiselectList = (): JSX.Element => {
                         Multiselect List
                     </Typography>
                     <Spacer />
-                    <IconButton
-                        edge={'end'}
-                        id="add-item-button"
-                        data-cy="toolbar-add"
-                        color="inherit"
-                        aria-label="add"
-                        onClick={onAddItem}
-                    >
-                        <AddIcon />
-                    </IconButton>
+                    <Tooltip title={'Add an item'}>
+                        <IconButton
+                            edge={'end'}
+                            id="add-item-button"
+                            data-cy="toolbar-add"
+                            color="inherit"
+                            aria-label="add"
+                            onClick={onAddItem}
+                        >
+                            <AddIcon />
+                        </IconButton>
+                    </Tooltip>
                 </Toolbar>
             </AppBar>
             {list.length < 1 && getEmptyComponent()}
@@ -206,20 +188,25 @@ export const MultiselectList = (): JSX.Element => {
                     </InfoListItem>
                 ))}
             </List>
-            <footer
-                data-cy="snackbar"
-                className={clsx(classes.snackbar, selectedItems.length > 0 && classes.active, classes.footer)}
-            >
-                <Typography>{selectedItems.length} selected items</Typography>
-                <div>
-                    <IconButton id="remove-items-button" onClick={onDelete} data-cy="snackbar-delete">
-                        <DeleteIcon />
-                    </IconButton>
-                    <IconButton id="cancel-button" onClick={onCancel} data-cy="snackbar-cancel">
-                        <CancelIcon />
-                    </IconButton>
-                </div>
-            </footer>
+            <Snackbar
+                action={
+                    <>
+                        <Tooltip title={'Delete all'}>
+                            <IconButton id="remove-items-button" onClick={onDelete} data-cy="snackbar-delete">
+                                <DeleteIcon />
+                            </IconButton>
+                        </Tooltip>
+                        <Tooltip title={'Cancel'}>
+                            <IconButton id="cancel-button" onClick={onCancel} data-cy="snackbar-cancel">
+                                <CancelIcon />
+                            </IconButton>
+                        </Tooltip>
+                    </>
+                }
+                message={`${selectedItems.length} selected item${selectedItems.length > 1 ? 's' : ''}`}
+                open={selectedItems.length > 0}
+                classes={{ root: classes.snackbar }}
+            />
         </div>
     );
 };

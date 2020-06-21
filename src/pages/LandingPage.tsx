@@ -133,16 +133,25 @@ export const LandingPage = (): JSX.Element => {
                         <div className={classes.spaced}>
                             <Divider />
                             <div className={classes.links}>
-                                <Button href={'https://pxblue.github.io/development/frameworks-web/react'}>
+                                <Button
+                                    target={'_blank'}
+                                    href={'https://pxblue.github.io/development/frameworks-web/react'}
+                                >
                                     PX Blue React Developer Guide
                                 </Button>
-                                <Button href={'https://pxblue.github.io/patterns'}>Design Pattern Description</Button>
-                                <Button href={'https://pxblue-components.github.io/react/'}>
+                                <Button target={'_blank'} href={'https://pxblue.github.io/patterns'}>
+                                    Design Pattern Description
+                                </Button>
+                                <Button target={'_blank'} href={'https://pxblue-components.github.io/react/'}>
                                     PX Blue React Components
                                 </Button>
-                                <Button href={'https://github.com/pxblue'}>Visit Us on GitHub</Button>
-                                <Button href={'https://pxblue.github.io/roadmap'}>Release Roadmap</Button>
-                                <Button href={'https://pxblue.github.io/community/contactus'}>
+                                <Button target={'_blank'} href={'https://github.com/pxblue'}>
+                                    Visit Us on GitHub
+                                </Button>
+                                <Button target={'_blank'} href={'https://pxblue.github.io/roadmap'}>
+                                    Release Roadmap
+                                </Button>
+                                <Button target={'_blank'} href={'https://pxblue.github.io/community/contactus'}>
                                     Send Feedback or Suggestion
                                 </Button>
                             </div>

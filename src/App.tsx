@@ -60,6 +60,7 @@ export const App: React.FC = () => {
             onClick: page.route
                 ? (): void => {
                       if (page.route) navigate(page.route); // this extra if shouldn't be necessary, but TS doesn't understand that it can't be undefined because of the ternary operator.
+                      dispatch({ type: TOGGLE_DRAWER, payload: false });
                   }
                 : undefined,
         };
@@ -83,6 +84,7 @@ export const App: React.FC = () => {
                 subtitle={'React Design Patterns'}
                 onClick={(): void => {
                     navigate('/');
+                    dispatch({ type: TOGGLE_DRAWER, payload: false });
                 }}
                 style={{ cursor: 'pointer' }}
             />
@@ -115,7 +117,12 @@ export const App: React.FC = () => {
             </DrawerBody>
             <DrawerFooter>
                 <Divider />
-                <div style={{ display: 'flex', justifyContent: 'center' }}>
+                <div
+                    style={{ display: 'flex', justifyContent: 'center', cursor: 'pointer' }}
+                    onClick={(): void => {
+                        window.open('https://www.eaton.com', '_blank');
+                    }}
+                >
                     <img src={EatonLogo} style={{ margin: '10px' }} alt="Eaton Logo" height={50} width={'auto'} />
                 </div>
             </DrawerFooter>

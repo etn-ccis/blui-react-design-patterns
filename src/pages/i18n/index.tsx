@@ -56,7 +56,10 @@ const useStyles = makeStyles((theme: Theme) => ({
     snackbar: {
         left: `calc((100vw - ${DRAWER_WIDTH}px)/2 + ${DRAWER_WIDTH}px);`,
         [theme.breakpoints.down('sm')]: {
-            left: '50%',
+            left: 'unset',
+            '&.RTL': {
+                right: '50%',
+            },
         },
     },
     icon: {

@@ -9,13 +9,13 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import AddIcon from '@material-ui/icons/Add';
 import DeleteIcon from '@material-ui/icons/Delete';
-import ComputerIcon from '@material-ui/icons/Computer';
+import ErrorIcon from '@material-ui/icons/Error';
 import List from '@material-ui/core/List';
 import { EmptyState, Spacer, InfoListItem } from '@pxblue/react-components';
 import { useDispatch } from 'react-redux';
 import { TOGGLE_DRAWER } from '../../../redux/actions';
 import { Menu as MenuIcon } from '@material-ui/icons';
-import { Hidden, useTheme } from '@material-ui/core';
+import { Hidden, useTheme, Tooltip } from '@material-ui/core';
 
 type Option = 'Delete' | 'View Details';
 type Item = {
@@ -88,16 +88,16 @@ export const ActionList = (): JSX.Element => {
             }}
         >
             <EmptyState
-                icon={<ComputerIcon style={{ fontSize: '100px' }} />}
+                icon={<ErrorIcon style={{ fontSize: '100px' }} />}
                 title={'No Items Found'}
                 actions={
                     <Button
                         variant="contained"
                         color="primary"
-                        style={{ margin: '10px' }}
+                        style={{ margin: theme.spacing() }}
                         onClick={(): void => onAddItem()}
+                        startIcon={<AddIcon />}
                     >
-                        <AddIcon style={{ marginRight: '5px' }} />
                         Add an Item
                     </Button>
                 }
@@ -124,29 +124,33 @@ export const ActionList = (): JSX.Element => {
                         Action List
                     </Typography>
                     <Spacer />
-                    <IconButton
-                        id="remove-all-button"
-                        data-cy="toolbar-delete"
-                        color="inherit"
-                        aria-label="Delete"
-                        onClick={(): void => {
-                            onRemoveAll();
-                        }}
-                    >
-                        <DeleteIcon />
-                    </IconButton>
-                    <IconButton
-                        id="add-item-button"
-                        data-cy="toolbar-add"
-                        color="inherit"
-                        aria-label="add"
-                        edge={'end'}
-                        onClick={(): void => {
-                            onAddItem();
-                        }}
-                    >
-                        <AddIcon />
-                    </IconButton>
+                    <Tooltip title={'Remove all items'}>
+                        <IconButton
+                            id="remove-all-button"
+                            data-cy="toolbar-delete"
+                            color="inherit"
+                            aria-label="Delete"
+                            onClick={(): void => {
+                                onRemoveAll();
+                            }}
+                        >
+                            <DeleteIcon />
+                        </IconButton>
+                    </Tooltip>
+                    <Tooltip title={'Add a new item'}>
+                        <IconButton
+                            id="add-item-button"
+                            data-cy="toolbar-add"
+                            color="inherit"
+                            aria-label="add"
+                            edge={'end'}
+                            onClick={(): void => {
+                                onAddItem();
+                            }}
+                        >
+                            <AddIcon />
+                        </IconButton>
+                    </Tooltip>
                 </Toolbar>
             </AppBar>
             {list.length < 1 && getEmptyComponent()}

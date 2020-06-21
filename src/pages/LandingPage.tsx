@@ -17,7 +17,6 @@ import {
 import { useDispatch } from 'react-redux';
 import { TOGGLE_DRAWER } from '../redux/actions';
 import clsx from 'clsx';
-// import { EmptyState, InfoListItem, ChannelValue } from '@pxblue/react-components';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({

@@ -166,7 +166,7 @@ export const ActionList = (): JSX.Element => {
                             rightComponent={
                                 <IconButton
                                     data-cy="action-menu"
-                                    onClick={(evt: any): void => onMenuClick(evt, i)}
+                                    onClick={(evt): void => onMenuClick(evt, i)}
                                     edge={'end'}
                                 >
                                     <MoreVertIcon />

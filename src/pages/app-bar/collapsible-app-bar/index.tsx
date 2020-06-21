@@ -101,7 +101,7 @@ export const CollapsibleAppBar = (): JSX.Element => {
     // header in the appropriate position.
     useEffect(() => {
         styleHeaderAndBanner();
-    });
+    }, []);
 
     return (
         <div

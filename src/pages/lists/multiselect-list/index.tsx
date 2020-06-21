@@ -36,9 +36,8 @@ export type ListItem = {
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         snackbar: {
-            left: `calc((100vw - ${DRAWER_WIDTH}px)/2 + ${DRAWER_WIDTH}px);`,
-            [theme.breakpoints.down('sm')]: {
-                left: 'unset',
+            [theme.breakpoints.up('md')]: {
+                left: `calc((100vw - ${DRAWER_WIDTH}px)/2 + ${DRAWER_WIDTH}px);`,
             },
         },
         emptyStateContainer: {

@@ -54,12 +54,15 @@ const useStyles = makeStyles((theme: Theme) => ({
         padding: theme.spacing(2),
     },
     snackbar: {
-        left: `calc((100vw - ${DRAWER_WIDTH}px)/2 + ${DRAWER_WIDTH}px);`,
-        [theme.breakpoints.down('sm')]: {
-            left: 'unset',
-            '&.RTL': {
-                right: '50%',
-            },
+        // left: `calc((100vw - ${DRAWER_WIDTH}px)/2 + ${DRAWER_WIDTH}px);`,
+        // [theme.breakpoints.down('sm')]: {
+        //     left: 'unset',
+        //     '&.RTL': {
+        //         right: '50%',
+        //     },
+        // },
+        [theme.breakpoints.up('md')]: {
+            left: `calc((100vw - ${DRAWER_WIDTH}px)/2 + ${DRAWER_WIDTH}px);`,
         },
     },
     icon: {

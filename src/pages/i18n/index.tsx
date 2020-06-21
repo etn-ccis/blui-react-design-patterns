@@ -54,13 +54,6 @@ const useStyles = makeStyles((theme: Theme) => ({
         padding: theme.spacing(2),
     },
     snackbar: {
-        // left: `calc((100vw - ${DRAWER_WIDTH}px)/2 + ${DRAWER_WIDTH}px);`,
-        // [theme.breakpoints.down('sm')]: {
-        //     left: 'unset',
-        //     '&.RTL': {
-        //         right: '50%',
-        //     },
-        // },
         [theme.breakpoints.up('md')]: {
             left: `calc((100vw - ${DRAWER_WIDTH}px)/2 + ${DRAWER_WIDTH}px);`,
         },
@@ -91,6 +84,10 @@ const useStyles = makeStyles((theme: Theme) => ({
     RTLButtonStartIcon: {
         marginRight: theme.spacing(-0.5),
         marginLeft: theme.spacing(),
+    },
+    rightComponent: {
+        marginLeft: 0,
+        marginRight: theme.spacing(2),
     },
 }));
 
@@ -246,6 +243,7 @@ export const I18N = (): JSX.Element => {
                         subtitle={t('MORE_INFO')}
                         icon={<Checkbox checked={selectedItems.has(fruit)} onChange={(): void => selectFruit(fruit)} />}
                         rightComponent={<ArrowForwardIosIcon className={clsx(classes.icon, isRTL() && classes.RTL)} />}
+                        classes={{ rightComponent: isRTL() ? classes.rightComponent : undefined }}
                     />
                 ))}
             </List>

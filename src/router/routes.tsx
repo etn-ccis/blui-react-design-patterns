@@ -74,21 +74,21 @@ export const PAGES: Routes = {
             route: 'dynamic-stepper',
         },
     },
-    VISUALIZATIONS: {
-        title: 'Visualizations',
-        CHARTJS: {
-            title: 'ChartJS',
-            route: 'chartjs',
-        },
-        MAPBOX: {
-            title: 'MapBox',
-            route: 'mapbox',
-        },
-        HIGHCHARTS: {
-            title: 'Highcharts',
-            route: 'highcharts',
-        },
-    },
+    // VISUALIZATIONS: {
+    //     title: 'Visualizations',
+    //     CHARTJS: {
+    //         title: 'ChartJS',
+    //         route: 'chartjs',
+    //     },
+    //     MAPBOX: {
+    //         title: 'MapBox',
+    //         route: 'mapbox',
+    //     },
+    //     HIGHCHARTS: {
+    //         title: 'Highcharts',
+    //         route: 'highcharts',
+    //     },
+    // },
 };
 
 export type RouteMetaData = {
@@ -122,9 +122,9 @@ export type Routes = {
     STEPPERS: RouteMetaData & {
         DYNAMIC: RouteMetaData;
     };
-    VISUALIZATIONS: RouteMetaData & {
-        HIGHCHARTS: RouteMetaData;
-        CHARTJS: RouteMetaData;
-        MAPBOX: RouteMetaData;
-    };
+    // VISUALIZATIONS: RouteMetaData & {
+    //     HIGHCHARTS: RouteMetaData;
+    //     CHARTJS: RouteMetaData;
+    //     MAPBOX: RouteMetaData;
+    // };
 };

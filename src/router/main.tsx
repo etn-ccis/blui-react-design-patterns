@@ -2,6 +2,7 @@ import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 
 // Different App Pages/Routes
+import { LandingPage } from '../pages/LandingPage';
 import { PAGES } from './routes';
 import { SearchBar } from '../pages/app-bar/search-bar';
 import { CollapsibleAppBar } from '../pages/app-bar/collapsible-app-bar';
@@ -22,6 +23,8 @@ The main page body, which contains the route definitions
 */
 export const Main = (): JSX.Element => (
     <Switch>
+        <Route exact path={'/'} component={LandingPage} />
+
         <Route exact path={`/${PAGES.APP_BAR.SEARCH.route}`} component={SearchBar} />
         <Route exact path={`/${PAGES.APP_BAR.COLLAPSIBLE.route}`} component={CollapsibleAppBar} />
 

@@ -78,7 +78,14 @@ export const App: React.FC = () => {
             }}
             variant={isMobile ? 'temporary' : 'permanent'}
         >
-            <DrawerHeader title={'PX Blue'} subtitle={'React Design Patterns'} />
+            <DrawerHeader
+                title={'PX Blue'}
+                subtitle={'React Design Patterns'}
+                onClick={(): void => {
+                    navigate('/');
+                }}
+                style={{ cursor: 'pointer' }}
+            />
             <DrawerBody>
                 <DrawerNavGroup items={navItems} hidePadding activeItem={selected} />
                 <Spacer />

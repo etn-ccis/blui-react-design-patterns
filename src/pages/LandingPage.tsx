@@ -44,11 +44,15 @@ const useStyles = makeStyles((theme: Theme) =>
             columnCount: 2,
             columnGap: theme.spacing(8),
             '& > *': {
-                display: 'block',
+                display: 'inline-block',
                 marginBottom: theme.spacing(1),
+                verticalAlign: 'top',
             },
             [theme.breakpoints.down('xs')]: {
                 columnCount: 1,
+                '& > *': {
+                    display: 'block',
+                },
             },
         },
     })
@@ -112,8 +116,8 @@ export const LandingPage = (): JSX.Element => {
 
                             <Typography variant={'body1'}>
                                 While everyone is encouraged to try interacting with the design pattern demos, this
-                                application is primarily intended for <strong> React developers </strong> to learn how
-                                certain patterns can be incorporated into their own applications.
+                                application is primarily intended for <strong> React developers </strong> to provide
+                                examples of how to implement these patterns in their own applications.
                             </Typography>
                             <Hidden mdUp>
                                 <Button
@@ -124,7 +128,7 @@ export const LandingPage = (): JSX.Element => {
                                         dispatch({ type: TOGGLE_DRAWER, payload: true });
                                     }}
                                 >
-                                    Explore PX Blue React Patterns
+                                    Explore PX Blue Design Patterns
                                 </Button>
                             </Hidden>
                         </div>
@@ -137,22 +141,25 @@ export const LandingPage = (): JSX.Element => {
                                     target={'_blank'}
                                     href={'https://pxblue.github.io/development/frameworks-web/react'}
                                 >
-                                    PX Blue React Developer Guide
+                                    React Getting Started Guide
                                 </Button>
                                 <Button target={'_blank'} href={'https://pxblue.github.io/patterns'}>
-                                    Design Pattern Description
+                                    Design Pattern Descriptions
                                 </Button>
                                 <Button target={'_blank'} href={'https://pxblue-components.github.io/react/'}>
-                                    PX Blue React Components
+                                    PX Blue React Component Library
                                 </Button>
                                 <Button target={'_blank'} href={'https://github.com/pxblue'}>
                                     Visit Us on GitHub
+                                </Button>
+                                <Button target={'_blank'} href={'https://github.com/pxblue/react-design-patterns'}>
+                                    Design Pattern Source on GitHub
                                 </Button>
                                 <Button target={'_blank'} href={'https://pxblue.github.io/roadmap'}>
                                     Release Roadmap
                                 </Button>
                                 <Button target={'_blank'} href={'https://pxblue.github.io/community/contactus'}>
-                                    Send Feedback or Suggestion
+                                    Send Feedback or Suggestions
                                 </Button>
                             </div>
                         </div>

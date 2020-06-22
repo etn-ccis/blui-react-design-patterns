@@ -6,7 +6,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         padding: theme.spacing(),
         margin: 0,
         justifyContent: 'space-around',
-        height: 270,
+        height: 289,
         backgroundColor: theme.palette.background.paper,
         border: 'none',
     },

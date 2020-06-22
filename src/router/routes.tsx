@@ -10,13 +10,6 @@ export const PAGES: Routes = {
             route: 'search',
         },
     },
-    EMPTY_STATES: {
-        title: 'Empty States',
-        LOADING: {
-            title: 'Loading',
-            route: 'loading',
-        },
-    },
     FORM_VALIDATION: {
         title: 'Form Validation',
         route: 'form-validation',
@@ -51,6 +44,10 @@ export const PAGES: Routes = {
             title: 'Responsive Table',
             route: 'responsive-table',
         },
+    },
+    LOADING: {
+        title: 'Loading States',
+        route: 'loading-states',
     },
     OVERLAYS: {
         title: 'Overlays',
@@ -101,9 +98,6 @@ export type Routes = {
         COLLAPSIBLE: RouteMetaData;
         SEARCH: RouteMetaData;
     };
-    EMPTY_STATES: RouteMetaData & {
-        LOADING: RouteMetaData;
-    };
     FORM_VALIDATION: RouteMetaData;
     I18N: RouteMetaData;
     LISTS: RouteMetaData & {
@@ -114,6 +108,7 @@ export type Routes = {
         STATUS_LIST: RouteMetaData;
         RESPONSIVE_TABLE: RouteMetaData;
     };
+    LOADING: RouteMetaData;
     OVERLAYS: RouteMetaData & {
         // DIALOG: RouteMetaData;
         BASIC_BOTTOM_SHEET: RouteMetaData;

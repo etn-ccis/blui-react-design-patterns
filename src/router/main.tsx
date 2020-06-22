@@ -28,7 +28,7 @@ export const Main = (): JSX.Element => (
         <Route exact path={`/${PAGES.APP_BAR.SEARCH.route}`} component={SearchBar} />
         <Route exact path={`/${PAGES.APP_BAR.COLLAPSIBLE.route}`} component={CollapsibleAppBar} />
 
-        <Route exact path={`/${PAGES.EMPTY_STATES.LOADING.route}`} component={LoadingStates} />
+        <Route exact path={`/${PAGES.LOADING.route}`} component={LoadingStates} />
         <Route exact path={`/${PAGES.FORM_VALIDATION.route}`} component={FormValidation} />
         <Route exact path={`/${PAGES.I18N.route}`} component={I18N} />
 

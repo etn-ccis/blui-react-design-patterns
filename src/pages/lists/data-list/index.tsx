@@ -9,43 +9,11 @@ import { IconButton, Hidden, useTheme } from '@material-ui/core';
 import { useDispatch } from 'react-redux';
 import { TOGGLE_DRAWER } from '../../../redux/actions';
 import { EmptyState, InfoListItem, ChannelValue } from '@pxblue/react-components';
-
-export type President = {
-    firstName: string;
-    lastName: string;
-    year: number;
-};
+import { presidentsList } from './list';
 
 export const DataList = (): JSX.Element => {
     const dispatch = useDispatch();
     const theme = useTheme();
-    const presidentsList: President[] = [
-        {
-            firstName: 'George',
-            lastName: 'Washington',
-            year: 1789,
-        },
-        {
-            firstName: 'John',
-            lastName: 'Adams',
-            year: 1796,
-        },
-        {
-            firstName: 'Thomas',
-            lastName: 'Jefferson',
-            year: 1800,
-        },
-        {
-            firstName: 'James',
-            lastName: 'Madison',
-            year: 1808,
-        },
-        {
-            firstName: 'James',
-            lastName: 'Monroe',
-            year: 1812,
-        },
-    ];
 
     const getEmptyComponent = (): JSX.Element => (
         <div
@@ -62,7 +30,7 @@ export const DataList = (): JSX.Element => {
 
     return (
         <div style={{ backgroundColor: theme.palette.background.paper, minHeight: '100vh' }}>
-            <AppBar position="sticky">
+            <AppBar position={'sticky'}>
                 <Toolbar>
                     <Hidden mdUp={true}>
                         <IconButton
@@ -75,13 +43,13 @@ export const DataList = (): JSX.Element => {
                             <MenuIcon />
                         </IconButton>
                     </Hidden>
-                    <Typography variant="h6" color="inherit">
+                    <Typography variant={'h6'} color={'inherit'}>
                         Data List
                     </Typography>
                 </Toolbar>
             </AppBar>
             {presidentsList.length < 1 && getEmptyComponent()}
-            <List style={{ paddingTop: '0px' }} component="nav">
+            <List disablePadding component={'nav'}>
                 {presidentsList.map((president) => (
                     <InfoListItem
                         hidePadding

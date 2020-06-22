@@ -28,6 +28,35 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
 }));
 
+const getIcon = (value: number): string => {
+    if (value < 80) {
+        return 'A';
+    }
+    if (value < 90) {
+        return 'B';
+    }
+    return 'C';
+};
+const getColor = (value: number): string => {
+    if (value < 25) {
+        return PXBColors.red[500];
+    }
+    if (value < 75) {
+        return PXBColors.yellow[500];
+    }
+    return PXBColors.green[500];
+};
+
+const getGradeColor = (value: number): string => {
+    if (value < 80) {
+        return PXBColors.red[500];
+    }
+    if (value < 90) {
+        return PXBColors.yellow[500];
+    }
+    return PXBColors.green[500];
+};
+
 export const LoadingStates = (): JSX.Element => {
     const theme = useTheme();
     const classes = useStyles(theme);
@@ -48,35 +77,6 @@ export const LoadingStates = (): JSX.Element => {
     const refreshData = (): void => {
         setData(emptyDeviceList);
         fetchData();
-    };
-
-    const getIcon = (value: number): string => {
-        if (value < 80) {
-            return 'A';
-        }
-        if (value < 90) {
-            return 'B';
-        }
-        return 'C';
-    };
-    const getColor = (value: number): string => {
-        if (value < 25) {
-            return PXBColors.red[500];
-        }
-        if (value < 75) {
-            return PXBColors.yellow[500];
-        }
-        return PXBColors.green[500];
-    };
-
-    const getGradeColor = (value: number): string => {
-        if (value < 80) {
-            return PXBColors.red[500];
-        }
-        if (value < 90) {
-            return PXBColors.yellow[500];
-        }
-        return PXBColors.green[500];
     };
 
     return (

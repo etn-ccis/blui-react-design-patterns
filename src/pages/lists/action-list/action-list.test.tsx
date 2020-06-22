@@ -6,6 +6,7 @@ import Adapter from 'enzyme-adapter-react-16';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import { Reducer } from '../../../redux/reducers';
+import { InfoListItem } from '@pxblue/react-components';
 
 Enzyme.configure({ adapter: new Adapter() });
 const store = createStore(Reducer());
@@ -27,7 +28,12 @@ it('renders 10 items by default', () => {
             <ActionList />
         </Provider>
     );
-    expect(actionList.find('.info-list-items').hostNodes()).toHaveLength(10);
+    expect(
+        actionList
+            .find('.list')
+            .hostNodes()
+            .children(InfoListItem)
+    ).toHaveLength(10);
 });
 
 it('adds an item correctly', () => {
@@ -42,7 +48,12 @@ it('adds an item correctly', () => {
         .hostNodes()
         .at(0)
         .simulate('click');
-    expect(actionList.find('.info-list-items').hostNodes()).toHaveLength(11);
+    expect(
+        actionList
+            .find('.list')
+            .hostNodes()
+            .children(InfoListItem)
+    ).toHaveLength(11);
 });
 
 // @TODO: figure out how to do this for a functional component
@@ -77,5 +88,10 @@ it('removes all and clears the list', () => {
         .hostNodes()
         .at(0)
         .simulate('click');
-    expect(actionList.find('.info-list-items').hostNodes()).toHaveLength(0);
+    expect(
+        actionList
+            .find('.list')
+            .hostNodes()
+            .children(InfoListItem)
+    ).toHaveLength(0);
 });

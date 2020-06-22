@@ -69,13 +69,13 @@ export const LandingPage = (): JSX.Element => {
     useEffect((): void => {
         setTimeout((): void => {
             setDisplayTitle(true);
-        }, 200);
+        }, 300);
         setTimeout((): void => {
             setDisplayBody(true);
-        }, 500);
+        }, 1000);
         setTimeout((): void => {
             setDisplayLinks(true);
-        }, 1000);
+        }, 1500);
     }, []);
 
     return (
@@ -100,12 +100,12 @@ export const LandingPage = (): JSX.Element => {
             </Hidden>
             <div className={classes.body}>
                 <div className={clsx(classes.content, classes.spaced)}>
-                    <Fade in={displayBody} timeout={300}>
+                    <Fade in={displayTitle} timeout={500}>
                         <Typography variant={'h2'}>
                             The <span style={{ color: theme.palette.primary.main }}>Patterns</span>.
                         </Typography>
                     </Fade>
-                    <Fade in={displayTitle} timeout={1500}>
+                    <Fade in={displayBody} timeout={1500}>
                         <div className={classes.spaced}>
                             <Typography variant={'body1'}>
                                 A <strong>design pattern</strong> is a common interaction or behavior that should be

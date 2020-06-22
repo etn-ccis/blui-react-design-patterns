@@ -24,32 +24,32 @@ type Item = {
     details: string;
 };
 
+const createItem = (index: number): Item => ({
+    id: index,
+    name: `Item ${index}`,
+    details: `Item ${index} occured`,
+});
+
+const createRandomItem = (): Item => {
+    const int = parseInt(`${Math.random() * 100}`, 10);
+    return createItem(int);
+};
+
+const generatedList: Item[] = [];
+
+for (let i = 0; i < 10; i++) {
+    generatedList.push(createRandomItem());
+}
+
 const options: Option[] = ['Delete', 'View Details'];
 
 export const ActionList = (): JSX.Element => {
     const dispatch = useDispatch();
     const theme = useTheme();
 
-    const createItem = (index: number): Item => ({
-        id: index,
-        name: `Item ${index}`,
-        details: `Item ${index} occured`,
-    });
-
-    const createRandomItem = (): Item => {
-        const int = parseInt(`${Math.random() * 100}`, 10);
-        return createItem(int);
-    };
-
-    const generatedList = [];
-
-    for (let i = 0; i < 10; i++) {
-        generatedList.push(createRandomItem());
-    }
-
     const [list, setList] = useState<Item[]>(generatedList);
-    const [menuPosition, setMenuPosition] = useState<any>(null);
-    const [activeMenu, setActiveMenu] = useState<number>(-1);
+    const [menuPosition, setMenuPosition] = useState<null | HTMLElement>(null);
+    const [activeIndex, setActiveIndex] = useState<number>(-1);
 
     const onAddItem = (): void => {
         setList([...list, createRandomItem()]);
@@ -57,12 +57,12 @@ export const ActionList = (): JSX.Element => {
 
     const onMenuClick = (event: any, i: number): void => {
         setMenuPosition(event.currentTarget);
-        setActiveMenu(i);
+        setActiveIndex(i);
     };
 
     const onMenuClose = (): void => {
         setMenuPosition(null);
-        setActiveMenu(-1);
+        setActiveIndex(-1);
     };
 
     const onMenuItemClick = (option: Option, i: number): void => {
@@ -83,8 +83,8 @@ export const ActionList = (): JSX.Element => {
             style={{
                 display: 'flex',
                 flexDirection: 'column',
-                padding: '20px',
-                height: 'calc(100vh - 64px)',
+                padding: theme.spacing(2),
+                height: `calc(100vh - ${theme.spacing(8)}px)`,
             }}
         >
             <EmptyState
@@ -92,8 +92,8 @@ export const ActionList = (): JSX.Element => {
                 title={'No Items Found'}
                 actions={
                     <Button
-                        variant="contained"
-                        color="primary"
+                        variant={'contained'}
+                        color={'primary'}
                         style={{ margin: theme.spacing() }}
                         onClick={(): void => onAddItem()}
                         startIcon={<AddIcon />}
@@ -107,8 +107,8 @@ export const ActionList = (): JSX.Element => {
 
     return (
         <div style={{ backgroundColor: theme.palette.background.paper, minHeight: '100vh' }}>
-            <AppBar position="sticky">
-                <Toolbar data-cy="pxb-toolbar">
+            <AppBar position={'sticky'}>
+                <Toolbar data-cy={'pxb-toolbar'}>
                     <Hidden mdUp={true}>
                         <IconButton
                             color={'inherit'}
@@ -120,16 +120,16 @@ export const ActionList = (): JSX.Element => {
                             <MenuIcon />
                         </IconButton>
                     </Hidden>
-                    <Typography variant="h6" color="inherit">
+                    <Typography variant={'h6'} color={'inherit'}>
                         Action List
                     </Typography>
                     <Spacer />
                     <Tooltip title={'Remove all items'}>
                         <IconButton
-                            id="remove-all-button"
-                            data-cy="toolbar-delete"
-                            color="inherit"
-                            aria-label="Delete"
+                            id={'remove-all-button'}
+                            data-cy={'toolbar-delete'}
+                            color={'inherit'}
+                            aria-label={'Delete'}
                             onClick={(): void => {
                                 onRemoveAll();
                             }}
@@ -139,10 +139,10 @@ export const ActionList = (): JSX.Element => {
                     </Tooltip>
                     <Tooltip title={'Add a new item'}>
                         <IconButton
-                            id="add-item-button"
-                            data-cy="toolbar-add"
-                            color="inherit"
-                            aria-label="add"
+                            id={'add-item-button'}
+                            data-cy={'toolbar-add'}
+                            color={'inherit'}
+                            aria-label={'add'}
                             edge={'end'}
                             onClick={(): void => {
                                 onAddItem();
@@ -154,7 +154,7 @@ export const ActionList = (): JSX.Element => {
                 </Toolbar>
             </AppBar>
             {list.length < 1 && getEmptyComponent()}
-            <List data-cy="list-content" disablePadding component="nav">
+            <List data-cy={'list-content'} disablePadding component="nav" className={'list'}>
                 {list.map(
                     (item, i): JSX.Element => (
                         <InfoListItem
@@ -166,10 +166,9 @@ export const ActionList = (): JSX.Element => {
                             onClick={(): void => {
                                 /* handle item onClick */
                             }}
-                            className={'info-list-items'}
                             rightComponent={
                                 <IconButton
-                                    data-cy="action-menu"
+                                    data-cy={'action-menu'}
                                     onClick={(evt): void => onMenuClick(evt, i)}
                                     edge={'end'}
                                 >
@@ -181,7 +180,7 @@ export const ActionList = (): JSX.Element => {
                 )}
             </List>
             <Menu
-                id="long-menu"
+                id={'long-menu'}
                 anchorEl={menuPosition}
                 open={Boolean(menuPosition)}
                 onClose={onMenuClose}
@@ -192,7 +191,7 @@ export const ActionList = (): JSX.Element => {
                 }}
             >
                 {options.map((option) => (
-                    <MenuItem key={option} onClick={(): void => onMenuItemClick(option, activeMenu)}>
+                    <MenuItem key={option} onClick={(): void => onMenuItemClick(option, activeIndex)}>
                         {option}
                     </MenuItem>
                 ))}

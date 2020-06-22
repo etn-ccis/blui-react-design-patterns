@@ -48,31 +48,31 @@ const useStyles = makeStyles((theme: Theme) =>
     })
 );
 
+const createItem = (index: number, randomStatus: string): ListItem => {
+    return {
+        id: index,
+        name: `Item ${index}`,
+        details: `Status: ${randomStatus}`,
+        checked: false,
+    };
+};
+
+const createRandomItem = (): ListItem => {
+    const int = parseInt(`${Math.random() * 100}`, 10);
+    const randomStatus = Math.random() >= 0.3 ? 'normal' : 'alarm';
+    return createItem(int, randomStatus);
+};
+
+const generatedList: ListItem[] = [];
+
+for (let i = 0; i < 10; i++) {
+    generatedList.push(createRandomItem());
+}
+
 export const MultiselectList = (): JSX.Element => {
     const classes = useStyles();
     const dispatch = useDispatch();
     const theme = useTheme();
-
-    function createItem(index: number, randomStatus: string): ListItem {
-        return {
-            id: index,
-            name: `Item ${index}`,
-            details: `Status: ${randomStatus}`,
-            checked: false,
-        };
-    }
-
-    function createRandomItem(): ListItem {
-        const int = parseInt(`${Math.random() * 100}`, 10);
-        const randomStatus = Math.random() >= 0.3 ? 'normal' : 'alarm';
-        return createItem(int, randomStatus);
-    }
-
-    const generatedList = [];
-
-    for (let i = 0; i < 10; i++) {
-        generatedList.push(createRandomItem());
-    }
 
     const [list, setList] = useState<ListItem[]>(generatedList);
     const [selectedItems, setSelectedItems] = useState<ListItem[]>([]);
@@ -135,7 +135,7 @@ export const MultiselectList = (): JSX.Element => {
 
     return (
         <div style={{ backgroundColor: theme.palette.background.paper, minHeight: '100vh' }}>
-            <AppBar position="sticky">
+            <AppBar position={'sticky'}>
                 <Toolbar>
                     <Hidden mdUp={true}>
                         <IconButton
@@ -148,17 +148,17 @@ export const MultiselectList = (): JSX.Element => {
                             <MenuIcon />
                         </IconButton>
                     </Hidden>
-                    <Typography variant="h6" data-cy="pxb-toolbar" color="inherit">
+                    <Typography variant={'h6'} data-cy={'pxb-toolbar'} color={'inherit'}>
                         Multiselect List
                     </Typography>
                     <Spacer />
                     <Tooltip title={'Add an item'}>
                         <IconButton
                             edge={'end'}
-                            id="add-item-button"
-                            data-cy="toolbar-add"
-                            color="inherit"
-                            aria-label="add"
+                            id={'add-item-button'}
+                            data-cy={'toolbar-add'}
+                            color={'inherit'}
+                            aria-label={'add'}
                             onClick={onAddItem}
                         >
                             <AddIcon />
@@ -167,13 +167,13 @@ export const MultiselectList = (): JSX.Element => {
                 </Toolbar>
             </AppBar>
             {list.length < 1 && getEmptyComponent()}
-            <List data-cy="list-content" className="list">
+            <List data-cy={'list-content'} className={'list'}>
                 {list.map((item, index) => (
                     <InfoListItem
                         key={`listItem_${index}`}
                         icon={
                             <Checkbox
-                                className="checkbox"
+                                className={'checkbox'}
                                 value={item.name}
                                 onChange={(): void => onSelect(item)}
                                 checked={isSelected(item)}
@@ -191,12 +191,22 @@ export const MultiselectList = (): JSX.Element => {
                 action={
                     <>
                         <Tooltip title={'Delete all'}>
-                            <IconButton id="remove-items-button" onClick={onDelete} data-cy="snackbar-delete">
+                            <IconButton
+                                id={'remove-items-button'}
+                                onClick={onDelete}
+                                data-cy={'snackbar-delete'}
+                                color={'inherit'}
+                            >
                                 <DeleteIcon />
                             </IconButton>
                         </Tooltip>
                         <Tooltip title={'Cancel'}>
-                            <IconButton id="cancel-button" onClick={onCancel} data-cy="snackbar-cancel">
+                            <IconButton
+                                id={'cancel-button'}
+                                onClick={onCancel}
+                                data-cy={'snackbar-cancel'}
+                                color={'inherit'}
+                            >
                                 <CancelIcon />
                             </IconButton>
                         </Tooltip>

@@ -40,11 +40,12 @@ const generateRandomItem = (): Item[] => {
     return listOfItems;
 };
 
+const list = generateRandomItem();
+
 export const ResponsiveTable = (): JSX.Element => {
     const theme = useTheme();
     const dispatch = useDispatch();
 
-    const list = generateRandomItem();
     return (
         <div
             style={{

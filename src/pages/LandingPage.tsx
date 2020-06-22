@@ -108,16 +108,17 @@ export const LandingPage = (): JSX.Element => {
                     <Fade in={displayTitle} timeout={1500}>
                         <div className={classes.spaced}>
                             <Typography variant={'body1'}>
-                                A <strong>design pattern</strong> is a common interaction or behavior that can exist at
-                                any level in the PX Blue design system. When we see a certain emerging trend in the
-                                application outside the scope of the Material Design, we would document and lock them
-                                down as our design pattern.
+                                A <strong>design pattern</strong> is a common interaction or behavior that should be
+                                consistent across applications. In general, we follow most of the design patterns and
+                                behavior from the Material Design system. PX Blue design patterns are patterns that
+                                extend/modify those from Material or are specific to PX Blue applications.
                             </Typography>
 
                             <Typography variant={'body1'}>
-                                While everyone is encouraged to try interacting with the design pattern demos, this
-                                application is primarily intended for <strong> React developers </strong> to provide
-                                examples of how to implement these patterns in their own applications.
+                                While everyone is encouraged to interact with the design pattern demos to become
+                                familiar with the interactions and behaviors, this application is primarily intended for
+                                <strong> React developers </strong> to provide examples of how to implement these
+                                patterns in their own applications.
                             </Typography>
                             <Hidden mdUp>
                                 <Button

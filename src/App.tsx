@@ -92,6 +92,7 @@ export const App: React.FC = () => {
                 <DrawerNavGroup items={navItems} hidePadding activeItem={selected} />
                 <Spacer />
                 <DrawerNavGroup
+                    hidePadding
                     titleContent={<Typography variant={'overline'}>More Resources</Typography>}
                     items={[
                         {
@@ -112,7 +113,6 @@ export const App: React.FC = () => {
                             divider: false,
                         },
                     ]}
-                    hidePadding
                 />
             </DrawerBody>
             <DrawerFooter>

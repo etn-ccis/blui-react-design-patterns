@@ -24,7 +24,7 @@ import { useDispatch } from 'react-redux';
 
 // Other
 import { createStyles, Theme, makeStyles, useTheme } from '@material-ui/core/styles';
-import { listItems as presidents, President } from '../../../assets/list';
+import { listItems as presidents, President } from './list';
 import { InfoListItem, Spacer } from '@pxblue/react-components';
 import { DRAWER_WIDTH } from '../../../assets/constants';
 import clsx from 'clsx';
@@ -34,7 +34,7 @@ const reversedPresidentList = presidents.reverse();
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         appbar: {
-            transition: 'all 250ms ease-in-out',
+            transition: theme.transitions.create('all', { duration: theme.transitions.duration.short }),
         },
         regularBar: {
             opacity: 1,

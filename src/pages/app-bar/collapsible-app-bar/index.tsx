@@ -16,7 +16,7 @@ import {
 } from '@material-ui/core';
 import { Person as PersonIcon, Menu as MenuIcon } from '@material-ui/icons';
 import clsx from 'clsx';
-import { listItems } from '../../../assets/list';
+import { listItems } from './list';
 import { useDispatch } from 'react-redux';
 import { TOGGLE_DRAWER } from '../../../redux/actions';
 
@@ -56,7 +56,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
     header: {
         transform: 'translateY(-120%)',
-        transition: 'all 0.5s ease-in-out',
+        transition: theme.transitions.create('all', { duration: theme.transitions.duration.standard }),
     },
     top: {
         transform: 'translateY(0)',

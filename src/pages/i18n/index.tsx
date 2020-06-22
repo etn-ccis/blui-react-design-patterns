@@ -17,6 +17,7 @@ import {
     Hidden,
     Tooltip,
     Snackbar,
+    SnackbarContent,
 } from '@material-ui/core';
 import { makeStyles, useTheme, Theme } from '@material-ui/core/styles';
 import { useDispatch } from 'react-redux';
@@ -39,7 +40,7 @@ import MenuOpenIcon from '@material-ui/icons/MenuOpen';
 import { english } from './translations/english';
 import { DRAWER_WIDTH } from '../../assets/constants';
 import './translations/i18n';
-import './index.css';
+// import './index.css';
 require('typeface-noto-sans');
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -57,6 +58,12 @@ const useStyles = makeStyles((theme: Theme) => ({
         [theme.breakpoints.up('md')]: {
             left: `calc((100vw - ${DRAWER_WIDTH}px)/2 + ${DRAWER_WIDTH}px);`,
         },
+    },
+    snackbarAction: {
+        margin: 'auto',
+        marginLeft: -theme.spacing(),
+        paddingRight: theme.spacing(2),
+        paddingLeft: 0,
     },
     icon: {
         fontSize: 16,
@@ -248,28 +255,28 @@ export const I18N = (): JSX.Element => {
                 ))}
             </List>
 
-            <Snackbar
-                open={selectedItems.size > 0}
-                action={
-                    <>
-                        <Tooltip title={t('DESELECT_ALL') || ''}>
-                            <IconButton
-                                onClick={(): void => {
-                                    setSelectedItems(new Set());
-                                }}
-                                color={'inherit'}
-                                id="deselect-all-button"
-                                data-cy="snackbar-deselect-all"
-                            >
-                                <CancelIcon />
-                            </IconButton>
-                        </Tooltip>
-                    </>
-                }
-                className={isRTL() ? 'RTL' : ''}
-                classes={{ root: classes.snackbar }}
-                message={`${selectedItems.size} ${t('ITEMS')}`}
-            />
+            <Snackbar open={selectedItems.size > 0} classes={{ root: classes.snackbar }}>
+                <SnackbarContent
+                    action={
+                        <>
+                            <Tooltip title={t('DESELECT_ALL') || ''}>
+                                <IconButton
+                                    onClick={(): void => {
+                                        setSelectedItems(new Set());
+                                    }}
+                                    color={'inherit'}
+                                    id="deselect-all-button"
+                                    data-cy="snackbar-deselect-all"
+                                >
+                                    <CancelIcon />
+                                </IconButton>
+                            </Tooltip>
+                        </>
+                    }
+                    message={`${selectedItems.size} ${t('ITEMS')}`}
+                    classes={{ action: clsx(isRTL() && classes.snackbarAction) }}
+                />
+            </Snackbar>
         </div>
     );
 };

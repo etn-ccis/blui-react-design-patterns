@@ -14,7 +14,7 @@ import { App } from './App';
 const store = createStore(Reducer());
 
 render(
-    <MuiThemeProvider theme={createMuiTheme(PXBThemes.blueDark)}>
+    <MuiThemeProvider theme={createMuiTheme(PXBThemes.blue)}>
         <BrowserRouter>
             <Provider store={store}>
                 <App />

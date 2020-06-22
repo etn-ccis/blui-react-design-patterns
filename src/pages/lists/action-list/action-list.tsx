@@ -86,7 +86,7 @@ export const ActionList = (): JSX.Element => {
             }}
         >
             <EmptyState
-                icon={<ComputerIcon style={{ fontSize: '100px' }}/>}
+                icon={<ComputerIcon style={{ fontSize: '100px' }} />}
                 title={'No Items Found'}
                 actions={
                     <Button

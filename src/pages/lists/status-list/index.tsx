@@ -9,20 +9,6 @@ import { TOGGLE_DRAWER } from '../../../redux/actions';
 import { InfoListItem, ListItemTag, InfoListItemProps } from '@pxblue/react-components';
 import * as colors from '@pxblue/colors';
 
-const createRandomItem = (): InfoListItemProps => {
-    const int = parseInt(`${Math.random() * 100}`, 10);
-    switch (Math.floor(Math.random() * 5)) {
-        case 0:
-            return createInfoListItemConfig(int, 'alarm');
-        case 1:
-            return createInfoListItemConfig(int, 'alarm', true);
-        case 2:
-            return createInfoListItemConfig(int, 'warning');
-        default:
-            return createInfoListItemConfig(int, 'normal');
-    }
-};
-
 const createInfoListItemConfig = (index: number, randomStatus: string, tag?: boolean): InfoListItemProps => {
     switch (randomStatus) {
         case 'alarm':
@@ -48,6 +34,20 @@ const createInfoListItemConfig = (index: number, randomStatus: string, tag?: boo
                 subtitle: `Status: ${randomStatus}`,
                 icon: <HomeIcon />,
             };
+    }
+};
+
+const createRandomItem = (): InfoListItemProps => {
+    const int = parseInt(`${Math.random() * 100}`, 10);
+    switch (Math.floor(Math.random() * 5)) {
+        case 0:
+            return createInfoListItemConfig(int, 'alarm');
+        case 1:
+            return createInfoListItemConfig(int, 'alarm', true);
+        case 2:
+            return createInfoListItemConfig(int, 'warning');
+        default:
+            return createInfoListItemConfig(int, 'normal');
     }
 };
 

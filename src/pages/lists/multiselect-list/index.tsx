@@ -48,14 +48,12 @@ const useStyles = makeStyles((theme: Theme) =>
     })
 );
 
-const createItem = (index: number, randomStatus: string): ListItem => {
-    return {
-        id: index,
-        name: `Item ${index}`,
-        details: `Status: ${randomStatus}`,
-        checked: false,
-    };
-};
+const createItem = (index: number, randomStatus: string): ListItem => ({
+    id: index,
+    name: `Item ${index}`,
+    details: `Status: ${randomStatus}`,
+    checked: false,
+});
 
 const createRandomItem = (): ListItem => {
     const int = parseInt(`${Math.random() * 100}`, 10);

@@ -87,12 +87,7 @@ export const MultiselectList = (): JSX.Element => {
         [selectedItems]
     );
 
-    const isSelected = useCallback(
-        (item: ListItem): boolean => {
-            return selectedItems.includes(item);
-        },
-        [selectedItems]
-    );
+    const isSelected = useCallback((item: ListItem): boolean => selectedItems.includes(item), [selectedItems]);
 
     const onAddItem = useCallback((): void => {
         setList([...list, createRandomItem()]);

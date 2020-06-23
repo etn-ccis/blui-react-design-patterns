@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import {
     makeStyles,
     createStyles,
@@ -75,24 +75,30 @@ export const MultiselectList = (): JSX.Element => {
     const [list, setList] = useState<ListItem[]>(generatedList);
     const [selectedItems, setSelectedItems] = useState<ListItem[]>([]);
 
-    function onSelect(item: ListItem): void {
-        if (!selectedItems.includes(item)) {
-            setSelectedItems([...selectedItems, item]);
-        } else {
-            const index = selectedItems.indexOf(item);
-            setSelectedItems(selectedItems.filter((_: ListItem, i: number) => i !== index));
-        }
-    }
+    const onSelect = useCallback(
+        (item: ListItem): void => {
+            if (!selectedItems.includes(item)) {
+                setSelectedItems([...selectedItems, item]);
+            } else {
+                const index = selectedItems.indexOf(item);
+                setSelectedItems(selectedItems.filter((_: ListItem, i: number) => i !== index));
+            }
+        },
+        [selectedItems]
+    );
 
-    function isSelected(item: ListItem): boolean {
-        return selectedItems.includes(item);
-    }
+    const isSelected = useCallback(
+        (item: ListItem): boolean => {
+            return selectedItems.includes(item);
+        },
+        [selectedItems]
+    );
 
-    function onAddItem(): void {
+    const onAddItem = useCallback((): void => {
         setList([...list, createRandomItem()]);
-    }
+    }, [list]);
 
-    function onDelete(): void {
+    const onDelete = useCallback((): void => {
         const updatedList = [...list];
 
         selectedItems.forEach((item: ListItem) => {
@@ -102,14 +108,14 @@ export const MultiselectList = (): JSX.Element => {
 
         setList(updatedList);
         setSelectedItems([]);
-    }
+    }, [list, selectedItems]);
 
-    function onCancel(): void {
+    const onCancel = useCallback((): void => {
         list.forEach((item: ListItem): void => {
             item.checked = false;
         });
         setSelectedItems([]);
-    }
+    }, [list]);
 
     const getEmptyComponent = (): JSX.Element => (
         <div className={classes.emptyStateContainer}>
@@ -118,8 +124,8 @@ export const MultiselectList = (): JSX.Element => {
                 title={'No Items Found'}
                 actions={
                     <Button
-                        variant="contained"
-                        color="primary"
+                        variant={'contained'}
+                        color={'primary'}
                         style={{ margin: theme.spacing() }}
                         onClick={onAddItem}
                         startIcon={<AddIcon />}

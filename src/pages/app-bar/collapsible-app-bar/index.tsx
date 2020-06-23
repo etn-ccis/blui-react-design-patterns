@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 
 import {
     Typography,
@@ -88,20 +88,20 @@ export const CollapsibleAppBar = (): JSX.Element => {
     const [opacity, setOpacity] = useState(1);
     const dispatch = useDispatch();
 
-    const styleHeaderAndBanner = (): void => {
+    const styleHeaderAndBanner = useCallback(() => {
         setOpacity(window.pageYOffset);
         if (window.pageYOffset > 70) {
             setHeaderActive(true);
         } else {
             setHeaderActive(false);
         }
-    };
+    }, []);
 
     // When the page first gets loaded but with a pageYOffset, set the
     // header in the appropriate position.
     useEffect(() => {
         styleHeaderAndBanner();
-    }, []);
+    }, [styleHeaderAndBanner]);
 
     return (
         <div

@@ -109,7 +109,7 @@ export const I18N = (): JSX.Element => {
     const [selectedItems, setSelectedItems] = useState(new Set<string>());
     const [lang, setLang] = useState('en');
     const isRTL = (): boolean => lang === 'ar';
-    const getDirection = (): string => (isRTL() ? 'rtl' : 'ltr');
+    const getDirection = (): 'rtl' | 'ltr' => (isRTL() ? 'rtl' : 'ltr');
     const dispatch = useDispatch();
 
     const changeLanguage = useCallback(
@@ -124,15 +124,18 @@ export const I18N = (): JSX.Element => {
         changeLanguage('en');
     }, [changeLanguage]);
 
-    const selectFruit = (fruit: string): void => {
-        const selected = new Set(selectedItems);
-        if (selected.has(fruit)) {
-            selected.delete(fruit);
-        } else {
-            selected.add(fruit);
-        }
-        setSelectedItems(selected);
-    };
+    const selectFruit = useCallback(
+        (fruit: string): void => {
+            const selected = new Set(selectedItems);
+            if (selected.has(fruit)) {
+                selected.delete(fruit);
+            } else {
+                selected.add(fruit);
+            }
+            setSelectedItems(selected);
+        },
+        [selectedItems]
+    );
 
     const getDrawer = (): ReactNode => {
         // eslint-disable-next-line react/jsx-key

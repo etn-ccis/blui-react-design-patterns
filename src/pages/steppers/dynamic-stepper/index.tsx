@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { useTheme, makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 
 import Stepper from '@material-ui/core/Stepper';
@@ -67,32 +67,35 @@ export const DynamicStepper = (): JSX.Element => {
     const [activeStep, setActiveStep] = useState(0);
     const [finished, setFinished] = useState(false);
 
-    const changeStepValue = (index: number, choice: number): void => {
-        const newSteps = [...steps];
-        newSteps[index] = choice;
-        setSteps(newSteps);
-        setActiveStep(newSteps.length);
-    };
+    const changeStepValue = useCallback(
+        (index: number, choice: number): void => {
+            const newSteps = [...steps];
+            newSteps[index] = choice;
+            setSteps(newSteps);
+            setActiveStep(newSteps.length);
+        },
+        [steps]
+    );
 
-    const addStep = (): void => {
+    const addStep = useCallback((): void => {
         const newSteps = [...steps];
         newSteps.push(-1);
         setSteps(newSteps);
         setActiveStep(newSteps.length - 1);
-    };
+    }, [steps]);
 
-    const removeStep = (): void => {
+    const removeStep = useCallback((): void => {
         const newSteps = [...steps];
         newSteps.splice(activeStep, 1);
         setSteps(newSteps);
         setActiveStep(steps.length);
-    };
+    }, [steps, activeStep]);
 
-    const reset = (): void => {
+    const reset = useCallback((): void => {
         setSteps([-1]);
         setActiveStep(0);
         setFinished(false);
-    };
+    }, []);
 
     return (
         <div style={{ backgroundColor: theme.palette.background.paper, minHeight: '100vh' }}>
@@ -131,14 +134,14 @@ export const DynamicStepper = (): JSX.Element => {
                             data-cy={'reset'}
                             color={'primary'}
                             className={classes.bottomButton}
-                            onClick={(): void => reset()}
+                            onClick={reset}
                         >
                             Reset
                         </Button>
                     </div>
                 )}
                 {!finished && (
-                    <React.Fragment>
+                    <>
                         <Stepper nonLinear activeStep={activeStep} orientation={'vertical'}>
                             {steps.map((choice, index) => (
                                 <Step
@@ -156,10 +159,7 @@ export const DynamicStepper = (): JSX.Element => {
                                             </Typography>
                                             {activeStep === index && (
                                                 <Tooltip title="Remove Step" data-cy="remove-step" placement={'right'}>
-                                                    <Delete
-                                                        className={classes.deleteButton}
-                                                        onClick={(): void => removeStep()}
-                                                    />
+                                                    <Delete className={classes.deleteButton} onClick={removeStep} />
                                                 </Tooltip>
                                             )}
                                         </div>
@@ -202,7 +202,7 @@ export const DynamicStepper = (): JSX.Element => {
                                             }
                                         />
                                     }
-                                    onClick={(): void => addStep()}
+                                    onClick={addStep}
                                 >
                                     <Typography variant={'body1'}>Add a Step</Typography>
                                 </StepButton>
@@ -212,12 +212,12 @@ export const DynamicStepper = (): JSX.Element => {
                             variant={'contained'}
                             data-cy="done"
                             color={'primary'}
-                            style={{ marginLeft: 24 }}
+                            style={{ marginLeft: theme.spacing(3) }}
                             onClick={(): void => setFinished(true)}
                         >
                             Done
                         </Button>
-                    </React.Fragment>
+                    </>
                 )}
             </div>
         </div>

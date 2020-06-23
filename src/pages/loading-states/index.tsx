@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import {
     AppBar,
     Toolbar,
@@ -64,20 +64,20 @@ export const LoadingStates = (): JSX.Element => {
 
     const [data, setData] = useState(emptyDeviceList);
 
-    const fetchData = (): void => {
+    const fetchData = useCallback((): void => {
         setTimeout(() => {
             setData(deviceList);
         }, 3000);
-    };
+    }, []);
 
     useEffect(() => {
         fetchData();
-    }, []);
+    }, [fetchData]);
 
-    const refreshData = (): void => {
+    const refreshData = useCallback((): void => {
         setData(emptyDeviceList);
         fetchData();
-    };
+    }, [fetchData]);
 
     return (
         <div

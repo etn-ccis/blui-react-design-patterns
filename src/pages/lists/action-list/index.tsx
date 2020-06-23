@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import IconButton from '@material-ui/core/IconButton';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -51,32 +51,38 @@ export const ActionList = (): JSX.Element => {
     const [menuPosition, setMenuPosition] = useState<null | HTMLElement>(null);
     const [activeIndex, setActiveIndex] = useState<number>(-1);
 
-    const onAddItem = (): void => {
+    const onAddItem = useCallback((): void => {
         setList([...list, createRandomItem()]);
-    };
+    }, [list]);
 
-    const onMenuClick = (event: any, i: number): void => {
-        setMenuPosition(event.currentTarget);
-        setActiveIndex(i);
-    };
+    const onMenuClick = useCallback(
+        (event: React.MouseEvent<HTMLButtonElement, MouseEvent>, i: number): void => {
+            setMenuPosition(event.currentTarget);
+            setActiveIndex(i);
+        },
+        [setMenuPosition, setActiveIndex]
+    );
 
-    const onMenuClose = (): void => {
+    const onMenuClose = useCallback((): void => {
         setMenuPosition(null);
         setActiveIndex(-1);
-    };
+    }, [setMenuPosition, setActiveIndex]);
 
-    const onMenuItemClick = (option: Option, i: number): void => {
-        if (option === 'Delete') {
-            const tempList = list;
-            tempList.splice(i, 1);
-            setList(tempList);
-        }
-        onMenuClose();
-    };
+    const onMenuItemClick = useCallback(
+        (option: Option, i: number): void => {
+            if (option === 'Delete') {
+                const tempList = list;
+                tempList.splice(i, 1);
+                setList(tempList);
+            }
+            onMenuClose();
+        },
+        [list, onMenuClose]
+    );
 
-    const onRemoveAll = (): void => {
+    const onRemoveAll = useCallback((): void => {
         setList([]);
-    };
+    }, []);
 
     const getEmptyComponent = (): JSX.Element => (
         <div
@@ -95,7 +101,7 @@ export const ActionList = (): JSX.Element => {
                         variant={'contained'}
                         color={'primary'}
                         style={{ margin: theme.spacing() }}
-                        onClick={(): void => onAddItem()}
+                        onClick={onAddItem}
                         startIcon={<AddIcon />}
                     >
                         Add an Item
@@ -130,9 +136,7 @@ export const ActionList = (): JSX.Element => {
                             data-cy={'toolbar-delete'}
                             color={'inherit'}
                             aria-label={'Delete'}
-                            onClick={(): void => {
-                                onRemoveAll();
-                            }}
+                            onClick={onRemoveAll}
                         >
                             <DeleteIcon />
                         </IconButton>
@@ -144,9 +148,7 @@ export const ActionList = (): JSX.Element => {
                             color={'inherit'}
                             aria-label={'add'}
                             edge={'end'}
-                            onClick={(): void => {
-                                onAddItem();
-                            }}
+                            onClick={onAddItem}
                         >
                             <AddIcon />
                         </IconButton>

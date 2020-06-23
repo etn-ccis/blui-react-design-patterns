@@ -104,7 +104,7 @@ export const I18N = (): JSX.Element => {
                 <Drawer
                     open={drawerOpen}
                     R2L={isRTL()}
-                    drawerToggler={() => {
+                    drawerToggler={(): void => {
                         setDrawerOpen(!drawerOpen);
                     }}
                     translator={t}

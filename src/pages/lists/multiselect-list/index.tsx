@@ -10,7 +10,6 @@ import {
     Checkbox,
     IconButton,
     Hidden,
-    Button,
     Theme,
     useTheme,
     Snackbar,
@@ -20,11 +19,11 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import CancelIcon from '@material-ui/icons/Cancel';
 import AddIcon from '@material-ui/icons/Add';
 import MenuIcon from '@material-ui/icons/Menu';
-import ErrorIcon from '@material-ui/icons/Error';
 import { TOGGLE_DRAWER } from '../../../redux/actions';
 import { useDispatch } from 'react-redux';
 import { DRAWER_WIDTH } from '../../../assets/constants';
-import { EmptyState, InfoListItem, Spacer } from '@pxblue/react-components';
+import { InfoListItem, Spacer } from '@pxblue/react-components';
+import { EmptyState } from './EmptyState';
 
 export type ListItem = {
     id: number;
@@ -112,26 +111,6 @@ export const MultiselectList = (): JSX.Element => {
         setSelectedItems([]);
     }, [list]);
 
-    const getEmptyComponent = (): JSX.Element => (
-        <div className={classes.emptyStateContainer}>
-            <EmptyState
-                icon={<ErrorIcon style={{ fontSize: '100px' }} />}
-                title={'No Items Found'}
-                actions={
-                    <Button
-                        variant={'contained'}
-                        color={'primary'}
-                        style={{ margin: theme.spacing() }}
-                        onClick={onAddItem}
-                        startIcon={<AddIcon />}
-                    >
-                        Add an Item
-                    </Button>
-                }
-            />
-        </div>
-    );
-
     return (
         <div style={{ backgroundColor: theme.palette.background.paper, minHeight: '100vh' }}>
             <AppBar position={'sticky'}>
@@ -165,7 +144,7 @@ export const MultiselectList = (): JSX.Element => {
                     </Tooltip>
                 </Toolbar>
             </AppBar>
-            {list.length < 1 && getEmptyComponent()}
+            {list.length < 1 && <EmptyState onAddItem={onAddItem} />}
             <List data-cy={'list-content'} className={'list'}>
                 {list.map((item, index) => (
                     <InfoListItem
@@ -189,7 +168,7 @@ export const MultiselectList = (): JSX.Element => {
             <Snackbar
                 action={
                     <>
-                        <Tooltip title={'Delete all'}>
+                        <Tooltip title={'Delete selected'}>
                             <IconButton
                                 id={'remove-items-button'}
                                 onClick={onDelete}

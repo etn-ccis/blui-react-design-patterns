@@ -12,7 +12,6 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 
 import Close from '@material-ui/icons/Close';
-import Error from '@material-ui/icons/Error';
 import Menu from '@material-ui/icons/Menu';
 import MoreVert from '@material-ui/icons/MoreVert';
 import Notifications from '@material-ui/icons/Notifications';
@@ -27,9 +26,10 @@ import { TOGGLE_DRAWER } from '../../../redux/actions';
 
 import { IconToggle } from './IconToggle';
 import { makeStyles, useTheme, Theme, createStyles } from '@material-ui/core/styles';
-import { Spacer, InfoListItem, EmptyState } from '@pxblue/react-components';
+import { Spacer, InfoListItem } from '@pxblue/react-components';
 
 import getEvents, { formatDate, Event } from './alarmData';
+import { EmptyState } from './EmptyState';
 
 export const TYPES = {
     TIME: 'time',
@@ -163,12 +163,6 @@ export const ComplexBottomSheet = (): JSX.Element => {
         );
     }, [currentSort, showActiveAlarms, showAlarms, showSettings, showSessions]);
 
-    const getEmptyState = (): JSX.Element => (
-        <div className={classes.emptyStateContainer}>
-            <EmptyState icon={<Error style={{ fontSize: theme.spacing(12) }} />} title={'No events available'} />
-        </div>
-    );
-
     return (
         <div style={{ backgroundColor: theme.palette.background.paper, minHeight: '100vh' }}>
             <AppBar position="sticky">
@@ -223,7 +217,7 @@ export const ComplexBottomSheet = (): JSX.Element => {
                 </List>
             )}
 
-            {list.length === 0 && getEmptyState()}
+            {list.length === 0 && <EmptyState />}
 
             {/* Custom/Complex Bottom Sheet Definition */}
             <Drawer

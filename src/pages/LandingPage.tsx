@@ -69,13 +69,13 @@ export const LandingPage = (): JSX.Element => {
     useEffect((): void => {
         setTimeout((): void => {
             setDisplayTitle(true);
-        }, 300);
+        }, 250);
         setTimeout((): void => {
             setDisplayBody(true);
-        }, 1000);
+        }, 500);
         setTimeout((): void => {
             setDisplayLinks(true);
-        }, 1500);
+        }, 1250);
     }, []);
 
     return (

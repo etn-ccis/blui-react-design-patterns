@@ -6,16 +6,15 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
 import AddIcon from '@material-ui/icons/Add';
 import DeleteIcon from '@material-ui/icons/Delete';
-import ErrorIcon from '@material-ui/icons/Error';
 import List from '@material-ui/core/List';
-import { EmptyState, Spacer, InfoListItem } from '@pxblue/react-components';
+import { Spacer, InfoListItem } from '@pxblue/react-components';
 import { useDispatch } from 'react-redux';
 import { TOGGLE_DRAWER } from '../../../redux/actions';
 import { Menu as MenuIcon } from '@material-ui/icons';
 import { Hidden, useTheme, Tooltip } from '@material-ui/core';
+import { EmptyState } from './EmptyState';
 
 type Option = 'Delete' | 'View Details';
 type Item = {
@@ -84,33 +83,6 @@ export const ActionList = (): JSX.Element => {
         setList([]);
     }, []);
 
-    const getEmptyComponent = (): JSX.Element => (
-        <div
-            style={{
-                display: 'flex',
-                flexDirection: 'column',
-                padding: theme.spacing(2),
-                height: `calc(100vh - ${theme.spacing(8)}px)`,
-            }}
-        >
-            <EmptyState
-                icon={<ErrorIcon style={{ fontSize: '100px' }} />}
-                title={'No Items Found'}
-                actions={
-                    <Button
-                        variant={'contained'}
-                        color={'primary'}
-                        style={{ margin: theme.spacing() }}
-                        onClick={onAddItem}
-                        startIcon={<AddIcon />}
-                    >
-                        Add an Item
-                    </Button>
-                }
-            />
-        </div>
-    );
-
     return (
         <div style={{ backgroundColor: theme.palette.background.paper, minHeight: '100vh' }}>
             <AppBar position={'sticky'}>
@@ -155,7 +127,7 @@ export const ActionList = (): JSX.Element => {
                     </Tooltip>
                 </Toolbar>
             </AppBar>
-            {list.length < 1 && getEmptyComponent()}
+            {list.length < 1 && <EmptyState onAddItem={onAddItem} />}
             <List data-cy={'list-content'} disablePadding component="nav" className={'list'}>
                 {list.map(
                     (item, i): JSX.Element => (

@@ -1,15 +1,11 @@
-import React, { ReactNode, useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
     AppBar,
     Button,
     Checkbox,
-    Drawer,
     IconButton,
     List,
-    ListItem,
-    ListItemIcon,
-    ListItemText,
     MenuItem,
     Select,
     Toolbar,
@@ -25,35 +21,19 @@ import { TOGGLE_DRAWER } from '../../redux/actions';
 import { InfoListItem, Spacer } from '@pxblue/react-components';
 import clsx from 'clsx';
 
-import BoltIcon from '@material-ui/icons/OfflineBolt';
 import MenuIcon from '@material-ui/icons/Menu';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import CartIcon from '@material-ui/icons/AddShoppingCart';
 import CancelIcon from '@material-ui/icons/Cancel';
-import HomeIcon from '@material-ui/icons/Home';
-import FolderIcon from '@material-ui/icons/Folder';
-import ErrorIcon from '@material-ui/icons/Error';
-import SettingsIcon from '@material-ui/icons/Settings';
-import HelpIcon from '@material-ui/icons/Help';
 import MenuOpenIcon from '@material-ui/icons/MenuOpen';
 
 import { english } from './translations/english';
 import { DRAWER_WIDTH } from '../../assets/constants';
+import { Drawer } from './Drawer';
 import './translations/i18n';
-// import './index.css';
 require('typeface-noto-sans');
 
 const useStyles = makeStyles((theme: Theme) => ({
-    drawer: {
-        maxWidth: '85%',
-        width: 350,
-    },
-    header: {
-        height: '180px',
-        color: 'white',
-        background: theme.palette.primary.main,
-        padding: theme.spacing(2),
-    },
     snackbar: {
         [theme.breakpoints.up('md')]: {
             left: `calc((100vw - ${DRAWER_WIDTH}px)/2 + ${DRAWER_WIDTH}px);`,
@@ -68,24 +48,6 @@ const useStyles = makeStyles((theme: Theme) => ({
     icon: {
         fontSize: 16,
         margin: 4,
-    },
-    listItem: {
-        height: theme.spacing(6),
-        paddingRight: theme.spacing(3),
-        '&:hover': {
-            backgroundColor: 'rgba(0, 0, 0, 0.08)',
-        },
-    },
-    flexVert: {
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'stretch',
-    },
-    flexVertBottom: {
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'flex-start',
-        justifyContent: 'flex-end',
     },
     RTL: { transform: 'scaleX(-1)' },
     RTLButtonStartIcon: {
@@ -103,7 +65,6 @@ export const I18N = (): JSX.Element => {
     const classes = useStyles(theme);
     const { t, i18n } = useTranslation();
     const fruits = english.translations.FRUITS;
-    const menuItems = english.translations.MENU_ITEMS;
 
     const [drawerOpen, setDrawerOpen] = useState(false);
     const [selectedItems, setSelectedItems] = useState(new Set<string>());
@@ -137,55 +98,17 @@ export const I18N = (): JSX.Element => {
         [selectedItems]
     );
 
-    const getDrawer = (): ReactNode => {
-        // eslint-disable-next-line react/jsx-key
-        const iconArray = [<HomeIcon />, <FolderIcon />, <ErrorIcon />, <SettingsIcon />, <HelpIcon />];
-        return (
-            <Drawer
-                open={drawerOpen}
-                onClose={(): void => setDrawerOpen(!drawerOpen)}
-                classes={{ paper: classes.drawer }}
-                anchor={isRTL() ? 'right' : 'left'}
-            >
-                <div className={classes.flexVert} style={{ height: '100%', width: '100%' }}>
-                    <div dir={getDirection()} className={clsx(classes.flexVertBottom, classes.header)}>
-                        <BoltIcon style={{ fontSize: '64px', transform: 'rotate(42deg)' }} />
-                        <div style={{ padding: theme.spacing(0.5) }}>
-                            <Typography variant="h5" color="inherit">
-                                PX {t('BLUE')}
-                            </Typography>
-                            <Typography variant="subtitle1" color="inherit">
-                                {t('I18N')}
-                            </Typography>
-                        </div>
-                    </div>
-                    <div>
-                        <List dir={getDirection()} disablePadding>
-                            {Object.keys(menuItems).map((menuItem, index) => (
-                                <ListItem
-                                    button
-                                    className={clsx(classes.listItem)}
-                                    key={menuItem}
-                                    onClick={(): void => setDrawerOpen(!drawerOpen)}
-                                    style={isRTL() ? { textAlign: 'right' } : undefined}
-                                >
-                                    <ListItemIcon>
-                                        <div className={clsx(isRTL() && classes.RTL)}>{iconArray[index]}</div>
-                                    </ListItemIcon>
-                                    <ListItemText primary={t(`MENU_ITEMS.${menuItem}`)} />
-                                </ListItem>
-                            ))}
-                        </List>
-                    </div>
-                </div>
-            </Drawer>
-        );
-    };
-
     return (
         <div dir={getDirection()} style={{ backgroundColor: theme.palette.background.paper, minHeight: '100vh' }}>
-            <AppBar position="sticky">
-                {getDrawer()}
+            <AppBar position={'sticky'}>
+                <Drawer
+                    open={drawerOpen}
+                    R2L={isRTL()}
+                    drawerToggler={() => {
+                        setDrawerOpen(!drawerOpen);
+                    }}
+                    translator={t}
+                />
                 <Toolbar>
                     <Hidden mdUp>
                         <IconButton
@@ -198,13 +121,13 @@ export const I18N = (): JSX.Element => {
                             <MenuIcon />
                         </IconButton>
                     </Hidden>
-                    <Typography variant="h6" color="inherit">
+                    <Typography variant={'h6'} color={'inherit'}>
                         {t('I18N')}
                     </Typography>
                     <Spacer />
                     <Tooltip title={t('VIEW_I18N_SIDE_NAV') || ''}>
                         <IconButton
-                            color="inherit"
+                            color={'inherit'}
                             onClick={(): void => setDrawerOpen(!drawerOpen)}
                             edge={isRTL() ? 'start' : 'end'}
                             className={clsx(isRTL() && classes.RTL)}
@@ -230,13 +153,13 @@ export const I18N = (): JSX.Element => {
                     <MenuItem value={'zh'}>{t('LANGUAGES.CHINESE')}</MenuItem>
                 </Select>
                 <Button
-                    variant="contained"
-                    color="primary"
+                    variant={'contained'}
+                    color={'primary'}
                     style={{ margin: theme.spacing(2) }}
                     classes={isRTL() ? { startIcon: classes.RTLButtonStartIcon } : undefined}
                     startIcon={<CartIcon className={clsx(classes.icon, isRTL() && classes.RTL)} />}
                 >
-                    <Typography noWrap color="inherit">
+                    <Typography noWrap color={'inherit'}>
                         {t('ADD_TO_CART')}
                     </Typography>
                 </Button>
@@ -268,8 +191,8 @@ export const I18N = (): JSX.Element => {
                                         setSelectedItems(new Set());
                                     }}
                                     color={'inherit'}
-                                    id="deselect-all-button"
-                                    data-cy="snackbar-deselect-all"
+                                    id={'deselect-all-button'}
+                                    data-cy={'snackbar-deselect-all'}
                                 >
                                     <CancelIcon />
                                 </IconButton>

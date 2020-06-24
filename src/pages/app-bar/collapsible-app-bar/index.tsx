@@ -95,7 +95,7 @@ export const CollapsibleAppBar = (): JSX.Element => {
         } else {
             setHeaderActive(false);
         }
-    }, []);
+    }, [setOpacity, setHeaderActive]);
 
     // When the page first gets loaded but with a pageYOffset, set the
     // header in the appropriate position.
@@ -105,7 +105,7 @@ export const CollapsibleAppBar = (): JSX.Element => {
 
     return (
         <div
-            id="scroll-area"
+            id={'scroll-area'}
             onWheel={styleHeaderAndBanner}
             style={{ backgroundColor: theme.palette.background.paper, minHeight: '100vh' }}
         >
@@ -113,7 +113,7 @@ export const CollapsibleAppBar = (): JSX.Element => {
                 <Toolbar>
                     <Hidden mdUp>
                         <IconButton
-                            color="inherit"
+                            color={'inherit'}
                             onClick={(): void => {
                                 dispatch({ type: TOGGLE_DRAWER, payload: true });
                             }}
@@ -123,10 +123,10 @@ export const CollapsibleAppBar = (): JSX.Element => {
                         </IconButton>
                     </Hidden>
                     <div>
-                        <Typography className={classes.headerTitle} variant="h6" color="inherit">
+                        <Typography className={classes.headerTitle} variant={'h6'} color={'inherit'}>
                             President
                         </Typography>
-                        <Typography className={classes.headerSubtitle} variant="subtitle1" color="inherit">
+                        <Typography className={classes.headerSubtitle} variant={'subtitle1'} color={'inherit'}>
                             Leader of the Free World
                         </Typography>
                     </div>
@@ -137,7 +137,7 @@ export const CollapsibleAppBar = (): JSX.Element => {
                     <div className={classes.bannerActionItems}>
                         <Hidden mdUp>
                             <IconButton
-                                color="inherit"
+                                color={'inherit'}
                                 onClick={(): void => {
                                     dispatch({ type: TOGGLE_DRAWER, payload: true });
                                 }}
@@ -149,18 +149,18 @@ export const CollapsibleAppBar = (): JSX.Element => {
                     </div>
                 </Toolbar>
                 <div className={classes.content} style={{ opacity: 1 - opacity / MAX_APP_BAR_HEIGHT }}>
-                    <Typography variant="h6" color="inherit">
+                    <Typography variant={'h6'} color={'inherit'}>
                         President
                     </Typography>
-                    <Typography variant="body1" color="inherit">
+                    <Typography variant={'body1'} color={'inherit'}>
                         Commander in Chief
                     </Typography>
-                    <Typography variant="body2" color="inherit">
+                    <Typography variant={'body2'} color={'inherit'}>
                         Leader of the Free World
                     </Typography>
                 </div>
             </div>
-            <List component="nav" className={classes.alignTopContent}>
+            <List component={'nav'} className={classes.alignTopContent}>
                 {list.map(
                     (item, i): JSX.Element => (
                         <ListItem key={`item-${i}`}>

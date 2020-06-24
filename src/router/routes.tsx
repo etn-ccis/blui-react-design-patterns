@@ -64,12 +64,9 @@ export const PAGES: Routes = {
             route: 'complex-bottom-sheet',
         },
     },
-    STEPPERS: {
-        title: 'Steppers',
-        DYNAMIC: {
-            title: 'Dynamic Stepper',
-            route: 'dynamic-stepper',
-        },
+    DYNAMIC_STEPPER: {
+        title: 'Dynamic Stepper',
+        route: 'dynamic-stepper',
     },
     // VISUALIZATIONS: {
     //     title: 'Visualizations',
@@ -114,9 +111,7 @@ export type Routes = {
         BASIC_BOTTOM_SHEET: RouteMetaData;
         COMPLEX_BOTTOM_SHEET: RouteMetaData;
     };
-    STEPPERS: RouteMetaData & {
-        DYNAMIC: RouteMetaData;
-    };
+    DYNAMIC_STEPPER: RouteMetaData;
     // VISUALIZATIONS: RouteMetaData & {
     //     HIGHCHARTS: RouteMetaData;
     //     CHARTJS: RouteMetaData;

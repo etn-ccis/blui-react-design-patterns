@@ -50,7 +50,7 @@ export const BasicBottomSheet = (): JSX.Element => {
 
     return (
         <div style={{ backgroundColor: theme.palette.background.paper, minHeight: '100vh' }}>
-            <AppBar position="sticky">
+            <AppBar position={'sticky'}>
                 <Toolbar>
                     <Hidden mdUp={true}>
                         <IconButton
@@ -63,11 +63,11 @@ export const BasicBottomSheet = (): JSX.Element => {
                             <MenuIcon />
                         </IconButton>
                     </Hidden>
-                    <Typography variant="h6" color="inherit">
+                    <Typography variant={'h6'} color={'inherit'}>
                         Basic Bottom Sheet
                     </Typography>
                     <Spacer />
-                    <IconButton color="inherit" edge={'end'} onClick={(): void => setShowMenu(true)}>
+                    <IconButton color={'inherit'} edge={'end'} onClick={(): void => setShowMenu(true)}>
                         <MoreVert />
                     </IconButton>
                 </Toolbar>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import {
     AppBar,
     Toolbar,
@@ -69,9 +69,9 @@ export const FormValidation = (): JSX.Element => {
 
     const getValidationIcon = (error: FormError): JSX.Element => {
         if (error && error.length > 0) {
-            return <Close style={{ color: theme.palette.error.main, marginRight: 8 }} />;
+            return <Close style={{ color: theme.palette.error.main, marginRight: theme.spacing() }} />;
         } else if (error === '') {
-            return <Done style={{ color: theme.palette.primary.main, marginRight: 8 }} />;
+            return <Done style={{ color: theme.palette.primary.main, marginRight: theme.spacing() }} />;
         }
         return <></>;
     };
@@ -83,54 +83,69 @@ export const FormValidation = (): JSX.Element => {
         </>
     );
 
-    const validateInput = (value: string): void => {
-        const tempInput = value;
-        let tempInputError = null;
-        if (!tempInput.trim()) {
-            tempInputError = 'required';
-        }
-        setInputError(tempInputError);
-    };
+    const validateInput = useCallback(
+        (value: string): void => {
+            const tempInput = value;
+            let tempInputError = null;
+            if (!tempInput.trim()) {
+                tempInputError = 'required';
+            }
+            setInputError(tempInputError);
+        },
+        [setInputError]
+    );
 
-    const onChange: OnChangeHandler = (event) => {
-        setChars(event.target.value);
-        validateInput(event.target.value);
-    };
+    const onChange: OnChangeHandler = useCallback(
+        (event) => {
+            setChars(event.target.value);
+            validateInput(event.target.value);
+        },
+        [setChars, validateInput]
+    );
 
-    const onInputChange: OnChangeHandler = (event) => {
-        setInput(event.target.value);
-        validateInput(event.target.value);
-    };
+    const onInputChange: OnChangeHandler = useCallback(
+        (event) => {
+            setInput(event.target.value);
+            validateInput(event.target.value);
+        },
+        [setInput, validateInput]
+    );
 
-    const onInputBlur = (): void => {
+    const onInputBlur = useCallback((): void => {
         validateInput(input);
-    };
+    }, [validateInput, input]);
 
-    const validateEmail = (value: string): void => {
-        const tempEmail = value;
-        let tempEmailError = '';
-        if (!tempEmail.trim()) {
-            tempEmailError = 'required';
-        } else if (!emailRegex.test(tempEmail)) {
-            tempEmailError = 'Invalid email address';
-        }
-        setEmailError(tempEmailError);
-    };
+    const validateEmail = useCallback(
+        (value: string): void => {
+            const tempEmail = value;
+            let tempEmailError = '';
+            if (!tempEmail.trim()) {
+                tempEmailError = 'required';
+            } else if (!emailRegex.test(tempEmail)) {
+                tempEmailError = 'Invalid email address';
+            }
+            setEmailError(tempEmailError);
+        },
+        [setEmailError]
+    );
 
-    const onEmailChange: OnChangeHandler = (event) => {
-        setEmail(event.target.value);
-        if (emailError) {
-            validateEmail(event.target.value);
-        } else {
-            setEmailError(null);
-        }
-    };
+    const onEmailChange: OnChangeHandler = useCallback(
+        (event) => {
+            setEmail(event.target.value);
+            if (emailError) {
+                validateEmail(event.target.value);
+            } else {
+                setEmailError(null);
+            }
+        },
+        [setEmail, emailError, validateEmail, setEmailError]
+    );
 
-    const onEmailBlur = (): void => {
+    const onEmailBlur = useCallback((): void => {
         validateEmail(email);
-    };
+    }, [validateEmail, email]);
 
-    const validatePhoneNumber = (): void => {
+    const validatePhoneNumber = useCallback((): void => {
         const tempPhoneNumber = phoneNumber;
         let tempPhoneNumberError = '';
         if (!tempPhoneNumber.trim()) {
@@ -139,53 +154,59 @@ export const FormValidation = (): JSX.Element => {
             tempPhoneNumberError = 'Invalid phone number';
         }
         setPhoneNumberError(tempPhoneNumberError);
-    };
+    }, [phoneNumber, setPhoneNumberError]);
 
-    const onPhoneNumberChange: OnChangeHandler = (event) => {
-        let { value } = event.target;
-        value = value.replace(/[a-zA-Z]+/, '');
-        setPhoneNumber(value);
-        if (phoneNumberError) {
-            validatePhoneNumber();
-        } else {
-            setPhoneNumberError(null);
-        }
-    };
+    const onPhoneNumberChange: OnChangeHandler = useCallback(
+        (event) => {
+            let { value } = event.target;
+            value = value.replace(/[a-zA-Z]+/, '');
+            setPhoneNumber(value);
+            if (phoneNumberError) {
+                validatePhoneNumber();
+            } else {
+                setPhoneNumberError(null);
+            }
+        },
+        [setPhoneNumber, phoneNumberError, validatePhoneNumber, setPhoneNumberError]
+    );
 
-    const validateOldPassword = (): void => {
+    const validateOldPassword = useCallback((): void => {
         const tempOldPassword = oldPassword;
         let tempOldPasswordError = '';
         if (!tempOldPassword.trim()) {
             tempOldPasswordError = 'required';
         }
         setOldPasswordError(tempOldPasswordError);
-    };
+    }, [oldPassword, setOldPasswordError]);
 
-    const onOldPasswordChange: OnChangeHandler = (event) => {
-        setOldPassword(event.target.value);
-        if (oldPasswordError) {
-            validateOldPassword();
-        } else {
-            setOldPasswordError(null);
-        }
-    };
+    const onOldPasswordChange: OnChangeHandler = useCallback(
+        (event) => {
+            setOldPassword(event.target.value);
+            if (oldPasswordError) {
+                validateOldPassword();
+            } else {
+                setOldPasswordError(null);
+            }
+        },
+        [setOldPassword, oldPasswordError, validateOldPassword, setOldPasswordError]
+    );
 
-    const validateNewPassword = (): void => {
+    const validateNewPassword = useCallback((): void => {
         const tempNewPassword = newPassword;
         let tempNewPasswordError = '';
         if (!tempNewPassword.trim() || Object.values(passwordErrors).includes('required')) {
             tempNewPasswordError = 'required';
         }
         setNewPasswordError(tempNewPasswordError);
-    };
+    }, [newPassword, passwordErrors, setNewPasswordError]);
 
-    const validatePasswordCriteria = (): void => {
+    const validatePasswordCriteria = useCallback((): void => {
         if (newPasswordError) {
             validateNewPassword();
         } else {
             setNewPasswordError(null);
         }
-    };
+    }, [newPasswordError, validateNewPassword, setNewPasswordError]);
 
     useEffect(() => {
         const tempPasswordErrors = {
@@ -198,12 +219,15 @@ export const FormValidation = (): JSX.Element => {
         setPasswordErrors(tempPasswordErrors);
     }, [newPassword]);
 
-    const onNewPasswordChange: OnChangeHandler = (event) => {
-        setNewPassword(event.target.value);
-        validatePasswordCriteria();
-    };
+    const onNewPasswordChange: OnChangeHandler = useCallback(
+        (event) => {
+            setNewPassword(event.target.value);
+            validatePasswordCriteria();
+        },
+        [setNewPassword, validatePasswordCriteria]
+    );
 
-    const validateConfirmPassword = (): void => {
+    const validateConfirmPassword = useCallback((): void => {
         const tempConfirmPassword = confirmPassword;
         let tempConfirmPasswordError = '';
         if (!tempConfirmPassword.trim()) {
@@ -212,16 +236,19 @@ export const FormValidation = (): JSX.Element => {
             tempConfirmPasswordError = 'Passwords do not match';
         }
         setConfirmPasswordError(tempConfirmPasswordError);
-    };
+    }, [confirmPassword, newPassword, setConfirmPasswordError]);
 
-    const onConfirmPasswordChange: OnChangeHandler = (event) => {
-        setConfirmPassword(event.target.value);
-        if (confirmPasswordError) {
-            validateConfirmPassword();
-        } else {
-            setConfirmPasswordError(null);
-        }
-    };
+    const onConfirmPasswordChange: OnChangeHandler = useCallback(
+        (event) => {
+            setConfirmPassword(event.target.value);
+            if (confirmPasswordError) {
+                validateConfirmPassword();
+            } else {
+                setConfirmPasswordError(null);
+            }
+        },
+        [setConfirmPassword, confirmPasswordError, validateConfirmPassword, setConfirmPasswordError]
+    );
 
     return (
         <div
@@ -231,7 +258,7 @@ export const FormValidation = (): JSX.Element => {
                 minHeight: '100vh',
             }}
         >
-            <AppBar position="sticky">
+            <AppBar position={'sticky'}>
                 <Toolbar>
                     <Hidden mdUp>
                         <IconButton
@@ -244,15 +271,15 @@ export const FormValidation = (): JSX.Element => {
                             <MenuIcon />
                         </IconButton>
                     </Hidden>
-                    <Typography variant="h6" color="inherit">
+                    <Typography variant={'h6'} color={'inherit'}>
                         Form Validation
                     </Typography>
                 </Toolbar>
             </AppBar>
 
             <div className={classes.block}>
-                <Typography variant="h6">Basic Form Fields</Typography>
-                <Typography variant="body2">
+                <Typography variant={'h6'}>Basic Form Fields</Typography>
+                <Typography variant={'body2'}>
                     The following example shows how to perform validation on various input types. The error icon on
                     invalid inputs is optional, but adds redundancy for color blind users.
                 </Typography>
@@ -261,8 +288,8 @@ export const FormValidation = (): JSX.Element => {
                     <CardContent>
                         <div>
                             <TextField
-                                id="input"
-                                label="Input"
+                                id={'input'}
+                                label={'Input'}
                                 fullWidth
                                 helperText={inputError || 'This is a regular input field.'}
                                 required
@@ -272,15 +299,17 @@ export const FormValidation = (): JSX.Element => {
                                 onBlur={onInputBlur}
                                 InputProps={{
                                     endAdornment: (
-                                        <InputAdornment position="end">{getValidationIcon(inputError)}</InputAdornment>
+                                        <InputAdornment position={'end'}>
+                                            {getValidationIcon(inputError)}
+                                        </InputAdornment>
                                     ),
                                 }}
                             />
 
                             <TextField
                                 className={classes.marginedField}
-                                id="email"
-                                label="Enter Your Email"
+                                id={'email'}
+                                label={'Enter Your Email'}
                                 helperText={
                                     emailError || 'This field throws an error if the email format is incorrect.'
                                 }
@@ -292,15 +321,17 @@ export const FormValidation = (): JSX.Element => {
                                 onBlur={onEmailBlur}
                                 InputProps={{
                                     endAdornment: (
-                                        <InputAdornment position="end">{getValidationIcon(emailError)}</InputAdornment>
+                                        <InputAdornment position={'end'}>
+                                            {getValidationIcon(emailError)}
+                                        </InputAdornment>
                                     ),
                                 }}
                             />
 
                             <TextField
                                 className={classes.marginedField}
-                                id="phoneNumber"
-                                label="Phone Number"
+                                id={'phoneNumber'}
+                                label={'Phone Number'}
                                 helperText={
                                     phoneNumberError ||
                                     'This field throws an error if the phone number format is incorrect. (Needs to be a valid U.S. number)'
@@ -313,7 +344,7 @@ export const FormValidation = (): JSX.Element => {
                                 onBlur={validatePhoneNumber}
                                 InputProps={{
                                     endAdornment: (
-                                        <InputAdornment position="end">
+                                        <InputAdornment position={'end'}>
                                             {getValidationIcon(phoneNumberError)}
                                         </InputAdornment>
                                     ),
@@ -325,8 +356,8 @@ export const FormValidation = (): JSX.Element => {
             </div>
 
             <div className={classes.block}>
-                <Typography variant="h6">Character Limits</Typography>
-                <Typography variant="body2">
+                <Typography variant={'h6'}>Character Limits</Typography>
+                <Typography variant={'body2'}>
                     The following example shows how to restrict the length of an input field. In these cases, you should
                     provide the user an indiction of how many characters are available.
                 </Typography>{' '}
@@ -335,8 +366,8 @@ export const FormValidation = (): JSX.Element => {
                     <CardContent>
                         <form>
                             <TextField
-                                id="chars"
-                                label="Enter some text"
+                                id={'chars'}
+                                label={'Enter some text'}
                                 fullWidth
                                 helperText={characterLimitsHelperText}
                                 value={chars}
@@ -349,8 +380,8 @@ export const FormValidation = (): JSX.Element => {
             </div>
 
             <div className={classes.block}>
-                <Typography variant="h6">Password Validation</Typography>
-                <Typography variant="body2">
+                <Typography variant={'h6'}>Password Validation</Typography>
+                <Typography variant={'body2'}>
                     The following example shows how to enforce password strength restrictions and confirmation field
                     matching. The password strength requirements for your application may differ from this example.
                 </Typography>
@@ -359,9 +390,9 @@ export const FormValidation = (): JSX.Element => {
                     <CardContent>
                         <form>
                             <TextField
-                                id="oldPassword"
-                                label="Old Password"
-                                type="password"
+                                id={'oldPassword'}
+                                label={'Old Password'}
+                                type={'password'}
                                 onChange={onOldPasswordChange}
                                 value={oldPassword}
                                 error={Boolean(oldPasswordError)}
@@ -372,9 +403,9 @@ export const FormValidation = (): JSX.Element => {
 
                             <TextField
                                 className={classes.marginedField}
-                                id="newPassword"
-                                label="New Password"
-                                type="password"
+                                id={'newPassword'}
+                                label={'New Password'}
+                                type={'password'}
                                 onChange={onNewPasswordChange}
                                 value={newPassword}
                                 error={Boolean(newPasswordError)}
@@ -385,9 +416,9 @@ export const FormValidation = (): JSX.Element => {
 
                             <TextField
                                 className={classes.marginedField}
-                                id="confirmPassword"
-                                label="Confirm Password"
-                                type="password"
+                                id={'confirmPassword'}
+                                label={'Confirm Password'}
+                                type={'password'}
                                 helperText={confirmPasswordError}
                                 onChange={onConfirmPasswordChange}
                                 value={confirmPassword}
@@ -401,7 +432,7 @@ export const FormValidation = (): JSX.Element => {
                             A password must contain the following:
                         </Typography>
 
-                        <List component="ul">
+                        <List component={'ul'}>
                             <ListItem>
                                 {getValidationIcon(passwordErrors.minLengthRequired)}
                                 <Typography variant={'body2'}>At least 8 characters in length</Typography>

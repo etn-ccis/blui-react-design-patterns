@@ -27,7 +27,7 @@ import Menu from '@material-ui/icons/Menu';
 import { Spacer } from '@pxblue/react-components';
 
 import { useDispatch } from 'react-redux';
-import { TOGGLE_DRAWER } from '../../../redux/actions';
+import { TOGGLE_DRAWER } from '../../redux/actions';
 
 export const stepOptions: string[] = ['Buy Groceries', 'Cook Dinner', 'Go To Sleep', 'Go To Work', 'Wake Up'];
 
@@ -158,17 +158,21 @@ export const DynamicStepper = (): JSX.Element => {
                                                 {choice === -1 ? 'Choose an action' : stepOptions[choice]}
                                             </Typography>
                                             {activeStep === index && (
-                                                <Tooltip title="Remove Step" data-cy="remove-step" placement={'right'}>
+                                                <Tooltip
+                                                    title={'Remove Step'}
+                                                    data-cy={'remove-step'}
+                                                    placement={'right'}
+                                                >
                                                     <Delete className={classes.deleteButton} onClick={removeStep} />
                                                 </Tooltip>
                                             )}
                                         </div>
                                     </StepButton>
                                     <StepContent>
-                                        <FormControl component="fieldset">
+                                        <FormControl component={'fieldset'}>
                                             <RadioGroup
-                                                data-cy="radiogroup"
-                                                aria-label="action"
+                                                data-cy={'radiogroup'}
+                                                aria-label={'action'}
                                                 name={`action_${index}`}
                                                 value={steps[index]}
                                                 onChange={(evt): void =>
@@ -190,7 +194,7 @@ export const DynamicStepper = (): JSX.Element => {
                             ))}
                             <Step
                                 key={'add-a-step'}
-                                data-cy="addstep"
+                                data-cy={'addstep'}
                                 disabled={steps.length > 0 && steps[steps.length - 1] === -1}
                             >
                                 <StepButton
@@ -210,7 +214,7 @@ export const DynamicStepper = (): JSX.Element => {
                         </Stepper>
                         <Button
                             variant={'contained'}
-                            data-cy="done"
+                            data-cy={'done'}
                             color={'primary'}
                             style={{ marginLeft: theme.spacing(3) }}
                             onClick={(): void => setFinished(true)}

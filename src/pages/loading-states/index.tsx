@@ -68,7 +68,7 @@ export const LoadingStates = (): JSX.Element => {
         setTimeout(() => {
             setData(deviceList);
         }, 3000);
-    }, []);
+    }, [setData]);
 
     useEffect(() => {
         fetchData();
@@ -77,7 +77,7 @@ export const LoadingStates = (): JSX.Element => {
     const refreshData = useCallback((): void => {
         setData(emptyDeviceList);
         fetchData();
-    }, [fetchData]);
+    }, [fetchData, setData]);
 
     return (
         <div
@@ -86,7 +86,7 @@ export const LoadingStates = (): JSX.Element => {
                 minHeight: '100vh',
             }}
         >
-            <AppBar position="sticky">
+            <AppBar position={'sticky'}>
                 <Toolbar>
                     <Hidden mdUp>
                         <IconButton
@@ -99,7 +99,7 @@ export const LoadingStates = (): JSX.Element => {
                             <MenuIcon />
                         </IconButton>
                     </Hidden>
-                    <Typography variant="h6" color="inherit">
+                    <Typography variant={'h6'} color={'inherit'}>
                         Loading States
                     </Typography>
                     <Spacer />
@@ -163,6 +163,7 @@ export const LoadingStates = (): JSX.Element => {
                                         <List disablePadding>
                                             {device.data.channels.map((channel, channelIndex) => (
                                                 <InfoListItem
+                                                    dense
                                                     title={channel.label}
                                                     icon={channel.icon}
                                                     rightComponent={
@@ -174,7 +175,6 @@ export const LoadingStates = (): JSX.Element => {
                                                             : 'full'
                                                     }
                                                     key={channelIndex}
-                                                    dense
                                                 />
                                             ))}
                                         </List>

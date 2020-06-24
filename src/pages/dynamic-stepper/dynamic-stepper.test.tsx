@@ -4,7 +4,7 @@ import Enzyme, { mount } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
-import { Reducer } from '../../../redux/reducers';
+import { Reducer } from '../../redux/reducers';
 import { DynamicStepper } from '.';
 import { StepButton } from '@material-ui/core';
 

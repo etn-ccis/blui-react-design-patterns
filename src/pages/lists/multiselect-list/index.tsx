@@ -83,14 +83,14 @@ export const MultiselectList = (): JSX.Element => {
                 setSelectedItems(selectedItems.filter((_: ListItem, i: number) => i !== index));
             }
         },
-        [selectedItems]
+        [selectedItems, setSelectedItems]
     );
 
     const isSelected = useCallback((item: ListItem): boolean => selectedItems.includes(item), [selectedItems]);
 
     const onAddItem = useCallback((): void => {
         setList([...list, createRandomItem()]);
-    }, [list]);
+    }, [list, setList]);
 
     const onDelete = useCallback((): void => {
         const updatedList = [...list];
@@ -102,14 +102,14 @@ export const MultiselectList = (): JSX.Element => {
 
         setList(updatedList);
         setSelectedItems([]);
-    }, [list, selectedItems]);
+    }, [list, selectedItems, setList, setSelectedItems]);
 
     const onCancel = useCallback((): void => {
         list.forEach((item: ListItem): void => {
             item.checked = false;
         });
         setSelectedItems([]);
-    }, [list]);
+    }, [list, setSelectedItems]);
 
     return (
         <div style={{ backgroundColor: theme.palette.background.paper, minHeight: '100vh' }}>

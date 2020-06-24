@@ -52,7 +52,7 @@ export const ActionList = (): JSX.Element => {
 
     const onAddItem = useCallback((): void => {
         setList([...list, createRandomItem()]);
-    }, [list]);
+    }, [list, setList]);
 
     const onMenuClick = useCallback(
         (event: React.MouseEvent<HTMLButtonElement, MouseEvent>, i: number): void => {
@@ -81,7 +81,7 @@ export const ActionList = (): JSX.Element => {
 
     const onRemoveAll = useCallback((): void => {
         setList([]);
-    }, []);
+    }, [setList]);
 
     return (
         <div style={{ backgroundColor: theme.palette.background.paper, minHeight: '100vh' }}>

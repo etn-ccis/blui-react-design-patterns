@@ -165,7 +165,7 @@ export const ComplexBottomSheet = (): JSX.Element => {
 
     return (
         <div style={{ backgroundColor: theme.palette.background.paper, minHeight: '100vh' }}>
-            <AppBar position="sticky">
+            <AppBar position={'sticky'}>
                 <Toolbar>
                     <Hidden mdUp>
                         <IconButton
@@ -178,12 +178,12 @@ export const ComplexBottomSheet = (): JSX.Element => {
                             <Menu />
                         </IconButton>
                     </Hidden>
-                    <Typography variant="h6" color="inherit" noWrap>
+                    <Typography variant={'h6'} color={'inherit'} noWrap>
                         Complex Bottom Sheet
                     </Typography>
                     <Spacer />
                     <IconButton
-                        data-cy="action-menu"
+                        data-cy={'action-menu'}
                         color={'inherit'}
                         onClick={(): void => setShowMenu(true)}
                         edge={'end'}
@@ -194,7 +194,7 @@ export const ComplexBottomSheet = (): JSX.Element => {
             </AppBar>
 
             {list.length > 0 && (
-                <List data-cy="list-content" disablePadding>
+                <List disablePadding data-cy={'list-content'}>
                     {list.map((event, i) => (
                         <InfoListItem
                             key={i}
@@ -228,8 +228,8 @@ export const ComplexBottomSheet = (): JSX.Element => {
                 classes={{ paper: classes.paper }}
             >
                 <List disablePadding>
-                    <ListItem data-cy="btm-sheet-sort" className={classes.sheetListItem}>
-                        <Typography variant="body1" gutterBottom>
+                    <ListItem data-cy={'btm-sheet-sort'} className={classes.sheetListItem}>
+                        <Typography variant={'body1'} gutterBottom>
                             Sort By:
                         </Typography>
                         <Grid container spacing={0} alignItems={'center'} justify={'center'}>
@@ -248,15 +248,15 @@ export const ComplexBottomSheet = (): JSX.Element => {
                         </Grid>
                     </ListItem>
                     <Divider />
-                    <ListItem data-cy="btm-sheet-show" className={classes.sheetListItem}>
+                    <ListItem data-cy={'btm-sheet-show'} className={classes.sheetListItem}>
                         <Typography variant="body1" gutterBottom>
                             Show:
                         </Typography>
                         <Grid container spacing={0} alignItems={'center'} justify={'center'}>
                             <IconToggle
                                 iconComponent={<NotificationsActive />}
-                                label="Active Alarms"
-                                data-cy="active-alarms"
+                                label={'Active Alarms'}
+                                data-cy={'active-alarms'}
                                 onClick={(): void => setShowActiveAlarms(!showActiveAlarms)}
                                 active={showActiveAlarms}
                             />

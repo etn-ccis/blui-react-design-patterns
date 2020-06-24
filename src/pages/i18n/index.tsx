@@ -138,7 +138,7 @@ export const I18N = (): JSX.Element => {
                 </Toolbar>
             </AppBar>
 
-            <Toolbar color="#fff">
+            <Toolbar>
                 <Select
                     value={lang}
                     onChange={(event): void => changeLanguage(String(event.target.value))}

@@ -3,30 +3,17 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import List from '@material-ui/core/List';
-import ComputerIcon from '@material-ui/icons/Computer';
 import MenuIcon from '@material-ui/icons/Menu';
 import { IconButton, Hidden, useTheme } from '@material-ui/core';
 import { useDispatch } from 'react-redux';
 import { TOGGLE_DRAWER } from '../../../redux/actions';
-import { EmptyState, InfoListItem, ChannelValue } from '@pxblue/react-components';
+import { InfoListItem, ChannelValue } from '@pxblue/react-components';
 import { presidentsList } from './list';
+import { EmptyState } from './EmptyState';
 
 export const DataList = (): JSX.Element => {
     const dispatch = useDispatch();
     const theme = useTheme();
-
-    const getEmptyComponent = (): JSX.Element => (
-        <div
-            style={{
-                display: 'flex',
-                flexDirection: 'column',
-                padding: '20px',
-                height: 'calc(100vh - 128px)',
-            }}
-        >
-            <EmptyState icon={<ComputerIcon style={{ fontSize: '100px' }} />} title={'No Items Found'} />
-        </div>
-    );
 
     return (
         <div style={{ backgroundColor: theme.palette.background.paper, minHeight: '100vh' }}>
@@ -48,7 +35,7 @@ export const DataList = (): JSX.Element => {
                     </Typography>
                 </Toolbar>
             </AppBar>
-            {presidentsList.length < 1 && getEmptyComponent()}
+            {presidentsList.length < 1 && <EmptyState />}
             <List disablePadding component={'nav'}>
                 {presidentsList.map((president) => (
                     <InfoListItem

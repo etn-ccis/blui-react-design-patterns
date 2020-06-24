@@ -49,7 +49,7 @@ const SortableListItem = SortableElement(({ president }: SortableListItemProps) 
 ));
 
 export const SortableListEdit = SortableContainer(({ presidents }: SortableListEditProps) => (
-    <List disablePadding component="nav">
+    <List disablePadding component={'nav'}>
         {presidents.map((president: President, i: number) => (
             <SortableListItem key={`item-${i}`} index={i} president={president} />
         ))}
@@ -71,7 +71,7 @@ export const SortableList = (): JSX.Element => {
 
     return (
         <div style={{ backgroundColor: theme.palette.background.paper, minHeight: '100vh' }}>
-            <AppBar position="sticky">
+            <AppBar position={'sticky'}>
                 <Toolbar>
                     <Hidden mdUp={true}>
                         <IconButton
@@ -84,7 +84,7 @@ export const SortableList = (): JSX.Element => {
                             <MenuIcon />
                         </IconButton>
                     </Hidden>
-                    <Typography variant="h6" color="inherit">
+                    <Typography variant={'h6'} color={'inherit'}>
                         Sortable List
                     </Typography>
                     <Spacer />
@@ -99,7 +99,7 @@ export const SortableList = (): JSX.Element => {
             </AppBar>
             {sortable && <SortableListEdit presidents={list} onSortEnd={onSortEnd} useDragHandle={true} />}
             {!sortable && (
-                <List className="list" disablePadding component="nav">
+                <List className={'list'} disablePadding component={'nav'}>
                     {list.map((president: President, i: number) => (
                         <InfoListItem
                             hidePadding

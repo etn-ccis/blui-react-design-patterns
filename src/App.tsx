@@ -123,7 +123,7 @@ export const App: React.FC = () => {
                         window.open('https://www.eaton.com', '_blank');
                     }}
                 >
-                    <img src={EatonLogo} style={{ margin: '10px' }} alt="Eaton Logo" height={50} width={'auto'} />
+                    <img src={EatonLogo} style={{ margin: '10px' }} alt={'Eaton Logo'} height={50} width={'auto'} />
                 </div>
             </DrawerFooter>
         </Drawer>

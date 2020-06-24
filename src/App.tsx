@@ -14,7 +14,6 @@ import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router';
 import { Main } from './router/main';
 import './style.css';
-import EatonLogo from './assets/EatonLogo.svg';
 import { PAGES, RouteMetaData, Routes } from './router/routes';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppState } from './redux/reducers';
@@ -123,7 +122,15 @@ export const App: React.FC = () => {
                         window.open('https://www.eaton.com', '_blank');
                     }}
                 >
-                    <img src={EatonLogo} style={{ margin: '10px' }} alt={'Eaton Logo'} height={50} width={'auto'} />
+                    <img
+                        src={
+                            'https://raw.githubusercontent.com/pxblue/react-design-patterns/master/src/assets/EatonLogo.svg'
+                        }
+                        style={{ margin: '10px' }}
+                        alt={'Eaton Logo'}
+                        height={50}
+                        width={'auto'}
+                    />
                 </div>
             </DrawerFooter>
         </Drawer>

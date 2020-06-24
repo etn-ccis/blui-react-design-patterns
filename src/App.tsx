@@ -1,4 +1,4 @@
-import { Divider, useMediaQuery, useTheme } from '@material-ui/core';
+import { Divider, useMediaQuery, useTheme, Typography } from '@material-ui/core';
 import {
     Drawer,
     DrawerBody,
@@ -7,7 +7,9 @@ import {
     DrawerLayout,
     DrawerNavGroup,
     NavItem,
+    Spacer,
 } from '@pxblue/react-components';
+import { OpenInNew } from '@material-ui/icons';
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router';
 import { Main } from './router/main';
@@ -17,6 +19,7 @@ import { PAGES, RouteMetaData, Routes } from './router/routes';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppState } from './redux/reducers';
 import { TOGGLE_DRAWER } from './redux/actions';
+import { DRAWER_WIDTH } from './assets/constants';
 
 export const App: React.FC = () => {
     const history = useHistory();
@@ -57,6 +60,7 @@ export const App: React.FC = () => {
             onClick: page.route
                 ? (): void => {
                       if (page.route) navigate(page.route); // this extra if shouldn't be necessary, but TS doesn't understand that it can't be undefined because of the ternary operator.
+                      dispatch({ type: TOGGLE_DRAWER, payload: false });
                   }
                 : undefined,
         };
@@ -67,24 +71,59 @@ export const App: React.FC = () => {
     const drawer = (
         <Drawer
             open={open}
-            width={270}
+            width={DRAWER_WIDTH}
             ModalProps={{
                 onBackdropClick: (): void => {
                     dispatch({ type: TOGGLE_DRAWER, payload: !open });
                 },
             }}
-            activeItemBackgroundColor={theme.palette.primary.light}
-            itemFontColor={theme.palette.text.primary}
             variant={isMobile ? 'temporary' : 'permanent'}
         >
-            <DrawerHeader title={'PX Blue'} subtitle={'React Design Patterns'} />
+            <DrawerHeader
+                title={'PX Blue'}
+                subtitle={'React Design Patterns'}
+                onClick={(): void => {
+                    navigate('/');
+                    dispatch({ type: TOGGLE_DRAWER, payload: false });
+                }}
+                style={{ cursor: 'pointer' }}
+            />
             <DrawerBody>
                 <DrawerNavGroup items={navItems} hidePadding activeItem={selected} />
+                <Spacer />
+                <DrawerNavGroup
+                    hidePadding
+                    titleContent={<Typography variant={'overline'}>More Resources</Typography>}
+                    items={[
+                        {
+                            title: 'PX Blue Components',
+                            itemID: 'comp lib',
+                            onClick: (): void => {
+                                window.open('https://pxblue-components.github.io/react/', '_blank');
+                            },
+                            rightComponent: <OpenInNew />,
+                        },
+                        {
+                            title: 'PX Blue React Guide',
+                            itemID: 'react guide',
+                            onClick: (): void => {
+                                window.open('https://pxblue.github.io/development/frameworks-web/react', '_blank');
+                            },
+                            rightComponent: <OpenInNew />,
+                            divider: false,
+                        },
+                    ]}
+                />
             </DrawerBody>
             <DrawerFooter>
                 <Divider />
-                <div style={{ display: 'flex', justifyContent: 'center' }}>
-                    <img src={EatonLogo} style={{ margin: '10px' }} alt="Eaton Logo" height={50} width={'auto'} />
+                <div
+                    style={{ display: 'flex', justifyContent: 'center', cursor: 'pointer' }}
+                    onClick={(): void => {
+                        window.open('https://www.eaton.com', '_blank');
+                    }}
+                >
+                    <img src={EatonLogo} style={{ margin: '10px' }} alt={'Eaton Logo'} height={50} width={'auto'} />
                 </div>
             </DrawerFooter>
         </Drawer>

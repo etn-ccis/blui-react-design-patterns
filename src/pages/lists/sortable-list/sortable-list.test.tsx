@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Enzyme from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
-import { SortableList } from './sortable-list';
+import { SortableList } from '.';
 import { createStore } from 'redux';
 import { Reducer } from '../../../redux/reducers';
 import { Provider } from 'react-redux';

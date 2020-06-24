@@ -10,13 +10,6 @@ export const PAGES: Routes = {
             route: 'search',
         },
     },
-    EMPTY_STATES: {
-        title: 'Empty States',
-        LOADING: {
-            title: 'Loading',
-            route: 'loading',
-        },
-    },
     FORM_VALIDATION: {
         title: 'Form Validation',
         route: 'form-validation',
@@ -47,48 +40,49 @@ export const PAGES: Routes = {
             title: 'Status List',
             route: 'status-list',
         },
-        TABLES: {
-            title: 'Tables',
-            route: 'tables',
+        RESPONSIVE_TABLE: {
+            title: 'Responsive Table',
+            route: 'responsive-table',
         },
+    },
+    LOADING: {
+        title: 'Loading States',
+        route: 'loading-states',
     },
     OVERLAYS: {
         title: 'Overlays',
-        DIALOG: {
-            title: 'Dialog',
-            route: 'dialog',
-        },
-        BOTTOM_SHEET: {
-            title: 'Bottom Sheet',
-            route: 'bottom-sheet',
+        // DIALOG: {
+        //     title: 'Dialog',
+        //     route: 'dialog',
+        // },
+        BASIC_BOTTOM_SHEET: {
+            title: 'Basic Bottom Sheet',
+            route: 'basic-bottom-sheet',
         },
         COMPLEX_BOTTOM_SHEET: {
             title: 'Complex Bottom Sheet',
             route: 'complex-bottom-sheet',
         },
     },
-    STEPPERS: {
-        title: 'Steppers',
-        DYNAMIC: {
-            title: 'Dynamic',
-            route: 'dynamic',
-        },
+    DYNAMIC_STEPPER: {
+        title: 'Dynamic Stepper',
+        route: 'dynamic-stepper',
     },
-    VISUALIZATIONS: {
-        title: 'Visualizations',
-        CHARTJS: {
-            title: 'ChartJS',
-            route: 'chartjs',
-        },
-        MAPBOX: {
-            title: 'MapBox',
-            route: 'mapbox',
-        },
-        HIGHCHARTS: {
-            title: 'Highcharts',
-            route: 'highcharts',
-        },
-    },
+    // VISUALIZATIONS: {
+    //     title: 'Visualizations',
+    //     CHARTJS: {
+    //         title: 'ChartJS',
+    //         route: 'chartjs',
+    //     },
+    //     MAPBOX: {
+    //         title: 'MapBox',
+    //         route: 'mapbox',
+    //     },
+    //     HIGHCHARTS: {
+    //         title: 'Highcharts',
+    //         route: 'highcharts',
+    //     },
+    // },
 };
 
 export type RouteMetaData = {
@@ -101,9 +95,6 @@ export type Routes = {
         COLLAPSIBLE: RouteMetaData;
         SEARCH: RouteMetaData;
     };
-    EMPTY_STATES: RouteMetaData & {
-        LOADING: RouteMetaData;
-    };
     FORM_VALIDATION: RouteMetaData;
     I18N: RouteMetaData;
     LISTS: RouteMetaData & {
@@ -112,19 +103,18 @@ export type Routes = {
         MULTISELECT_LIST: RouteMetaData;
         SORTABLE_LIST: RouteMetaData;
         STATUS_LIST: RouteMetaData;
-        TABLES: RouteMetaData;
+        RESPONSIVE_TABLE: RouteMetaData;
     };
+    LOADING: RouteMetaData;
     OVERLAYS: RouteMetaData & {
-        DIALOG: RouteMetaData;
-        BOTTOM_SHEET: RouteMetaData;
+        // DIALOG: RouteMetaData;
+        BASIC_BOTTOM_SHEET: RouteMetaData;
         COMPLEX_BOTTOM_SHEET: RouteMetaData;
     };
-    STEPPERS: RouteMetaData & {
-        DYNAMIC: RouteMetaData;
-    };
-    VISUALIZATIONS: RouteMetaData & {
-        HIGHCHARTS: RouteMetaData;
-        CHARTJS: RouteMetaData;
-        MAPBOX: RouteMetaData;
-    };
+    DYNAMIC_STEPPER: RouteMetaData;
+    // VISUALIZATIONS: RouteMetaData & {
+    //     HIGHCHARTS: RouteMetaData;
+    //     CHARTJS: RouteMetaData;
+    //     MAPBOX: RouteMetaData;
+    // };
 };

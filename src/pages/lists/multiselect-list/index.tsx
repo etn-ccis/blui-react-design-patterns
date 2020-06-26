@@ -6,7 +6,6 @@ import {
     Toolbar,
     Typography,
     List,
-    ListItem,
     Checkbox,
     IconButton,
     Hidden,
@@ -25,7 +24,7 @@ import { DRAWER_WIDTH } from '../../../assets/constants';
 import { InfoListItem, Spacer } from '@pxblue/react-components';
 import { EmptyState } from './EmptyState';
 
-export type ListItem = {
+export type ListItemType = {
     id: number;
     name: string;
     details: string;
@@ -47,20 +46,20 @@ const useStyles = makeStyles((theme: Theme) =>
     })
 );
 
-const createItem = (index: number, randomStatus: string): ListItem => ({
+const createItem = (index: number, randomStatus: string): ListItemType => ({
     id: index,
     name: `Item ${index}`,
     details: `Status: ${randomStatus}`,
     checked: false,
 });
 
-const createRandomItem = (): ListItem => {
+const createRandomItem = (): ListItemType => {
     const int = parseInt(`${Math.random() * 100}`, 10);
     const randomStatus = Math.random() >= 0.3 ? 'normal' : 'alarm';
     return createItem(int, randomStatus);
 };
 
-const generatedList: ListItem[] = [];
+const generatedList: ListItemType[] = [];
 
 for (let i = 0; i < 10; i++) {
     generatedList.push(createRandomItem());
@@ -71,22 +70,22 @@ export const MultiselectList = (): JSX.Element => {
     const dispatch = useDispatch();
     const theme = useTheme();
 
-    const [list, setList] = useState<ListItem[]>(generatedList);
-    const [selectedItems, setSelectedItems] = useState<ListItem[]>([]);
+    const [list, setList] = useState<ListItemType[]>(generatedList);
+    const [selectedItems, setSelectedItems] = useState<ListItemType[]>([]);
 
     const onSelect = useCallback(
-        (item: ListItem): void => {
+        (item: ListItemType): void => {
             if (!selectedItems.includes(item)) {
                 setSelectedItems([...selectedItems, item]);
             } else {
                 const index = selectedItems.indexOf(item);
-                setSelectedItems(selectedItems.filter((_: ListItem, i: number) => i !== index));
+                setSelectedItems(selectedItems.filter((_: ListItemType, i: number) => i !== index));
             }
         },
         [selectedItems, setSelectedItems]
     );
 
-    const isSelected = useCallback((item: ListItem): boolean => selectedItems.includes(item), [selectedItems]);
+    const isSelected = useCallback((item: ListItemType): boolean => selectedItems.includes(item), [selectedItems]);
 
     const onAddItem = useCallback((): void => {
         setList([...list, createRandomItem()]);
@@ -95,7 +94,7 @@ export const MultiselectList = (): JSX.Element => {
     const onDelete = useCallback((): void => {
         const updatedList = [...list];
 
-        selectedItems.forEach((item: ListItem) => {
+        selectedItems.forEach((item: ListItemType) => {
             const index = updatedList.indexOf(item);
             updatedList.splice(index, 1);
         });
@@ -105,7 +104,7 @@ export const MultiselectList = (): JSX.Element => {
     }, [list, selectedItems, setList, setSelectedItems]);
 
     const onCancel = useCallback((): void => {
-        list.forEach((item: ListItem): void => {
+        list.forEach((item: ListItemType): void => {
             item.checked = false;
         });
         setSelectedItems([]);

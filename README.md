@@ -1,6 +1,6 @@
 # React Design Patterns
 
-This repository holds the source code for some [PX Blue's design patterns](https://pxblue.github.io/patterns), written in React. The code based is arranged so that you can easily copy and paste the code examples into your own projects.
+This repository holds the source code examples for [PX Blue design patterns](https://pxblue.github.io/patterns), written in React. The code is organized to make it easy to copy and paste the examples into your own projects.
 
 ## Current Patterns
 
@@ -21,16 +21,13 @@ This repository holds the source code for some [PX Blue's design patterns](https
 | [Sortable List](https://pxblue.github.io/patterns/lists)                       | [Link](https://codesandbox.io/s/github/pxblue/react-design-patterns/tree/master?file=/src/pages/lists/sortable-list/index.tsx)           |
 | [Status List](https://pxblue.github.io/patterns/lists)                         | [Link](https://codesandbox.io/s/github/pxblue/react-design-patterns/tree/master?file=/src/pages/lists/status-list/index.tsx)             |
 
-## Update
+## Running Locally
 
-To update the code base, first clone the repository and make a feature branch:
+To run this project (with all patterns) locally, first clone the repository:
 
 ```
 git clone https://github.com/pxblue/react-design-patterns.git
 cd react-design-patterns
-git checkout -b feature/my-feature
 ```
 
 Then you may run `yarn && yarn start` to start a local server.
-
-Once you have made your changes, push your feature branch and make a Pull Request into the dev branch.

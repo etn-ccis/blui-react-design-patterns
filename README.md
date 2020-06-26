@@ -1,5 +1,7 @@
 # React Design Patterns
 
+[![](https://img.shields.io/circleci/project/github/pxblue/react-design-patterns/master.svg?style=flat)](https://circleci.com/gh/pxblue/react-design-patterns/tree/master)
+
 This repository holds the source code examples for [PX Blue design patterns](https://pxblue.github.io/patterns), written in React. The code is organized to make it easy to copy and paste the examples into your own projects.
 
 ## Current Patterns

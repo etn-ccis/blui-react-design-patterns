@@ -1,4 +1,5 @@
 import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
+import CssBaseline from '@material-ui/core/CssBaseline';
 
 import * as PXBThemes from '@pxblue/react-themes';
 import React from 'react';
@@ -17,6 +18,7 @@ render(
     <MuiThemeProvider theme={createMuiTheme(PXBThemes.blue)}>
         <BrowserRouter>
             <Provider store={store}>
+                <CssBaseline />
                 <App />
             </Provider>
         </BrowserRouter>

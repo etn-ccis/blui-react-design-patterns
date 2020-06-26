@@ -4,9 +4,6 @@ import AppBar from '@material-ui/core/AppBar';
 import Hidden from '@material-ui/core/Hidden';
 import IconButton from '@material-ui/core/IconButton';
 import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
 import TextField from '@material-ui/core/TextField';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
@@ -177,23 +174,18 @@ export const SearchBar = (): JSX.Element => {
             </AppBar>
 
             {/* List */}
-            <List disablePadding>
+            <List>
                 {list.map((item, index) => (
-                    <ListItem key={`item-${index}`}>
-                        <ListItemIcon>
-                            <Person />
-                        </ListItemIcon>
-                        <ListItemText
-                            primary={item.president}
-                            secondary={
-                                <>
-                                    <Typography variant={'body2'}>{item.party}</Typography>
-                                    <Typography variant={'body2'}>{item.took_office}</Typography>
-                                </>
-                            }
-                            secondaryTypographyProps={{ component: 'div' }}
-                        />
-                    </ListItem>
+                    <InfoListItem
+                        avatar
+                        key={index}
+                        icon={<Person />}
+                        title={item.president}
+                        subtitle={item.party}
+                        info={item.took_office}
+                        statusColor={'transparent'}
+                        iconColor={theme.palette.text.primary}
+                    />
                 ))}
                 {list.length < 1 && (
                     <InfoListItem icon={<Error />} title={'0 results'} subtitle={'No matching presidents'} />

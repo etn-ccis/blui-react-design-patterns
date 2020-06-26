@@ -1,24 +1,12 @@
 import React, { useState, useEffect, useCallback } from 'react';
 
-import {
-    Typography,
-    List,
-    ListItem,
-    ListItemIcon,
-    ListItemText,
-    Toolbar,
-    IconButton,
-    AppBar,
-    Hidden,
-    makeStyles,
-    Theme,
-    useTheme,
-} from '@material-ui/core';
+import { Typography, List, Toolbar, IconButton, AppBar, Hidden, makeStyles, Theme, useTheme } from '@material-ui/core';
 import { Person as PersonIcon, Menu as MenuIcon } from '@material-ui/icons';
 import clsx from 'clsx';
 import { listItems } from './list';
 import { useDispatch } from 'react-redux';
 import { TOGGLE_DRAWER } from '../../../redux/actions';
+import { InfoListItem } from '@pxblue/react-components';
 
 const MAX_APP_BAR_HEIGHT = 128; // Specified by Material Design
 
@@ -163,21 +151,16 @@ export const CollapsibleAppBar = (): JSX.Element => {
             <List component={'nav'} className={classes.alignTopContent}>
                 {list.map(
                     (item, i): JSX.Element => (
-                        <ListItem key={`item-${i}`}>
-                            <ListItemIcon>
-                                <PersonIcon />
-                            </ListItemIcon>
-                            <ListItemText
-                                primary={item.president}
-                                secondary={
-                                    <>
-                                        <Typography variant={'body2'}>{item.party}</Typography>
-                                        <Typography variant={'body2'}>{item.took_office}</Typography>
-                                    </>
-                                }
-                                secondaryTypographyProps={{ component: 'div' }}
-                            />
-                        </ListItem>
+                        <InfoListItem
+                            avatar
+                            icon={<PersonIcon />}
+                            title={item.president}
+                            subtitle={item.party}
+                            info={item.took_office}
+                            key={i}
+                            statusColor={'transparent'}
+                            iconColor={theme.palette.text.primary}
+                        />
                     )
                 )}
             </List>

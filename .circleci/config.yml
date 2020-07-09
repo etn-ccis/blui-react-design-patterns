@@ -16,6 +16,7 @@ jobs:
             - save_cache:
                   name: Save Cache
                   paths:
+                      - ~/.cache
                       - node_modules
                   key: v3-dependencies-{{ checksum "yarn.lock" }}
             - run:

@@ -121,13 +121,15 @@ export const SearchBar = (): JSX.Element => {
     return (
         <div style={{ backgroundColor: theme.palette.background.paper, minHeight: '100vh' }}>
             {/* The Regular App Bar */}
-            <AppBar data-cy="pxb-toolbar"
+            <AppBar
+                data-cy="pxb-toolbar"
                 position={'sticky'}
                 className={clsx(classes.appbar, classes.regularBar, searchActive && classes.searchActive)}
             >
                 <Toolbar>
                     <Hidden mdUp={true}>
-                        <IconButton data-cy="toolbar-menu"
+                        <IconButton
+                            data-cy="toolbar-menu"
                             color={'inherit'}
                             onClick={(): void => {
                                 dispatch({ type: TOGGLE_DRAWER, payload: true });
@@ -141,14 +143,20 @@ export const SearchBar = (): JSX.Element => {
                         Search Bar
                     </Typography>
                     <Spacer />
-                    <IconButton color={'inherit'} onClick={(): void => setSearchActive(true)} edge={'end'} data-cy="search-btn">
+                    <IconButton
+                        color={'inherit'}
+                        onClick={(): void => setSearchActive(true)}
+                        edge={'end'}
+                        data-cy="search-btn"
+                    >
                         <Search />
                     </IconButton>
                 </Toolbar>
             </AppBar>
 
             {/* Search Bar */}
-            <AppBar data-cy="searchfield"
+            <AppBar
+                data-cy="searchfield"
                 className={clsx(classes.appbar, classes.searchbar, searchActive && classes.searchActive)}
                 position={'fixed'}
                 color={'default'}
@@ -167,7 +175,12 @@ export const SearchBar = (): JSX.Element => {
                             autoFocus
                         />
                     )}
-                    <IconButton color={'inherit'} onClick={(): void => setSearchActive(false)} edge={'end'} data-cy="search-close-btn">
+                    <IconButton
+                        color={'inherit'}
+                        onClick={(): void => setSearchActive(false)}
+                        edge={'end'}
+                        data-cy="search-close-btn"
+                    >
                         <Close />
                     </IconButton>
                 </Toolbar>

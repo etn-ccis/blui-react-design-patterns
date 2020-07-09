@@ -21,7 +21,8 @@ export const EmptyState: React.FC<EmptyStateProps> = (props) => {
                 icon={<ErrorIcon style={{ fontSize: '100px' }} />}
                 title={'No Items Found'}
                 actions={
-                    <Button data-cy="pxb-empty-state-add"
+                    <Button
+                        data-cy="pxb-empty-state-add"
                         variant={'contained'}
                         color={'primary'}
                         style={{ margin: theme.spacing() }}

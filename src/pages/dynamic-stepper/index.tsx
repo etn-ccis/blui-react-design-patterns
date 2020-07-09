@@ -102,7 +102,8 @@ export const DynamicStepper = (): JSX.Element => {
             <AppBar data-cy="pxb-toolbar" position={'sticky'}>
                 <Toolbar>
                     <Hidden mdUp={true}>
-                        <IconButton data-cy="toolbar-menu"
+                        <IconButton
+                            data-cy="toolbar-menu"
                             color={'inherit'}
                             onClick={(): void => {
                                 dispatch({ type: TOGGLE_DRAWER, payload: true });
@@ -117,7 +118,13 @@ export const DynamicStepper = (): JSX.Element => {
                     </Typography>
                     <Spacer />
                     <Tooltip title={'Remove All Steps'}>
-                        <IconButton data-cy="remove all" color={'inherit'} edge={'end'} onClick={(): void => setSteps([])} id={'remove-all'}>
+                        <IconButton
+                            data-cy="remove all"
+                            color={'inherit'}
+                            edge={'end'}
+                            onClick={(): void => setSteps([])}
+                            id={'remove-all'}
+                        >
                             <DeleteSweep />
                         </IconButton>
                     </Tooltip>

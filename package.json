@@ -39,7 +39,7 @@
         "prettier:check": "prettier \"src/**/**.{ts,tsx,js,jsx,json,css,scss,html}\" --check",
         "cy:run": "cypress run",
         "cypress:open": "cypress open",
-        "cytest": "start-server-and-test start http://localhost:3000 cy:run"
+        "cytest": "start-server-and-test start-server http://localhost:3000 cy:run"
     },
     "browserslist": {
         "production": [

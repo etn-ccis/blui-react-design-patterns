@@ -88,7 +88,7 @@ export const ActionList = (): JSX.Element => {
             <AppBar position={'sticky'}>
                 <Toolbar data-cy={'pxb-toolbar'}>
                     <Hidden mdUp={true}>
-                        <IconButton
+                        <IconButton data-cy='toolbar-menu'
                             color={'inherit'}
                             onClick={(): void => {
                                 dispatch({ type: TOGGLE_DRAWER, payload: true });

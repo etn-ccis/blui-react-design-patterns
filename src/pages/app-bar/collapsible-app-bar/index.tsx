@@ -124,7 +124,7 @@ export const CollapsibleAppBar = (): JSX.Element => {
                 <Toolbar className={classes.bannerMain}>
                     <div className={classes.bannerActionItems}>
                         <Hidden mdUp>
-                            <IconButton
+                            <IconButton data-cy="toolbar-menu"
                                 color={'inherit'}
                                 onClick={(): void => {
                                     dispatch({ type: TOGGLE_DRAWER, payload: true });

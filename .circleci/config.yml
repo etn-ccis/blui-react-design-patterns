@@ -30,3 +30,8 @@ jobs:
                   name: Unit Tests
                   command: |
                       yarn test
+            - run:
+                  name: design pattern cypress tests
+                  command: yarn cytest
+            - store_artifacts:
+                  path: cypress/screenshots

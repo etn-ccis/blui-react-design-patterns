@@ -121,13 +121,13 @@ export const SearchBar = (): JSX.Element => {
     return (
         <div style={{ backgroundColor: theme.palette.background.paper, minHeight: '100vh' }}>
             {/* The Regular App Bar */}
-            <AppBar
+            <AppBar data-cy="pxb-toolbar"
                 position={'sticky'}
                 className={clsx(classes.appbar, classes.regularBar, searchActive && classes.searchActive)}
             >
                 <Toolbar>
                     <Hidden mdUp={true}>
-                        <IconButton
+                        <IconButton data-cy="toolbar-menu"
                             color={'inherit'}
                             onClick={(): void => {
                                 dispatch({ type: TOGGLE_DRAWER, payload: true });
@@ -141,14 +141,14 @@ export const SearchBar = (): JSX.Element => {
                         Search Bar
                     </Typography>
                     <Spacer />
-                    <IconButton color={'inherit'} onClick={(): void => setSearchActive(true)} edge={'end'}>
+                    <IconButton color={'inherit'} onClick={(): void => setSearchActive(true)} edge={'end'} data-cy="search-btn">
                         <Search />
                     </IconButton>
                 </Toolbar>
             </AppBar>
 
             {/* Search Bar */}
-            <AppBar
+            <AppBar data-cy="searchfield"
                 className={clsx(classes.appbar, classes.searchbar, searchActive && classes.searchActive)}
                 position={'fixed'}
                 color={'default'}
@@ -167,14 +167,14 @@ export const SearchBar = (): JSX.Element => {
                             autoFocus
                         />
                     )}
-                    <IconButton color={'inherit'} onClick={(): void => setSearchActive(false)} edge={'end'}>
+                    <IconButton color={'inherit'} onClick={(): void => setSearchActive(false)} edge={'end'} data-cy="search-close-btn">
                         <Close />
                     </IconButton>
                 </Toolbar>
             </AppBar>
 
             {/* List */}
-            <List>
+            <List data-cy="list-view">
                 {list.map((item, index) => (
                     <InfoListItem
                         avatar

@@ -56,7 +56,8 @@ export const ResponsiveTable = (): JSX.Element => {
             <AppBar data-cy="pxb-toolbar" position="sticky">
                 <Toolbar>
                     <Hidden mdUp>
-                        <IconButton data-cy="toolbar-menu"
+                        <IconButton
+                            data-cy="toolbar-menu"
                             color={'inherit'}
                             onClick={(): void => {
                                 dispatch({ type: TOGGLE_DRAWER, payload: true });

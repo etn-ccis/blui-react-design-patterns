@@ -115,7 +115,8 @@ export const MultiselectList = (): JSX.Element => {
             <AppBar position={'sticky'}>
                 <Toolbar>
                     <Hidden mdUp={true}>
-                        <IconButton data-cy="toolbar-menu"
+                        <IconButton
+                            data-cy="toolbar-menu"
                             color={'inherit'}
                             onClick={(): void => {
                                 dispatch({ type: TOGGLE_DRAWER, payload: true });
@@ -164,7 +165,8 @@ export const MultiselectList = (): JSX.Element => {
                     </InfoListItem>
                 ))}
             </List>
-            <Snackbar data-cy="snack-bar"
+            <Snackbar
+                data-cy="snack-bar"
                 action={
                     <>
                         <Tooltip title={'Delete selected'}>

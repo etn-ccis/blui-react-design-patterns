@@ -24,7 +24,7 @@ const createInfoListItemConfig = (index: number, randomStatus: string, tag?: boo
             return {
                 title: `Item ${index}`,
                 subtitle: `Status: ${randomStatus}`,
-                icon: <WarningIcon/>,
+                icon: <WarningIcon />,
                 iconColor: colors.orange[500],
             };
         case 'normal':
@@ -66,7 +66,8 @@ export const StatusList = (): JSX.Element => {
             <AppBar data-cy="pxb-toolbar" position={'sticky'}>
                 <Toolbar>
                     <Hidden mdUp={true}>
-                        <IconButton data-cy="toolbar-menu"
+                        <IconButton
+                            data-cy="toolbar-menu"
                             color={'inherit'}
                             onClick={(): void => {
                                 dispatch({ type: TOGGLE_DRAWER, payload: true });

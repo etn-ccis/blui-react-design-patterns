@@ -168,7 +168,8 @@ export const ComplexBottomSheet = (): JSX.Element => {
             <AppBar data-cy="pxb-toolbar" position={'sticky'}>
                 <Toolbar>
                     <Hidden mdUp>
-                        <IconButton data-cy="toolbar-menu"
+                        <IconButton
+                            data-cy="toolbar-menu"
                             color={'inherit'}
                             onClick={(): void => {
                                 dispatch({ type: TOGGLE_DRAWER, payload: true });
@@ -281,7 +282,13 @@ export const ComplexBottomSheet = (): JSX.Element => {
                         </Grid>
                     </ListItem>
                     <Divider />
-                    <InfoListItem data-cy="btm-sheet-cancel" icon={<Close />} title={'Close'} dense onClick={(): void => setShowMenu(false)} />
+                    <InfoListItem
+                        data-cy="btm-sheet-cancel"
+                        icon={<Close />}
+                        title={'Close'}
+                        dense
+                        onClick={(): void => setShowMenu(false)}
+                    />
                 </List>
             </Drawer>
         </div>

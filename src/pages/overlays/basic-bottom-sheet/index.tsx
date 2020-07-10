@@ -53,7 +53,8 @@ export const BasicBottomSheet = (): JSX.Element => {
             <AppBar data-cy="pxb-toolbar" position={'sticky'}>
                 <Toolbar>
                     <Hidden mdUp={true}>
-                        <IconButton data-cy="toolbar-menu"
+                        <IconButton
+                            data-cy="toolbar-menu"
                             color={'inherit'}
                             onClick={(): void => {
                                 dispatch({ type: TOGGLE_DRAWER, payload: true });
@@ -67,7 +68,12 @@ export const BasicBottomSheet = (): JSX.Element => {
                         Basic Bottom Sheet
                     </Typography>
                     <Spacer />
-                    <IconButton data-cy="toolbar-action-menu" color={'inherit'} edge={'end'} onClick={(): void => setShowMenu(true)}>
+                    <IconButton
+                        data-cy="toolbar-action-menu"
+                        color={'inherit'}
+                        edge={'end'}
+                        onClick={(): void => setShowMenu(true)}
+                    >
                         <MoreVert />
                     </IconButton>
                 </Toolbar>
@@ -87,7 +93,8 @@ export const BasicBottomSheet = (): JSX.Element => {
                     />
                 ))}
             </List>
-            <Drawer data-cy="bottom-sheet"
+            <Drawer
+                data-cy="bottom-sheet"
                 anchor={'bottom'}
                 transitionDuration={250}
                 open={showMenu}
@@ -95,14 +102,27 @@ export const BasicBottomSheet = (): JSX.Element => {
                 classes={{ paper: classes.paper }}
             >
                 <List disablePadding>
-                    <InfoListItem data-cy="ack"
+                    <InfoListItem
+                        data-cy="ack"
                         dense
                         onClick={(): void => setShowMenu(false)}
                         icon={<Done />}
                         title={'Acknowledge All'}
                     />
-                    <InfoListItem data-cy="export" dense onClick={(): void => setShowMenu(false)} icon={<GetApp />} title={'Export'} />
-                    <InfoListItem data-cy="cancel" dense onClick={(): void => setShowMenu(false)} icon={<Close />} title={'Cancel'} />
+                    <InfoListItem
+                        data-cy="export"
+                        dense
+                        onClick={(): void => setShowMenu(false)}
+                        icon={<GetApp />}
+                        title={'Export'}
+                    />
+                    <InfoListItem
+                        data-cy="cancel"
+                        dense
+                        onClick={(): void => setShowMenu(false)}
+                        icon={<Close />}
+                        title={'Cancel'}
+                    />
                 </List>
             </Drawer>
         </div>

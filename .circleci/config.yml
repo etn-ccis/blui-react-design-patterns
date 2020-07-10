@@ -3,7 +3,7 @@ jobs:
     build:
         working_directory: ~/react-design-patterns
         docker:
-            - image: circleci/node:12.6
+            - image: circleci/node:12.6-browsers
         steps:
             - checkout
             - restore_cache:

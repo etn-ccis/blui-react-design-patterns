@@ -39,7 +39,7 @@
         "prettier:check": "prettier \"src/**/**.{ts,tsx,js,jsx,json,css,scss,html}\" --check",
         "cy:run": "cypress run",
         "cypress:open": "cypress open",
-        "cytest": "wait-on http://localhost:3000 cy:run"
+        "cytest": "start-server-and-test start http://localhost:3000 cy:run"
     },
     "browserslist": {
         "production": [
@@ -81,8 +81,8 @@
         "eslint-plugin-react": "^7.18.3",
         "mocha": "^8.0.1",
         "prettier": "^1.19.1",
-        "typescript": "~3.7.2",
-        "wait-on": "^5.0.3"
+        "start-server-and-test": "^1.11.1",
+        "typescript": "~3.7.2"
     },
     "prettier": "@pxblue/prettier-config"
 }

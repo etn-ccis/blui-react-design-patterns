@@ -3,7 +3,7 @@
 const { should } = require("chai");
 
 
-describe('Functional basic bottom sheet', () => {
+describe('Functional complex bottom sheet', () => {
     beforeEach(() => {
         cy.visit('http://localhost:3000/complex-bottom-sheet');
     });

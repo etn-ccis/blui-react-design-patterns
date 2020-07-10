@@ -86,10 +86,11 @@ export const LoadingStates = (): JSX.Element => {
                 minHeight: '100vh',
             }}
         >
-            <AppBar position={'sticky'}>
+            <AppBar data-cy="pxb-toolbar" position={'sticky'}>
                 <Toolbar>
                     <Hidden mdUp>
                         <IconButton
+                            data-cy="toolbar-menu"
                             color={'inherit'}
                             onClick={(): void => {
                                 dispatch({ type: TOGGLE_DRAWER, payload: true });
@@ -105,7 +106,7 @@ export const LoadingStates = (): JSX.Element => {
                     <Spacer />
                     {data[0].data && (
                         <Tooltip title={'Refresh this page'}>
-                            <IconButton edge={'end'} color={'inherit'} onClick={refreshData}>
+                            <IconButton data-cy="toolbar-refresh" edge={'end'} color={'inherit'} onClick={refreshData}>
                                 <Refresh />
                             </IconButton>
                         </Tooltip>

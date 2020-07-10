@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 export const Placeholder = (): JSX.Element => {
     const classes = useStyles(useTheme());
     return (
-        <div className={`ph-item ${classes.phItem}`}>
+        <div data-cy="placeholder" className={`ph-item ${classes.phItem}`}>
             {[0, 1, 2].map((value) => (
                 <div key={value} className={'ph-col-4'} style={{ justifyContent: 'center', maxWidth: '100px' }}>
                     <div className={'ph-avatar'} style={{ minWidth: 0 }} />

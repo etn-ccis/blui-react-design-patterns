@@ -258,10 +258,10 @@ export const FormValidation = (): JSX.Element => {
                 minHeight: '100vh',
             }}
         >
-            <AppBar position={'sticky'}>
+            <AppBar data-cy="pxb-toolbar" position={'sticky'}>
                 <Toolbar>
                     <Hidden mdUp>
-                        <IconButton
+                        <IconButton data-cy="toolbar-menu"
                             color={'inherit'}
                             onClick={(): void => {
                                 dispatch({ type: TOGGLE_DRAWER, payload: true });

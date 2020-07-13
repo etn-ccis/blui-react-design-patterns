@@ -1,7 +1,7 @@
 /// <reference types="cypress" />
 
 
-describe('Functional visual test', () => {
+describe('Functional data list', () => {
     beforeEach(() => {
         cy.visit('http://localhost:3000/data-list');
     });

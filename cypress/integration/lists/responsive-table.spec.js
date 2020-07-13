@@ -1,7 +1,7 @@
 /// <reference types="cypress" />
 
 
-describe('Functional test table view ports', () => {
+describe('Functional table view ports', () => {
 
     it('desktop view', () => {
         cy.viewport(1024, 635)

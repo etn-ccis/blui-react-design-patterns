@@ -1,7 +1,7 @@
 /// <reference types="cypress" />
 
 
-describe('Functional test app bar', () => {
+describe('Functional app bar', () => {
     beforeEach(() => {
         cy.visit('http://localhost:3000/collapsible');
     });

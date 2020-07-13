@@ -1,7 +1,7 @@
 /// <reference types="cypress" />
 
 
-describe('Functional test search bar', () => {
+describe('Functional search bar', () => {
     beforeEach(() => {
         cy.visit('http://localhost:3000/search');
     });

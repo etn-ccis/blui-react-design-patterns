@@ -1,7 +1,7 @@
 /// <reference types="cypress" />
 
 
-describe('Functional test add remove steps', () => {
+describe('Functional add remove steps', () => {
     beforeEach(() => {
         cy.visit('http://localhost:3000/dynamic-stepper');
     });

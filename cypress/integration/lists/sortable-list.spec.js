@@ -1,7 +1,7 @@
 /// <reference types="cypress" />
 
 
-describe('Functional multi-select list', () => {
+describe('Functional sortable list TODO', () => {
     beforeEach(() => {
         cy.visit('http://localhost:3000/sortable-list');
     });

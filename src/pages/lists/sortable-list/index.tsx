@@ -74,7 +74,8 @@ export const SortableList = (): JSX.Element => {
             <AppBar data-cy="pxb-toolbar" position={'sticky'}>
                 <Toolbar>
                     <Hidden mdUp={true}>
-                        <IconButton data-cy="toolbar-menu"
+                        <IconButton
+                            data-cy="toolbar-menu"
                             color={'inherit'}
                             onClick={(): void => {
                                 dispatch({ type: TOGGLE_DRAWER, payload: true });
@@ -88,7 +89,8 @@ export const SortableList = (): JSX.Element => {
                         Sortable List
                     </Typography>
                     <Spacer />
-                    <Button data-cy="edit-save"
+                    <Button
+                        data-cy="edit-save"
                         style={{ color: 'white', borderColor: 'white' }}
                         onClick={(): void => setSortable(!sortable)}
                         variant={'outlined'}

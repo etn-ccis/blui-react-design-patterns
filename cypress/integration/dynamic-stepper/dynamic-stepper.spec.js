@@ -1,7 +1,7 @@
 /// <reference types="cypress" />
 
 
-describe('Functional add remove steps', () => {
+describe('Dynamic stepper', () => {
     beforeEach(() => {
         cy.visit('http://localhost:3000/dynamic-stepper');
     });
@@ -24,6 +24,7 @@ describe('Functional add remove steps', () => {
         cy.contains('Go To Work').click()
         cy.contains('Go To Work').click()
         cy.get('[data-cy=remove-step]').click()
+        cy.contains('Go To Work').should('not.be.visible')
         cy.contains('Cook Dinner').click()
         cy.get('[data-cy=remove-step]').click()
         

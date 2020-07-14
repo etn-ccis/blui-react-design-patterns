@@ -1,7 +1,7 @@
 /// <reference types="cypress" />
 
 
-describe('Functional basic bottom sheet', () => {
+describe('Basic bottom sheet', () => {
     beforeEach(() => {
         cy.visit('http://localhost:3000/basic-bottom-sheet');
     });

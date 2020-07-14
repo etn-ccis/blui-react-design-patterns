@@ -1,7 +1,7 @@
 /// <reference types="cypress" />
 
 
-describe('Functional i18n', () => {
+describe('i18n international', () => {
     beforeEach(() => {
         cy.visit('http://localhost:3000/i18n');
     });
@@ -61,7 +61,6 @@ describe('Functional i18n', () => {
         cy.get('#item-list').should('contain', '苹果')
     });
 
-    it('TODO test RTL', () => {
+//    it('TODO test RTL', () => {
         
     });
-});

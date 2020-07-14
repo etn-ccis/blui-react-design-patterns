@@ -1,18 +1,13 @@
 /// <reference types="cypress" />
 
 // todo add data-test=id to info list items
-describe('Functional status list loads & tag', () => {
+describe('status list', () => {
     beforeEach(() => {
         cy.visit('http://localhost:3000/status-list');
     });
 
     it('title displays', () => {
         cy.get('[data-cy=pxb-toolbar]').should('contain', 'Status List');
-    });
-
-    it('status tags load', () => {
-        cy.get('[data-test=list-item-tag]').should('be.visible').and('have.css', 'background-color', 'rgb(202, 60, 61)')
-
     });
 
     it('toolbar menu not displayed desktop view', () => {

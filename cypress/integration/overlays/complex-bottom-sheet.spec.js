@@ -3,7 +3,7 @@
 const { should } = require("chai");
 
 
-describe('Functional complex bottom sheet', () => {
+describe('Complex bottom sheet', () => {
     beforeEach(() => {
         cy.visit('http://localhost:3000/complex-bottom-sheet');
     });
@@ -12,7 +12,7 @@ describe('Functional complex bottom sheet', () => {
         cy.get('[data-cy=pxb-toolbar]').should('contain', 'Complex Bottom Sheet');
     });
 
-    it('bottom sheet opens & action items display', () => {
+    it('opens & action items display', () => {
         cy.get('[data-cy=action-menu]').click()
         cy.get('[data-cy=btm-sheet-sort]').should('contain', 'Sort By')
         .and('contain', 'Time')
@@ -23,6 +23,13 @@ describe('Functional complex bottom sheet', () => {
         .and('contain', 'settings')
         .and('contain', 'session')
         cy.get('[data-cy=btm-sheet-cancel]').should('contain', 'Close')
+    });
+
+    it('dismissed when page is selected', () => {
+        cy.get('[data-cy=action-menu]').click()
+        cy.get('[data-cy=btm-sheet-sort]').should('be.visible')
+        cy.get('body').click()
+        cy.get('[data-cy=btm-sheet-sort]').should('not.be.visible')
     });
 
     it('toolbar menu not displayed desktop view', () => {

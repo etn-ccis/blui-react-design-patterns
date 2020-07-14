@@ -1,7 +1,7 @@
 /// <reference types="cypress" />
 
 
-describe('Functional search bar', () => {
+describe('Search bar', () => {
     beforeEach(() => {
         cy.visit('http://localhost:3000/search');
     });
@@ -13,11 +13,11 @@ describe('Functional search bar', () => {
     it('search filters data', () => {
         cy.get('[data-cy=search-btn]').click()
         cy.get('[data-cy=searchfield]').type('bill clinton')
-        cy.get('[data-cy=list-view]').should('contain', 'Bill Clinton')
+        cy.get('[data-cy=list-view]').should('contain', 'Bill Clinton').and('have.length', (1))
         cy.get('[data-cy=search-close-btn]').click()
         cy.get('[data-cy=search-btn]').click()
         cy.get('[data-cy=searchfield]').type('ron')
-        cy.get('[data-cy=list-view]').should('contain', 'Ronald Reagan')
+        cy.get('[data-cy=list-view]').should('contain', 'Ronald Reagan').and('have.length', (1))
         cy.get('[data-cy=search-close-btn]').click()
 
     });

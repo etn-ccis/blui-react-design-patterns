@@ -1,7 +1,7 @@
 /// <reference types="cypress" />
 
 
-describe('Functional data list', () => {
+describe('Data list', () => {
     beforeEach(() => {
         cy.visit('http://localhost:3000/data-list');
     });
@@ -12,6 +12,10 @@ describe('Functional data list', () => {
 
     it('data list loads', () => {
         cy.contains('George Washington')
+        cy.contains('John Adams')
+        cy.contains('Thomas Jefferson')
+        cy.contains('James Madison')
+        cy.contains('James Monroe')
 
     });
 

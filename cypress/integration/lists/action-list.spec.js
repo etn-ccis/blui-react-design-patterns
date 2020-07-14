@@ -1,7 +1,7 @@
 /// <reference types="cypress" />
 
 
-describe('Functional action list', () => {
+describe('Action list', () => {
     beforeEach(() => {
         cy.visit('http://localhost:3000/action-list');
     });

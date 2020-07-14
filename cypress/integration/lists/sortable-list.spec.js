@@ -1,7 +1,7 @@
 /// <reference types="cypress" />
 
 
-describe('Functional sortable list TODO', () => {
+describe('Sortable list', () => {
     beforeEach(() => {
         cy.visit('http://localhost:3000/sortable-list');
     });
@@ -10,7 +10,6 @@ describe('Functional sortable list TODO', () => {
         cy.get('[data-cy=pxb-toolbar]').should('contain', 'Sortable List');
     });
 
-    it('TODO: edit list', () => {
-        cy.get('[data-cy=edit-save]').click()
+ //   it('TODO: edit list', () => {
+ //       cy.get('[data-cy=edit-save]').click()
     });
-});

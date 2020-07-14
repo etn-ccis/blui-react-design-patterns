@@ -1,7 +1,7 @@
 /// <reference types="cypress" />
 
 
-describe('Functional multi-select list', () => {
+describe('Multi-select list', () => {
     beforeEach(() => {
         cy.visit('http://localhost:3000/multiselect-list');
     });

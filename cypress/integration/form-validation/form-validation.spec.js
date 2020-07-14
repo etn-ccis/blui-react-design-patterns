@@ -1,7 +1,7 @@
 /// <reference types="cypress" />
 
 
-describe('Functional form validations', () => {
+describe('Form validation', () => {
     beforeEach(() => {
         cy.visit('http://localhost:3000/form-validation');
     });

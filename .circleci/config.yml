@@ -36,3 +36,8 @@ jobs:
                   command: yarn cytest
             - store_artifacts:
                   path: cypress/screenshots
+                    filters:
+                      branches:
+                          only:
+                              - master
+                              - dev

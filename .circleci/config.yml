@@ -1,41 +1,77 @@
 version: 2
 jobs:
-    build:
+    build_project:
         working_directory: ~/react-design-patterns
         docker:
             - image: circleci/node:12.6-browsers
         steps:
             - checkout
             - restore_cache:
-                  keys:
-                      - v2-dependencies-{{ checksum "yarn.lock" }}
+                keys:
+                    - v2-dependencies-{{ checksum "yarn.lock" }}
             - run:
-                  name: Install Dependencies
-                  command: |
-                      yarn install --frozen-lockfile
+                name: Install Dependencies
+                command: |
+                    yarn install --frozen-lockfile
             - save_cache:
-                  name: Save Cache
-                  paths:
-                      - ~/.cache
-                      - node_modules
-                  key: v2-dependencies-{{ checksum "yarn.lock" }}
+                name: Save Cache
+                paths:
+                    - ~/.cache
+                    - node_modules
+                key: v2-dependencies-{{ checksum "yarn.lock" }}
             - run:
-                  name: Prettier Check
-                  command: |
-                      yarn prettier:check
+                name: Prettier Check
+                command: |
+                    yarn prettier:check
             - run:
-                  name: Lint
-                  command: |
-                      yarn lint
+                name: Lint
+                command: |
+                    yarn lint
             - run:
-                  name: Unit Tests
-                  command: |
-                      yarn test
+                name: Unit Tests
+                command: |
+                    yarn test
             - run:
-                  name: design pattern cypress tests
-                  command: |
-                       if [ $CIRCLE_BRANCH == $MASTER_BRANCH ] || [ $CIRCLE_BRANCH == $DEV_BRANCH ]; then
-                       yarn cytest
-                       fi
+                name: Build Project
+                command: |
+                    yarn build
+
+    cypress_tests:
+        working_directory: ~/react-design-patterns
+        docker:
+            - image: circleci/node:12.6-browsers
+        steps:
+            - checkout
+            - restore_cache:
+                keys:
+                    - v2-dependencies-{{ checksum "yarn.lock" }}
+            - run:
+                name: Install Dependencies
+                command: |
+                    yarn install --frozen-lockfile
+            - save_cache:
+                name: Save Cache
+                paths:
+                    - ~/.cache
+                    - node_modules
+                key: v2-dependencies-{{ checksum "yarn.lock" }}
+            - run:
+                name: Cypress E2E Tests
+                command: |
+                    yarn cytest
             - store_artifacts:
-                  path: cypress/screenshots
+                path: cypress/screenshots
+
+workflows:
+    version: 2
+    react_design_patterns:
+        jobs:
+            - build_project
+            - cypress_tests:
+                    requires:
+                        - build_project
+                    filters:
+                        branches:
+                            only:
+                                - master
+                                - dev

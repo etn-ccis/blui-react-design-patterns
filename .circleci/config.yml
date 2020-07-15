@@ -1,6 +1,10 @@
 version: 2
 jobs:
     build:
+        branches:
+        only:
+        - master
+        - dev
         working_directory: ~/react-design-patterns
         docker:
             - image: circleci/node:12.6-browsers
@@ -36,8 +40,3 @@ jobs:
                   command: yarn cytest
             - store_artifacts:
                   path: cypress/screenshots
-                    filters:
-                      branches:
-                          only:
-                              - master
-                              - dev

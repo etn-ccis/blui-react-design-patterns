@@ -3,7 +3,7 @@
 
 describe('Responsive table', () => {
 
-    it('desktop view', () => {
+    it('should display title and table header on desktop', () => {
         cy.viewport(1024, 635)
         cy.visit('localhost:3000/responsive-table')
         cy.get('[data-cy=pxb-toolbar]').should('contain', 'Responsive Table')
@@ -13,7 +13,7 @@ describe('Responsive table', () => {
 
 
     });
-    it('tablet view', () => {
+    it('should display title and table header on tablet', () => {
         cy.viewport(768, 1024)
         cy.visit('localhost:3000/responsive-table')
         cy.get('[data-cy=pxb-toolbar]').should('contain', 'Responsive Table')
@@ -23,7 +23,7 @@ describe('Responsive table', () => {
 
 
     });
-    it('phone view', () => {
+    it('should display title and no table header on phone', () => {
         cy.viewport(375, 812)
         cy.visit('localhost:3000/responsive-table')
         cy.get('[data-cy=pxb-toolbar]').should('contain', 'Responsive Table')

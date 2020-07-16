@@ -6,7 +6,7 @@ describe('Sortable list', () => {
         cy.visit('http://localhost:3000/sortable-list');
     });
 
-    it('title displays', () => {
+    it('should display page title', () => {
         cy.get('[data-cy=pxb-toolbar]').should('contain', 'Sortable List');
     });
 

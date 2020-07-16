@@ -6,11 +6,11 @@ describe('Data list', () => {
         cy.visit('http://localhost:3000/data-list');
     });
 
-    it('title displays', () => {
+    it('should display page title', () => {
         cy.get('[data-cy=pxb-toolbar]').should('contain', 'Data List');
     });
 
-    it('data list loads', () => {
+    it('should display list', () => {
         cy.contains('George Washington')
         cy.contains('John Adams')
         cy.contains('Thomas Jefferson')

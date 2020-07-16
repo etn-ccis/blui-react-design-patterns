@@ -6,11 +6,11 @@ describe('Collapsible app bar', () => {
         cy.visit('http://localhost:3000/collapsible');
     });
 
-    it('banner displays', () => {
+    it('should display banner', () => {
         cy.get('[data-cy=banner]').should('be.visible')
     });
 
-    it('tool bar displays on scroll', () => {
+    it('should display tool bar on scroll', () => {
         cy.get('#scroll-area > .MuiList-root').scrollIntoView({ duration: 1000, offset:{ top: 0, left: 0 }})
         cy.get('[data-cy=app-bar] > .MuiToolbar-root').scrollIntoView().should('be.visible')
     });

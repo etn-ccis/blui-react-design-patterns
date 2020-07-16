@@ -6,11 +6,11 @@ describe('Basic bottom sheet', () => {
         cy.visit('http://localhost:3000/basic-bottom-sheet');
     });
 
-    it('title displays', () => {
+    it('should display page title', () => {
         cy.get('[data-cy=pxb-toolbar]').should('contain', 'Basic Bottom Sheet');
     });
 
-    it('bottom sheet opens & action items', () => {
+    it('should display bottom sheet and action items', () => {
         cy.get('[data-cy=toolbar-action-menu]').click()
         cy.get('[data-cy=ack]').should('contain', 'Acknowledge All')
         cy.get('[data-cy=export]').should('contain', 'Export')

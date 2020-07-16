@@ -6,11 +6,11 @@ describe('Dynamic stepper', () => {
         cy.visit('http://localhost:3000/dynamic-stepper');
     });
 
-    it('title displays', () => {
+    it('should display page title', () => {
         cy.get('[data-cy=pxb-toolbar]').should('contain', 'Dynamic Stepper');
     });
 
-    it('add steps', () => {
+    it('should add steps to stepper when add is cllicked', () => {
         cy.contains('Cook Dinner').click()
         cy.get('[data-cy=addstep]').click()
         cy.contains('Go To Work').click()
@@ -18,7 +18,7 @@ describe('Dynamic stepper', () => {
         cy.get('[data-cy="success msg"]').should('contain', 'Procedure created successfully.')
     });
 
-    it('remove steps', () => {
+    it('should remove steps from stepper when step remove clicked', () => {
         cy.contains('Cook Dinner').click()
         cy.get('[data-cy=addstep]').click()
         cy.contains('Go To Work').click()
@@ -30,7 +30,7 @@ describe('Dynamic stepper', () => {
         
     });
 
-    it('remove all steps', () => {
+    it('should remove all steps from stepper', () => {
         cy.contains('Cook Dinner').click()
         cy.get('[data-cy=addstep]').click()
         cy.contains('Go To Work').click()
@@ -40,7 +40,7 @@ describe('Dynamic stepper', () => {
 
     });
 
-    it('reset demo', () => {
+    it('should reset the demo when reset is clicked', () => {
         cy.contains('Cook Dinner').click()
         cy.get('[data-cy=addstep]').click()
         cy.contains('Go To Work').click()

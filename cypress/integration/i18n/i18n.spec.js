@@ -6,11 +6,11 @@ describe('i18n international', () => {
         cy.visit('http://localhost:3000/i18n');
     });
 
-    it('title displays', () => {
+    it('should display page title', () => {
         cy.get('.MuiToolbar-root > .MuiTypography-root').should('contain', 'Internationalization');
     });
 
-    it('language dropdown', () => {
+    it('should display language in dropdown', () => {
         cy.get('.MuiSelect-root').click()
         cy.get('.MuiPaper-root > .MuiList-root').should('contain', 'English')
         .should('contain', 'Spanish')
@@ -21,41 +21,41 @@ describe('i18n international', () => {
         .should('contain', 'Chinese')
     });
 
-    it('item list displays english', () => {
+    it('should display list items in english', () => {
         cy.get('#item-list').should('contain', 'Apple')
     });
 
-    it('item list displays spanish', () => {
+    it('should display list items in spanish', () => {
         cy.get('.MuiSelect-root').click()
         cy.contains('Spanish').click()
         cy.get('#item-list').should('contain', 'Manzana')
     });
 
-    it('item list displays german', () => {
+    it('should display list items in german', () => {
         cy.get('.MuiSelect-root').click()
         cy.contains('German').click()
         cy.get('#item-list').should('contain', 'Apfel')
     });
 
-    it('item list displays arabic', () => {
+    it('should display list items in arabic', () => {
         cy.get('.MuiSelect-root').click()
         cy.contains('Arabic').click()
         cy.get('#item-list').should('contain', 'تفاحة')
     });
 
-    it('item list displays french', () => {
+    it('should display list items in french', () => {
         cy.get('.MuiSelect-root').click()
         cy.contains('French').click()
         cy.get('#item-list').should('contain', 'Pomme')
     });
 
-    it('item list displays portuguese', () => {
+    it('should display list items in portuguese', () => {
         cy.get('.MuiSelect-root').click()
         cy.contains('Portuguese').click()
         cy.get('#item-list').should('contain', 'Maçã')
     });
 
-    it('item list displays chinese', () => {
+    it('should display list items in chinese', () => {
         cy.get('.MuiSelect-root').click()
         cy.contains('Chinese').click()
         cy.get('#item-list').should('contain', '苹果')

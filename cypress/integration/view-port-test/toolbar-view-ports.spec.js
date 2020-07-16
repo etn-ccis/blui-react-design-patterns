@@ -7,11 +7,11 @@ const urls = ['http://localhost:3000/collapsible', 'http://localhost:3000/search
 'http://localhost:3000/responsive-table', 'http://localhost:3000/loading-states', 'http://localhost:3000/basic-bottom-sheet',
 'http://localhost:3000/complex-bottom-sheet', 'http://localhost:3000/dynamic-stepper'];
 
-describe('Toolbar menu mobile and tablet', () => {
+describe('Hidden toolbar menu displays on small devices', () => {
     urls.forEach(url => {
     describe(`url: ${url}`, () => {
     sizes.forEach(size => {
-    it(`displays toolbar menu icon ${url}`, () => {
+    it(`should display menu icon ${url}`, () => {
     cy.visit(url);
     cy.viewport(size);
     cy.get('[data-cy=toolbar-menu]')

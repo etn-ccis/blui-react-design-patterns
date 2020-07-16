@@ -6,11 +6,11 @@ describe('Search bar', () => {
         cy.visit('http://localhost:3000/search');
     });
 
-    it('title displays', () => {
+    it('should display page title', () => {
         cy.get('[data-cy=pxb-toolbar]').should('contain', 'Search');
     });
 
-    it('search filters data', () => {
+    it('should filter data when searching', () => {
         cy.get('[data-cy=search-btn]').click()
         cy.get('[data-cy=searchfield]').type('bill clinton')
         cy.get('[data-cy=list-view]').should('contain', 'Bill Clinton').and('have.length', (1))
@@ -22,7 +22,7 @@ describe('Search bar', () => {
 
     });
 
-    it('search with no results', () => {
+    it('should return no results when data does not exist', () => {
         cy.get('[data-cy=search-btn]').click()
         cy.get('[data-cy=searchfield]').type('123')
         cy.get('[data-cy=list-view]').should('contain', 'No matching presidents')

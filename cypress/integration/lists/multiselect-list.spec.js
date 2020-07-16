@@ -6,18 +6,18 @@ describe('Multi-select list', () => {
         cy.visit('http://localhost:3000/multiselect-list');
     });
 
-    it('title displays', () => {
+    it('should display page title', () => {
         cy.get('[data-cy=pxb-toolbar]').should('contain', 'Multiselect List');
     });
 
-    it('add list items', () => {
+    it('should add list items when add is clicked', () => {
         cy.get('[data-cy=list-content]').children().should('have.length', '10')
         cy.get('[data-cy=toolbar-add]').click().click()
         cy.get('[data-cy=list-content]').children().should('have.length', '12')
 
     });
 
-    it('remove list items', () => {
+    it('should remove list items when delete is clicked', () => {
         cy.get('[data-cy=list-content]').children().should('have.length', '10')
         cy.get('[type="checkbox"]').first().check({ force: true })
         cy.get('.MuiSnackbarContent-message').should('contain', '1 selected item')
@@ -26,7 +26,7 @@ describe('Multi-select list', () => {
 
     });
 
-    it('cancel selected list items', () => {
+    it('should cancel selected list items', () => {
         cy.get('[data-cy=list-content]').children().should('have.length', '10')
         cy.get('[type="checkbox"]').first().check({ force: true })
         cy.get('.MuiSnackbarContent-message').should('contain', '1 selected item')
@@ -35,7 +35,7 @@ describe('Multi-select list', () => {
 
     });
 
-    it('remove all list items & verify empty state', () => {
+    it('should select all and remove list items & empty state displays', () => {
         cy.get('[data-cy=list-content]').children().should('have.length', '10')
         cy.get('[type="checkbox"]').check({ force: true })
         cy.get('.MuiSnackbarContent-message').should('contain', '10 selected items')

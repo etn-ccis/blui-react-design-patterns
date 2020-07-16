@@ -6,7 +6,7 @@ describe('status list', () => {
         cy.visit('http://localhost:3000/status-list');
     });
 
-    it('title displays', () => {
+    it('should display page title', () => {
         cy.get('[data-cy=pxb-toolbar]').should('contain', 'Status List');
     });
 });

@@ -6,11 +6,11 @@ describe('Form validation', () => {
         cy.visit('http://localhost:3000/form-validation');
     });
 
-    it('title displays', () => {
+    it('should display page title', () => {
         cy.get('[data-cy=pxb-toolbar]').should('contain', 'Form Validation');
     });
 
-    it('basic form error states', () => {
+    it('should display error states', () => {
         cy.get('#input').click()
         cy.get('#email').click()
         cy.get('#phoneNumber').click()
@@ -20,7 +20,7 @@ describe('Form validation', () => {
         cy.get('#phoneNumber-helper-text').should('contain', 'required')
     });
 
-    it('basic form invalid entry', () => {
+    it('should display invalid entry on fields', () => {
         cy.get('#input').click().type('info')
         cy.get('#input-helper-text').should('contain', 'This is a regular input field')
         cy.get('#email').click().type('admin@admin.n')
@@ -31,7 +31,7 @@ describe('Form validation', () => {
         cy.get('#phoneNumber-helper-text').should('contain', 'Invalid phone number')
     });
 
-    it('basic form valid entry', () => {
+    it('should accept valid entry', () => {
         cy.get('#input').click().type('info')
         cy.get('#input-helper-text').should('contain', 'This is a regular input field')
         cy.get('#email').click().type('admin@admin.net')
@@ -42,15 +42,30 @@ describe('Form validation', () => {
         cy.get('#phoneNumber-helper-text').should('contain', 'This field throws an error if the phone number format is incorrect. (Needs to be a valid U.S. number)')
     });
 
-    it('character limit entry', () => {
+    it('should display character count 15/30', () => {
+        cy.get('#chars').click().type('Enter some text')
+        cy.get('#chars-helper-text').should('contain', '15/30')
+    });
+
+    it('should display character count 30/30', () => {
         cy.get('#chars').click().type('Enter some text')
         cy.get('#chars-helper-text').should('contain', '15/30')
         cy.get('#chars').click().type('Enter some text')
         cy.get('#chars-helper-text').should('contain', '30/30')
+        cy.get('#chars').click().type('Enter some addtional text')
+        cy.get('#chars-helper-text').should('contain', '30/30')
     });
 
-    it('password error states', () => {
+    it('should display character count 30/30 when 45 entered', () => {
+        cy.get('#chars').click().type('Enter some text')
+        cy.get('#chars-helper-text').should('contain', '15/30')
+        cy.get('#chars').click().type('Enter some text')
+        cy.get('#chars-helper-text').should('contain', '30/30')
+        cy.get('#chars').click().type('Enter more text')
+        cy.get('#chars-helper-text').should('contain', '30/30')
+    });
+
+    //it('password error states', () => {
         //TODO- need a way to find change on all 5 requirements
 
     });
-});

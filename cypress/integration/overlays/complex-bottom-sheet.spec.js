@@ -8,11 +8,11 @@ describe('Complex bottom sheet', () => {
         cy.visit('http://localhost:3000/complex-bottom-sheet');
     });
 
-    it('title displays', () => {
+    it('should display page title', () => {
         cy.get('[data-cy=pxb-toolbar]').should('contain', 'Complex Bottom Sheet');
     });
 
-    it('opens & action items display', () => {
+    it('should open and action items display', () => {
         cy.get('[data-cy=action-menu]').click()
         cy.get('[data-cy=btm-sheet-sort]').should('contain', 'Sort By')
         .and('contain', 'Time')
@@ -25,7 +25,7 @@ describe('Complex bottom sheet', () => {
         cy.get('[data-cy=btm-sheet-cancel]').should('contain', 'Close')
     });
 
-    it('dismissed when page is selected', () => {
+    it('should dismiss when page is selected', () => {
         cy.get('[data-cy=action-menu]').click()
         cy.get('[data-cy=btm-sheet-sort]').should('be.visible')
         cy.get('body').click()

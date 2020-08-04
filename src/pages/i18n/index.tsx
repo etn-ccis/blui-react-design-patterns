@@ -1,5 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import NumberFormat from 'react-number-format';
+
 import {
     AppBar,
     Button,
@@ -64,10 +66,15 @@ export const I18N = (): JSX.Element => {
     const theme = useTheme();
     const classes = useStyles(theme);
     const { t, i18n } = useTranslation();
-    const fruits = english.translations.FRUITS;
+    const [fruits] = useState(Object.keys(english.translations.FRUITS).map((fruit) => ({
+        name: fruit,
+        price: Math.round((Math.random() + Number.EPSILON) * 1000) / 100
+    })));
 
     const [drawerOpen, setDrawerOpen] = useState(false);
     const [selectedItems, setSelectedItems] = useState(new Set<string>());
+    const [prefix, setPrefix] = useState('$');
+    const [suffix, setSuffix] = useState('');
     const [lang, setLang] = useState('en');
     const isRTL = (): boolean => lang === 'ar';
     const getDirection = (): 'rtl' | 'ltr' => (isRTL() ? 'rtl' : 'ltr');
@@ -76,6 +83,17 @@ export const I18N = (): JSX.Element => {
     const changeLanguage = useCallback(
         (lng) => {
             setLang(lng);
+            setSuffix('');
+            setPrefix('');
+            if (lng === 'en') {
+                setPrefix('$')
+            } else if (lng === 'ar') {
+                setPrefix('ج.م.‏');
+            } else if (lng === 'zh') {
+                setPrefix('¥')
+            } else {
+                setSuffix('€');
+            }
             i18n.changeLanguage(lng);
         },
         [i18n]
@@ -167,15 +185,24 @@ export const I18N = (): JSX.Element => {
             </Toolbar>
 
             <List id={'item-list'}>
-                {Object.keys(fruits).map((fruit, index) => (
+                {fruits.map((fruit, index) => (
                     <InfoListItem
                         key={index}
-                        onClick={(): void => selectFruit(fruit)}
+                        onClick={(): void => selectFruit(fruit.name)}
                         ripple={true}
                         style={{ textAlign: isRTL() ? 'right' : 'left' }}
-                        title={t(`FRUITS.${fruit}`)}
-                        subtitle={t('MORE_INFO')}
-                        icon={<Checkbox checked={selectedItems.has(fruit)} onChange={(): void => selectFruit(fruit)} />}
+                        title={t(`FRUITS.${fruit.name}`)}
+                        subtitle={[
+                            <NumberFormat key={index}
+                                          value={fruit.price}
+                                          decimalSeparator={suffix ? ',' : '.'}
+                                          displayType={'text'}
+                                          decimalScale={2}
+                                          fixedDecimalScale={true}
+                                          suffix={suffix}
+                                          prefix={prefix} />
+                        ]}
+                        icon={<Checkbox checked={selectedItems.has(fruit.name)} onChange={(): void => selectFruit(fruit.name)} />}
                         rightComponent={<ArrowForwardIosIcon className={clsx(classes.icon, isRTL() && classes.RTL)} />}
                         classes={{ rightComponent: isRTL() ? classes.rightComponent : undefined }}
                     />

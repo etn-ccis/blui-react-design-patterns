@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Drawer as MuiDrawer, Typography, List, makeStyles, Theme, useTheme } from '@material-ui/core';
 import clsx from 'clsx';
 import { TFunction } from 'i18next';
@@ -83,7 +83,11 @@ export const Drawer = (props: DrawerProps): JSX.Element => {
                         <Typography variant={'subtitle1'} color={'inherit'}>
                             {t('I18N')}
                         </Typography>
-                        <div>{moment().locale(lang === 'zh' ? 'zh-cn': lang).format('LL')}</div>
+                        <div>
+                            {moment()
+                                .locale(lang === 'zh' ? 'zh-cn' : lang)
+                                .format('LL')}
+                        </div>
                     </div>
                 </div>
                 <div>

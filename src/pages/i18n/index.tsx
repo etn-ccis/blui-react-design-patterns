@@ -66,10 +66,12 @@ export const I18N = (): JSX.Element => {
     const theme = useTheme();
     const classes = useStyles(theme);
     const { t, i18n } = useTranslation();
-    const [fruits] = useState(Object.keys(english.translations.FRUITS).map((fruit) => ({
-        name: fruit,
-        price: Math.round((Math.random() + Number.EPSILON) * 1000) / 100
-    })));
+    const [fruits] = useState(
+        Object.keys(english.translations.FRUITS).map((fruit) => ({
+            name: fruit,
+            price: Math.round((Math.random() + Number.EPSILON) * 1000) / 100,
+        }))
+    );
 
     const [drawerOpen, setDrawerOpen] = useState(false);
     const [selectedItems, setSelectedItems] = useState(new Set<string>());
@@ -86,11 +88,11 @@ export const I18N = (): JSX.Element => {
             setSuffix('');
             setPrefix('');
             if (lng === 'en') {
-                setPrefix('$')
+                setPrefix('$');
             } else if (lng === 'ar') {
                 setPrefix('ج.م.‏');
             } else if (lng === 'zh') {
-                setPrefix('¥')
+                setPrefix('¥');
             } else {
                 setSuffix('€');
             }
@@ -122,6 +124,7 @@ export const I18N = (): JSX.Element => {
                 <Drawer
                     open={drawerOpen}
                     R2L={isRTL()}
+                    lang={lang}
                     drawerToggler={(): void => {
                         setDrawerOpen(!drawerOpen);
                     }}
@@ -193,16 +196,23 @@ export const I18N = (): JSX.Element => {
                         style={{ textAlign: isRTL() ? 'right' : 'left' }}
                         title={t(`FRUITS.${fruit.name}`)}
                         subtitle={[
-                            <NumberFormat key={index}
-                                          value={fruit.price}
-                                          decimalSeparator={suffix ? ',' : '.'}
-                                          displayType={'text'}
-                                          decimalScale={2}
-                                          fixedDecimalScale={true}
-                                          suffix={suffix}
-                                          prefix={prefix} />
+                            <NumberFormat
+                                key={index}
+                                value={fruit.price}
+                                decimalSeparator={suffix ? ',' : '.'}
+                                displayType={'text'}
+                                decimalScale={2}
+                                fixedDecimalScale={true}
+                                suffix={suffix}
+                                prefix={prefix}
+                            />,
                         ]}
-                        icon={<Checkbox checked={selectedItems.has(fruit.name)} onChange={(): void => selectFruit(fruit.name)} />}
+                        icon={
+                            <Checkbox
+                                checked={selectedItems.has(fruit.name)}
+                                onChange={(): void => selectFruit(fruit.name)}
+                            />
+                        }
                         rightComponent={<ArrowForwardIosIcon className={clsx(classes.icon, isRTL() && classes.RTL)} />}
                         classes={{ rightComponent: isRTL() ? classes.rightComponent : undefined }}
                     />

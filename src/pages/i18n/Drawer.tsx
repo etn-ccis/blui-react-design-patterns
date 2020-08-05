@@ -76,19 +76,19 @@ export const Drawer = (props: DrawerProps): JSX.Element => {
             <div className={classes.flexVert} style={{ height: '100%', width: '100%' }}>
                 <div dir={R2L ? 'rtl' : 'ltr'} className={clsx(classes.flexVertBottom, classes.header)}>
                     <BoltIcon style={{ fontSize: '64px', transform: 'rotate(42deg)' }} />
-                    <div style={{ padding: theme.spacing(0.5) }}>
+                    <Typography style={{ padding: theme.spacing(0.5) }}>
                         <Typography variant={'h5'} color={'inherit'}>
                             PX {t('BLUE')}
                         </Typography>
                         <Typography variant={'subtitle1'} color={'inherit'}>
                             {t('I18N')}
                         </Typography>
-                        <div>
+                        <Typography variant={'subtitle1'} color={'inherit'}>
                             {moment()
                                 .locale(lang === 'zh' ? 'zh-cn' : lang)
                                 .format('LL')}
-                        </div>
-                    </div>
+                        </Typography>
+                    </Typography>
                 </div>
                 <div>
                     <List dir={R2L ? 'rtl' : 'ltr'} disablePadding>

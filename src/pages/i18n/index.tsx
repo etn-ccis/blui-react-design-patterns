@@ -1,23 +1,22 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import NumberFormat from 'react-number-format';
 
 import {
     AppBar,
     Button,
     Checkbox,
+    Hidden,
     IconButton,
     List,
     MenuItem,
     Select,
-    Toolbar,
-    Typography,
-    Hidden,
-    Tooltip,
     Snackbar,
     SnackbarContent,
+    Toolbar,
+    Tooltip,
+    Typography,
 } from '@material-ui/core';
-import { makeStyles, useTheme, Theme } from '@material-ui/core/styles';
+import { makeStyles, Theme, useTheme } from '@material-ui/core/styles';
 import { useDispatch } from 'react-redux';
 import { TOGGLE_DRAWER } from '../../redux/actions';
 import { InfoListItem, Spacer } from '@pxblue/react-components';
@@ -33,6 +32,7 @@ import { english } from './translations/english';
 import { DRAWER_WIDTH } from '../../assets/constants';
 import { Drawer } from './Drawer';
 import './translations/i18n';
+
 require('typeface-noto-sans');
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -75,8 +75,6 @@ export const I18N = (): JSX.Element => {
 
     const [drawerOpen, setDrawerOpen] = useState(false);
     const [selectedItems, setSelectedItems] = useState(new Set<string>());
-    const [prefix, setPrefix] = useState('$');
-    const [suffix, setSuffix] = useState('');
     const [lang, setLang] = useState('en');
     const isRTL = (): boolean => lang === 'ar';
     const getDirection = (): 'rtl' | 'ltr' => (isRTL() ? 'rtl' : 'ltr');
@@ -85,17 +83,6 @@ export const I18N = (): JSX.Element => {
     const changeLanguage = useCallback(
         (lng) => {
             setLang(lng);
-            setSuffix('');
-            setPrefix('');
-            if (lng === 'en') {
-                setPrefix('$');
-            } else if (lng === 'ar') {
-                setPrefix('ج.م.‏');
-            } else if (lng === 'zh') {
-                setPrefix('¥');
-            } else {
-                setSuffix('€');
-            }
             i18n.changeLanguage(lng);
         },
         [i18n]
@@ -195,18 +182,7 @@ export const I18N = (): JSX.Element => {
                         ripple={true}
                         style={{ textAlign: isRTL() ? 'right' : 'left' }}
                         title={t(`FRUITS.${fruit.name}`)}
-                        subtitle={[
-                            <NumberFormat
-                                key={index}
-                                value={fruit.price}
-                                decimalSeparator={suffix ? ',' : '.'}
-                                displayType={'text'}
-                                decimalScale={2}
-                                fixedDecimalScale={true}
-                                suffix={suffix}
-                                prefix={prefix}
-                            />,
-                        ]}
+                        subtitle={t('CURRENCY', { price: fruit.price, lng: lang })}
                         icon={
                             <Checkbox
                                 checked={selectedItems.has(fruit.name)}

@@ -30,7 +30,20 @@ i18n.use(initReactI18next)
         ns: ['translations'],
         defaultNS: 'translations',
         interpolation: {
-            escapeValue: false,
+            format: (value, format, lng): string => {
+                if (format === 'currency') {
+                    const price = (Math.round(value * 100) / 100).toFixed(2);
+                    if (lng === 'en') {
+                        return `$${price}`;
+                    } else if (lng === 'zh') {
+                        return `¥${price}`;
+                    } else if (lng === 'ar') {
+                        return ` ج.م.‏${price}`;
+                    }
+                    return `${price.replace('.', ',')} €`;
+                }
+                return value;
+            },
         },
     });
 

@@ -3,6 +3,15 @@ import { Drawer as MuiDrawer, Typography, List, makeStyles, Theme, useTheme } fr
 import clsx from 'clsx';
 import { TFunction } from 'i18next';
 
+// Load moment.js locales
+import moment from 'moment';
+import 'moment/locale/de';
+import 'moment/locale/es';
+import 'moment/locale/fr';
+import 'moment/locale/zh-cn';
+import 'moment/locale/ar';
+import 'moment/locale/pt';
+
 import BoltIcon from '@material-ui/icons/OfflineBolt';
 import HomeIcon from '@material-ui/icons/Home';
 import FolderIcon from '@material-ui/icons/Folder';
@@ -49,10 +58,11 @@ type DrawerProps = {
     open: boolean;
     drawerToggler: () => void;
     translator: TFunction;
+    lang: string;
 };
 
 export const Drawer = (props: DrawerProps): JSX.Element => {
-    const { R2L, open, drawerToggler, translator: t } = props;
+    const { R2L, open, drawerToggler, translator: t, lang } = props;
     const theme = useTheme();
     const classes = useStyles(theme);
 
@@ -72,6 +82,11 @@ export const Drawer = (props: DrawerProps): JSX.Element => {
                         </Typography>
                         <Typography variant={'subtitle1'} color={'inherit'}>
                             {t('I18N')}
+                        </Typography>
+                        <Typography variant={'subtitle1'} color={'inherit'}>
+                            {moment()
+                                .locale(lang === 'zh' ? 'zh-cn' : lang)
+                                .format('LL')}
                         </Typography>
                     </div>
                 </div>

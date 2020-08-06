@@ -1,5 +1,6 @@
 export type SampleTranslation = {
     translations: {
+        CURRENCY: `{{price, currency}}`;
         FRUITS: {
             APPLE: string;
             BANANA: string;

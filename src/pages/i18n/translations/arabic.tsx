@@ -2,6 +2,7 @@ import { SampleTranslation } from './sample-translation';
 
 export const arabic: SampleTranslation = {
     translations: {
+        CURRENCY: `{{price, currency}}`,
         FRUITS: {
             APPLE: 'تفاحة',
             BANANA: 'موز',

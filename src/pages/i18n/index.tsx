@@ -182,7 +182,7 @@ export const I18N = (): JSX.Element => {
                         ripple={true}
                         style={{ textAlign: isRTL() ? 'right' : 'left' }}
                         title={t(`FRUITS.${fruit.name}`)}
-                        subtitle={t('CURRENCY', { price: fruit.price, lng: lang })}
+                        subtitle={t('CURRENCY', { price: fruit.price })}
                         icon={
                             <Checkbox
                                 checked={selectedItems.has(fruit.name)}

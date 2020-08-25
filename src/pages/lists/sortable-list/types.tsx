@@ -1,4 +1,4 @@
-import { InfoListItemProps } from "@pxblue/react-components";
+import { InfoListItemProps } from '@pxblue/react-components';
 
 export type President = {
     firstName: string;

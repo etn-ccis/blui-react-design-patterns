@@ -38,7 +38,7 @@ const presidentsList: President[] = [
 ];
 
 // Sortable Components Definitions
-const DragHandle = SortableHandle(() => <DragHandleIcon style={{ cursor: 'pointer' }} data-cy={'bar'} />);
+const DragHandle = SortableHandle(() => <DragHandleIcon style={{ cursor: 'pointer' }} />);
 
 const SortableListItem = SortableElement(({ president, ...other }: SortableListItemProps) => (
     <InfoListItem
@@ -52,7 +52,7 @@ const SortableListItem = SortableElement(({ president, ...other }: SortableListI
 export const SortableListEdit = SortableContainer(({ presidents }: SortableListEditProps) => (
     <List disablePadding component={'nav'}>
         {presidents.map((president: President, i: number) => (
-            <SortableListItem key={`item-${i}`} id={`sortable-row-${i}`} index={i} president={president} />
+            <SortableListItem key={`item-${i}`} data-cy={`sortable-row-${i}`} index={i} president={president} />
         ))}
     </List>
 ));
@@ -102,7 +102,7 @@ export const SortableList = (): JSX.Element => {
             </AppBar>
             {sortable && <SortableListEdit presidents={list} onSortEnd={onSortEnd} useDragHandle={true} />}
             {!sortable && (
-                <List className={'list'} data-cy={'list-of-list'} disablePadding component={'nav'}>
+                <List className={'list'} disablePadding component={'nav'}>
                     {list.map((president: President, i: number) => (
                         <InfoListItem
                             hidePadding

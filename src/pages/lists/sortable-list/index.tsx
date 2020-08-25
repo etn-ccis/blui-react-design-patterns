@@ -40,8 +40,9 @@ const presidentsList: President[] = [
 // Sortable Components Definitions
 const DragHandle = SortableHandle(() => <DragHandleIcon style={{ cursor: 'pointer' }} data-cy={'bar'} />);
 
-const SortableListItem = SortableElement(({ president }: SortableListItemProps) => (
+const SortableListItem = SortableElement(({ president, ...other }: SortableListItemProps) => (
     <InfoListItem
+        {...other}
         icon={<DragHandle />}
         title={`${president.firstName} ${president.lastName}`}
         rightComponent={<ChannelValue value={president.year}></ChannelValue>}
@@ -51,7 +52,7 @@ const SortableListItem = SortableElement(({ president }: SortableListItemProps) 
 export const SortableListEdit = SortableContainer(({ presidents }: SortableListEditProps) => (
     <List disablePadding component={'nav'}>
         {presidents.map((president: President, i: number) => (
-            <SortableListItem key={`item-${i}`} index={i} president={president} />
+            <SortableListItem key={`item-${i}`} id={`sortable-row-${i}`} index={i} president={president} />
         ))}
     </List>
 ));

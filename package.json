@@ -57,6 +57,7 @@
     },
     "author": "PX Blue <pxblue@eaton.com>",
     "devDependencies": {
+        "@4tw/cypress-drag-drop": "^1.4.0",
         "@pxblue/eslint-config": "^1.1.4",
         "@pxblue/prettier-config": "^1.0.2",
         "@testing-library/jest-dom": "^4.2.4",

@@ -10,6 +10,12 @@ describe('Sortable list', () => {
         cy.get('[data-cy=pxb-toolbar]').should('contain', 'Sortable List');
     });
 
- //   it('TODO: edit list', () => {
- //       cy.get('[data-cy=edit-save]').click()
+    it('should drag item in list', () => {
+      cy.get('[data-cy=edit-save]').click()
+      cy.get('.makeStyles-root-440 > .MuiListItemIcon-root > .MuiSvgIcon-root')
+      .trigger('mousedown', { which: 1 })
+      .trigger('mousemove', { force: true, x: 0, y: 100 })
+      .trigger('mouseup', { force: true })
+
     });
+});

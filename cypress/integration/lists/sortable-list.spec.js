@@ -10,6 +10,12 @@ describe('Sortable list', () => {
         cy.get('[data-cy=pxb-toolbar]').should('contain', 'Sortable List');
     });
 
+    it('should enable sortable list items on edit', () => {
+        cy.get('[data-cy=edit-save]').click()
+        cy.get('[data-cy=sortable-row-0]').should('be.visible')
+  
+      });
+
     it('should drag item in list to location', () => {
       cy.get('[data-cy=edit-save]').click()
       cy.get('[data-cy=sortable-row-0] > .MuiListItemIcon-root > .MuiSvgIcon-root')

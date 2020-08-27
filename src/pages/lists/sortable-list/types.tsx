@@ -1,10 +1,12 @@
+import { InfoListItemProps } from '@pxblue/react-components';
+
 export type President = {
     firstName: string;
     lastName: string;
     year: number;
 };
 
-export type SortableListItemProps = {
+export type SortableListItemProps = Partial<InfoListItemProps> & {
     president: President;
 };
 

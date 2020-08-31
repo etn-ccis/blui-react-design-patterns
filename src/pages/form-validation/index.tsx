@@ -14,7 +14,7 @@ import {
     Hidden,
 } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
-import { Close, Done } from '@material-ui/icons';
+import { Close, Done, Visibility, VisibilityOff } from '@material-ui/icons';
 import { makeStyles, useTheme, Theme } from '@material-ui/core/styles';
 import { useDispatch } from 'react-redux';
 import { TOGGLE_DRAWER } from '../../redux/actions';
@@ -55,6 +55,9 @@ export const FormValidation = (): JSX.Element => {
     const [newPasswordError, setNewPasswordError] = useState<FormError>();
     const [confirmPassword, setConfirmPassword] = useState('');
     const [confirmPasswordError, setConfirmPasswordError] = useState<FormError>();
+    const [showOldPassword, setShowOldPassword] = useState<boolean>(false);
+    const [showNewPassword, setShowNewPassword] = useState<boolean>(false);
+    const [showConfirmPassword, setShowConfirmPassword] = useState<boolean>(false);
     const [passwordErrors, setPasswordErrors] = useState({
         minLengthRequired: 'required',
         atLeast1UpperCharRequired: 'required',
@@ -393,13 +396,24 @@ export const FormValidation = (): JSX.Element => {
                             <TextField
                                 id={'oldPassword'}
                                 label={'Old Password'}
-                                type={'password'}
+                                type={showOldPassword ? 'text' : 'password'}
                                 onChange={onOldPasswordChange}
                                 value={oldPassword}
                                 error={Boolean(oldPasswordError)}
                                 onBlur={validateOldPassword}
                                 required
                                 fullWidth
+                                InputProps={{
+                                    endAdornment: (
+                                        <InputAdornment position={'end'}>
+                                            <IconButton style={{height: 36, width: 36}}
+                                                        onClick={(): void => setShowOldPassword(!showOldPassword)}>
+                                                {showOldPassword && <Visibility />}
+                                                {!showOldPassword && <VisibilityOff />}
+                                            </IconButton>
+                                        </InputAdornment>
+                                    ),
+                                }}
                             />
 
                             <TextField
@@ -413,7 +427,47 @@ export const FormValidation = (): JSX.Element => {
                                 onBlur={validateNewPassword}
                                 required
                                 fullWidth
+                                InputProps={{
+                                    endAdornment: (
+                                        <InputAdornment position={'end'}>
+                                            <IconButton style={{height: 36, width: 36}}
+                                                        onClick={(): void => setShowNewPassword(!showNewPassword)}>
+                                                {showNewPassword && <Visibility />}
+                                                {!showNewPassword && <VisibilityOff />}
+                                            </IconButton>
+                                        </InputAdornment>
+                                    ),
+                                }}
                             />
+
+                            <Typography className={classes.marginedField} variant={'body1'}>
+                                A password must contain the following:
+                            </Typography>
+
+                            <List component={'ul'}>
+                                <ListItem>
+                                    {getValidationIcon(passwordErrors.minLengthRequired)}
+                                    <Typography variant={'body2'}>At least 8 characters in length</Typography>
+                                </ListItem>
+                                <ListItem>
+                                    {getValidationIcon(passwordErrors.atLeast1NumberRequired)}
+                                    <Typography variant={'body2'}>At least 1 digit</Typography>
+                                </ListItem>
+                                <ListItem>
+                                    {getValidationIcon(passwordErrors.atLeast1UpperCharRequired)}
+                                    <Typography variant={'body2'}>At least 1 uppercase letter</Typography>
+                                </ListItem>
+                                <ListItem>
+                                    {getValidationIcon(passwordErrors.atLeast1LowerCharRequired)}
+                                    <Typography variant={'body2'}>At least 1 lowercase letter</Typography>
+                                </ListItem>
+                                <ListItem>
+                                    {getValidationIcon(passwordErrors.atLeast1SplCharRequired)}
+                                    <Typography variant={'body2'}>
+                                        At least 1 special character: (valid: ! @ # $ ^ &)
+                                    </Typography>
+                                </ListItem>
+                            </List>
 
                             <TextField
                                 className={classes.marginedField}
@@ -427,36 +481,19 @@ export const FormValidation = (): JSX.Element => {
                                 onBlur={validateConfirmPassword}
                                 required
                                 fullWidth
+                                InputProps={{
+                                    endAdornment: (
+                                        <InputAdornment position={'end'}>
+                                            <IconButton style={{height: 36, width: 36}}
+                                                        onClick={(): void => setShowConfirmPassword(!showConfirmPassword)}>
+                                                {showConfirmPassword && <Visibility />}
+                                                {!showConfirmPassword && <VisibilityOff />}
+                                            </IconButton>
+                                        </InputAdornment>
+                                    ),
+                                }}
                             />
                         </form>
-                        <Typography className={classes.marginedField} variant={'body1'}>
-                            A password must contain the following:
-                        </Typography>
-
-                        <List component={'ul'}>
-                            <ListItem>
-                                {getValidationIcon(passwordErrors.minLengthRequired)}
-                                <Typography variant={'body2'}>At least 8 characters in length</Typography>
-                            </ListItem>
-                            <ListItem>
-                                {getValidationIcon(passwordErrors.atLeast1NumberRequired)}
-                                <Typography variant={'body2'}>At least 1 digit</Typography>
-                            </ListItem>
-                            <ListItem>
-                                {getValidationIcon(passwordErrors.atLeast1UpperCharRequired)}
-                                <Typography variant={'body2'}>At least 1 uppercase letter</Typography>
-                            </ListItem>
-                            <ListItem>
-                                {getValidationIcon(passwordErrors.atLeast1LowerCharRequired)}
-                                <Typography variant={'body2'}>At least 1 lowercase letter</Typography>
-                            </ListItem>
-                            <ListItem>
-                                {getValidationIcon(passwordErrors.atLeast1SplCharRequired)}
-                                <Typography variant={'body2'}>
-                                    At least 1 special character: (valid: ! @ # $ ^ &)
-                                </Typography>
-                            </ListItem>
-                        </List>
                     </CardContent>
                 </Card>
             </div>

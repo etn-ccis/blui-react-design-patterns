@@ -18,6 +18,7 @@ import { Close, Done, Visibility, VisibilityOff } from '@material-ui/icons';
 import { makeStyles, useTheme, Theme } from '@material-ui/core/styles';
 import { useDispatch } from 'react-redux';
 import { TOGGLE_DRAWER } from '../../redux/actions';
+import * as Colors from '@pxblue/colors';
 
 const useStyles = makeStyles((theme: Theme) => ({
     marginedField: {
@@ -26,6 +27,10 @@ const useStyles = makeStyles((theme: Theme) => ({
     block: {
         padding: theme.spacing(2),
     },
+    passwordCriteria: {
+        paddingTop: 0,
+        paddingBottom: 0,
+    }
 }));
 
 type FormError = undefined | null | string;
@@ -78,6 +83,10 @@ export const FormValidation = (): JSX.Element => {
         }
         return <></>;
     };
+
+    const getPasswordCriteriaIcon = (error: FormError): JSX.Element => (
+        <Done style={{ color: error ? Colors.gray[100] : theme.palette.primary.main, marginRight: theme.spacing() }} />
+    );
 
     const characterLimitsHelperText = (
         <>
@@ -440,30 +449,26 @@ export const FormValidation = (): JSX.Element => {
                                 }}
                             />
 
-                            <Typography className={classes.marginedField} variant={'body1'}>
-                                A password must contain the following:
-                            </Typography>
-
-                            <List component={'ul'}>
-                                <ListItem>
-                                    {getValidationIcon(passwordErrors.minLengthRequired)}
-                                    <Typography variant={'body2'}>At least 8 characters in length</Typography>
+                            <List component={'ul'} style={{marginTop: 16}}>
+                                <ListItem className={classes.passwordCriteria}>
+                                    {getPasswordCriteriaIcon(passwordErrors.minLengthRequired)}
+                                    <Typography variant={'body1'}>At least 8 characters in length</Typography>
                                 </ListItem>
-                                <ListItem>
-                                    {getValidationIcon(passwordErrors.atLeast1NumberRequired)}
-                                    <Typography variant={'body2'}>At least 1 digit</Typography>
+                                <ListItem className={classes.passwordCriteria}>
+                                    {getPasswordCriteriaIcon(passwordErrors.atLeast1NumberRequired)}
+                                    <Typography variant={'body1'}>At least 1 digit</Typography>
                                 </ListItem>
-                                <ListItem>
-                                    {getValidationIcon(passwordErrors.atLeast1UpperCharRequired)}
-                                    <Typography variant={'body2'}>At least 1 uppercase letter</Typography>
+                                <ListItem className={classes.passwordCriteria}>
+                                    {getPasswordCriteriaIcon(passwordErrors.atLeast1UpperCharRequired)}
+                                    <Typography variant={'body1'}>At least 1 uppercase letter</Typography>
                                 </ListItem>
-                                <ListItem>
-                                    {getValidationIcon(passwordErrors.atLeast1LowerCharRequired)}
-                                    <Typography variant={'body2'}>At least 1 lowercase letter</Typography>
+                                <ListItem className={classes.passwordCriteria}>
+                                    {getPasswordCriteriaIcon(passwordErrors.atLeast1LowerCharRequired)}
+                                    <Typography variant={'body1'}>At least 1 lowercase letter</Typography>
                                 </ListItem>
-                                <ListItem>
-                                    {getValidationIcon(passwordErrors.atLeast1SplCharRequired)}
-                                    <Typography variant={'body2'}>
+                                <ListItem className={classes.passwordCriteria}>
+                                    {getPasswordCriteriaIcon(passwordErrors.atLeast1SplCharRequired)}
+                                    <Typography variant={'body1'}>
                                         At least 1 special character: (valid: ! @ # $ ^ &)
                                     </Typography>
                                 </ListItem>

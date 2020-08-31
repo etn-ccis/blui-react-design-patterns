@@ -67,10 +67,10 @@ export const FormValidation = (): JSX.Element => {
     const classes = useStyles(theme);
     const dispatch = useDispatch();
 
-    const getValidationIcon = (error: FormError): JSX.Element => {
+    const getValidationIcon = (error: FormError, value?: string): JSX.Element => {
         if (error && error.length > 0) {
             return <Close style={{ color: theme.palette.error.main, marginRight: theme.spacing() }} />;
-        } else if (error === '') {
+        } else if (value && !error) {
             return <Done style={{ color: theme.palette.primary.main, marginRight: theme.spacing() }} />;
         }
         return <></>;
@@ -301,7 +301,7 @@ export const FormValidation = (): JSX.Element => {
                                 InputProps={{
                                     endAdornment: (
                                         <InputAdornment position={'end'}>
-                                            {getValidationIcon(inputError)}
+                                            {getValidationIcon(inputError, input)}
                                         </InputAdornment>
                                     ),
                                 }}
@@ -323,7 +323,7 @@ export const FormValidation = (): JSX.Element => {
                                 InputProps={{
                                     endAdornment: (
                                         <InputAdornment position={'end'}>
-                                            {getValidationIcon(emailError)}
+                                            {getValidationIcon(emailError, email)}
                                         </InputAdornment>
                                     ),
                                 }}
@@ -346,7 +346,7 @@ export const FormValidation = (): JSX.Element => {
                                 InputProps={{
                                     endAdornment: (
                                         <InputAdornment position={'end'}>
-                                            {getValidationIcon(phoneNumberError)}
+                                            {getValidationIcon(phoneNumberError, phoneNumber)}
                                         </InputAdornment>
                                     ),
                                 }}

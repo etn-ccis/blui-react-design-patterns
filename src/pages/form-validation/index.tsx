@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     passwordCriteria: {
         paddingTop: 0,
         paddingBottom: 0,
-    }
+    },
 }));
 
 type FormError = undefined | null | string;
@@ -415,8 +415,10 @@ export const FormValidation = (): JSX.Element => {
                                 InputProps={{
                                     endAdornment: (
                                         <InputAdornment position={'end'}>
-                                            <IconButton style={{height: 36, width: 36}}
-                                                        onClick={(): void => setShowOldPassword(!showOldPassword)}>
+                                            <IconButton
+                                                style={{ height: 36, width: 36 }}
+                                                onClick={(): void => setShowOldPassword(!showOldPassword)}
+                                            >
                                                 {showOldPassword && <Visibility />}
                                                 {!showOldPassword && <VisibilityOff />}
                                             </IconButton>
@@ -439,8 +441,10 @@ export const FormValidation = (): JSX.Element => {
                                 InputProps={{
                                     endAdornment: (
                                         <InputAdornment position={'end'}>
-                                            <IconButton style={{height: 36, width: 36}}
-                                                        onClick={(): void => setShowNewPassword(!showNewPassword)}>
+                                            <IconButton
+                                                style={{ height: 36, width: 36 }}
+                                                onClick={(): void => setShowNewPassword(!showNewPassword)}
+                                            >
                                                 {showNewPassword && <Visibility />}
                                                 {!showNewPassword && <VisibilityOff />}
                                             </IconButton>
@@ -449,7 +453,7 @@ export const FormValidation = (): JSX.Element => {
                                 }}
                             />
 
-                            <List component={'ul'} style={{marginTop: 16}}>
+                            <List component={'ul'} style={{ marginTop: 16 }}>
                                 <ListItem className={classes.passwordCriteria}>
                                     {getPasswordCriteriaIcon(passwordErrors.minLengthRequired)}
                                     <Typography variant={'body1'}>At least 8 characters in length</Typography>
@@ -489,8 +493,10 @@ export const FormValidation = (): JSX.Element => {
                                 InputProps={{
                                     endAdornment: (
                                         <InputAdornment position={'end'}>
-                                            <IconButton style={{height: 36, width: 36}}
-                                                        onClick={(): void => setShowConfirmPassword(!showConfirmPassword)}>
+                                            <IconButton
+                                                style={{ height: 36, width: 36 }}
+                                                onClick={(): void => setShowConfirmPassword(!showConfirmPassword)}
+                                            >
                                                 {showConfirmPassword && <Visibility />}
                                                 {!showConfirmPassword && <VisibilityOff />}
                                             </IconButton>

@@ -307,7 +307,8 @@ export const FormValidation = (): JSX.Element => {
                         Basic Form Fields
                     </Typography>
                     <Typography variant={'body1'}>
-                        The following examples show how to perform validation on various input types. The error icon on invalid inputs is optional, but adds redundancy for color blind users.
+                        The following examples show how to perform validation on various input types. The error icon on
+                        invalid inputs is optional, but adds redundancy for color blind users.
                     </Typography>
                     <br />
                     <Card>
@@ -386,7 +387,8 @@ export const FormValidation = (): JSX.Element => {
                         Character Limits
                     </Typography>
                     <Typography variant={'body1'}>
-                        The following example shows how to restrict the length of an input field. In these cases, you should provide the user an indication of how many characters are available.
+                        The following example shows how to restrict the length of an input field. In these cases, you
+                        should provide the user an indication of how many characters are available.
                     </Typography>
                     <br />
                     <Card>
@@ -411,7 +413,8 @@ export const FormValidation = (): JSX.Element => {
                         Password Validation
                     </Typography>
                     <Typography variant={'body1'}>
-                        The following example shows how to enforce password strength restrictions and confirmation field matching. The password strength requirements for your application may differ from this example.
+                        The following example shows how to enforce password strength restrictions and confirmation field
+                        matching. The password strength requirements for your application may differ from this example.
                     </Typography>
                     <br />
                     <Card>

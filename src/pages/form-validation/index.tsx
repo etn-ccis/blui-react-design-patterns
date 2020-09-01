@@ -37,7 +37,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         flexDirection: 'column',
         padding: theme.spacing(2),
         maxWidth: 600,
-        paddingBottom: theme.spacing(6)
+        paddingBottom: theme.spacing(6),
     },
     passwordCriteria: {
         paddingTop: 0,

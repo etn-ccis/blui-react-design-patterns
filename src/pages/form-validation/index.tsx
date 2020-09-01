@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     sectionHeader: {
         marginBottom: 16,
     },
-    marginedField: {
+    inputField: {
         marginTop: theme.spacing(2),
     },
     block: {
@@ -277,7 +277,7 @@ export const FormValidation = (): JSX.Element => {
     return (
         <div
             style={{
-                backgroundColor: theme.palette.background.default,
+                backgroundColor: 'white',
                 color: theme.palette.text.primary,
                 minHeight: '100vh',
             }}
@@ -312,75 +312,72 @@ export const FormValidation = (): JSX.Element => {
                         invalid inputs is optional, but adds redundancy for color blind users.
                     </Typography>
                     <br />
-                    <Card>
-                        <CardContent>
-                            <div>
-                                <TextField
-                                    id={'input'}
-                                    label={'Input'}
-                                    fullWidth
-                                    helperText={inputError || 'This is a regular input field.'}
-                                    required
-                                    value={input}
-                                    onChange={onInputChange}
-                                    error={Boolean(inputError)}
-                                    onBlur={onInputBlur}
-                                    InputProps={{
-                                        endAdornment: (
-                                            <InputAdornment position={'end'}>
-                                                {getValidationIcon(inputError, input)}
-                                            </InputAdornment>
-                                        ),
-                                    }}
-                                />
+                    <div>
+                        <TextField
+                            id={'input'}
+                            label={'Input'}
+                            fullWidth
+                            helperText={inputError || 'This is a regular input field.'}
+                            required
+                            value={input}
+                            onChange={onInputChange}
+                            error={Boolean(inputError)}
+                            onBlur={onInputBlur}
+                            variant={'filled'}
+                            InputProps={{
+                                endAdornment: (
+                                    <InputAdornment position={'end'}>
+                                        {getValidationIcon(inputError, input)}
+                                    </InputAdornment>
+                                ),
+                            }}
+                        />
 
-                                <TextField
-                                    className={classes.marginedField}
-                                    id={'email'}
-                                    label={'Enter Your Email'}
-                                    helperText={
-                                        emailError || 'This field throws an error if the email format is incorrect.'
-                                    }
-                                    fullWidth
-                                    required
-                                    value={email}
-                                    error={Boolean(emailError)}
-                                    onChange={onEmailChange}
-                                    onBlur={onEmailBlur}
-                                    InputProps={{
-                                        endAdornment: (
-                                            <InputAdornment position={'end'}>
-                                                {getValidationIcon(emailError, email)}
-                                            </InputAdornment>
-                                        ),
-                                    }}
-                                />
+                        <TextField
+                            className={classes.inputField}
+                            id={'email'}
+                            label={'Enter Your Email'}
+                            helperText={emailError || 'This field throws an error if the email format is incorrect.'}
+                            fullWidth
+                            required
+                            value={email}
+                            error={Boolean(emailError)}
+                            onChange={onEmailChange}
+                            onBlur={onEmailBlur}
+                            variant={'filled'}
+                            InputProps={{
+                                endAdornment: (
+                                    <InputAdornment position={'end'}>
+                                        {getValidationIcon(emailError, email)}
+                                    </InputAdornment>
+                                ),
+                            }}
+                        />
 
-                                <TextField
-                                    className={classes.marginedField}
-                                    id={'phoneNumber'}
-                                    label={'Phone Number'}
-                                    helperText={
-                                        phoneNumberError ||
-                                        'This field throws an error if the phone number format is incorrect. (Needs to be a valid U.S. number)'
-                                    }
-                                    fullWidth
-                                    required
-                                    value={phoneNumber}
-                                    error={Boolean(phoneNumberError)}
-                                    onChange={onPhoneNumberChange}
-                                    onBlur={validatePhoneNumber}
-                                    InputProps={{
-                                        endAdornment: (
-                                            <InputAdornment position={'end'}>
-                                                {getValidationIcon(phoneNumberError, phoneNumber)}
-                                            </InputAdornment>
-                                        ),
-                                    }}
-                                />
-                            </div>
-                        </CardContent>
-                    </Card>
+                        <TextField
+                            className={classes.inputField}
+                            id={'phoneNumber'}
+                            label={'Phone Number'}
+                            helperText={
+                                phoneNumberError ||
+                                'This field throws an error if the phone number format is incorrect. (Needs to be a valid U.S. number)'
+                            }
+                            fullWidth
+                            required
+                            value={phoneNumber}
+                            error={Boolean(phoneNumberError)}
+                            onChange={onPhoneNumberChange}
+                            onBlur={validatePhoneNumber}
+                            variant={'filled'}
+                            InputProps={{
+                                endAdornment: (
+                                    <InputAdornment position={'end'}>
+                                        {getValidationIcon(phoneNumberError, phoneNumber)}
+                                    </InputAdornment>
+                                ),
+                            }}
+                        />
+                    </div>
                 </div>
 
                 <div className={classes.block}>
@@ -392,21 +389,18 @@ export const FormValidation = (): JSX.Element => {
                         should provide the user an indication of how many characters are available.
                     </Typography>
                     <br />
-                    <Card>
-                        <CardContent>
-                            <form>
-                                <TextField
-                                    id={'chars'}
-                                    label={'Enter some text'}
-                                    fullWidth
-                                    helperText={characterLimitsHelperText}
-                                    value={chars}
-                                    onChange={onChange}
-                                    inputProps={{ maxLength: MAX_CHARS_LIMIT }}
-                                />
-                            </form>
-                        </CardContent>
-                    </Card>
+                    <form>
+                        <TextField
+                            id={'chars'}
+                            label={'Enter some text'}
+                            fullWidth
+                            helperText={characterLimitsHelperText}
+                            value={chars}
+                            onChange={onChange}
+                            variant={'filled'}
+                            inputProps={{ maxLength: MAX_CHARS_LIMIT }}
+                        />
+                    </form>
                 </div>
 
                 <div className={classes.block}>
@@ -418,114 +412,113 @@ export const FormValidation = (): JSX.Element => {
                         matching. The password strength requirements for your application may differ from this example.
                     </Typography>
                     <br />
-                    <Card>
-                        <CardContent>
-                            <form>
-                                <TextField
-                                    id={'oldPassword'}
-                                    label={'Old Password'}
-                                    type={showOldPassword ? 'text' : 'password'}
-                                    onChange={onOldPasswordChange}
-                                    value={oldPassword}
-                                    error={Boolean(oldPasswordError)}
-                                    onBlur={validateOldPassword}
-                                    required
-                                    fullWidth
-                                    InputProps={{
-                                        endAdornment: (
-                                            <InputAdornment position={'end'}>
-                                                <IconButton
-                                                    style={{ height: 36, width: 36 }}
-                                                    onClick={(): void => setShowOldPassword(!showOldPassword)}
-                                                >
-                                                    {showOldPassword && <Visibility />}
-                                                    {!showOldPassword && <VisibilityOff />}
-                                                </IconButton>
-                                            </InputAdornment>
-                                        ),
-                                    }}
-                                />
+                    <form>
+                        <TextField
+                            id={'oldPassword'}
+                            label={'Old Password'}
+                            type={showOldPassword ? 'text' : 'password'}
+                            onChange={onOldPasswordChange}
+                            value={oldPassword}
+                            error={Boolean(oldPasswordError)}
+                            onBlur={validateOldPassword}
+                            required
+                            fullWidth
+                            variant={'filled'}
+                            InputProps={{
+                                endAdornment: (
+                                    <InputAdornment position={'end'}>
+                                        <IconButton
+                                            style={{ height: 36, width: 36 }}
+                                            onClick={(): void => setShowOldPassword(!showOldPassword)}
+                                        >
+                                            {showOldPassword && <Visibility />}
+                                            {!showOldPassword && <VisibilityOff />}
+                                        </IconButton>
+                                    </InputAdornment>
+                                ),
+                            }}
+                        />
 
-                                <TextField
-                                    className={classes.marginedField}
-                                    id={'newPassword'}
-                                    label={'New Password'}
-                                    type={showNewPassword ? 'text' : 'password'}
-                                    onChange={onNewPasswordChange}
-                                    value={newPassword}
-                                    error={Boolean(newPasswordError)}
-                                    onBlur={validateNewPassword}
-                                    required
-                                    fullWidth
-                                    InputProps={{
-                                        endAdornment: (
-                                            <InputAdornment position={'end'}>
-                                                <IconButton
-                                                    style={{ height: 36, width: 36 }}
-                                                    onClick={(): void => setShowNewPassword(!showNewPassword)}
-                                                >
-                                                    {showNewPassword && <Visibility />}
-                                                    {!showNewPassword && <VisibilityOff />}
-                                                </IconButton>
-                                            </InputAdornment>
-                                        ),
-                                    }}
-                                />
+                        <TextField
+                            className={classes.inputField}
+                            id={'newPassword'}
+                            label={'New Password'}
+                            type={showNewPassword ? 'text' : 'password'}
+                            onChange={onNewPasswordChange}
+                            value={newPassword}
+                            error={Boolean(newPasswordError)}
+                            onBlur={validateNewPassword}
+                            required
+                            fullWidth
+                            variant={'filled'}
+                            InputProps={{
+                                endAdornment: (
+                                    <InputAdornment position={'end'}>
+                                        <IconButton
+                                            style={{ height: 36, width: 36 }}
+                                            onClick={(): void => setShowNewPassword(!showNewPassword)}
+                                        >
+                                            {showNewPassword && <Visibility />}
+                                            {!showNewPassword && <VisibilityOff />}
+                                        </IconButton>
+                                    </InputAdornment>
+                                ),
+                            }}
+                        />
 
-                                <List component={'ul'} style={{ marginTop: 16 }}>
-                                    <ListItem className={classes.passwordCriteria}>
-                                        {getPasswordCriteriaIcon(passwordErrors.minLengthRequired)}
-                                        <Typography variant={'body1'}>At least 8 characters in length</Typography>
-                                    </ListItem>
-                                    <ListItem className={classes.passwordCriteria}>
-                                        {getPasswordCriteriaIcon(passwordErrors.atLeast1NumberRequired)}
-                                        <Typography variant={'body1'}>At least 1 digit</Typography>
-                                    </ListItem>
-                                    <ListItem className={classes.passwordCriteria}>
-                                        {getPasswordCriteriaIcon(passwordErrors.atLeast1UpperCharRequired)}
-                                        <Typography variant={'body1'}>At least 1 uppercase letter</Typography>
-                                    </ListItem>
-                                    <ListItem className={classes.passwordCriteria}>
-                                        {getPasswordCriteriaIcon(passwordErrors.atLeast1LowerCharRequired)}
-                                        <Typography variant={'body1'}>At least 1 lowercase letter</Typography>
-                                    </ListItem>
-                                    <ListItem className={classes.passwordCriteria}>
-                                        {getPasswordCriteriaIcon(passwordErrors.atLeast1SplCharRequired)}
-                                        <Typography variant={'body1'}>
-                                            At least 1 special character: (valid: ! @ # $ ^ &)
-                                        </Typography>
-                                    </ListItem>
-                                </List>
+                        <List component={'ul'} style={{ marginTop: 16 }}>
+                            <ListItem className={classes.passwordCriteria}>
+                                {getPasswordCriteriaIcon(passwordErrors.minLengthRequired)}
+                                <Typography variant={'body1'}>At least 8 characters in length</Typography>
+                            </ListItem>
+                            <ListItem className={classes.passwordCriteria}>
+                                {getPasswordCriteriaIcon(passwordErrors.atLeast1NumberRequired)}
+                                <Typography variant={'body1'}>At least 1 digit</Typography>
+                            </ListItem>
+                            <ListItem className={classes.passwordCriteria}>
+                                {getPasswordCriteriaIcon(passwordErrors.atLeast1UpperCharRequired)}
+                                <Typography variant={'body1'}>At least 1 uppercase letter</Typography>
+                            </ListItem>
+                            <ListItem className={classes.passwordCriteria}>
+                                {getPasswordCriteriaIcon(passwordErrors.atLeast1LowerCharRequired)}
+                                <Typography variant={'body1'}>At least 1 lowercase letter</Typography>
+                            </ListItem>
+                            <ListItem className={classes.passwordCriteria}>
+                                {getPasswordCriteriaIcon(passwordErrors.atLeast1SplCharRequired)}
+                                <Typography variant={'body1'}>
+                                    At least 1 special character: (valid: ! @ # $ ^ &)
+                                </Typography>
+                            </ListItem>
+                        </List>
 
-                                <TextField
-                                    className={classes.marginedField}
-                                    id={'confirmPassword'}
-                                    label={'Confirm Password'}
-                                    type={showConfirmPassword ? 'text' : 'password'}
-                                    helperText={confirmPasswordError}
-                                    onChange={onConfirmPasswordChange}
-                                    value={confirmPassword}
-                                    error={Boolean(confirmPasswordError)}
-                                    onBlur={validateConfirmPassword}
-                                    required
-                                    fullWidth
-                                    InputProps={{
-                                        endAdornment: (
-                                            <InputAdornment position={'end'}>
-                                                <IconButton
-                                                    style={{ height: 36, width: 36 }}
-                                                    onClick={(): void => setShowConfirmPassword(!showConfirmPassword)}
-                                                >
-                                                    {showConfirmPassword && <Visibility />}
-                                                    {!showConfirmPassword && <VisibilityOff />}
-                                                </IconButton>
-                                            </InputAdornment>
-                                        ),
-                                    }}
-                                />
-                            </form>
-                        </CardContent>
-                    </Card>
+                        <TextField
+                            className={classes.inputField}
+                            id={'confirmPassword'}
+                            label={'Confirm Password'}
+                            type={showConfirmPassword ? 'text' : 'password'}
+                            helperText={confirmPasswordError}
+                            onChange={onConfirmPasswordChange}
+                            value={confirmPassword}
+                            error={Boolean(confirmPasswordError)}
+                            onBlur={validateConfirmPassword}
+                            required
+                            fullWidth
+                            variant={'filled'}
+                            InputProps={{
+                                endAdornment: (
+                                    <InputAdornment position={'end'}>
+                                        <IconButton
+                                            style={{ height: 36, width: 36 }}
+                                            onClick={(): void => setShowConfirmPassword(!showConfirmPassword)}
+                                        >
+                                            {showConfirmPassword && <Visibility />}
+                                            {!showConfirmPassword && <VisibilityOff />}
+                                        </IconButton>
+                                    </InputAdornment>
+                                ),
+                            }}
+                        />
+                    </form>
                 </div>
             </div>
         </div>

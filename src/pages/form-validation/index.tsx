@@ -117,15 +117,7 @@ export const FormValidation = (): JSX.Element => {
         [setInputError]
     );
 
-    const onChange: OnChangeHandler = useCallback(
-        (event) => {
-            setChars(event.target.value);
-            validateInput(event.target.value);
-        },
-        [setChars, validateInput]
-    );
-
-    const onInputChange: OnChangeHandler = useCallback(
+    const onBasicChange: OnChangeHandler = useCallback(
         (event) => {
             setInput(event.target.value);
             validateInput(event.target.value);
@@ -318,7 +310,7 @@ export const FormValidation = (): JSX.Element => {
                             helperText={inputError || 'This is a regular input field.'}
                             required
                             value={input}
-                            onChange={onInputChange}
+                            onChange={onBasicChange}
                             error={Boolean(inputError)}
                             onBlur={onInputBlur}
                             variant={'filled'}
@@ -394,7 +386,7 @@ export const FormValidation = (): JSX.Element => {
                             fullWidth
                             helperText={characterLimitsHelperText}
                             value={chars}
-                            onChange={onChange}
+                            onChange={(e): void => setChars(e.target.value)}
                             variant={'filled'}
                             inputProps={{ maxLength: MAX_CHARS_LIMIT }}
                         />

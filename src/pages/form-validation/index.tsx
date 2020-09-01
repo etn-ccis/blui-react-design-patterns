@@ -450,7 +450,7 @@ export const FormValidation = (): JSX.Element => {
                                     className={classes.marginedField}
                                     id={'newPassword'}
                                     label={'New Password'}
-                                    type={'password'}
+                                    type={showNewPassword ? 'text' : 'password'}
                                     onChange={onNewPasswordChange}
                                     value={newPassword}
                                     error={Boolean(newPasswordError)}
@@ -501,7 +501,7 @@ export const FormValidation = (): JSX.Element => {
                                     className={classes.marginedField}
                                     id={'confirmPassword'}
                                     label={'Confirm Password'}
-                                    type={'password'}
+                                    type={showConfirmPassword ? 'text' : 'password'}
                                     helperText={confirmPasswordError}
                                     onChange={onConfirmPasswordChange}
                                     value={confirmPassword}

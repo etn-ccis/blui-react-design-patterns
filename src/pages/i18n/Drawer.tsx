@@ -71,7 +71,7 @@ export const Drawer = (props: DrawerProps): JSX.Element => {
             open={open}
             onClose={drawerToggler}
             classes={{ paper: classes.drawer }}
-            anchor={R2L ? 'right' : 'left'}
+            anchor={R2L ? 'left' : 'right'}
         >
             <div className={classes.flexVert} style={{ height: '100%', width: '100%' }}>
                 <div dir={R2L ? 'rtl' : 'ltr'} className={clsx(classes.flexVertBottom, classes.header)}>

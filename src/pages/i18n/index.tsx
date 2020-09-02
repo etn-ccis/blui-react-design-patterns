@@ -23,7 +23,6 @@ import { InfoListItem, Spacer } from '@pxblue/react-components';
 import clsx from 'clsx';
 
 import MenuIcon from '@material-ui/icons/Menu';
-import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import CartIcon from '@material-ui/icons/AddShoppingCart';
 import CancelIcon from '@material-ui/icons/Cancel';
 import MenuOpenIcon from '@material-ui/icons/MenuOpen';
@@ -154,12 +153,12 @@ export const I18N = (): JSX.Element => {
                     style={{ padding: theme.spacing(0.5), minWidth: theme.spacing(20), marginLeft: theme.spacing(0.5) }}
                 >
                     <MenuItem value={'en'}>{t('LANGUAGES.ENGLISH')}</MenuItem>
-                    <MenuItem value={'es'}>{t('LANGUAGES.SPANISH')}</MenuItem>
-                    <MenuItem value={'de'}>{t('LANGUAGES.GERMAN')}</MenuItem>
                     <MenuItem value={'ar'}>{t('LANGUAGES.ARABIC')}</MenuItem>
-                    <MenuItem value={'fr'}>{t('LANGUAGES.FRENCH')}</MenuItem>
-                    <MenuItem value={'pt'}>{t('LANGUAGES.PORTUGUESE')}</MenuItem>
                     <MenuItem value={'zh'}>{t('LANGUAGES.CHINESE')}</MenuItem>
+                    <MenuItem value={'fr'}>{t('LANGUAGES.FRENCH')}</MenuItem>
+                    <MenuItem value={'de'}>{t('LANGUAGES.GERMAN')}</MenuItem>
+                    <MenuItem value={'pt'}>{t('LANGUAGES.PORTUGUESE')}</MenuItem>
+                    <MenuItem value={'es'}>{t('LANGUAGES.SPANISH')}</MenuItem>
                 </Select>
                 <Button
                     variant={'contained'}
@@ -189,7 +188,6 @@ export const I18N = (): JSX.Element => {
                                 onChange={(): void => selectFruit(fruit.name)}
                             />
                         }
-                        rightComponent={<ArrowForwardIosIcon className={clsx(classes.icon, isRTL() && classes.RTL)} />}
                         classes={{ rightComponent: isRTL() ? classes.rightComponent : undefined }}
                     />
                 ))}

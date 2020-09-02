@@ -23,7 +23,6 @@ import { InfoListItem, Spacer } from '@pxblue/react-components';
 import clsx from 'clsx';
 
 import MenuIcon from '@material-ui/icons/Menu';
-import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import CartIcon from '@material-ui/icons/AddShoppingCart';
 import CancelIcon from '@material-ui/icons/Cancel';
 import MenuOpenIcon from '@material-ui/icons/MenuOpen';

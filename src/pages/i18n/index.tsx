@@ -59,6 +59,12 @@ const useStyles = makeStyles((theme: Theme) => ({
         marginLeft: 0,
         marginRight: theme.spacing(2),
     },
+    appbarRoot: {
+        padding: 0
+    },
+    toolbarGutters: {
+        padding: '0 16px'
+    }
 }));
 
 export const I18N = (): JSX.Element => {
@@ -106,7 +112,7 @@ export const I18N = (): JSX.Element => {
 
     return (
         <div dir={getDirection()} style={{ backgroundColor: theme.palette.background.paper, minHeight: '100vh' }}>
-            <AppBar position={'sticky'}>
+            <AppBar position={'sticky'} classes={{ root: classes.appbarRoot}}>
                 <Drawer
                     open={drawerOpen}
                     R2L={isRTL()}
@@ -116,7 +122,7 @@ export const I18N = (): JSX.Element => {
                     }}
                     translator={t}
                 />
-                <Toolbar>
+                <Toolbar classes={{ gutters: classes.toolbarGutters}}>
                     <Hidden mdUp>
                         <IconButton
                             data-cy="toolbar-menu"
@@ -125,6 +131,7 @@ export const I18N = (): JSX.Element => {
                                 dispatch({ type: TOGGLE_DRAWER, payload: true });
                             }}
                             edge={isRTL() ? 'end' : 'start'}
+                            style={{ marginRight: isRTL() ? '' : 20, marginLeft: isRTL() ? 20 : '' }}
                         >
                             <MenuIcon />
                         </IconButton>

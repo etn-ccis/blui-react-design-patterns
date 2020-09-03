@@ -11,6 +11,12 @@ import { InfoListItem } from '@pxblue/react-components';
 const MAX_APP_BAR_HEIGHT = 128; // Specified by Material Design
 
 const useStyles = makeStyles((theme: Theme) => ({
+    appbarRoot: {
+        padding: 0
+    },
+    toolbarGutters: {
+        padding: '0 16px'
+    },
     banner: {
         // IE 11 does not support background blend mode. To see the image, you need to reverse the order of the image and gradient in the background property below.
         background:
@@ -101,8 +107,9 @@ export const CollapsibleAppBar = (): JSX.Element => {
                 className={clsx(classes.header, headerActive && classes.top)}
                 data-cy={'app-bar'}
                 position={'sticky'}
+                classes={{ root: classes.appbarRoot}}
             >
-                <Toolbar>
+                <Toolbar classes={{ gutters: classes.toolbarGutters}}>
                     <Hidden mdUp>
                         <IconButton
                             color={'inherit'}
@@ -110,6 +117,7 @@ export const CollapsibleAppBar = (): JSX.Element => {
                                 dispatch({ type: TOGGLE_DRAWER, payload: true });
                             }}
                             edge={'start'}
+                            style={{ marginRight: 20 }}
                         >
                             <MenuIcon />
                         </IconButton>

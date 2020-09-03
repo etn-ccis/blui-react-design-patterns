@@ -20,7 +20,7 @@ import { TOGGLE_DRAWER } from '../../../redux/actions';
 import { InfoListItem } from '@pxblue/react-components';
 
 import './index.css';
-import {makeStyles} from "@material-ui/core";
+import { makeStyles } from '@material-ui/core';
 
 export type Item = {
     id: number;
@@ -28,14 +28,13 @@ export type Item = {
     description: string;
 };
 
-
 const useStyles = makeStyles(() => ({
     appbarRoot: {
-        padding: 0
+        padding: 0,
     },
     toolbarGutters: {
-        padding: '0 16px'
-    }
+        padding: '0 16px',
+    },
 }));
 
 const generateRandomItem = (): Item[] => {
@@ -65,8 +64,8 @@ export const ResponsiveTable = (): JSX.Element => {
                 minHeight: '100vh',
             }}
         >
-            <AppBar data-cy="pxb-toolbar" position="sticky"  classes={{ root: classes.appbarRoot}}>
-                <Toolbar  classes={{ gutters: classes.toolbarGutters}}>
+            <AppBar data-cy="pxb-toolbar" position="sticky" classes={{ root: classes.appbarRoot }}>
+                <Toolbar classes={{ gutters: classes.toolbarGutters }}>
                     <Hidden mdUp>
                         <IconButton
                             data-cy="toolbar-menu"

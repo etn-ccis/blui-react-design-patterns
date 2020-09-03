@@ -18,7 +18,6 @@ import { useDispatch } from 'react-redux';
 import { TOGGLE_DRAWER } from '../../redux/actions';
 import * as Colors from '@pxblue/colors';
 
-
 const useStyles = makeStyles((theme: Theme) => ({
     container: {
         display: 'flex',
@@ -43,11 +42,11 @@ const useStyles = makeStyles((theme: Theme) => ({
         paddingBottom: 0,
     },
     appbarRoot: {
-        padding: 0
+        padding: 0,
     },
     toolbarGutters: {
-        padding: '0 16px'
-    }
+        padding: '0 16px',
+    },
 }));
 
 type FormError = undefined | null | string;
@@ -279,8 +278,8 @@ export const FormValidation = (): JSX.Element => {
                 minHeight: '100vh',
             }}
         >
-            <AppBar data-cy="pxb-toolbar" position={'sticky'}  classes={{ root: classes.appbarRoot}}>
-                <Toolbar  classes={{ gutters: classes.toolbarGutters}}>
+            <AppBar data-cy="pxb-toolbar" position={'sticky'} classes={{ root: classes.appbarRoot }}>
+                <Toolbar classes={{ gutters: classes.toolbarGutters }}>
                     <Hidden mdUp>
                         <IconButton
                             data-cy="toolbar-menu"

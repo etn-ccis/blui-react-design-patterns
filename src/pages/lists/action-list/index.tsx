@@ -15,7 +15,7 @@ import { TOGGLE_DRAWER } from '../../../redux/actions';
 import { Menu as MenuIcon } from '@material-ui/icons';
 import { Hidden, useTheme, Tooltip } from '@material-ui/core';
 import { EmptyState } from './EmptyState';
-import {makeStyles} from "@material-ui/core/styles";
+import { makeStyles } from '@material-ui/core/styles';
 
 type Option = 'Delete' | 'View Details';
 type Item = {
@@ -26,11 +26,11 @@ type Item = {
 
 const useStyles = makeStyles(() => ({
     appbarRoot: {
-        padding: 0
+        padding: 0,
     },
     toolbarGutters: {
-        padding: '0 16px'
-    }
+        padding: '0 16px',
+    },
 }));
 
 const createItem = (index: number): Item => ({
@@ -96,8 +96,8 @@ export const ActionList = (): JSX.Element => {
 
     return (
         <div style={{ backgroundColor: theme.palette.background.paper, minHeight: '100vh' }}>
-            <AppBar position={'sticky'} classes={{ root: classes.appbarRoot}}>
-                <Toolbar data-cy={'pxb-toolbar'} classes={{ gutters: classes.toolbarGutters}}>
+            <AppBar position={'sticky'} classes={{ root: classes.appbarRoot }}>
+                <Toolbar data-cy={'pxb-toolbar'} classes={{ gutters: classes.toolbarGutters }}>
                     <Hidden mdUp={true}>
                         <IconButton
                             data-cy="toolbar-menu"

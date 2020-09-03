@@ -44,14 +44,13 @@ export const FILTERS = {
 
 const eventList = getEvents(20);
 
-
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         appbarRoot: {
-            padding: 0
+            padding: 0,
         },
         toolbarGutters: {
-            padding: '0 16px'
+            padding: '0 16px',
         },
         alarmRow: {
             borderLeft: `${theme.spacing(0.5)}px solid transparent`,
@@ -172,8 +171,8 @@ export const ComplexBottomSheet = (): JSX.Element => {
 
     return (
         <div style={{ backgroundColor: theme.palette.background.paper, minHeight: '100vh' }}>
-            <AppBar data-cy="pxb-toolbar" position={'sticky'} classes={{ root: classes.appbarRoot}}>
-                <Toolbar classes={{ gutters: classes.toolbarGutters}}>
+            <AppBar data-cy="pxb-toolbar" position={'sticky'} classes={{ root: classes.appbarRoot }}>
+                <Toolbar classes={{ gutters: classes.toolbarGutters }}>
                     <Hidden mdUp>
                         <IconButton
                             data-cy="toolbar-menu"

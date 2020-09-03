@@ -60,11 +60,11 @@ const useStyles = makeStyles((theme: Theme) => ({
         marginRight: theme.spacing(2),
     },
     appbarRoot: {
-        padding: 0
+        padding: 0,
     },
     toolbarGutters: {
-        padding: '0 16px'
-    }
+        padding: '0 16px',
+    },
 }));
 
 export const I18N = (): JSX.Element => {
@@ -112,7 +112,7 @@ export const I18N = (): JSX.Element => {
 
     return (
         <div dir={getDirection()} style={{ backgroundColor: theme.palette.background.paper, minHeight: '100vh' }}>
-            <AppBar position={'sticky'} classes={{ root: classes.appbarRoot}}>
+            <AppBar position={'sticky'} classes={{ root: classes.appbarRoot }}>
                 <Drawer
                     open={drawerOpen}
                     R2L={isRTL()}
@@ -122,7 +122,7 @@ export const I18N = (): JSX.Element => {
                     }}
                     translator={t}
                 />
-                <Toolbar classes={{ gutters: classes.toolbarGutters}}>
+                <Toolbar classes={{ gutters: classes.toolbarGutters }}>
                     <Hidden mdUp>
                         <IconButton
                             data-cy="toolbar-menu"

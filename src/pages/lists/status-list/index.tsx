@@ -1,5 +1,5 @@
 import React from 'react';
-import {AppBar, Toolbar, Typography, List, Hidden, IconButton, useTheme, makeStyles} from '@material-ui/core';
+import { AppBar, Toolbar, Typography, List, Hidden, IconButton, useTheme, makeStyles } from '@material-ui/core';
 import HomeIcon from '@material-ui/icons/Home';
 import MenuIcon from '@material-ui/icons/Menu';
 import NotificationIcon from '@material-ui/icons/Notifications';
@@ -11,11 +11,11 @@ import * as colors from '@pxblue/colors';
 
 const useStyles = makeStyles(() => ({
     appbarRoot: {
-        padding: 0
+        padding: 0,
     },
     toolbarGutters: {
-        padding: '0 16px'
-    }
+        padding: '0 16px',
+    },
 }));
 
 const createInfoListItemConfig = (index: number, randomStatus: string, tag?: boolean): InfoListItemProps => {
@@ -73,8 +73,8 @@ export const StatusList = (): JSX.Element => {
 
     return (
         <div style={{ backgroundColor: theme.palette.background.paper, minHeight: '100vh' }}>
-            <AppBar data-cy="pxb-toolbar" position={'sticky'} classes={{ root: classes.appbarRoot}}>
-                <Toolbar classes={{ gutters: classes.toolbarGutters}}>
+            <AppBar data-cy="pxb-toolbar" position={'sticky'} classes={{ root: classes.appbarRoot }}>
+                <Toolbar classes={{ gutters: classes.toolbarGutters }}>
                     <Hidden mdUp={true}>
                         <IconButton
                             data-cy="toolbar-menu"

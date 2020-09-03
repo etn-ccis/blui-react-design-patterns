@@ -24,10 +24,10 @@ import { TOGGLE_DRAWER } from '../../../redux/actions';
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         appbarRoot: {
-            padding: 0
+            padding: 0,
         },
         toolbarGutters: {
-            padding: '0 16px'
+            padding: '0 16px',
         },
         paper: {
             width: '100%',
@@ -56,8 +56,8 @@ export const BasicBottomSheet = (): JSX.Element => {
 
     return (
         <div style={{ backgroundColor: theme.palette.background.paper, minHeight: '100vh' }}>
-            <AppBar data-cy="pxb-toolbar" position={'sticky'}  classes={{ root: classes.appbarRoot}}>
-                <Toolbar  classes={{ gutters: classes.toolbarGutters}}>
+            <AppBar data-cy="pxb-toolbar" position={'sticky'} classes={{ root: classes.appbarRoot }}>
+                <Toolbar classes={{ gutters: classes.toolbarGutters }}>
                     <Hidden mdUp={true}>
                         <IconButton
                             data-cy="toolbar-menu"

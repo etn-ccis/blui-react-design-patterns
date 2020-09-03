@@ -31,7 +31,6 @@ export type ListItemType = {
     checked: boolean;
 };
 
-
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         snackbar: {
@@ -45,11 +44,11 @@ const useStyles = makeStyles((theme: Theme) =>
             height: `calc(100vh - ${theme.spacing(8)}px)`,
         },
         appbarRoot: {
-            padding: 0
+            padding: 0,
         },
         toolbarGutters: {
-            padding: '0 16px'
-        }
+            padding: '0 16px',
+        },
     })
 );
 
@@ -119,8 +118,8 @@ export const MultiselectList = (): JSX.Element => {
 
     return (
         <div style={{ backgroundColor: theme.palette.background.paper, minHeight: '100vh' }}>
-            <AppBar position={'sticky'}  classes={{ root: classes.appbarRoot}}>
-                <Toolbar  classes={{ gutters: classes.toolbarGutters}}>
+            <AppBar position={'sticky'} classes={{ root: classes.appbarRoot }}>
+                <Toolbar classes={{ gutters: classes.toolbarGutters }}>
                     <Hidden mdUp={true}>
                         <IconButton
                             data-cy="toolbar-menu"

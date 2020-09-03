@@ -28,18 +28,16 @@ import clsx from 'clsx';
 
 const reversedPresidentList = presidents.reverse();
 
-
-
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         appbar: {
             transition: theme.transitions.create('all', { duration: theme.transitions.duration.short }),
         },
         appbarRoot: {
-            padding: 0
+            padding: 0,
         },
         toolbarGutters: {
-            padding: '0 16px'
+            padding: '0 16px',
         },
         regularBar: {
             opacity: 1,
@@ -132,10 +130,10 @@ export const SearchBar = (): JSX.Element => {
             <AppBar
                 data-cy="pxb-toolbar"
                 position={'sticky'}
-                classes={{ root: classes.appbarRoot}}
+                classes={{ root: classes.appbarRoot }}
                 className={clsx(classes.appbar, classes.regularBar, searchActive && classes.searchActive)}
             >
-                <Toolbar  classes={{ gutters: classes.toolbarGutters}}>
+                <Toolbar classes={{ gutters: classes.toolbarGutters }}>
                     <Hidden mdUp={true}>
                         <IconButton
                             data-cy="toolbar-menu"

@@ -2,7 +2,7 @@ import React, { useState, useCallback } from 'react';
 import { SortableHandle, SortableElement, SortableContainer } from 'react-sortable-hoc';
 import arrayMove from 'array-move';
 import { DragHandle as DragHandleIcon } from '@material-ui/icons';
-import {List, AppBar, Toolbar, Typography, Button, Hidden, IconButton, useTheme, makeStyles} from '@material-ui/core';
+import { List, AppBar, Toolbar, Typography, Button, Hidden, IconButton, useTheme, makeStyles } from '@material-ui/core';
 import { InfoListItem, ChannelValue, Spacer } from '@pxblue/react-components';
 import { TOGGLE_DRAWER } from '../../../redux/actions';
 import { useDispatch } from 'react-redux';
@@ -11,11 +11,11 @@ import { President, SortableListItemProps, SortableListEditProps, OnSortEndProps
 
 const useStyles = makeStyles(() => ({
     appbarRoot: {
-        padding: 0
+        padding: 0,
     },
     toolbarGutters: {
-        padding: '0 16px'
-    }
+        padding: '0 16px',
+    },
 }));
 
 const presidentsList: President[] = [
@@ -82,8 +82,8 @@ export const SortableList = (): JSX.Element => {
 
     return (
         <div style={{ backgroundColor: theme.palette.background.paper, minHeight: '100vh' }}>
-            <AppBar data-cy="pxb-toolbar" position={'sticky'}  classes={{ root: classes.appbarRoot}}>
-                <Toolbar  classes={{ gutters: classes.toolbarGutters}}>
+            <AppBar data-cy="pxb-toolbar" position={'sticky'} classes={{ root: classes.appbarRoot }}>
+                <Toolbar classes={{ gutters: classes.toolbarGutters }}>
                     <Hidden mdUp={true}>
                         <IconButton
                             data-cy="toolbar-menu"

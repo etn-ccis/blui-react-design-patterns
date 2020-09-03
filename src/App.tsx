@@ -138,9 +138,7 @@ export const App: React.FC = () => {
 
     return (
         <DrawerLayout drawer={drawer}>
-            <div className={'content'}>
-                <Main />
-            </div>
+            <Main />
         </DrawerLayout>
     );
 };

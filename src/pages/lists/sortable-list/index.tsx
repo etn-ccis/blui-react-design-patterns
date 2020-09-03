@@ -2,12 +2,21 @@ import React, { useState, useCallback } from 'react';
 import { SortableHandle, SortableElement, SortableContainer } from 'react-sortable-hoc';
 import arrayMove from 'array-move';
 import { DragHandle as DragHandleIcon } from '@material-ui/icons';
-import { List, AppBar, Toolbar, Typography, Button, Hidden, IconButton, useTheme } from '@material-ui/core';
+import {List, AppBar, Toolbar, Typography, Button, Hidden, IconButton, useTheme, makeStyles} from '@material-ui/core';
 import { InfoListItem, ChannelValue, Spacer } from '@pxblue/react-components';
 import { TOGGLE_DRAWER } from '../../../redux/actions';
 import { useDispatch } from 'react-redux';
 import MenuIcon from '@material-ui/icons/Menu';
 import { President, SortableListItemProps, SortableListEditProps, OnSortEndProps } from './types';
+
+const useStyles = makeStyles(() => ({
+    appbarRoot: {
+        padding: 0
+    },
+    toolbarGutters: {
+        padding: '0 16px'
+    }
+}));
 
 const presidentsList: President[] = [
     {
@@ -60,6 +69,7 @@ export const SortableListEdit = SortableContainer(({ presidents }: SortableListE
 export const SortableList = (): JSX.Element => {
     const dispatch = useDispatch();
     const theme = useTheme();
+    const classes = useStyles();
     const [list, setList] = useState<President[]>(presidentsList);
     const [sortable, setSortable] = useState<boolean>(false);
 
@@ -72,8 +82,8 @@ export const SortableList = (): JSX.Element => {
 
     return (
         <div style={{ backgroundColor: theme.palette.background.paper, minHeight: '100vh' }}>
-            <AppBar data-cy="pxb-toolbar" position={'sticky'}>
-                <Toolbar>
+            <AppBar data-cy="pxb-toolbar" position={'sticky'}  classes={{ root: classes.appbarRoot}}>
+                <Toolbar  classes={{ gutters: classes.toolbarGutters}}>
                     <Hidden mdUp={true}>
                         <IconButton
                             data-cy="toolbar-menu"
@@ -82,6 +92,7 @@ export const SortableList = (): JSX.Element => {
                                 dispatch({ type: TOGGLE_DRAWER, payload: true });
                             }}
                             edge={'start'}
+                            style={{ marginRight: 20 }}
                         >
                             <MenuIcon />
                         </IconButton>

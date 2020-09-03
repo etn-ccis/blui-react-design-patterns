@@ -15,6 +15,7 @@ import { TOGGLE_DRAWER } from '../../../redux/actions';
 import { Menu as MenuIcon } from '@material-ui/icons';
 import { Hidden, useTheme, Tooltip } from '@material-ui/core';
 import { EmptyState } from './EmptyState';
+import {makeStyles} from "@material-ui/core/styles";
 
 type Option = 'Delete' | 'View Details';
 type Item = {
@@ -22,6 +23,15 @@ type Item = {
     name: string;
     details: string;
 };
+
+const useStyles = makeStyles(() => ({
+    appbarRoot: {
+        padding: 0
+    },
+    toolbarGutters: {
+        padding: '0 16px'
+    }
+}));
 
 const createItem = (index: number): Item => ({
     id: index,
@@ -45,6 +55,7 @@ const options: Option[] = ['Delete', 'View Details'];
 export const ActionList = (): JSX.Element => {
     const dispatch = useDispatch();
     const theme = useTheme();
+    const classes = useStyles();
 
     const [list, setList] = useState<Item[]>(generatedList);
     const [menuPosition, setMenuPosition] = useState<null | HTMLElement>(null);
@@ -85,8 +96,8 @@ export const ActionList = (): JSX.Element => {
 
     return (
         <div style={{ backgroundColor: theme.palette.background.paper, minHeight: '100vh' }}>
-            <AppBar position={'sticky'}>
-                <Toolbar data-cy={'pxb-toolbar'}>
+            <AppBar position={'sticky'} classes={{ root: classes.appbarRoot}}>
+                <Toolbar data-cy={'pxb-toolbar'} classes={{ gutters: classes.toolbarGutters}}>
                     <Hidden mdUp={true}>
                         <IconButton
                             data-cy="toolbar-menu"
@@ -95,6 +106,7 @@ export const ActionList = (): JSX.Element => {
                                 dispatch({ type: TOGGLE_DRAWER, payload: true });
                             }}
                             edge={'start'}
+                            style={{ marginRight: 20 }}
                         >
                             <MenuIcon />
                         </IconButton>

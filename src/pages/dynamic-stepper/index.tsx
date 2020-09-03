@@ -31,6 +31,7 @@ import { TOGGLE_DRAWER } from '../../redux/actions';
 
 export const stepOptions: string[] = ['Buy Groceries', 'Cook Dinner', 'Go To Sleep', 'Go To Work', 'Wake Up'];
 
+
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         addButton: {
@@ -40,6 +41,12 @@ const useStyles = makeStyles((theme: Theme) =>
             '&.disabled': {
                 color: theme.palette.text.disabled,
             },
+        },
+        appbarRoot: {
+            padding: 0
+        },
+        toolbarGutters: {
+            padding: '0 16px'
         },
         deleteButton: {
             marginLeft: theme.spacing(1),
@@ -99,8 +106,8 @@ export const DynamicStepper = (): JSX.Element => {
 
     return (
         <div style={{ backgroundColor: theme.palette.background.paper, minHeight: '100vh' }}>
-            <AppBar data-cy="pxb-toolbar" position={'sticky'}>
-                <Toolbar>
+            <AppBar data-cy="pxb-toolbar" position={'sticky'}  classes={{ root: classes.appbarRoot}}>
+                <Toolbar  classes={{ gutters: classes.toolbarGutters}}>
                     <Hidden mdUp={true}>
                         <IconButton
                             data-cy="toolbar-menu"
@@ -109,6 +116,7 @@ export const DynamicStepper = (): JSX.Element => {
                                 dispatch({ type: TOGGLE_DRAWER, payload: true });
                             }}
                             edge={'start'}
+                            style={{ marginRight: 20 }}
                         >
                             <Menu />
                         </IconButton>

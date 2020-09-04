@@ -48,8 +48,15 @@ const useStyles = makeStyles((theme: Theme) => ({
     RTL: { transform: 'scaleX(-1)' },
 }));
 
-// eslint-disable-next-line react/jsx-key
-const iconArray = [<HomeIcon />, <FolderIcon />, <ErrorIcon />, <SettingsIcon />, <HelpIcon />];
+type IconArrayType = { icon: React.ReactNode; flipRTL: boolean }[];
+
+const iconArray: IconArrayType = [
+    { icon: <HomeIcon />, flipRTL: false },
+    { icon: <FolderIcon />, flipRTL: false },
+    { icon: <ErrorIcon />, flipRTL: true },
+    { icon: <SettingsIcon />, flipRTL: false },
+    { icon: <HelpIcon />, flipRTL: true },
+];
 
 const menuItems = english.translations.MENU_ITEMS;
 
@@ -96,7 +103,11 @@ export const Drawer = (props: DrawerProps): JSX.Element => {
                             <InfoListItem
                                 dense
                                 title={t(`MENU_ITEMS.${menuItem}`)}
-                                icon={<div className={clsx(R2L && classes.RTL)}>{iconArray[index]}</div>}
+                                icon={
+                                    <div className={clsx(R2L && iconArray[index].flipRTL && classes.RTL)}>
+                                        {iconArray[index].icon}
+                                    </div>
+                                }
                                 key={menuItem}
                                 onClick={drawerToggler}
                                 style={R2L ? { textAlign: 'right' } : undefined}

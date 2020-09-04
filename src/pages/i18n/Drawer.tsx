@@ -48,7 +48,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     RTL: { transform: 'scaleX(-1)' },
 }));
 
-type IconArrayType = { icon: React.ReactNode; flipRTL: boolean }[];
+type IconArrayType = Array<{ icon: React.ReactNode; flipRTL: boolean }>;
 
 const iconArray: IconArrayType = [
     { icon: <HomeIcon />, flipRTL: false },

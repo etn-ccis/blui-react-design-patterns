@@ -104,7 +104,7 @@ export const Drawer = (props: DrawerProps): JSX.Element => {
                                 dense
                                 title={t(`MENU_ITEMS.${menuItem}`)}
                                 icon={
-                                    <div className={clsx(R2L && iconArray[index].flipRTL && classes.RTL)}>
+                                    <div className={clsx({ [classes.RTL]: R2L && iconArray[index].flipRTL })}>
                                         {iconArray[index].icon}
                                     </div>
                                 }

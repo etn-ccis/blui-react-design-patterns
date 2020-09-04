@@ -72,6 +72,9 @@ export const ResponsiveTable = (): JSX.Element => {
                     </Typography>
                 </Toolbar>
             </AppBar>
+            <Typography variant="body1" color="inherit" style={{ textAlign: 'center', padding: '1.5rem 0 0.5rem' }}>
+                Resize your browser to view responsiveness
+            </Typography>
             <Hidden smUp>
                 <List disablePadding component="nav">
                     {list.map(

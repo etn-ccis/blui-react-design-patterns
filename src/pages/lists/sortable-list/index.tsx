@@ -8,6 +8,7 @@ import { TOGGLE_DRAWER } from '../../../redux/actions';
 import { useDispatch } from 'react-redux';
 import MenuIcon from '@material-ui/icons/Menu';
 import { President, SortableListItemProps, SortableListEditProps, OnSortEndProps } from './types';
+import * as Colors from '@pxblue/colors';
 
 const presidentsList: President[] = [
     {
@@ -42,8 +43,13 @@ const DragHandle = SortableHandle(() => <DragHandleIcon style={{ cursor: 'pointe
 
 const SortableListItem = SortableElement(({ president, ...other }: SortableListItemProps) => (
     <InfoListItem
+        style={{ backgroundColor: Colors.white[50] }}
         {...other}
-        icon={<DragHandle />}
+        icon={
+            <IconButton disableRipple style={{ backgroundColor: 'transparent' }}>
+                <DragHandle />
+            </IconButton>
+        }
         title={`${president.firstName} ${president.lastName}`}
         rightComponent={<ChannelValue value={president.year}></ChannelValue>}
     ></InfoListItem>

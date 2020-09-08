@@ -141,7 +141,8 @@ export const CollapsibleAppBar = (): JSX.Element => {
                                 onClick={(): void => {
                                     dispatch({ type: TOGGLE_DRAWER, payload: true });
                                 }}
-                                style={{ marginRight: 20, marginLeft: -12 }}
+                                edge={'start'}
+                                style={{ marginRight: 20 }}
                             >
                                 <MenuIcon />
                             </IconButton>

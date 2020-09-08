@@ -10,6 +10,8 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
+import { Hero, HeroBanner } from '@pxblue/react-components';
+
 
 import Close from '@material-ui/icons/Close';
 import Menu from '@material-ui/icons/Menu';
@@ -41,6 +43,19 @@ export const FILTERS = {
     SESSION: 'session',
     SETTINGS: 'settings',
 };
+
+const heroes = [
+    <Hero
+        icon={<AccessTime />}
+        key={'sort-by-1'}
+        label={'Time'}
+    />,
+    <Hero
+        icon={<Info />}
+        key={'sort-by-2'}
+        label={'Type'}
+    />,
+];
 
 const eventList = getEvents(20);
 
@@ -233,6 +248,9 @@ export const ComplexBottomSheet = (): JSX.Element => {
                         <Typography variant={'body1'} gutterBottom>
                             Sort By:
                         </Typography>
+
+                        <HeroBanner style={{ width: '100%' }}>{heroes}</HeroBanner>
+
                         <Grid container spacing={0} alignItems={'center'} justify={'center'}>
                             <IconToggle
                                 iconComponent={<AccessTime />}

@@ -117,7 +117,6 @@ export const CollapsibleAppBar = (): JSX.Element => {
                                 dispatch({ type: TOGGLE_DRAWER, payload: true });
                             }}
                             edge={'start'}
-                            style={{ marginRight: 20 }}
                         >
                             <MenuIcon />
                         </IconButton>
@@ -133,7 +132,7 @@ export const CollapsibleAppBar = (): JSX.Element => {
                 </Toolbar>
             </AppBar>
             <div className={clsx(classes.banner, classes.alignTopContent)}>
-                <Toolbar className={classes.bannerMain} data-cy={'banner'}>
+                <Toolbar className={classes.bannerMain} data-cy={'banner'} style={{ paddingLeft: 16}}>
                     <div className={classes.bannerActionItems}>
                         <Hidden mdUp>
                             <IconButton
@@ -142,7 +141,7 @@ export const CollapsibleAppBar = (): JSX.Element => {
                                 onClick={(): void => {
                                     dispatch({ type: TOGGLE_DRAWER, payload: true });
                                 }}
-                                edge={'start'}
+                                style={{ marginRight: 20, marginLeft: -12 }}
                             >
                                 <MenuIcon />
                             </IconButton>

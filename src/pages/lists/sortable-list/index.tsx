@@ -2,12 +2,26 @@ import React, { useState, useCallback } from 'react';
 import { SortableHandle, SortableElement, SortableContainer } from 'react-sortable-hoc';
 import arrayMove from 'array-move';
 import { DragHandle as DragHandleIcon } from '@material-ui/icons';
+import {
+    List,
+    AppBar,
+    Toolbar,
+    Typography,
+    Button,
+    Hidden,
+    IconButton,
+    useTheme,
+    createStyles,
+    makeStyles,
+    Theme,
+} from '@material-ui/core';
 import { List, AppBar, Toolbar, Typography, Button, Hidden, IconButton, useTheme, makeStyles } from '@material-ui/core';
 import { InfoListItem, ChannelValue, Spacer } from '@pxblue/react-components';
 import { TOGGLE_DRAWER } from '../../../redux/actions';
 import { useDispatch } from 'react-redux';
 import MenuIcon from '@material-ui/icons/Menu';
 import { President, SortableListItemProps, SortableListEditProps, OnSortEndProps } from './types';
+import * as Colors from '@pxblue/colors';
 
 const useStyles = makeStyles(() => ({
     appbarRoot: {
@@ -46,13 +60,26 @@ const presidentsList: President[] = [
     },
 ];
 
+const useStyles = makeStyles((theme: Theme) =>
+    createStyles({
+        dragging: {
+            boxShadow: theme.shadows[4],
+        },
+    })
+);
+
 // Sortable Components Definitions
 const DragHandle = SortableHandle(() => <DragHandleIcon style={{ cursor: 'pointer' }} />);
 
 const SortableListItem = SortableElement(({ president, ...other }: SortableListItemProps) => (
     <InfoListItem
+        backgroundColor={Colors.white[50]}
         {...other}
-        icon={<DragHandle />}
+        icon={
+            <IconButton disableRipple style={{ backgroundColor: 'transparent' }}>
+                <DragHandle />
+            </IconButton>
+        }
         title={`${president.firstName} ${president.lastName}`}
         rightComponent={<ChannelValue value={president.year}></ChannelValue>}
     ></InfoListItem>
@@ -70,6 +97,7 @@ export const SortableList = (): JSX.Element => {
     const dispatch = useDispatch();
     const theme = useTheme();
     const classes = useStyles();
+    const classes = useStyles(theme);
     const [list, setList] = useState<President[]>(presidentsList);
     const [sortable, setSortable] = useState<boolean>(false);
 
@@ -111,7 +139,14 @@ export const SortableList = (): JSX.Element => {
                     </Button>
                 </Toolbar>
             </AppBar>
-            {sortable && <SortableListEdit presidents={list} onSortEnd={onSortEnd} useDragHandle={true} />}
+            {sortable && (
+                <SortableListEdit
+                    presidents={list}
+                    onSortEnd={onSortEnd}
+                    useDragHandle={true}
+                    helperClass={classes.dragging}
+                />
+            )}
             {!sortable && (
                 <List className={'list'} disablePadding component={'nav'}>
                     {list.map((president: President, i: number) => (

@@ -1,36 +1,26 @@
-import React, { useState, useCallback } from 'react';
-import { SortableHandle, SortableElement, SortableContainer } from 'react-sortable-hoc';
+import React, { useCallback, useState } from 'react';
+import { SortableContainer, SortableElement, SortableHandle } from 'react-sortable-hoc';
 import arrayMove from 'array-move';
 import { DragHandle as DragHandleIcon } from '@material-ui/icons';
 import {
-    List,
     AppBar,
-    Toolbar,
-    Typography,
     Button,
+    createStyles,
     Hidden,
     IconButton,
-    useTheme,
-    createStyles,
+    List,
     makeStyles,
     Theme,
+    Toolbar,
+    Typography,
+    useTheme,
 } from '@material-ui/core';
-import { List, AppBar, Toolbar, Typography, Button, Hidden, IconButton, useTheme, makeStyles } from '@material-ui/core';
-import { InfoListItem, ChannelValue, Spacer } from '@pxblue/react-components';
+import { ChannelValue, InfoListItem, Spacer } from '@pxblue/react-components';
 import { TOGGLE_DRAWER } from '../../../redux/actions';
 import { useDispatch } from 'react-redux';
 import MenuIcon from '@material-ui/icons/Menu';
-import { President, SortableListItemProps, SortableListEditProps, OnSortEndProps } from './types';
+import { OnSortEndProps, President, SortableListEditProps, SortableListItemProps } from './types';
 import * as Colors from '@pxblue/colors';
-
-const useStyles = makeStyles(() => ({
-    appbarRoot: {
-        padding: 0,
-    },
-    toolbarGutters: {
-        padding: '0 16px',
-    },
-}));
 
 const presidentsList: President[] = [
     {
@@ -65,6 +55,12 @@ const useStyles = makeStyles((theme: Theme) =>
         dragging: {
             boxShadow: theme.shadows[4],
         },
+        appbarRoot: {
+            padding: 0,
+        },
+        toolbarGutters: {
+            padding: '0 16px',
+        },
     })
 );
 
@@ -81,8 +77,8 @@ const SortableListItem = SortableElement(({ president, ...other }: SortableListI
             </IconButton>
         }
         title={`${president.firstName} ${president.lastName}`}
-        rightComponent={<ChannelValue value={president.year}></ChannelValue>}
-    ></InfoListItem>
+        rightComponent={<ChannelValue value={president.year} />}
+    />
 ));
 
 export const SortableListEdit = SortableContainer(({ presidents }: SortableListEditProps) => (
@@ -96,7 +92,6 @@ export const SortableListEdit = SortableContainer(({ presidents }: SortableListE
 export const SortableList = (): JSX.Element => {
     const dispatch = useDispatch();
     const theme = useTheme();
-    const classes = useStyles();
     const classes = useStyles(theme);
     const [list, setList] = useState<President[]>(presidentsList);
     const [sortable, setSortable] = useState<boolean>(false);
@@ -155,7 +150,7 @@ export const SortableList = (): JSX.Element => {
                             key={`president-${i}`}
                             title={`${president.firstName} ${president.lastName}`}
                             rightComponent={<ChannelValue value={president.year} />}
-                        ></InfoListItem>
+                        />
                     ))}
                 </List>
             )}

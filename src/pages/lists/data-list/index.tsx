@@ -10,15 +10,26 @@ import { TOGGLE_DRAWER } from '../../../redux/actions';
 import { InfoListItem, ChannelValue } from '@pxblue/react-components';
 import { presidentsList } from './list';
 import { EmptyState } from './EmptyState';
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles(() => ({
+    appbarRoot: {
+        padding: 0,
+    },
+    toolbarGutters: {
+        padding: '0 16px',
+    },
+}));
 
 export const DataList = (): JSX.Element => {
     const dispatch = useDispatch();
     const theme = useTheme();
+    const classes = useStyles();
 
     return (
         <div style={{ backgroundColor: theme.palette.background.paper, minHeight: '100vh' }}>
-            <AppBar data-cy="pxb-toolbar" position={'sticky'}>
-                <Toolbar>
+            <AppBar data-cy="pxb-toolbar" position={'sticky'} classes={{ root: classes.appbarRoot }}>
+                <Toolbar classes={{ gutters: classes.toolbarGutters }}>
                     <Hidden mdUp={true}>
                         <IconButton
                             data-cy="toolbar-menu"
@@ -27,6 +38,7 @@ export const DataList = (): JSX.Element => {
                                 dispatch({ type: TOGGLE_DRAWER, payload: true });
                             }}
                             edge={'start'}
+                            style={{ marginRight: 20 }}
                         >
                             <MenuIcon />
                         </IconButton>

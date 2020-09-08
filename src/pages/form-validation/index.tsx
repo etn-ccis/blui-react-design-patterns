@@ -41,6 +41,12 @@ const useStyles = makeStyles((theme: Theme) => ({
         paddingTop: 0,
         paddingBottom: 0,
     },
+    appbarRoot: {
+        padding: 0,
+    },
+    toolbarGutters: {
+        padding: '0 16px',
+    },
 }));
 
 type FormError = undefined | null | string;
@@ -272,8 +278,8 @@ export const FormValidation = (): JSX.Element => {
                 minHeight: '100vh',
             }}
         >
-            <AppBar data-cy="pxb-toolbar" position={'sticky'}>
-                <Toolbar>
+            <AppBar data-cy="pxb-toolbar" position={'sticky'} classes={{ root: classes.appbarRoot }}>
+                <Toolbar classes={{ gutters: classes.toolbarGutters }}>
                     <Hidden mdUp>
                         <IconButton
                             data-cy="toolbar-menu"
@@ -282,6 +288,7 @@ export const FormValidation = (): JSX.Element => {
                                 dispatch({ type: TOGGLE_DRAWER, payload: true });
                             }}
                             edge={'start'}
+                            style={{ marginRight: 20 }}
                         >
                             <MenuIcon />
                         </IconButton>

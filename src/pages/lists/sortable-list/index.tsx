@@ -1,25 +1,25 @@
-import React, { useState, useCallback } from 'react';
-import { SortableHandle, SortableElement, SortableContainer } from 'react-sortable-hoc';
+import React, { useCallback, useState } from 'react';
+import { SortableContainer, SortableElement, SortableHandle } from 'react-sortable-hoc';
 import arrayMove from 'array-move';
 import { DragHandle as DragHandleIcon } from '@material-ui/icons';
 import {
-    List,
     AppBar,
-    Toolbar,
-    Typography,
     Button,
+    createStyles,
     Hidden,
     IconButton,
-    useTheme,
-    createStyles,
+    List,
     makeStyles,
     Theme,
+    Toolbar,
+    Typography,
+    useTheme,
 } from '@material-ui/core';
-import { InfoListItem, ChannelValue, Spacer } from '@pxblue/react-components';
+import { ChannelValue, InfoListItem, Spacer } from '@pxblue/react-components';
 import { TOGGLE_DRAWER } from '../../../redux/actions';
 import { useDispatch } from 'react-redux';
 import MenuIcon from '@material-ui/icons/Menu';
-import { President, SortableListItemProps, SortableListEditProps, OnSortEndProps } from './types';
+import { OnSortEndProps, President, SortableListEditProps, SortableListItemProps } from './types';
 import * as Colors from '@pxblue/colors';
 
 const presidentsList: President[] = [
@@ -55,6 +55,12 @@ const useStyles = makeStyles((theme: Theme) =>
         dragging: {
             boxShadow: theme.shadows[4],
         },
+        appbarRoot: {
+            padding: 0,
+        },
+        toolbarGutters: {
+            padding: '0 16px',
+        },
     })
 );
 
@@ -71,8 +77,8 @@ const SortableListItem = SortableElement(({ president, ...other }: SortableListI
             </IconButton>
         }
         title={`${president.firstName} ${president.lastName}`}
-        rightComponent={<ChannelValue value={president.year}></ChannelValue>}
-    ></InfoListItem>
+        rightComponent={<ChannelValue value={president.year} />}
+    />
 ));
 
 export const SortableListEdit = SortableContainer(({ presidents }: SortableListEditProps) => (
@@ -99,8 +105,8 @@ export const SortableList = (): JSX.Element => {
 
     return (
         <div style={{ backgroundColor: theme.palette.background.paper, minHeight: '100vh' }}>
-            <AppBar data-cy="pxb-toolbar" position={'sticky'}>
-                <Toolbar>
+            <AppBar data-cy="pxb-toolbar" position={'sticky'} classes={{ root: classes.appbarRoot }}>
+                <Toolbar classes={{ gutters: classes.toolbarGutters }}>
                     <Hidden mdUp={true}>
                         <IconButton
                             data-cy="toolbar-menu"
@@ -109,6 +115,7 @@ export const SortableList = (): JSX.Element => {
                                 dispatch({ type: TOGGLE_DRAWER, payload: true });
                             }}
                             edge={'start'}
+                            style={{ marginRight: 20 }}
                         >
                             <MenuIcon />
                         </IconButton>
@@ -143,7 +150,7 @@ export const SortableList = (): JSX.Element => {
                             key={`president-${i}`}
                             title={`${president.firstName} ${president.lastName}`}
                             rightComponent={<ChannelValue value={president.year} />}
-                        ></InfoListItem>
+                        />
                     ))}
                 </List>
             )}

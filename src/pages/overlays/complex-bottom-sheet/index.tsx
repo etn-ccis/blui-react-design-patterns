@@ -46,6 +46,12 @@ const eventList = getEvents(20);
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
+        appbarRoot: {
+            padding: 0,
+        },
+        toolbarGutters: {
+            padding: '0 16px',
+        },
         alarmRow: {
             borderLeft: `${theme.spacing(0.5)}px solid transparent`,
             '&$active': {
@@ -165,8 +171,8 @@ export const ComplexBottomSheet = (): JSX.Element => {
 
     return (
         <div style={{ backgroundColor: theme.palette.background.paper, minHeight: '100vh' }}>
-            <AppBar data-cy="pxb-toolbar" position={'sticky'}>
-                <Toolbar>
+            <AppBar data-cy="pxb-toolbar" position={'sticky'} classes={{ root: classes.appbarRoot }}>
+                <Toolbar classes={{ gutters: classes.toolbarGutters }}>
                     <Hidden mdUp>
                         <IconButton
                             data-cy="toolbar-menu"
@@ -175,6 +181,7 @@ export const ComplexBottomSheet = (): JSX.Element => {
                                 dispatch({ type: TOGGLE_DRAWER, payload: true });
                             }}
                             edge={'start'}
+                            style={{ marginRight: 20 }}
                         >
                             <Menu />
                         </IconButton>

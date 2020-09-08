@@ -132,7 +132,7 @@ export const CollapsibleAppBar = (): JSX.Element => {
                 </Toolbar>
             </AppBar>
             <div className={clsx(classes.banner, classes.alignTopContent)}>
-                <Toolbar className={classes.bannerMain} data-cy={'banner'} style={{ paddingLeft: 16}}>
+                <Toolbar className={classes.bannerMain} data-cy={'banner'} style={{ paddingLeft: 16 }}>
                     <div className={classes.bannerActionItems}>
                         <Hidden mdUp>
                             <IconButton

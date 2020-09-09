@@ -60,12 +60,12 @@ const useStyles = makeStyles((theme: Theme) =>
         heroBanner: {
             width: '100%',
             display: 'flex',
-            justifyContent: 'center'
+            justifyContent: 'center',
         },
         hero: {
             cursor: 'pointer',
             flex: 'unset',
-            minWidth: 100
+            minWidth: 100,
         },
         activeIcon: {
             color: Colors.blue[500],
@@ -279,7 +279,7 @@ export const ComplexBottomSheet = (): JSX.Element => {
                                 classes={
                                     showActiveAlarms
                                         ? { root: classes.hero, label: classes.activeIcon, icon: classes.activeIcon }
-                                        : { root: classes.hero, }
+                                        : { root: classes.hero }
                                 }
                                 onClick={(): void => setShowActiveAlarms(!showActiveAlarms)}
                             />

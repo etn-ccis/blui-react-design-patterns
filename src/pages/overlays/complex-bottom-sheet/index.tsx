@@ -238,7 +238,7 @@ export const ComplexBottomSheet = (): JSX.Element => {
             >
                 <List disablePadding>
                     <ListItem data-cy={'btm-sheet-sort'} className={classes.sheetListItem}>
-                        <Typography variant={'body1'} style={{ width: '100%' }} gutterBottom>
+                        <Typography variant={'overline'} style={{ width: '100%' }} gutterBottom>
                             Sort By:
                         </Typography>
 
@@ -267,7 +267,7 @@ export const ComplexBottomSheet = (): JSX.Element => {
                     </ListItem>
                     <Divider />
                     <ListItem data-cy={'btm-sheet-show'} className={classes.sheetListItem}>
-                        <Typography variant="body1" style={{ width: '100%' }} gutterBottom>
+                        <Typography variant="overline" style={{ width: '100%' }} gutterBottom>
                             Show:
                         </Typography>
 

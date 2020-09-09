@@ -11,7 +11,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import { Hero, HeroBanner, InfoListItem, Spacer } from '@pxblue/react-components';
 import * as Colors from '@pxblue/colors';
-import Box from '@material-ui/core/Box'
+import Box from '@material-ui/core/Box';
 
 import Close from '@material-ui/icons/Close';
 import Menu from '@material-ui/icons/Menu';
@@ -28,7 +28,7 @@ import { TOGGLE_DRAWER } from '../../../redux/actions';
 import { createStyles, makeStyles, Theme, useTheme } from '@material-ui/core/styles';
 import getEvents, { Event, formatDate } from './alarmData';
 import { EmptyState } from './EmptyState';
-import {useMediaQuery} from "@material-ui/core";
+import { useMediaQuery } from '@material-ui/core';
 
 export const TYPES = {
     TIME: 'time',

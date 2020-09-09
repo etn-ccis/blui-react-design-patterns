@@ -11,6 +11,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import { Hero, HeroBanner, InfoListItem, Spacer } from '@pxblue/react-components';
 import * as Colors from '@pxblue/colors';
+import Box from '@material-ui/core/Box'
 
 import Close from '@material-ui/icons/Close';
 import Menu from '@material-ui/icons/Menu';
@@ -27,6 +28,7 @@ import { TOGGLE_DRAWER } from '../../../redux/actions';
 import { createStyles, makeStyles, Theme, useTheme } from '@material-ui/core/styles';
 import getEvents, { Event, formatDate } from './alarmData';
 import { EmptyState } from './EmptyState';
+import {useMediaQuery} from "@material-ui/core";
 
 export const TYPES = {
     TIME: 'time',
@@ -159,6 +161,7 @@ export const ComplexBottomSheet = (): JSX.Element => {
     const [showActiveAlarms, setShowActiveAlarms] = useState(true);
     const [showSettings, setShowSettings] = useState(true);
     const [showSessions, setShowSessions] = useState(true);
+    const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
     useEffect(() => {
         setList(
@@ -284,7 +287,7 @@ export const ComplexBottomSheet = (): JSX.Element => {
                                 onClick={(): void => setShowActiveAlarms(!showActiveAlarms)}
                             />
                             <Hero
-                                icon={<Notifications style={{}} />}
+                                icon={<Notifications />}
                                 label={'Alarms'}
                                 classes={
                                     showAlarms
@@ -315,14 +318,17 @@ export const ComplexBottomSheet = (): JSX.Element => {
                             />
                         </HeroBanner>
                     </ListItem>
-                    <Divider />
-                    <InfoListItem
-                        data-cy="btm-sheet-cancel"
-                        icon={<Close />}
-                        title={'Close'}
-                        dense
-                        onClick={(): void => setShowMenu(false)}
-                    />
+
+                    {!isMobile && <Divider />}
+                    <Box boxShadow={isMobile ? 8 : 0}>
+                        <InfoListItem
+                            data-cy="btm-sheet-cancel"
+                            icon={<Close />}
+                            title={'Close'}
+                            dense
+                            onClick={(): void => setShowMenu(false)}
+                        />
+                    </Box>
                 </List>
             </Drawer>
         </div>

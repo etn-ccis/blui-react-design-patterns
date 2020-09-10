@@ -27,6 +27,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         minHeight: MAX_APP_BAR_HEIGHT,
         color: '#fff',
         position: 'relative',
+        height: 218,
     },
     alignTopContent: {
         top: -theme.spacing(8),
@@ -41,7 +42,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     content: {
         position: 'absolute',
         left: theme.spacing(9),
-        bottom: 28,
+        bottom: theme.spacing(7),
     },
     flexCenter: {
         display: 'flex',
@@ -154,13 +155,13 @@ export const CollapsibleAppBar = (): JSX.Element => {
                     </div>
                 </Toolbar>
                 <div className={classes.content} style={{ opacity: 1 - opacity / MAX_APP_BAR_HEIGHT }}>
-                    <Typography variant={'h6'} color={'inherit'}>
+                    <Typography variant={'h4'} color={'inherit'}>
                         President
                     </Typography>
-                    <Typography variant={'body1'} color={'inherit'}>
+                    <Typography variant={'h5'} color={'inherit'}>
                         Commander in Chief
                     </Typography>
-                    <Typography variant={'body2'} color={'inherit'}>
+                    <Typography variant={'h6'} color={'inherit'} style={{ fontWeight: 600 }}>
                         Leader of the Free World
                     </Typography>
                 </div>

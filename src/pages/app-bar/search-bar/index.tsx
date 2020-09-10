@@ -169,7 +169,7 @@ export const SearchBar = (): JSX.Element => {
                 position={'fixed'}
                 color={'default'}
             >
-                <Toolbar>
+                <Toolbar classes={{ gutters: classes.toolbarGutters }}>
                     <IconButton color={'inherit'} edge={'start'} disabled>
                         <Search />
                     </IconButton>

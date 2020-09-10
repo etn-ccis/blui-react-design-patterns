@@ -19,9 +19,9 @@ describe('Complex bottom sheet', () => {
         .and('contain', 'Type')
         cy.get('[data-cy=btm-sheet-show]').should('contain', 'Show')
         .and('contain', 'Active Alarms')
-        .and('contain', 'alarms')
-        .and('contain', 'settings')
-        .and('contain', 'session')
+        .and('contain', 'Alarms')
+        .and('contain', 'Settings')
+        .and('contain', 'Session')
         cy.get('[data-cy=btm-sheet-cancel]').should('contain', 'Close')
     });
 

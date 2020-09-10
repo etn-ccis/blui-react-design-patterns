@@ -8,7 +8,7 @@
         "@pxblue/colors": "^3.0.0",
         "@pxblue/react-components": "^4.0.2",
         "@pxblue/react-progress-icons": "^2.0.0",
-        "@pxblue/react-themes": "^5.0.0",
+        "@pxblue/react-themes": "^5.0.2",
         "@types/enzyme-adapter-react-16": "^1.0.6",
         "array-move": "^2.2.2",
         "i18next": "^19.4.5",

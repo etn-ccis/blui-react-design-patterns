@@ -67,6 +67,7 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         heroBanner: {
             width: '100%',
+            height: 100,
             display: 'flex',
             justifyContent: 'center',
         },

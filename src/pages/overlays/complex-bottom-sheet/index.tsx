@@ -327,7 +327,7 @@ export const ComplexBottomSheet = (): JSX.Element => {
                     </ListItem>
 
                     {!isMobile && <Divider />}
-                    <Box boxShadow={isMobile ? 8 : 0}>
+                    <Box boxShadow={isMobile ? 8 : 0} style={{ position: 'sticky', bottom: 0, background: Colors.white[50]}}>
                         <InfoListItem
                             data-cy="btm-sheet-cancel"
                             icon={<Close />}

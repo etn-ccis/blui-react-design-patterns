@@ -53,17 +53,10 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         alarmRow: {
             borderLeft: `${theme.spacing(0.5)}px solid transparent`,
-            '&$active': {
-                borderColor: theme.palette.error.main,
-            },
         },
         avatar: {
             color: theme.palette.text.primary,
             background: 'transparent',
-            '&$active': {
-                color: 'white',
-                background: theme.palette.error.main,
-            },
         },
         heroBanner: {
             width: '100%',
@@ -81,9 +74,6 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         alarmText: {
             fontWeight: 600,
-            '&$active': {
-                color: theme.palette.error.main,
-            },
         },
         paper: {
             width: '100%',
@@ -328,7 +318,10 @@ export const ComplexBottomSheet = (): JSX.Element => {
                     </ListItem>
 
                     {!isMobile && <Divider />}
-                    <Box boxShadow={isMobile ? 8 : 0}>
+                    <Box
+                        boxShadow={isMobile ? 8 : 0}
+                        style={{ position: 'sticky', bottom: 0, background: Colors.white[50] }}
+                    >
                         <InfoListItem
                             data-cy="btm-sheet-cancel"
                             icon={<Close />}

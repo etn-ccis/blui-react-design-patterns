@@ -36,7 +36,7 @@ const useStyles = makeStyles(() => ({
 const createItem = (index: number): Item => ({
     id: index,
     name: `Item ${index}`,
-    details: `Item ${index} occured`,
+    details: `Item ${index} details`,
 });
 
 const createRandomItem = (): Item => {

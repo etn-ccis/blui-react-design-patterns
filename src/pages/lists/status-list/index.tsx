@@ -1,5 +1,5 @@
 import React from 'react';
-import { AppBar, Toolbar, Typography, List, Hidden, IconButton, useTheme } from '@material-ui/core';
+import { AppBar, Toolbar, Typography, List, Hidden, IconButton, useTheme, makeStyles } from '@material-ui/core';
 import HomeIcon from '@material-ui/icons/Home';
 import MenuIcon from '@material-ui/icons/Menu';
 import NotificationIcon from '@material-ui/icons/Notifications';
@@ -8,6 +8,15 @@ import { useDispatch } from 'react-redux';
 import { TOGGLE_DRAWER } from '../../../redux/actions';
 import { InfoListItem, ListItemTag, InfoListItemProps } from '@pxblue/react-components';
 import * as colors from '@pxblue/colors';
+
+const useStyles = makeStyles(() => ({
+    appbarRoot: {
+        padding: 0,
+    },
+    toolbarGutters: {
+        padding: '0 16px',
+    },
+}));
 
 const createInfoListItemConfig = (index: number, randomStatus: string, tag?: boolean): InfoListItemProps => {
     switch (randomStatus) {
@@ -60,18 +69,21 @@ for (let i = 0; i < 20; i++) {
 export const StatusList = (): JSX.Element => {
     const dispatch = useDispatch();
     const theme = useTheme();
+    const classes = useStyles();
 
     return (
         <div style={{ backgroundColor: theme.palette.background.paper, minHeight: '100vh' }}>
-            <AppBar position={'sticky'}>
-                <Toolbar>
+            <AppBar data-cy="pxb-toolbar" position={'sticky'} classes={{ root: classes.appbarRoot }}>
+                <Toolbar classes={{ gutters: classes.toolbarGutters }}>
                     <Hidden mdUp={true}>
                         <IconButton
+                            data-cy="toolbar-menu"
                             color={'inherit'}
                             onClick={(): void => {
                                 dispatch({ type: TOGGLE_DRAWER, payload: true });
                             }}
                             edge={'start'}
+                            style={{ marginRight: 20 }}
                         >
                             <MenuIcon />
                         </IconButton>

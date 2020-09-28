@@ -41,6 +41,12 @@ const useStyles = makeStyles((theme: Theme) =>
                 color: theme.palette.text.disabled,
             },
         },
+        appbarRoot: {
+            padding: 0,
+        },
+        toolbarGutters: {
+            padding: '0 16px',
+        },
         deleteButton: {
             marginLeft: theme.spacing(1),
             color: theme.palette.text.primary,
@@ -99,15 +105,17 @@ export const DynamicStepper = (): JSX.Element => {
 
     return (
         <div style={{ backgroundColor: theme.palette.background.paper, minHeight: '100vh' }}>
-            <AppBar position={'sticky'}>
-                <Toolbar>
+            <AppBar data-cy="pxb-toolbar" position={'sticky'} classes={{ root: classes.appbarRoot }}>
+                <Toolbar classes={{ gutters: classes.toolbarGutters }}>
                     <Hidden mdUp={true}>
                         <IconButton
+                            data-cy="toolbar-menu"
                             color={'inherit'}
                             onClick={(): void => {
                                 dispatch({ type: TOGGLE_DRAWER, payload: true });
                             }}
                             edge={'start'}
+                            style={{ marginRight: 20 }}
                         >
                             <Menu />
                         </IconButton>
@@ -117,7 +125,13 @@ export const DynamicStepper = (): JSX.Element => {
                     </Typography>
                     <Spacer />
                     <Tooltip title={'Remove All Steps'}>
-                        <IconButton color={'inherit'} edge={'end'} onClick={(): void => setSteps([])} id={'remove-all'}>
+                        <IconButton
+                            data-cy="remove all"
+                            color={'inherit'}
+                            edge={'end'}
+                            onClick={(): void => setSteps([])}
+                            id={'remove-all'}
+                        >
                             <DeleteSweep />
                         </IconButton>
                     </Tooltip>
@@ -126,7 +140,7 @@ export const DynamicStepper = (): JSX.Element => {
             <div data-cy={'reset-page'}>
                 {finished && (
                     <div className={classes.paddedContainer}>
-                        <Typography variant={'body1'} color={'textPrimary'}>
+                        <Typography data-cy="success msg" variant={'body1'} color={'textPrimary'}>
                             Procedure created successfully.
                         </Typography>
                         <Button

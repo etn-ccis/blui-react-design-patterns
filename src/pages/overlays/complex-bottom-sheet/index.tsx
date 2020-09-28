@@ -1,15 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import AppBar from '@material-ui/core/AppBar';
 import Divider from '@material-ui/core/Divider';
 import Drawer from '@material-ui/core/Drawer';
-import Grid from '@material-ui/core/Grid';
 import Hidden from '@material-ui/core/Hidden';
 import IconButton from '@material-ui/core/IconButton';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
+import { Hero, HeroBanner, InfoListItem, Spacer } from '@pxblue/react-components';
+import * as Colors from '@pxblue/colors';
+import Box from '@material-ui/core/Box';
 
 import Close from '@material-ui/icons/Close';
 import Menu from '@material-ui/icons/Menu';
@@ -23,13 +25,10 @@ import Update from '@material-ui/icons/Update';
 
 import { useDispatch } from 'react-redux';
 import { TOGGLE_DRAWER } from '../../../redux/actions';
-
-import { IconToggle } from './IconToggle';
-import { makeStyles, useTheme, Theme, createStyles } from '@material-ui/core/styles';
-import { Spacer, InfoListItem } from '@pxblue/react-components';
-
-import getEvents, { formatDate, Event } from './alarmData';
+import { createStyles, makeStyles, Theme, useTheme } from '@material-ui/core/styles';
+import getEvents, { Event, formatDate } from './alarmData';
 import { EmptyState } from './EmptyState';
+import { useMediaQuery } from '@material-ui/core';
 
 export const TYPES = {
     TIME: 'time',
@@ -46,27 +45,36 @@ const eventList = getEvents(20);
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
+        appbarRoot: {
+            padding: 0,
+        },
+        toolbarGutters: {
+            padding: '0 16px',
+        },
         alarmRow: {
             borderLeft: `${theme.spacing(0.5)}px solid transparent`,
-            '&$active': {
-                borderColor: theme.palette.error.main,
-            },
         },
         avatar: {
             color: theme.palette.text.primary,
             background: 'transparent',
-            '&$active': {
-                color: 'white',
-                background: theme.palette.error.main,
-            },
+        },
+        heroBanner: {
+            width: '100%',
+            height: 100,
+            display: 'flex',
+            justifyContent: 'center',
+        },
+        hero: {
+            cursor: 'pointer',
+            flex: 'unset',
+            minWidth: 100,
+        },
+        activeIcon: {
+            color: Colors.blue[500],
         },
         alarmText: {
             fontWeight: 600,
-            '&$active': {
-                color: theme.palette.error.main,
-            },
         },
-        active: {},
         paper: {
             width: '100%',
             maxWidth: 600,
@@ -76,7 +84,6 @@ const useStyles = makeStyles((theme: Theme) =>
         sheetListItem: {
             width: '100%',
             flexDirection: 'column',
-            alignItems: 'flex-start',
         },
         row: {
             cursor: 'pointer',
@@ -151,6 +158,7 @@ export const ComplexBottomSheet = (): JSX.Element => {
     const [showActiveAlarms, setShowActiveAlarms] = useState(true);
     const [showSettings, setShowSettings] = useState(true);
     const [showSessions, setShowSessions] = useState(true);
+    const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
     useEffect(() => {
         setList(
@@ -165,15 +173,17 @@ export const ComplexBottomSheet = (): JSX.Element => {
 
     return (
         <div style={{ backgroundColor: theme.palette.background.paper, minHeight: '100vh' }}>
-            <AppBar position={'sticky'}>
-                <Toolbar>
+            <AppBar data-cy="pxb-toolbar" position={'sticky'} classes={{ root: classes.appbarRoot }}>
+                <Toolbar classes={{ gutters: classes.toolbarGutters }}>
                     <Hidden mdUp>
                         <IconButton
+                            data-cy="toolbar-menu"
                             color={'inherit'}
                             onClick={(): void => {
                                 dispatch({ type: TOGGLE_DRAWER, payload: true });
                             }}
                             edge={'start'}
+                            style={{ marginRight: 20 }}
                         >
                             <Menu />
                         </IconButton>
@@ -229,59 +239,97 @@ export const ComplexBottomSheet = (): JSX.Element => {
             >
                 <List disablePadding>
                     <ListItem data-cy={'btm-sheet-sort'} className={classes.sheetListItem}>
-                        <Typography variant={'body1'} gutterBottom>
+                        <Typography variant={'overline'} style={{ width: '100%' }} gutterBottom>
                             Sort By:
                         </Typography>
-                        <Grid container spacing={0} alignItems={'center'} justify={'center'}>
-                            <IconToggle
-                                iconComponent={<AccessTime />}
+
+                        <HeroBanner className={classes.heroBanner}>
+                            <Hero
+                                icon={<AccessTime />}
                                 label={'Time'}
+                                classes={
+                                    currentSort === TYPES.TIME
+                                        ? { root: classes.hero, label: classes.activeIcon, icon: classes.activeIcon }
+                                        : { root: classes.hero }
+                                }
                                 onClick={(): void => setCurrentSort(TYPES.TIME)}
-                                active={currentSort === TYPES.TIME}
                             />
-                            <IconToggle
-                                iconComponent={<Info />}
+                            <Hero
+                                icon={<Info />}
                                 label={'Type'}
+                                classes={
+                                    currentSort === TYPES.TYPE
+                                        ? { root: classes.hero, label: classes.activeIcon, icon: classes.activeIcon }
+                                        : { root: classes.hero }
+                                }
                                 onClick={(): void => setCurrentSort(TYPES.TYPE)}
-                                active={currentSort === TYPES.TYPE}
                             />
-                        </Grid>
+                        </HeroBanner>
                     </ListItem>
                     <Divider />
                     <ListItem data-cy={'btm-sheet-show'} className={classes.sheetListItem}>
-                        <Typography variant="body1" gutterBottom>
+                        <Typography variant="overline" style={{ width: '100%' }} gutterBottom>
                             Show:
                         </Typography>
-                        <Grid container spacing={0} alignItems={'center'} justify={'center'}>
-                            <IconToggle
-                                iconComponent={<NotificationsActive />}
+
+                        <HeroBanner className={classes.heroBanner}>
+                            <Hero
+                                icon={<NotificationsActive />}
                                 label={'Active Alarms'}
                                 data-cy={'active-alarms'}
+                                classes={
+                                    showActiveAlarms
+                                        ? { root: classes.hero, label: classes.activeIcon, icon: classes.activeIcon }
+                                        : { root: classes.hero }
+                                }
                                 onClick={(): void => setShowActiveAlarms(!showActiveAlarms)}
-                                active={showActiveAlarms}
                             />
-                            <IconToggle
-                                iconComponent={<Notifications />}
-                                label={FILTERS.ALARM}
+                            <Hero
+                                icon={<Notifications />}
+                                label={'Alarms'}
+                                classes={
+                                    showAlarms
+                                        ? { root: classes.hero, label: classes.activeIcon, icon: classes.activeIcon }
+                                        : { root: classes.hero }
+                                }
                                 onClick={(): void => setShowAlarms(!showAlarms)}
-                                active={showAlarms}
                             />
-                            <IconToggle
-                                iconComponent={<Settings />}
-                                label={FILTERS.SETTINGS}
+                            <Hero
+                                icon={<Settings />}
+                                label={'Settings'}
+                                classes={
+                                    showSettings
+                                        ? { root: classes.hero, label: classes.activeIcon, icon: classes.activeIcon }
+                                        : { root: classes.hero }
+                                }
                                 onClick={(): void => setShowSettings(!showSettings)}
-                                active={showSettings}
                             />
-                            <IconToggle
-                                iconComponent={<Update />}
-                                label={FILTERS.SESSION}
+                            <Hero
+                                icon={<Update />}
+                                label={'Sessions'}
+                                classes={
+                                    showSessions
+                                        ? { root: classes.hero, label: classes.activeIcon, icon: classes.activeIcon }
+                                        : { root: classes.hero }
+                                }
                                 onClick={(): void => setShowSessions(!showSessions)}
-                                active={showSessions}
                             />
-                        </Grid>
+                        </HeroBanner>
                     </ListItem>
-                    <Divider />
-                    <InfoListItem icon={<Close />} title={'Close'} dense onClick={(): void => setShowMenu(false)} />
+
+                    {!isMobile && <Divider />}
+                    <Box
+                        boxShadow={isMobile ? 8 : 0}
+                        style={{ position: 'sticky', bottom: 0, background: Colors.white[50] }}
+                    >
+                        <InfoListItem
+                            data-cy="btm-sheet-cancel"
+                            icon={<Close />}
+                            title={'Close'}
+                            dense
+                            onClick={(): void => setShowMenu(false)}
+                        />
+                    </Box>
                 </List>
             </Drawer>
         </div>

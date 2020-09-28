@@ -11,6 +11,12 @@ import { InfoListItem } from '@pxblue/react-components';
 const MAX_APP_BAR_HEIGHT = 128; // Specified by Material Design
 
 const useStyles = makeStyles((theme: Theme) => ({
+    appbarRoot: {
+        padding: 0,
+    },
+    toolbarGutters: {
+        padding: '0 16px',
+    },
     banner: {
         // IE 11 does not support background blend mode. To see the image, you need to reverse the order of the image and gradient in the background property below.
         background:
@@ -21,6 +27,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         minHeight: MAX_APP_BAR_HEIGHT,
         color: '#fff',
         position: 'relative',
+        height: 218,
     },
     alignTopContent: {
         top: -theme.spacing(8),
@@ -35,7 +42,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     content: {
         position: 'absolute',
         left: theme.spacing(9),
-        bottom: 28,
+        bottom: theme.spacing(7),
     },
     flexCenter: {
         display: 'flex',
@@ -97,8 +104,13 @@ export const CollapsibleAppBar = (): JSX.Element => {
             onWheel={styleHeaderAndBanner}
             style={{ backgroundColor: theme.palette.background.paper, minHeight: '100vh' }}
         >
-            <AppBar className={clsx(classes.header, headerActive && classes.top)} position={'sticky'}>
-                <Toolbar>
+            <AppBar
+                className={clsx(classes.header, headerActive && classes.top)}
+                data-cy={'app-bar'}
+                position={'sticky'}
+                classes={{ root: classes.appbarRoot }}
+            >
+                <Toolbar classes={{ gutters: classes.toolbarGutters }}>
                     <Hidden mdUp>
                         <IconButton
                             color={'inherit'}
@@ -106,6 +118,7 @@ export const CollapsibleAppBar = (): JSX.Element => {
                                 dispatch({ type: TOGGLE_DRAWER, payload: true });
                             }}
                             edge={'start'}
+                            style={{ marginRight: 20 }}
                         >
                             <MenuIcon />
                         </IconButton>
@@ -121,15 +134,21 @@ export const CollapsibleAppBar = (): JSX.Element => {
                 </Toolbar>
             </AppBar>
             <div className={clsx(classes.banner, classes.alignTopContent)}>
-                <Toolbar className={classes.bannerMain}>
+                <Toolbar
+                    className={classes.bannerMain}
+                    data-cy={'banner'}
+                    classes={{ gutters: classes.toolbarGutters }}
+                >
                     <div className={classes.bannerActionItems}>
                         <Hidden mdUp>
                             <IconButton
+                                data-cy="toolbar-menu"
                                 color={'inherit'}
                                 onClick={(): void => {
                                     dispatch({ type: TOGGLE_DRAWER, payload: true });
                                 }}
                                 edge={'start'}
+                                style={{ marginRight: 20 }}
                             >
                                 <MenuIcon />
                             </IconButton>
@@ -137,13 +156,13 @@ export const CollapsibleAppBar = (): JSX.Element => {
                     </div>
                 </Toolbar>
                 <div className={classes.content} style={{ opacity: 1 - opacity / MAX_APP_BAR_HEIGHT }}>
-                    <Typography variant={'h6'} color={'inherit'}>
+                    <Typography variant={'h4'} color={'inherit'}>
                         President
                     </Typography>
-                    <Typography variant={'body1'} color={'inherit'}>
+                    <Typography variant={'h5'} color={'inherit'}>
                         Commander in Chief
                     </Typography>
-                    <Typography variant={'body2'} color={'inherit'}>
+                    <Typography variant={'h6'} color={'inherit'} style={{ fontWeight: 600 }}>
                         Leader of the Free World
                     </Typography>
                 </div>

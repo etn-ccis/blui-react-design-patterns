@@ -26,6 +26,12 @@ const useStyles = makeStyles((theme: Theme) => ({
     card: {
         margin: theme.spacing(0.5),
     },
+    appbarRoot: {
+        padding: 0,
+    },
+    toolbarGutters: {
+        padding: '0 16px',
+    },
 }));
 
 const getIcon = (value: number): string => {
@@ -86,15 +92,17 @@ export const LoadingStates = (): JSX.Element => {
                 minHeight: '100vh',
             }}
         >
-            <AppBar position={'sticky'}>
-                <Toolbar>
+            <AppBar data-cy="pxb-toolbar" position={'sticky'} classes={{ root: classes.appbarRoot }}>
+                <Toolbar classes={{ gutters: classes.toolbarGutters }}>
                     <Hidden mdUp>
                         <IconButton
+                            data-cy="toolbar-menu"
                             color={'inherit'}
                             onClick={(): void => {
                                 dispatch({ type: TOGGLE_DRAWER, payload: true });
                             }}
                             edge={'start'}
+                            style={{ marginRight: 20 }}
                         >
                             <MenuIcon />
                         </IconButton>
@@ -105,7 +113,7 @@ export const LoadingStates = (): JSX.Element => {
                     <Spacer />
                     {data[0].data && (
                         <Tooltip title={'Refresh this page'}>
-                            <IconButton edge={'end'} color={'inherit'} onClick={refreshData}>
+                            <IconButton data-cy="toolbar-refresh" edge={'end'} color={'inherit'} onClick={refreshData}>
                                 <Refresh />
                             </IconButton>
                         </Tooltip>

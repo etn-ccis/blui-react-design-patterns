@@ -20,12 +20,22 @@ import { TOGGLE_DRAWER } from '../../../redux/actions';
 import { InfoListItem } from '@pxblue/react-components';
 
 import './index.css';
+import { makeStyles } from '@material-ui/core';
 
 export type Item = {
     id: number;
     name: string;
     description: string;
 };
+
+const useStyles = makeStyles(() => ({
+    appbarRoot: {
+        padding: 0,
+    },
+    toolbarGutters: {
+        padding: '0 16px',
+    },
+}));
 
 const generateRandomItem = (): Item[] => {
     const listOfItems = [];
@@ -45,6 +55,7 @@ const list = generateRandomItem();
 export const ResponsiveTable = (): JSX.Element => {
     const theme = useTheme();
     const dispatch = useDispatch();
+    const classes = useStyles();
 
     return (
         <div
@@ -53,15 +64,17 @@ export const ResponsiveTable = (): JSX.Element => {
                 minHeight: '100vh',
             }}
         >
-            <AppBar position="sticky">
-                <Toolbar>
+            <AppBar data-cy="pxb-toolbar" position="sticky" classes={{ root: classes.appbarRoot }}>
+                <Toolbar classes={{ gutters: classes.toolbarGutters }}>
                     <Hidden mdUp>
                         <IconButton
+                            data-cy="toolbar-menu"
                             color={'inherit'}
                             onClick={(): void => {
                                 dispatch({ type: TOGGLE_DRAWER, payload: true });
                             }}
                             edge={'start'}
+                            style={{ marginRight: 20 }}
                         >
                             <MenuIcon />
                         </IconButton>
@@ -71,6 +84,9 @@ export const ResponsiveTable = (): JSX.Element => {
                     </Typography>
                 </Toolbar>
             </AppBar>
+            <Typography variant="body1" color="inherit" style={{ textAlign: 'center', padding: '1.5rem 0 0.5rem' }}>
+                Resize your browser to view responsiveness
+            </Typography>
             <Hidden smUp>
                 <List disablePadding component="nav">
                     {list.map(

@@ -2,6 +2,7 @@ import { SampleTranslation } from './sample-translation';
 
 export const portuguese: SampleTranslation = {
     translations: {
+        CURRENCY: `{{price, currency}}`,
         FRUITS: {
             APPLE: 'Maçã',
             BANANA: 'Banana',

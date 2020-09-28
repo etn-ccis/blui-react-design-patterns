@@ -43,6 +43,12 @@ const useStyles = makeStyles((theme: Theme) =>
             flexDirection: 'column',
             height: `calc(100vh - ${theme.spacing(8)}px)`,
         },
+        appbarRoot: {
+            padding: 0,
+        },
+        toolbarGutters: {
+            padding: '0 16px',
+        },
     })
 );
 
@@ -112,15 +118,17 @@ export const MultiselectList = (): JSX.Element => {
 
     return (
         <div style={{ backgroundColor: theme.palette.background.paper, minHeight: '100vh' }}>
-            <AppBar position={'sticky'}>
-                <Toolbar>
+            <AppBar position={'sticky'} classes={{ root: classes.appbarRoot }}>
+                <Toolbar classes={{ gutters: classes.toolbarGutters }}>
                     <Hidden mdUp={true}>
                         <IconButton
+                            data-cy="toolbar-menu"
                             color={'inherit'}
                             onClick={(): void => {
                                 dispatch({ type: TOGGLE_DRAWER, payload: true });
                             }}
                             edge={'start'}
+                            style={{ marginRight: 20 }}
                         >
                             <MenuIcon />
                         </IconButton>
@@ -165,6 +173,7 @@ export const MultiselectList = (): JSX.Element => {
                 ))}
             </List>
             <Snackbar
+                data-cy="snack-bar"
                 action={
                     <>
                         <Tooltip title={'Delete selected'}>

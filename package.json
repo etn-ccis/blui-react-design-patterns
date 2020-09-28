@@ -8,11 +8,12 @@
         "@pxblue/colors": "^3.0.0",
         "@pxblue/react-components": "^4.0.2",
         "@pxblue/react-progress-icons": "^2.0.0",
-        "@pxblue/react-themes": "^5.0.0",
+        "@pxblue/react-themes": "^5.0.2",
         "@types/enzyme-adapter-react-16": "^1.0.6",
         "array-move": "^2.2.2",
         "i18next": "^19.4.5",
         "i18next-browser-languagedetector": "^4.3.1",
+        "moment": "^2.27.0",
         "node-sass": "^4.14.1",
         "placeholder-loading": "^0.2.6",
         "react": "^16.12.0",
@@ -36,7 +37,10 @@
         "lint": "eslint \"src/**/**.{tsx,ts}\"",
         "lint:fix": "eslint \"src/**/**.{tsx,ts}\" --fix",
         "prettier": "prettier \"src/**/**.{ts,tsx,js,jsx,json,css,scss,html}\" --write",
-        "prettier:check": "prettier \"src/**/**.{ts,tsx,js,jsx,json,css,scss,html}\" --check"
+        "prettier:check": "prettier \"src/**/**.{ts,tsx,js,jsx,json,css,scss,html}\" --check",
+        "cy:run": "cypress run",
+        "cypress:open": "cypress open",
+        "cytest": "start-server-and-test start http://localhost:3000 cy:run"
     },
     "browserslist": {
         "production": [
@@ -54,6 +58,7 @@
     },
     "author": "PX Blue <pxblue@eaton.com>",
     "devDependencies": {
+        "@4tw/cypress-drag-drop": "^1.4.0",
         "@pxblue/eslint-config": "^1.1.4",
         "@pxblue/prettier-config": "^1.0.2",
         "@testing-library/jest-dom": "^4.2.4",
@@ -68,12 +73,17 @@
         "@types/react-router-dom": "^5.1.2",
         "@typescript-eslint/eslint-plugin": "^2.21.0",
         "@typescript-eslint/parser": "^2.21.0",
+        "chai": "^4.2.0",
+        "chance": "^1.1.6",
+        "cypress": "^4.9.0",
         "enzyme": "^3.10.0",
         "enzyme-adapter-react-16": "^1.14.0",
         "eslint": "^6.8.0",
         "eslint-config-prettier": "^6.10.0",
         "eslint-plugin-react": "^7.18.3",
+        "mocha": "^8.0.1",
         "prettier": "^1.19.1",
+        "start-server-and-test": "^1.11.1",
         "typescript": "~3.7.2"
     },
     "prettier": "@pxblue/prettier-config"

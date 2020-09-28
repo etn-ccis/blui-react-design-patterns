@@ -33,6 +33,12 @@ const useStyles = makeStyles((theme: Theme) =>
         appbar: {
             transition: theme.transitions.create('all', { duration: theme.transitions.duration.short }),
         },
+        appbarRoot: {
+            padding: 0,
+        },
+        toolbarGutters: {
+            padding: '0 16px',
+        },
         regularBar: {
             opacity: 1,
             '&$searchActive': {
@@ -122,17 +128,21 @@ export const SearchBar = (): JSX.Element => {
         <div style={{ backgroundColor: theme.palette.background.paper, minHeight: '100vh' }}>
             {/* The Regular App Bar */}
             <AppBar
+                data-cy="pxb-toolbar"
                 position={'sticky'}
+                classes={{ root: classes.appbarRoot }}
                 className={clsx(classes.appbar, classes.regularBar, searchActive && classes.searchActive)}
             >
-                <Toolbar>
+                <Toolbar classes={{ gutters: classes.toolbarGutters }}>
                     <Hidden mdUp={true}>
                         <IconButton
+                            data-cy="toolbar-menu"
                             color={'inherit'}
                             onClick={(): void => {
                                 dispatch({ type: TOGGLE_DRAWER, payload: true });
                             }}
                             edge={'start'}
+                            style={{ marginRight: 20 }}
                         >
                             <MenuIcon />
                         </IconButton>
@@ -141,7 +151,12 @@ export const SearchBar = (): JSX.Element => {
                         Search Bar
                     </Typography>
                     <Spacer />
-                    <IconButton color={'inherit'} onClick={(): void => setSearchActive(true)} edge={'end'}>
+                    <IconButton
+                        color={'inherit'}
+                        onClick={(): void => setSearchActive(true)}
+                        edge={'end'}
+                        data-cy="search-btn"
+                    >
                         <Search />
                     </IconButton>
                 </Toolbar>
@@ -149,11 +164,12 @@ export const SearchBar = (): JSX.Element => {
 
             {/* Search Bar */}
             <AppBar
+                data-cy="searchfield"
                 className={clsx(classes.appbar, classes.searchbar, searchActive && classes.searchActive)}
                 position={'fixed'}
                 color={'default'}
             >
-                <Toolbar>
+                <Toolbar classes={{ gutters: classes.toolbarGutters }}>
                     <IconButton color={'inherit'} edge={'start'} disabled>
                         <Search />
                     </IconButton>
@@ -167,14 +183,19 @@ export const SearchBar = (): JSX.Element => {
                             autoFocus
                         />
                     )}
-                    <IconButton color={'inherit'} onClick={(): void => setSearchActive(false)} edge={'end'}>
+                    <IconButton
+                        color={'inherit'}
+                        onClick={(): void => setSearchActive(false)}
+                        edge={'end'}
+                        data-cy="search-close-btn"
+                    >
                         <Close />
                     </IconButton>
                 </Toolbar>
             </AppBar>
 
             {/* List */}
-            <List>
+            <List data-cy="list-view">
                 {list.map((item, index) => (
                     <InfoListItem
                         avatar

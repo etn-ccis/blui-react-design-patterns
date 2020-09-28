@@ -1,13 +1,26 @@
-import React, { useState, useCallback } from 'react';
-import { SortableHandle, SortableElement, SortableContainer } from 'react-sortable-hoc';
+import React, { useCallback, useState } from 'react';
+import { SortableContainer, SortableElement, SortableHandle } from 'react-sortable-hoc';
 import arrayMove from 'array-move';
 import { DragHandle as DragHandleIcon } from '@material-ui/icons';
-import { List, AppBar, Toolbar, Typography, Button, Hidden, IconButton, useTheme } from '@material-ui/core';
-import { InfoListItem, ChannelValue, Spacer } from '@pxblue/react-components';
+import {
+    AppBar,
+    Button,
+    createStyles,
+    Hidden,
+    IconButton,
+    List,
+    makeStyles,
+    Theme,
+    Toolbar,
+    Typography,
+    useTheme,
+} from '@material-ui/core';
+import { ChannelValue, InfoListItem, Spacer } from '@pxblue/react-components';
 import { TOGGLE_DRAWER } from '../../../redux/actions';
 import { useDispatch } from 'react-redux';
 import MenuIcon from '@material-ui/icons/Menu';
-import { President, SortableListItemProps, SortableListEditProps, OnSortEndProps } from './types';
+import { OnSortEndProps, President, SortableListEditProps, SortableListItemProps } from './types';
+import * as Colors from '@pxblue/colors';
 
 const presidentsList: President[] = [
     {
@@ -37,21 +50,41 @@ const presidentsList: President[] = [
     },
 ];
 
+const useStyles = makeStyles((theme: Theme) =>
+    createStyles({
+        dragging: {
+            boxShadow: theme.shadows[4],
+        },
+        appbarRoot: {
+            padding: 0,
+        },
+        toolbarGutters: {
+            padding: '0 16px',
+        },
+    })
+);
+
 // Sortable Components Definitions
 const DragHandle = SortableHandle(() => <DragHandleIcon style={{ cursor: 'pointer' }} />);
 
-const SortableListItem = SortableElement(({ president }: SortableListItemProps) => (
+const SortableListItem = SortableElement(({ president, ...other }: SortableListItemProps) => (
     <InfoListItem
-        icon={<DragHandle />}
+        backgroundColor={Colors.white[50]}
+        {...other}
+        icon={
+            <IconButton disableRipple style={{ backgroundColor: 'transparent' }}>
+                <DragHandle />
+            </IconButton>
+        }
         title={`${president.firstName} ${president.lastName}`}
-        rightComponent={<ChannelValue value={president.year}></ChannelValue>}
-    ></InfoListItem>
+        rightComponent={<ChannelValue value={president.year} />}
+    />
 ));
 
 export const SortableListEdit = SortableContainer(({ presidents }: SortableListEditProps) => (
     <List disablePadding component={'nav'}>
         {presidents.map((president: President, i: number) => (
-            <SortableListItem key={`item-${i}`} index={i} president={president} />
+            <SortableListItem key={`item-${i}`} data-cy={`sortable-row-${i}`} index={i} president={president} />
         ))}
     </List>
 ));
@@ -59,6 +92,7 @@ export const SortableListEdit = SortableContainer(({ presidents }: SortableListE
 export const SortableList = (): JSX.Element => {
     const dispatch = useDispatch();
     const theme = useTheme();
+    const classes = useStyles(theme);
     const [list, setList] = useState<President[]>(presidentsList);
     const [sortable, setSortable] = useState<boolean>(false);
 
@@ -71,15 +105,17 @@ export const SortableList = (): JSX.Element => {
 
     return (
         <div style={{ backgroundColor: theme.palette.background.paper, minHeight: '100vh' }}>
-            <AppBar position={'sticky'}>
-                <Toolbar>
+            <AppBar data-cy="pxb-toolbar" position={'sticky'} classes={{ root: classes.appbarRoot }}>
+                <Toolbar classes={{ gutters: classes.toolbarGutters }}>
                     <Hidden mdUp={true}>
                         <IconButton
+                            data-cy="toolbar-menu"
                             color={'inherit'}
                             onClick={(): void => {
                                 dispatch({ type: TOGGLE_DRAWER, payload: true });
                             }}
                             edge={'start'}
+                            style={{ marginRight: 20 }}
                         >
                             <MenuIcon />
                         </IconButton>
@@ -89,6 +125,7 @@ export const SortableList = (): JSX.Element => {
                     </Typography>
                     <Spacer />
                     <Button
+                        data-cy="edit-save"
                         style={{ color: 'white', borderColor: 'white' }}
                         onClick={(): void => setSortable(!sortable)}
                         variant={'outlined'}
@@ -97,7 +134,14 @@ export const SortableList = (): JSX.Element => {
                     </Button>
                 </Toolbar>
             </AppBar>
-            {sortable && <SortableListEdit presidents={list} onSortEnd={onSortEnd} useDragHandle={true} />}
+            {sortable && (
+                <SortableListEdit
+                    presidents={list}
+                    onSortEnd={onSortEnd}
+                    useDragHandle={true}
+                    helperClass={classes.dragging}
+                />
+            )}
             {!sortable && (
                 <List className={'list'} disablePadding component={'nav'}>
                     {list.map((president: President, i: number) => (
@@ -106,7 +150,7 @@ export const SortableList = (): JSX.Element => {
                             key={`president-${i}`}
                             title={`${president.firstName} ${president.lastName}`}
                             rightComponent={<ChannelValue value={president.year} />}
-                        ></InfoListItem>
+                        />
                     ))}
                 </List>
             )}

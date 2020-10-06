@@ -59,6 +59,7 @@
     "author": "PX Blue <pxblue@eaton.com>",
     "devDependencies": {
         "@4tw/cypress-drag-drop": "^1.4.0",
+        "@babel/helper-call-delegate": "^7.11.4",
         "@pxblue/eslint-config": "^1.1.4",
         "@pxblue/prettier-config": "^1.0.2",
         "@testing-library/jest-dom": "^4.2.4",
@@ -84,7 +85,8 @@
         "mocha": "^8.0.1",
         "prettier": "^1.19.1",
         "start-server-and-test": "^1.11.1",
-        "typescript": "~3.7.2"
+        "typescript": "~3.7.2",
+        "yarn-audit-fix": "^3.2.6"
     },
     "prettier": "@pxblue/prettier-config"
 }

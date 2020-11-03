@@ -77,15 +77,12 @@ export const LoadingStates = (): JSX.Element => {
     useEffect(() => {
         let isMounted = true;
 
-        const loadContent = async (): Promise<void> => {
-            setTimeout(() => {
-                if (isMounted) {
-                    setData(deviceList);
-                    setDataloaded(true);
-                }
-            }, 3000);
-        };
-        loadContent();
+        setTimeout(() => {
+            if (isMounted) {
+                setData(deviceList);
+                setDataloaded(true);
+            }
+        }, 3000);
 
         return (): void => {
             isMounted = false;

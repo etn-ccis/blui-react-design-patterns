@@ -20,6 +20,8 @@ import { Spacer, Hero, HeroBanner, InfoListItem, ChannelValue } from '@pxblue/re
 import { emptyDeviceList, deviceList } from './data';
 import * as PXBColors from '@pxblue/colors';
 import { Placeholder } from './Placeholder';
+
+// CSS animations for the placeholder loading
 import 'placeholder-loading/src/scss/placeholder-loading.scss';
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -69,21 +71,32 @@ export const LoadingStates = (): JSX.Element => {
     const dispatch = useDispatch();
 
     const [data, setData] = useState(emptyDeviceList);
+    const [dataLoaded, setDataloaded] = useState(false);
 
-    const fetchData = useCallback((): void => {
-        setTimeout(() => {
-            setData(deviceList);
-        }, 3000);
-    }, [setData]);
-
+    // Triggers a reload when the page is loaded for the first time, or when the refresh button is pressed on.
     useEffect(() => {
-        fetchData();
-    }, [fetchData]);
+        let isMounted = true;
+
+        const loadContent = async(): Promise<void> => {
+            setTimeout(() => {
+                if (isMounted) {
+                    setData(deviceList);
+                    setDataloaded(true);
+                }
+            }, 3000);
+        }
+        loadContent();
+        
+        return (): void => {
+            isMounted = false;
+        }
+
+    }, [dataLoaded, setDataloaded, setData]);
 
     const refreshData = useCallback((): void => {
         setData(emptyDeviceList);
-        fetchData();
-    }, [fetchData, setData]);
+        setDataloaded(false);
+    }, [setData, setDataloaded]);
 
     return (
         <div

@@ -84,7 +84,7 @@
         "eslint-plugin-react": "^7.18.3",
         "mocha": "^8.0.1",
         "prettier": "^1.19.1",
-        "start-server-and-test": "^1.11.1",
+        "start-server-and-test": "1.11.1",
         "typescript": "~3.7.2",
         "yarn-audit-fix": "^3.2.6"
     },

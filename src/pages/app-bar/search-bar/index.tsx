@@ -22,7 +22,7 @@ import { useDispatch } from 'react-redux';
 // Other
 import { createStyles, Theme, makeStyles, useTheme } from '@material-ui/core/styles';
 import { listItems as presidents, President } from './list';
-import { InfoListItem, Spacer } from '@pxblue/react-components';
+import { EmptyState, InfoListItem, Spacer } from '@pxblue/react-components';
 import { DRAWER_WIDTH } from '../../../assets/constants';
 import clsx from 'clsx';
 
@@ -209,7 +209,19 @@ export const SearchBar = (): JSX.Element => {
                     />
                 ))}
                 {list.length < 1 && (
-                    <InfoListItem icon={<Error />} title={'0 results'} subtitle={'No matching presidents'} />
+                    <div
+                        style={{
+                            display: 'flex',
+                            flexDirection: 'column',
+                            height: `calc(100vh - ${theme.spacing(8)}px)`,
+                        }}
+                    >
+                        <EmptyState
+                            icon={<Error fontSize={'inherit'} />}
+                            title={'0 results'}
+                            description={'No matching presidents'}
+                        />
+                    </div>
                 )}
             </List>
         </div>

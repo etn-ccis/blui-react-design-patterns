@@ -208,22 +208,22 @@ export const SearchBar = (): JSX.Element => {
                         iconColor={theme.palette.text.primary}
                     />
                 ))}
-                {list.length < 1 && (
-                    <div
-                        style={{
-                            display: 'flex',
-                            flexDirection: 'column',
-                            height: `calc(100vh - ${theme.spacing(8)}px)`,
-                        }}
-                    >
-                        <EmptyState
-                            icon={<Error fontSize={'inherit'} />}
-                            title={'0 results'}
-                            description={'No matching presidents'}
-                        />
-                    </div>
-                )}
             </List>
+            {list.length < 1 && (
+                <div
+                    style={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        height: `calc(100vh - ${theme.spacing(8)}px)`,
+                    }}
+                >
+                    <EmptyState
+                        icon={<Error fontSize={'inherit'} />}
+                        title={'0 results'}
+                        description={'No matching presidents'}
+                    />
+                </div>
+            )}
         </div>
     );
 };

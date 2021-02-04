@@ -3,12 +3,13 @@
     "version": "0.1.0",
     "private": true,
     "dependencies": {
+        "@fontsource/noto-sans": "^4.1.0",
         "@material-ui/core": "^4.7.0",
         "@material-ui/icons": "^4.5.1",
         "@pxblue/colors": "^3.0.0",
         "@pxblue/react-components": "^4.0.2",
         "@pxblue/react-progress-icons": "^2.0.0",
-        "@pxblue/react-themes": "^5.0.2",
+        "@pxblue/react-themes": "^6.0.0-beta.0",
         "@types/enzyme-adapter-react-16": "^1.0.6",
         "array-move": "^2.2.2",
         "i18next": "^19.4.5",
@@ -25,9 +26,7 @@
         "react-router-dom": "5.1.2",
         "react-scripts": "^3.4.3",
         "react-sortable-hoc": "^1.11.0",
-        "redux": "^4.0.5",
-        "typeface-noto-sans": "^0.0.72",
-        "typeface-open-sans": "0.0.75"
+        "redux": "^4.0.5"
     },
     "scripts": {
         "start": "react-scripts start",

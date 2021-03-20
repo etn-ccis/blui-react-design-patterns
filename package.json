@@ -39,7 +39,8 @@
         "prettier:check": "prettier \"src/**/**.{ts,tsx,js,jsx,json,css,scss,html}\" --check",
         "cy:run": "cypress run",
         "cypress:open": "cypress open",
-        "cytest": "yarn start wait-on http://localhost:3000 cy:run"
+        "cytest": "yarn start wait-on http://localhost:3000 cy:run",
+        "precommit": "yarn prettier && yarn lint && yarn test"
     },
     "browserslist": {
         "production": [

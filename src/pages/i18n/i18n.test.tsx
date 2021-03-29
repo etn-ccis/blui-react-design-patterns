@@ -1,7 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Enzyme, { mount } from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
+// import Adapter from 'enzyme-adapter-react-16';
+import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import { I18N } from '.';
@@ -38,11 +39,7 @@ it('should cancel selected items', () => {
     boxes = i18nPattern.find(Checkbox);
 
     expect(i18nPattern.find('#deselect-all-button').hostNodes()).toHaveLength(1);
-    i18nPattern
-        .find('#deselect-all-button')
-        .hostNodes()
-        .at(0)
-        .simulate('click');
+    i18nPattern.find('#deselect-all-button').hostNodes().at(0).simulate('click');
     expect(i18nPattern.find('#item-list').children(InfoListItem)).toHaveLength(
         Object.keys(english.translations.FRUITS).length
     );

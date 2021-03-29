@@ -2,7 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { ActionList } from '.';
 import Enzyme, { mount } from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
+// import Adapter from 'enzyme-adapter-react-16';
+import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import { Reducer } from '../../../redux/reducers';
@@ -28,12 +29,7 @@ it('renders 10 items by default', () => {
             <ActionList />
         </Provider>
     );
-    expect(
-        actionList
-            .find('.list')
-            .hostNodes()
-            .children(InfoListItem)
-    ).toHaveLength(10);
+    expect(actionList.find('.list').hostNodes().children(InfoListItem)).toHaveLength(10);
 });
 
 it('adds an item correctly', () => {
@@ -43,17 +39,8 @@ it('adds an item correctly', () => {
         </Provider>
     );
     expect(actionList.find('#add-item-button').hostNodes()).toHaveLength(1);
-    actionList
-        .find('#add-item-button')
-        .hostNodes()
-        .at(0)
-        .simulate('click');
-    expect(
-        actionList
-            .find('.list')
-            .hostNodes()
-            .children(InfoListItem)
-    ).toHaveLength(11);
+    actionList.find('#add-item-button').hostNodes().at(0).simulate('click');
+    expect(actionList.find('.list').hostNodes().children(InfoListItem)).toHaveLength(11);
 });
 
 // @TODO: figure out how to do this for a functional component
@@ -83,15 +70,6 @@ it('removes all and clears the list', () => {
         </Provider>
     );
     expect(actionList.find('#remove-all-button').hostNodes()).toHaveLength(1);
-    actionList
-        .find('#remove-all-button')
-        .hostNodes()
-        .at(0)
-        .simulate('click');
-    expect(
-        actionList
-            .find('.list')
-            .hostNodes()
-            .children(InfoListItem)
-    ).toHaveLength(0);
+    actionList.find('#remove-all-button').hostNodes().at(0).simulate('click');
+    expect(actionList.find('.list').hostNodes().children(InfoListItem)).toHaveLength(0);
 });

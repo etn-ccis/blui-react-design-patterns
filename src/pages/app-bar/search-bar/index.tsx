@@ -70,28 +70,13 @@ const useStyles = makeStyles((theme: Theme) =>
 export const searchResults = (searchString: string): President[] => {
     const q = searchString.toLowerCase().trim();
     return reversedPresidentList.filter((item: President): boolean => {
-        if (
-            item.president
-                .toLowerCase()
-                .trim()
-                .includes(q)
-        ) {
+        if (item.president.toLowerCase().trim().includes(q)) {
             return true;
         }
-        if (
-            item.party
-                .toLowerCase()
-                .trim()
-                .includes(q)
-        ) {
+        if (item.party.toLowerCase().trim().includes(q)) {
             return true;
         }
-        if (
-            item.took_office
-                .toLowerCase()
-                .trim()
-                .includes(q)
-        ) {
+        if (item.tookOffice.toLowerCase().trim().includes(q)) {
             return true;
         }
         return false;
@@ -203,7 +188,7 @@ export const SearchBar = (): JSX.Element => {
                         icon={<Person />}
                         title={item.president}
                         subtitle={item.party}
-                        info={item.took_office}
+                        info={item.tookOffice}
                         statusColor={'transparent'}
                         iconColor={theme.palette.text.primary}
                     />

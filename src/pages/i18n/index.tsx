@@ -89,7 +89,7 @@ export const I18N = (): JSX.Element => {
     const changeLanguage = useCallback(
         (lng) => {
             setLang(lng);
-            i18n.changeLanguage(lng);
+            void i18n.changeLanguage(lng);
         },
         [i18n]
     );

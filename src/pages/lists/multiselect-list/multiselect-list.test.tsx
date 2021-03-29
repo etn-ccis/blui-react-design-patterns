@@ -3,7 +3,8 @@ import ReactDOM from 'react-dom';
 import { MultiselectList } from '.';
 
 import Enzyme, { mount } from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
+// import Adapter from 'enzyme-adapter-react-16';
+import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import { InfoListItem } from '@pxblue/react-components';
@@ -29,12 +30,7 @@ it('should render 10 list items by default', () => {
             <MultiselectList />
         </Provider>
     );
-    expect(
-        multiselectList
-            .find('.list')
-            .hostNodes()
-            .children(InfoListItem)
-    ).toHaveLength(10);
+    expect(multiselectList.find('.list').hostNodes().children(InfoListItem)).toHaveLength(10);
 });
 
 it('should add an item', () => {
@@ -44,11 +40,7 @@ it('should add an item', () => {
         </Provider>
     );
     expect(multiselectList.find('#add-item-button').hostNodes()).toHaveLength(1);
-    multiselectList
-        .find('#add-item-button')
-        .hostNodes()
-        .at(0)
-        .simulate('click');
+    multiselectList.find('#add-item-button').hostNodes().at(0).simulate('click');
     expect(multiselectList.find('.list').children(InfoListItem)).toHaveLength(11);
 });
 
@@ -66,11 +58,7 @@ it('should remove item', () => {
     boxes = multiselectList.find(Checkbox);
 
     expect(multiselectList.find('#remove-items-button').hostNodes()).toHaveLength(1);
-    multiselectList
-        .find('#remove-items-button')
-        .hostNodes()
-        .at(0)
-        .simulate('click');
+    multiselectList.find('#remove-items-button').hostNodes().at(0).simulate('click');
     expect(multiselectList.find('.list').children(InfoListItem)).toHaveLength(9);
 });
 
@@ -88,11 +76,7 @@ it('should cancel selected items', () => {
     boxes = multiselectList.find(Checkbox);
 
     expect(multiselectList.find('#cancel-button').hostNodes()).toHaveLength(1);
-    multiselectList
-        .find('#cancel-button')
-        .hostNodes()
-        .at(0)
-        .simulate('click');
+    multiselectList.find('#cancel-button').hostNodes().at(0).simulate('click');
     expect(multiselectList.find('.list').children(InfoListItem)).toHaveLength(10);
 
     boxes = multiselectList.find(Checkbox);

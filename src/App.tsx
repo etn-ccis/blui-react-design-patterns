@@ -77,6 +77,7 @@ export const App: React.FC = () => {
                 },
             }}
             variant={isMobile ? 'temporary' : 'permanent'}
+            activeItem={selected}
         >
             <DrawerHeader
                 title={'PX Blue'}
@@ -88,7 +89,7 @@ export const App: React.FC = () => {
                 style={{ cursor: 'pointer' }}
             />
             <DrawerBody>
-                <DrawerNavGroup items={navItems} hidePadding activeItem={selected} />
+                <DrawerNavGroup items={navItems} hidePadding />
                 <Spacer />
                 <DrawerNavGroup
                     hidePadding

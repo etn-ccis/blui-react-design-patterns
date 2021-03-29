@@ -1,7 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Enzyme, { mount } from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
+// import Adapter from 'enzyme-adapter-react-16';
+import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import { Reducer } from '../../redux/reducers';
@@ -33,10 +34,7 @@ it('removes all the steps when the remove all button is clicked', () => {
     expect(dynamicStepper.find(StepButton)).toHaveLength(2);
 
     // After clicking the 'remove all' button, there should only be the 'add a step' left
-    dynamicStepper
-        .find('#remove-all')
-        .hostNodes()
-        .simulate('click');
+    dynamicStepper.find('#remove-all').hostNodes().simulate('click');
     expect(dynamicStepper.find(StepButton)).toHaveLength(1);
     expect(dynamicStepper.find(StepButton).text()).toBe('Add a Step');
 });

@@ -175,7 +175,7 @@ export const CollapsibleAppBar = (): JSX.Element => {
                             icon={<PersonIcon />}
                             title={item.president}
                             subtitle={item.party}
-                            info={item.took_office}
+                            info={item.tookOffice}
                             key={i}
                             statusColor={'transparent'}
                             iconColor={theme.palette.text.primary}

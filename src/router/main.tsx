@@ -25,23 +25,23 @@ export const Main = (): JSX.Element => (
     <Switch>
         <Route exact path={'/'} component={LandingPage} />
 
-        <Route exact path={`/${PAGES.APP_BAR.SEARCH.route}`} component={SearchBar} />
-        <Route exact path={`/${PAGES.APP_BAR.COLLAPSIBLE.route}`} component={CollapsibleAppBar} />
+        <Route exact path={`/${PAGES.APP_BAR.SEARCH.route || ''}`} component={SearchBar} />
+        <Route exact path={`/${PAGES.APP_BAR.COLLAPSIBLE.route || ''}`} component={CollapsibleAppBar} />
 
-        <Route exact path={`/${PAGES.LOADING.route}`} component={LoadingStates} />
-        <Route exact path={`/${PAGES.FORM_VALIDATION.route}`} component={FormValidation} />
-        <Route exact path={`/${PAGES.I18N.route}`} component={I18N} />
+        <Route exact path={`/${PAGES.LOADING.route || ''}`} component={LoadingStates} />
+        <Route exact path={`/${PAGES.FORM_VALIDATION.route || ''}`} component={FormValidation} />
+        <Route exact path={`/${PAGES.I18N.route || ''}`} component={I18N} />
 
-        <Route exact path={`/${PAGES.LISTS.ACTION_LIST.route}`} component={ActionList} />
-        <Route exact path={`/${PAGES.LISTS.DATA_LIST.route}`} component={DataList} />
-        <Route exact path={`/${PAGES.LISTS.MULTISELECT_LIST.route}`} component={MultiselectList} />
-        <Route exact path={`/${PAGES.LISTS.STATUS_LIST.route}`} component={StatusList} />
-        <Route exact path={`/${PAGES.LISTS.SORTABLE_LIST.route}`} component={SortableList} />
-        <Route exact path={`/${PAGES.LISTS.RESPONSIVE_TABLE.route}`} component={ResponsiveTable} />
+        <Route exact path={`/${PAGES.LISTS.ACTION_LIST.route || ''}`} component={ActionList} />
+        <Route exact path={`/${PAGES.LISTS.DATA_LIST.route || ''}`} component={DataList} />
+        <Route exact path={`/${PAGES.LISTS.MULTISELECT_LIST.route || ''}`} component={MultiselectList} />
+        <Route exact path={`/${PAGES.LISTS.STATUS_LIST.route || ''}`} component={StatusList} />
+        <Route exact path={`/${PAGES.LISTS.SORTABLE_LIST.route || ''}`} component={SortableList} />
+        <Route exact path={`/${PAGES.LISTS.RESPONSIVE_TABLE.route || ''}`} component={ResponsiveTable} />
 
-        <Route exact path={`/${PAGES.OVERLAYS.BASIC_BOTTOM_SHEET.route}`} component={BasicBottomSheet} />
-        <Route exact path={`/${PAGES.OVERLAYS.COMPLEX_BOTTOM_SHEET.route}`} component={ComplexBottomSheet} />
+        <Route exact path={`/${PAGES.OVERLAYS.BASIC_BOTTOM_SHEET.route || ''}`} component={BasicBottomSheet} />
+        <Route exact path={`/${PAGES.OVERLAYS.COMPLEX_BOTTOM_SHEET.route || ''}`} component={ComplexBottomSheet} />
 
-        <Route exact path={`/${PAGES.DYNAMIC_STEPPER.route}`} component={DynamicStepper} />
+        <Route exact path={`/${PAGES.DYNAMIC_STEPPER.route || ''}`} component={DynamicStepper} />
     </Switch>
 );

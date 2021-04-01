@@ -32,7 +32,8 @@ import { DRAWER_WIDTH } from '../../assets/constants';
 import { Drawer } from './Drawer';
 import './translations/i18n';
 
-require('typeface-noto-sans');
+import '@fontsource/noto-sans/400.css';
+import '@fontsource/noto-sans/700.css';
 
 const useStyles = makeStyles((theme: Theme) => ({
     snackbar: {
@@ -88,7 +89,7 @@ export const I18N = (): JSX.Element => {
     const changeLanguage = useCallback(
         (lng) => {
             setLang(lng);
-            i18n.changeLanguage(lng);
+            void i18n.changeLanguage(lng);
         },
         [i18n]
     );

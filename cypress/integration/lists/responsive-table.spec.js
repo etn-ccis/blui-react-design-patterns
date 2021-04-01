@@ -8,7 +8,7 @@ describe('Responsive table', () => {
         cy.visit('localhost:3000/responsive-table')
         cy.get('[data-cy=pxb-toolbar]').should('contain', 'Responsive Table')
         cy.get('.MuiTableHead-root').should('contain', 'Name').and('contain', 'Description')
-        cy.get('[data-cy=toolbar-menu]').should('not.be.visible')
+        cy.get('[data-cy=toolbar-menu]').should('not.exist')
         
 
 
@@ -27,7 +27,7 @@ describe('Responsive table', () => {
         cy.viewport(375, 812)
         cy.visit('localhost:3000/responsive-table')
         cy.get('[data-cy=pxb-toolbar]').should('contain', 'Responsive Table')
-        cy.get('.MuiTableHead-root').should('not.contain', 'Name').and('not.contain', 'Description')
+        cy.get('.MuiTableHead-root').should('not.exist')
         cy.get('[data-cy=toolbar-menu]').should('be.visible')
 
 

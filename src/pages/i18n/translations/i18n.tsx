@@ -10,7 +10,8 @@ import { french } from './french';
 import { portuguese } from './portuguese';
 import { chinese } from './chinese';
 
-i18n.use(initReactI18next)
+void i18n
+    .use(initReactI18next)
     .use(LanguageDetector)
     .init({
         // we init with resources

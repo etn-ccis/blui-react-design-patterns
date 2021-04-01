@@ -1,7 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Enzyme, { mount } from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
+// import Adapter from 'enzyme-adapter-react-16';
+import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
 import { StatusList } from '.';
 import { createStore } from 'redux';
 import { Reducer } from '../../../redux/reducers';
@@ -28,10 +29,5 @@ it('should render 20 list items by default', () => {
             <StatusList />
         </Provider>
     );
-    expect(
-        multiselectList
-            .find('.list')
-            .hostNodes()
-            .children(InfoListItem)
-    ).toHaveLength(20);
+    expect(multiselectList.find('.list').hostNodes().children(InfoListItem)).toHaveLength(20);
 });

@@ -8,7 +8,7 @@ jobs:
             - checkout
             - restore_cache:
                 keys:
-                    - v2-dependencies-{{ checksum "yarn.lock" }}
+                    - v3-dependencies-{{ checksum "yarn.lock" }}
             - run:
                 name: Install Dependencies
                 command: |
@@ -18,7 +18,7 @@ jobs:
                 paths:
                     - ~/.cache
                     - node_modules
-                key: v2-dependencies-{{ checksum "yarn.lock" }}
+                key: v3-dependencies-{{ checksum "yarn.lock" }}
             - run:
                 name: Prettier Check
                 command: |
@@ -44,7 +44,7 @@ jobs:
             - checkout
             - restore_cache:
                 keys:
-                    - v2-dependencies-{{ checksum "yarn.lock" }}
+                    - v3-dependencies-{{ checksum "yarn.lock" }}
             - run:
                 name: Install Dependencies
                 command: |
@@ -54,7 +54,7 @@ jobs:
                 paths:
                     - ~/.cache
                     - node_modules
-                key: v2-dependencies-{{ checksum "yarn.lock" }}
+                key: v3-dependencies-{{ checksum "yarn.lock" }}
             - run:
                 name: Cypress E2E Tests
                 command: |

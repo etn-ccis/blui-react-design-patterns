@@ -28,7 +28,10 @@ const useStyles = makeStyles((theme: Theme) => ({
         marginBottom: 16,
     },
     inputField: {
-        marginTop: theme.spacing(2),
+        marginTop: theme.spacing(4),
+        [theme.breakpoints.down('xs')]: {
+            marginTop: theme.spacing(3),
+        },
     },
     block: {
         display: 'flex',
@@ -40,6 +43,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     passwordCriteria: {
         paddingTop: 0,
         paddingBottom: 0,
+        marginTop: theme.spacing(0.5),
     },
     appbarRoot: {
         padding: 0,
@@ -463,24 +467,24 @@ export const FormValidation = (): JSX.Element => {
                             }}
                         />
 
-                        <List component={'ul'} style={{ marginTop: 16 }}>
-                            <ListItem className={classes.passwordCriteria}>
+                        <List disablePadding component={'ul'} style={{ marginTop: 8 }}>
+                            <ListItem disableGutters className={classes.passwordCriteria}>
                                 {getPasswordCriteriaIcon(passwordErrors.minLengthRequired)}
                                 <Typography variant={'body1'}>At least 8 characters in length</Typography>
                             </ListItem>
-                            <ListItem className={classes.passwordCriteria}>
+                            <ListItem disableGutters className={classes.passwordCriteria}>
                                 {getPasswordCriteriaIcon(passwordErrors.atLeast1NumberRequired)}
                                 <Typography variant={'body1'}>At least 1 digit</Typography>
                             </ListItem>
-                            <ListItem className={classes.passwordCriteria}>
+                            <ListItem disableGutters className={classes.passwordCriteria}>
                                 {getPasswordCriteriaIcon(passwordErrors.atLeast1UpperCharRequired)}
                                 <Typography variant={'body1'}>At least 1 uppercase letter</Typography>
                             </ListItem>
-                            <ListItem className={classes.passwordCriteria}>
+                            <ListItem disableGutters className={classes.passwordCriteria}>
                                 {getPasswordCriteriaIcon(passwordErrors.atLeast1LowerCharRequired)}
                                 <Typography variant={'body1'}>At least 1 lowercase letter</Typography>
                             </ListItem>
-                            <ListItem className={classes.passwordCriteria}>
+                            <ListItem disableGutters className={classes.passwordCriteria}>
                                 {getPasswordCriteriaIcon(passwordErrors.atLeast1SplCharRequired)}
                                 <Typography variant={'body1'}>
                                     At least 1 special character: (valid: ! @ # $ ^ &)

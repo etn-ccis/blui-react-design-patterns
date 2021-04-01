@@ -22,7 +22,7 @@ import { useDispatch } from 'react-redux';
 // Other
 import { createStyles, Theme, makeStyles, useTheme } from '@material-ui/core/styles';
 import { listItems as presidents, President } from './list';
-import { InfoListItem, Spacer } from '@pxblue/react-components';
+import { EmptyState, InfoListItem, Spacer } from '@pxblue/react-components';
 import { DRAWER_WIDTH } from '../../../assets/constants';
 import clsx from 'clsx';
 
@@ -70,28 +70,13 @@ const useStyles = makeStyles((theme: Theme) =>
 export const searchResults = (searchString: string): President[] => {
     const q = searchString.toLowerCase().trim();
     return reversedPresidentList.filter((item: President): boolean => {
-        if (
-            item.president
-                .toLowerCase()
-                .trim()
-                .includes(q)
-        ) {
+        if (item.president.toLowerCase().trim().includes(q)) {
             return true;
         }
-        if (
-            item.party
-                .toLowerCase()
-                .trim()
-                .includes(q)
-        ) {
+        if (item.party.toLowerCase().trim().includes(q)) {
             return true;
         }
-        if (
-            item.took_office
-                .toLowerCase()
-                .trim()
-                .includes(q)
-        ) {
+        if (item.tookOffice.toLowerCase().trim().includes(q)) {
             return true;
         }
         return false;
@@ -203,15 +188,27 @@ export const SearchBar = (): JSX.Element => {
                         icon={<Person />}
                         title={item.president}
                         subtitle={item.party}
-                        info={item.took_office}
+                        info={item.tookOffice}
                         statusColor={'transparent'}
                         iconColor={theme.palette.text.primary}
                     />
                 ))}
-                {list.length < 1 && (
-                    <InfoListItem icon={<Error />} title={'0 results'} subtitle={'No matching presidents'} />
-                )}
             </List>
+            {list.length < 1 && (
+                <div
+                    style={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        height: `calc(100vh - ${theme.spacing(8)}px)`,
+                    }}
+                >
+                    <EmptyState
+                        icon={<Error fontSize={'inherit'} />}
+                        title={'0 results'}
+                        description={'No matching presidents'}
+                    />
+                </div>
+            )}
         </div>
     );
 };

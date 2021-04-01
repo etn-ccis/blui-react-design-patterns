@@ -15,6 +15,6 @@ describe('Loading states', () => {
         cy.get('[data-cy=toolbar-refresh]').click()
         cy.get(':nth-child(1) > .MuiPaper-root > [data-cy=placeholder]').should('be.visible')
         cy.wait(300)
-        cy.get(':nth-child(1) > .MuiPaper-root > [data-cy=placeholder]').should('not.be.visible')
+        cy.get(':nth-child(1) > .MuiPaper-root > [data-cy=placeholder]').should('not.exist')
     });
 });

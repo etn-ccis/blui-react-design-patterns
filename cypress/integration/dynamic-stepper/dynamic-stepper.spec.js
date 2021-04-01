@@ -24,7 +24,7 @@ describe('Dynamic stepper', () => {
         cy.contains('Go To Work').click()
         cy.contains('Go To Work').click()
         cy.get('[data-cy=remove-step]').click()
-        cy.contains('Go To Work').should('not.be.visible')
+        cy.contains('Go To Work').should('not.exist')
         cy.contains('Cook Dinner').click()
         cy.get('[data-cy=remove-step]').click()
         

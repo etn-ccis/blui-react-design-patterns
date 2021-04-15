@@ -40,7 +40,9 @@
         "cy:run": "cypress run",
         "cypress:open": "cypress open",
         "cytest": "start-server-and-test start http://localhost:3000 cy:run",
-        "precommit": "yarn prettier && yarn lint && yarn test"
+        "precommit": "yarn prettier && yarn lint && yarn test",
+        "coverage": "yarn test --coverage --watchAll=false",
+        "codecov": "./node_modules/.bin/codecov -f coverage/coverage-final.json"
     },
     "browserslist": {
         "production": [
@@ -77,6 +79,7 @@
         "@wojtekmaj/enzyme-adapter-react-17": "^0.6.0",
         "chai": "^4.2.0",
         "chance": "^1.1.6",
+        "codecov": "^3.8.1",
         "cypress": "^6.0.0",
         "enzyme": "^3.10.0",
         "enzyme-adapter-react-16": "^1.14.0",

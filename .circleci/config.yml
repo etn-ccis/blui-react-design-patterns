@@ -33,7 +33,7 @@ jobs:
                 name: Unit Tests
                 command: |
                     yarn test --coverage --watchAll=false
-                    - codecov/upload:
+            - codecov/upload:
                 file: './coverage/clover.xml'
                 token: 74ebd8f2-0b51-4873-972a-82c2b3509b37
             - run:

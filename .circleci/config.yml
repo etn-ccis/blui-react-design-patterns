@@ -1,4 +1,6 @@
-version: 2
+version: 2.1
+orbs:
+    codecov: codecov/codecov@1.1.3
 jobs:
     build_project:
         working_directory: ~/react-design-patterns
@@ -30,11 +32,15 @@ jobs:
             - run:
                 name: Unit Tests
                 command: |
-                    yarn test
+                    yarn test --coverage --watchAll=false
             - run:
                 name: Build Project
                 command: |
                     yarn build
+            - persist_to_workspace:
+                root: .
+                paths:
+                    - coverage
 
     cypress_tests:
         working_directory: ~/react-design-patterns
@@ -62,6 +68,18 @@ jobs:
             - store_artifacts:
                 path: cypress/screenshots
 
+    coverage_report:
+        working_directory: ~/react-design-patterns
+        docker:
+            - image: circleci/node:12.6-browsers
+        steps:
+            - checkout
+            - attach_workspace:
+                at: .
+            - codecov/upload:
+                file: './coverage/clover.xml'
+                token: 74ebd8f2-0b51-4873-972a-82c2b3509b37
+
 workflows:
     version: 2
     react_design_patterns:
@@ -75,3 +93,10 @@ workflows:
                             only:
                                 - master
                                 - dev
+            - coverage_report:
+                   requires:
+                        - build_project
+                   filters:
+                        branches:
+                            only:
+                                - master

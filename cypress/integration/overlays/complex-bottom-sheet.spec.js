@@ -12,7 +12,7 @@ describe('Complex bottom sheet', () => {
         cy.get('[data-cy=pxb-toolbar]').should('contain', 'Complex Bottom Sheet');
     });
 
-    it('should open and action items display', () => {
+    it('should open overlay and action items display', () => {
         cy.get('[data-cy=action-menu]').click()
         cy.get('[data-cy=btm-sheet-sort]').should('contain', 'Sort By')
         .and('contain', 'Time')
@@ -25,7 +25,7 @@ describe('Complex bottom sheet', () => {
         cy.get('[data-cy=btm-sheet-cancel]').should('contain', 'Close')
     });
 
-    it('should dismiss when page is selected', () => {
+    it('should dismiss overlay when page is selected', () => {
         cy.get('[data-cy=action-menu]').click()
         cy.get('[data-cy=btm-sheet-sort]').should('be.visible')
         cy.get('body').click(top)

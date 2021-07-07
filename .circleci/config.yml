@@ -103,6 +103,7 @@ workflows:
             - coverage_reports:
                    requires:
                         - build_project
+                        - cypress_tests
                 #    filters:
                 #         branches:
                 #             only:

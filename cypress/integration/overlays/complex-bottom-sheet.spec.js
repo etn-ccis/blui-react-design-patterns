@@ -28,7 +28,7 @@ describe('Complex bottom sheet', () => {
     it('should dismiss when page is selected', () => {
         cy.get('[data-cy=action-menu]').click()
         cy.get('[data-cy=btm-sheet-sort]').should('be.visible')
-        cy.get('body').click()
+        cy.get('body').click(top)
         cy.get('[data-cy=btm-sheet-sort]').should('not.be.visible')
     });
 });

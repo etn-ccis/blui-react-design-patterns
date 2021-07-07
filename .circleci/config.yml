@@ -95,11 +95,11 @@ workflows:
             - cypress_tests:
                     requires:
                         - build_project
-                    filters:
-                        branches:
-                            only:
-                                - master
-                                - dev
+                    # filters:
+                    #     branches:
+                    #         only:
+                    #             - master
+                    #             - dev
             - coverage_reports:
                    requires:
                         - build_project

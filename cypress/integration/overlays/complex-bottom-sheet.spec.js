@@ -31,4 +31,14 @@ describe('Complex bottom sheet', () => {
         cy.get('body').click(top)
         cy.get('[data-cy=btm-sheet-sort]').should('not.be.visible')
     });
+    it('should display empty state', () => {
+        cy.get('[data-cy=action-menu]').click()
+        cy.get('[data-cy=active-alarms]').click()
+        cy.get('[data-cy=alarms]').click()
+        cy.get('[data-cy=settings]').click()
+        cy.get('[data-cy=sessions]').click()
+        cy.get('[data-cy=btm-sheet-cancel]').click()
+        //cy.get('body').click(top)
+        cy.get('[data-test=frame]').should('contain', 'No Events Available')
+    });
 });

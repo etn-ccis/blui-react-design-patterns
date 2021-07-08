@@ -28,7 +28,7 @@ describe('Complex bottom sheet', () => {
     it('should dismiss overlay when page is selected', () => {
         cy.get('[data-cy=action-menu]').click()
         cy.get('[data-cy=btm-sheet-sort]').should('be.visible')
-        cy.get('body').click(top)
+        cy.get('body').click(top, {force: true})
         cy.get('[data-cy=btm-sheet-sort]').should('not.be.visible')
     });
     it('should display empty state', () => {
@@ -38,7 +38,6 @@ describe('Complex bottom sheet', () => {
         cy.get('[data-cy=settings]').click()
         cy.get('[data-cy=sessions]').click()
         cy.get('[data-cy=btm-sheet-cancel]').click()
-        //cy.get('body').click(top)
         cy.get('[data-test=frame]').should('contain', 'No Events Available')
     });
 });

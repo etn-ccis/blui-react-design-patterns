@@ -77,7 +77,7 @@ export const App: React.FC = () => {
                 },
             }}
             variant={isMobile ? 'temporary' : 'permanent'}
-            activeItem={selected}
+            activeItem={selected !== '' ? selected : undefined}
         >
             <DrawerHeader
                 title={'PX Blue'}

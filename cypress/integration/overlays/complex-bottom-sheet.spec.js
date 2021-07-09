@@ -12,7 +12,7 @@ describe('Complex bottom sheet', () => {
         cy.get('[data-cy=pxb-toolbar]').should('contain', 'Complex Bottom Sheet');
     });
 
-    it('should open and action items display', () => {
+    it('should open overlay and action items display', () => {
         cy.get('[data-cy=action-menu]').click()
         cy.get('[data-cy=btm-sheet-sort]').should('contain', 'Sort By')
         .and('contain', 'Time')
@@ -25,10 +25,19 @@ describe('Complex bottom sheet', () => {
         cy.get('[data-cy=btm-sheet-cancel]').should('contain', 'Close')
     });
 
-    it('should dismiss when page is selected', () => {
+    it('should dismiss overlay when page is selected', () => {
         cy.get('[data-cy=action-menu]').click()
         cy.get('[data-cy=btm-sheet-sort]').should('be.visible')
-        cy.get('body').click()
+        cy.get('body').click(top, {force: true})
         cy.get('[data-cy=btm-sheet-sort]').should('not.be.visible')
+    });
+    it('should display empty state', () => {
+        cy.get('[data-cy=action-menu]').click()
+        cy.get('[data-cy=active-alarms]').click()
+        cy.get('[data-cy=alarms]').click()
+        cy.get('[data-cy=settings]').click()
+        cy.get('[data-cy=sessions]').click()
+        cy.get('[data-cy=btm-sheet-cancel]').click()
+        cy.get('[data-test=frame]').should('contain', 'No Events Available')
     });
 });

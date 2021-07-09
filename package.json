@@ -30,6 +30,7 @@
     },
     "scripts": {
         "start": "react-scripts start",
+        "start:cytest": "react-scripts -r @cypress/instrument-cra start",
         "build": "react-scripts build",
         "test": "react-scripts test",
         "eject": "react-scripts eject",
@@ -39,7 +40,7 @@
         "prettier:check": "prettier \"src/**/**.{ts,tsx,js,jsx,json,css,scss,html}\" --check",
         "cy:run": "cypress run",
         "cypress:open": "cypress open",
-        "cytest": "start-server-and-test start http://localhost:3000 cy:run",
+        "cytest": "start-server-and-test start:cytest http://localhost:3000 cy:run",
         "precommit": "yarn prettier && yarn lint && yarn test",
         "coverage": "yarn test --coverage --watchAll=false",
         "codecov": "./node_modules/.bin/codecov -f coverage/coverage-final.json"
@@ -62,6 +63,8 @@
     "devDependencies": {
         "@4tw/cypress-drag-drop": "^1.4.0",
         "@babel/helper-call-delegate": "^7.11.4",
+        "@cypress/code-coverage": "^3.9.8",
+        "@cypress/instrument-cra": "^1.4.0",
         "@pxblue/eslint-config": "^2.0.0",
         "@pxblue/prettier-config": "^1.0.2",
         "@testing-library/jest-dom": "^5.0.0",
@@ -77,6 +80,7 @@
         "@typescript-eslint/eslint-plugin": "^4.0.0",
         "@typescript-eslint/parser": "^4.0.0",
         "@wojtekmaj/enzyme-adapter-react-17": "^0.6.0",
+        "babel-plugin-istanbul": "^6.0.0",
         "chai": "^4.2.0",
         "chance": "^1.1.6",
         "codecov": "^3.8.1",
@@ -92,5 +96,8 @@
         "typescript": "^4.0.0",
         "yarn-audit-fix": "^4.0.0"
     },
-    "prettier": "@pxblue/prettier-config"
+    "prettier": "@pxblue/prettier-config",
+    "nyc": {
+        "report-dir": "cypress-coverage"
+      }
 }

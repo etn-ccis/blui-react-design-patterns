@@ -67,8 +67,12 @@ jobs:
                     yarn cytest
             - store_artifacts:
                 path: cypress/screenshots
+            - persist_to_workspace:
+                root: .
+                paths:
+                    - cypress-coverage
 
-    coverage_report:
+    coverage_reports:
         working_directory: ~/react-design-patterns
         docker:
             - image: circleci/node:12.6-browsers
@@ -78,6 +82,9 @@ jobs:
                 at: .
             - codecov/upload:
                 file: './coverage/clover.xml'
+                token: 74ebd8f2-0b51-4873-972a-82c2b3509b37
+            - codecov/upload:
+                file: './cypress-coverage/clover.xml'
                 token: 74ebd8f2-0b51-4873-972a-82c2b3509b37
 
 workflows:
@@ -93,9 +100,10 @@ workflows:
                             only:
                                 - master
                                 - dev
-            - coverage_report:
+            - coverage_reports:
                    requires:
                         - build_project
+                        - cypress_tests
                    filters:
                         branches:
                             only:

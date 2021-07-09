@@ -16,6 +16,7 @@ package-lock.json
 
 # Testing
 /coverage
+/cypress-coverage
 fake-api-server/fake-db/data
 test-api-port
 
@@ -39,6 +40,7 @@ test-api-port
 junit.xml
 eslint.json
 .envrc
+.nyc_output
 
 
 # Linting

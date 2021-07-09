@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import {
     AppBar,
     Button,
@@ -11,14 +11,25 @@ import {
     RadioGroup,
     FormControlLabel,
     FormControl,
+    List,
+    // Box,
 } from '@material-ui/core';
 import { makeStyles, Theme, useTheme } from '@material-ui/core/styles';
 import MenuIcon from '@material-ui/icons/Menu';
-import { Folder, VerticalAlignTop } from '@material-ui/icons';
+import { Folder, VerticalAlignTop, Description } from '@material-ui/icons';
+// import LinearProgress from '@material-ui/core/LinearProgress';
+// import LinearProgressWithLabel, { LinearProgressProps } from '@material-ui/core/LinearProgress';
+import LinearProgress, { LinearProgressProps } from '@material-ui/core/LinearProgress';
 import { useDispatch } from 'react-redux';
 import { TOGGLE_DRAWER } from '../../../redux/actions';
+import { InfoListItem } from '@pxblue/react-components';
 import * as Colors from '@pxblue/colors';
-
+// import { Alarm } from '@material-ui/icons';
+type FolderItem = {
+    name: string;
+    progress: number;
+    status: string;
+};
 const foldersList = [
     { label: 'The Best Dev Team', value: '1' },
     { label: 'The Best Design Team', value: '2' },
@@ -27,6 +38,13 @@ const foldersList = [
     { label: 'The Best Facility Team', value: '5' },
     { label: 'The The Proudest Team', value: '6' },
 ];
+const LinearProgressWithLabel = (props: LinearProgressProps & { value: number }): JSX.Element => (
+// export const LinearProgressWithLabel = (props: LinearProgressProps & { value: number }): JSX.Element => {
+    // return (
+        <LinearProgress variant="determinate" {...props} />
+    // );
+);
+const uploadFileList: FolderItem[] = [];
 
 const useStyles = makeStyles((theme: Theme) => ({
     container: {
@@ -68,10 +86,90 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
 }));
 
+const uploadFileItem = (): FolderItem => ({
+    name: 'PX Blue is Awesome.pdf',
+    progress: 0,
+    status: `Uploading (0%)`,
+});
+
 export const ProgressBar = (): JSX.Element => {
     const dispatch = useDispatch();
     const theme = useTheme();
     const classes = useStyles();
+    const [list, setUploadFileList] = useState<FolderItem[]>(uploadFileList);
+    const [progress, setProgress] = useState([0]);
+
+    // const uploadFile = useCallback((): void => {
+    //     setUploadFileList([...list, uploadFileItem]);
+    // }, [list, setUploadFileList]);
+
+    const uploadFile = useCallback((): void => {
+        setUploadFileList([...list, uploadFileItem()]);
+        // for (let i = 0; i <= list.length; i++) {
+        //     const interval = setInterval(() => {
+        //         if (list[i]) {
+        //             if (list[i].progress < 100) {
+        //                 list[i].progress += 1;
+        //                 list[i].status = `Uploading (${list[i].progress}%)`;
+        //             } else {
+        //                 // this.uploadFileList[i].status = 'Complete';
+        //                 clearInterval(interval);
+        //             }
+        //         }
+        //     }, 100);
+        //     setTimeout(() => {
+        //         list.splice(i, 1);
+        //     }, 10000);
+        // }
+    }, [list, setUploadFileList]);
+    
+    useEffect(() => {
+        // uploadFile();
+        for (let i = 0; i <= list.length; i++) {
+        setInterval(() => {
+            // setProgress((prevProgress) => (prevProgress >= 100 ? 10 : prevProgress + 10));
+            if (list[i]) {
+                            if (list[i].progress < 100) {
+                                list[i].progress += 1;
+                                list[i].status = `Uploading (${list[i].progress}%)`;
+                                // setProgress()
+                                setProgress([
+                                    ...progress,
+                                    list[i].progress
+                                  ]);
+                                // setProgress([list[i].progress]);
+                                // setProgress( progress1 => [...progress1, list[i].progress]);
+                                // setProgress( (arr) => {
+                                //     [...arr, list[i].progress]
+                                // });
+
+                            } else {
+                                list[i].status = 'Complete';
+                                setProgress([
+                                    ...progress,
+                                    list[i].progress
+                                  ]);
+                                // clearInterval(timer);
+                                //   setTimeout(() => {
+                                //       setProgress([
+                                //           ...progress,
+                                //           list[i].progress
+                                //         ]);
+                                //         list.splice(i, 1);
+                                //   }, 3000);
+                            }
+                        }
+          }, 100);
+          setTimeout(() => {
+            // setProgress([
+            //               ...progress,
+            //               list[i].progress
+            //             ]);
+            // list.splice(i, 1);
+            // clearInterval(timer);
+            
+        }, 10000);
+    }}, [list, setUploadFileList]);
 
     return (
         <div style={{ backgroundColor: theme.palette.background.paper, minHeight: '100vh' }}>
@@ -91,7 +189,7 @@ export const ProgressBar = (): JSX.Element => {
                         </IconButton>
                     </Hidden>
                     <Typography variant={'h6'} color={'inherit'}>
-                        Progress Bars (Indeterminate)
+                        Progress Bars
                     </Typography>
                     <div />
                 </Toolbar>
@@ -102,6 +200,7 @@ export const ProgressBar = (): JSX.Element => {
                         variant={'contained'}
                         color={'primary'}
                         startIcon={<VerticalAlignTop />}
+                        onClick={uploadFile}
                     >
                         <Typography noWrap color={'inherit'}>
                             UPLOAD NEW FILE
@@ -124,6 +223,32 @@ export const ProgressBar = (): JSX.Element => {
                         </RadioGroup>
                     </FormControl>
                 </Card>
+                <List data-cy={'list-content'} disablePadding component="nav" className={'list'}>
+                {list.map(
+                    (item, i): JSX.Element => (
+                        <InfoListItem
+                            key={i}
+                            hidePadding
+                            ripple
+                            title={item.name}
+                            subtitle={item.status}
+                            icon={<Description />}
+                            iconAlign='left'
+                            iconColor={Colors.black[500]}
+                            info={[
+                                <LinearProgressWithLabel value={item.progress} key={`progress${i}`}/>
+                            ]}
+                            rightComponent={
+                                <Button
+                                    variant="outlined"
+                                >
+                                Cancel    
+                                </Button>
+                            }
+                        />
+                    )
+                )}
+            </List>
             </div>
         </div>
     );

@@ -49,6 +49,13 @@ export const PAGES: Routes = {
         title: 'Loading States',
         route: 'loading-states',
     },
+    LOADING_WAITING_STATES: {
+        title: 'Loading & Waiting',
+        PROGRESS_BAR_INDETERMINATE: {
+            title: 'Progress Bars (Indet.)',
+            route: 'progress-bar-indeterminate',
+        },
+    },
     OVERLAYS: {
         title: 'Overlays',
         // DIALOG: {
@@ -106,6 +113,9 @@ export type Routes = {
         RESPONSIVE_TABLE: RouteMetaData;
     };
     LOADING: RouteMetaData;
+    LOADING_WAITING_STATES: RouteMetaData & {
+        PROGRESS_BAR_INDETERMINATE: RouteMetaData;
+    };
     OVERLAYS: RouteMetaData & {
         // DIALOG: RouteMetaData;
         BASIC_BOTTOM_SHEET: RouteMetaData;

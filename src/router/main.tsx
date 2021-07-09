@@ -18,6 +18,7 @@ import { ResponsiveTable } from '../pages/lists/responsive-table';
 import { BasicBottomSheet } from '../pages/overlays/basic-bottom-sheet';
 import { ComplexBottomSheet } from '../pages/overlays/complex-bottom-sheet';
 import { DynamicStepper } from '../pages/dynamic-stepper';
+import { ProgressBarIndeterminate } from '../pages/loading-waiting-states/progress-bar-indeterminate';
 /*
 The main page body, which contains the route definitions
 */
@@ -43,5 +44,11 @@ export const Main = (): JSX.Element => (
         <Route exact path={`/${PAGES.OVERLAYS.COMPLEX_BOTTOM_SHEET.route || ''}`} component={ComplexBottomSheet} />
 
         <Route exact path={`/${PAGES.DYNAMIC_STEPPER.route || ''}`} component={DynamicStepper} />
+        <Route exact path={`/${PAGES.DYNAMIC_STEPPER.route || ''}`} component={DynamicStepper} />
+        <Route
+            exact
+            path={`/${PAGES.LOADING_WAITING_STATES.PROGRESS_BAR_INDETERMINATE.route || ''}`}
+            component={ProgressBarIndeterminate}
+        />
     </Switch>
 );

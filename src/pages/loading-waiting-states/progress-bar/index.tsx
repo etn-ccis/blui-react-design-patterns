@@ -41,7 +41,7 @@ const uploadFileList: FolderItem[] = [];
 
 const useStyles = makeStyles((theme: Theme) => ({
     container: {
-        padding: `${theme.spacing(2)} ${theme.spacing(2)}`,
+        padding: `${theme.spacing(2)}px ${theme.spacing(2)}px`,
         maxWidth: 600,
         margin: '0 auto',
     },
@@ -70,7 +70,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         margin: 0,
         width: '100%',
         padding: theme.spacing(1),
-        borderBottom: '1px solid #efe9e9',
+        borderBottom: `1px solid ${Colors.gray[50]}`,
         '&:last-child': {
             borderBottom: 'none',
         },

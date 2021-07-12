@@ -41,13 +41,17 @@ const uploadFileList: FolderItem[] = [];
 
 const useStyles = makeStyles((theme: Theme) => ({
     container: {
-        padding: '16px 24px',
+        padding: `${theme.spacing(2)} ${theme.spacing(2)}`,
         maxWidth: 600,
         margin: '0 auto',
     },
-    buttonContainer: {
+    uploadButtonContainer: {
         textAlign: 'right',
         paddingBottom: theme.spacing(2),
+    },
+    closeButtonContainer: {
+        color: Colors.black[50],
+        borderColor: Colors.black[50],
     },
     cardContentStyle: {
         padding: 0,
@@ -60,7 +64,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
     iconStyle: {
         fill: Colors.gray[500],
-        margin: '0 16px 0 8px',
+        margin: `0 ${theme.spacing(2)}px 0 ${theme.spacing(1)}px`,
     },
     formLabel: {
         margin: 0,
@@ -71,11 +75,19 @@ const useStyles = makeStyles((theme: Theme) => ({
             borderBottom: 'none',
         },
     },
-    appbarRoot: {
-        padding: 0,
-    },
     toolbarGutters: {
-        padding: '0 16px',
+        padding: `0 ${theme.spacing(2)}px`,
+    },
+    placementOfList: {
+        position: 'absolute',
+        bottom: theme.spacing(3),
+        right: theme.spacing(3),
+    },
+    infoListItemStyle: {
+        marginBottom: theme.spacing(2),
+        '&:last-child': {
+            marginBottom: 0,
+        },
     },
 }));
 
@@ -115,7 +127,7 @@ export const ProgressBar = (): JSX.Element => {
 
     return (
         <div style={{ backgroundColor: theme.palette.background.paper, minHeight: '100vh' }}>
-            <AppBar data-cy="pxb-toolbar" position={'sticky'} classes={{ root: classes.appbarRoot }}>
+            <AppBar data-cy="pxb-toolbar" position={'sticky'}>
                 <Toolbar classes={{ gutters: classes.toolbarGutters }}>
                     <Hidden mdUp={true}>
                         <IconButton
@@ -137,7 +149,7 @@ export const ProgressBar = (): JSX.Element => {
                 </Toolbar>
             </AppBar>
             <div className={classes.container}>
-                <div className={classes.buttonContainer}>
+                <div className={classes.uploadButtonContainer}>
                     <Button
                         variant={'contained'}
                         color={'primary'}
@@ -169,21 +181,26 @@ export const ProgressBar = (): JSX.Element => {
                         </RadioGroup>
                     </FormControl>
                 </Card>
-                <List data-cy={'list-content'} disablePadding component="nav" className={'list'}>
+                <List data-cy={'list-content'} disablePadding component="nav" className={classes.placementOfList}>
                     {list.map(
                         (item, i): JSX.Element => (
+                            <div key={`itemKey${i}`} className={classes.infoListItemStyle}>
                             <InfoListItem
                                 key={i}
                                 hidePadding
                                 ripple
+                                backgroundColor={Colors.black[900]}
+                                fontColor={Colors.black[50]}
+                                color={Colors.black[50]}
                                 title={item.name}
                                 subtitle={item.status}
                                 icon={<Description />}
                                 iconAlign="left"
-                                iconColor={Colors.black[500]}
-                                info={[<LinearProgressWithLabel value={item.progress} key={`progress${i}`} />]}
-                                rightComponent={<Button variant="outlined">Cancel</Button>}
+                                iconColor={Colors.black[200]}
+                                rightComponent={<Button variant="outlined" className={classes.closeButtonContainer}>Cancel</Button>}
                             />
+                                <LinearProgressWithLabel value={item.progress} key={`progress${i}`} />
+                            </div>
                         )
                     )}
                 </List>

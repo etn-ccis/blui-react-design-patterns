@@ -22,6 +22,7 @@ import { TOGGLE_DRAWER } from '../../../redux/actions';
 import { InfoListItem } from '@pxblue/react-components';
 import * as Colors from '@pxblue/colors';
 type FolderItem = {
+    id: string;
     name: string;
     progress: number;
     status: string;
@@ -90,8 +91,8 @@ const useStyles = makeStyles((theme: Theme) => ({
         },
     },
 }));
-
-const uploadFileItem = (): FolderItem => ({
+const createFileItem = (): FolderItem => ({
+    id: `${Math.random() * 100}`,
     name: 'PX Blue is Awesome.pdf',
     progress: 0,
     status: `Uploading (0%)`,
@@ -102,28 +103,42 @@ export const ProgressBar = (): JSX.Element => {
     const theme = useTheme();
     const classes = useStyles();
     const [list, setUploadFileList] = useState<FolderItem[]>(uploadFileList);
-    const [progress, setProgress] = useState([0]);
 
     const uploadFile = useCallback((): void => {
-        setUploadFileList([...list, uploadFileItem()]);
+        setUploadFileList((oldList) => [...oldList, createFileItem()]);
     }, [list, setUploadFileList]);
 
     useEffect(() => {
-        for (let i = 0; i <= list.length; i++) {
-            setInterval(() => {
-                if (list[i]) {
-                    if (list[i].progress < 100) {
-                        list[i].progress += 1;
-                        list[i].status = `Uploading (${list[i].progress}%)`;
-                        setProgress([...progress, list[i].progress]);
-                    } else {
-                        list[i].status = 'Complete';
-                        setProgress([...progress, list[i].progress]);
-                    }
+        const progressInterval = setInterval(() => {
+            const newList = [...list];
+            for (let i = 0; i < list.length; i++) {
+                if (list[i].progress < 100) {
+                    const newItem: FolderItem = {
+                        ...list[i],
+                        progress: list[i].progress + 1,
+                        status: `Uploading (${list[i].progress + 1})`,
+                    };
+                    newList[i] = newItem;
+                } else {
+                    const newItem: FolderItem = {
+                        ...list[i],
+                        status: `Complete`,
+                    };
+                    newList[i] = newItem;
+                    setTimeout(() => {
+                        setUploadFileList((oldList) => oldList.filter((item) => item.id !== list[i].id));
+                    }, 3000);
                 }
-            }, 100);
+            }
+            setUploadFileList(newList);
+        }, 100);
+        if (list.length < 1) {
+            clearInterval(progressInterval);
         }
-    }, [list, setUploadFileList]);
+        return (): void => {
+            clearInterval(progressInterval);
+        };
+    }, [list]);
 
     return (
         <div style={{ backgroundColor: theme.palette.background.paper, minHeight: '100vh' }}>
@@ -185,20 +200,24 @@ export const ProgressBar = (): JSX.Element => {
                     {list.map(
                         (item, i): JSX.Element => (
                             <div key={`itemKey${i}`} className={classes.infoListItemStyle}>
-                            <InfoListItem
-                                key={i}
-                                hidePadding
-                                ripple
-                                backgroundColor={Colors.black[900]}
-                                fontColor={Colors.black[50]}
-                                color={Colors.black[50]}
-                                title={item.name}
-                                subtitle={item.status}
-                                icon={<Description />}
-                                iconAlign="left"
-                                iconColor={Colors.black[200]}
-                                rightComponent={<Button variant="outlined" className={classes.closeButtonContainer}>Cancel</Button>}
-                            />
+                                <InfoListItem
+                                    key={i}
+                                    hidePadding
+                                    ripple
+                                    backgroundColor={Colors.black[900]}
+                                    fontColor={Colors.black[50]}
+                                    color={Colors.black[50]}
+                                    title={item.name}
+                                    subtitle={item.status}
+                                    icon={<Description />}
+                                    iconAlign="left"
+                                    iconColor={Colors.black[200]}
+                                    rightComponent={
+                                        <Button variant="outlined" className={classes.closeButtonContainer}>
+                                            Cancel
+                                        </Button>
+                                    }
+                                />
                                 <LinearProgressWithLabel value={item.progress} key={`progress${i}`} />
                             </div>
                         )

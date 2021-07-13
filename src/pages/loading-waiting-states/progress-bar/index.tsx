@@ -13,7 +13,7 @@ import {
     FormControl,
     List,
 } from '@material-ui/core';
-import { makeStyles, Theme, useTheme } from '@material-ui/core/styles';
+import { makeStyles, Theme } from '@material-ui/core/styles';
 import MenuIcon from '@material-ui/icons/Menu';
 import { Folder, VerticalAlignTop, Description } from '@material-ui/icons';
 import LinearProgress, { LinearProgressProps } from '@material-ui/core/LinearProgress';
@@ -103,7 +103,6 @@ const createFileItem = (): FolderItem => ({
 
 export const ProgressBar = (): JSX.Element => {
     const dispatch = useDispatch();
-    const theme = useTheme();
     const classes = useStyles();
     const [list, setUploadFileList] = useState<FolderItem[]>(uploadFileList);
 
@@ -130,7 +129,7 @@ export const ProgressBar = (): JSX.Element => {
                     newList[i] = newItem;
                     setTimeout(() => {
                         setUploadFileList((oldList) => oldList.filter((item) => item.id !== list[i].id));
-                    }, 3000);
+                    }, 10000);
                 }
             }
             setUploadFileList(newList);

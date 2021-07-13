@@ -3,6 +3,9 @@ import {
     AppBar,
     Button,
     Card,
+    CardActions,
+    CardHeader,
+    CardContent,
     Checkbox,
     CircularProgress,
     Divider,
@@ -17,12 +20,11 @@ import MenuIcon from '@material-ui/icons/Menu';
 import { useDispatch } from 'react-redux';
 import { TOGGLE_DRAWER } from '../../../redux/actions';
 import { eulaDetails } from './eulaText';
-import * as Colors from '@pxblue/colors';
 
 const useStyles = makeStyles((theme: Theme) => ({
     container: {
         padding: `${theme.spacing(2)}px ${theme.spacing(2)}px`,
-        maxWidth: '600px',
+        maxWidth: '450px',
         margin: '0 auto',
         height: `calc(100vh - ${theme.spacing(8)}px)`,
         [theme.breakpoints.down('xs')]: {
@@ -32,68 +34,76 @@ const useStyles = makeStyles((theme: Theme) => ({
     toolbarGutters: {
         padding: `0 ${theme.spacing(2)}px`,
     },
-    eulaContainer: {
-        height: `calc(100vh - 100px)`,
+    reloadButton: {
+        width: '100%',
+    },
+    eulaContent: {
+        flex: '1 1 0px',
+        overflow: 'auto',
+    },
+    eulaConfirmationCheck: {
+        flex: '0 0 auto',
+        marginRight: 0,
+        marginTop: theme.spacing(2),
+    },
+    card: {
         position: 'relative',
         padding: 0,
-    },
-    loadingOverlayContainer: {
+        width: '100%',
+        height: '100%',
+        maxWidth: '450px',
+        maxHeight: '730px',
+        overflow: 'auto',
         display: 'flex',
+        flexDirection: 'column',
+        [theme.breakpoints.down('xs')]: {
+            maxWidth: 'none',
+            maxHeight: 'none',
+            borderRadius: 0,
+        },
+    },
+    cardTitle: {
+        padding: `${theme.spacing(4)}px ${theme.spacing(3)}px 0 ${theme.spacing(3)}px`,
+        [theme.breakpoints.down('xs')]: {
+            padding: `${theme.spacing(2)}px ${theme.spacing(2)}px 0 ${theme.spacing(2)}px`,
+        },
+    },
+    cardContent: {
+        flex: '1 1 0px',
+        overflow: 'auto',
+        display: 'flex',
+        flexDirection: 'column',
+        position: 'relative',
+        padding: `${theme.spacing(2)}px ${theme.spacing(3)}px`,
+        [theme.breakpoints.down('xs')]: {
+            padding: `${theme.spacing(2)}px ${theme.spacing(2)}px ${theme.spacing(3)}px ${theme.spacing(2)}px`,
+        },
+    },
+    cardActions: {
+        padding: theme.spacing(3),
+        justifyContent: 'flex-end',
+        [theme.breakpoints.down('xs')]: {
+            padding: theme.spacing(2),
+        },
+    },
+    overlayBackground: {
         position: 'absolute',
+        display: 'flex',
+        backgroundColor: 'rgba(255,255,255,0.6)',
+        alignItems: 'center',
+        justifyContent: 'center',
+        flexDirection: 'column',
         top: 0,
         left: 0,
         width: '100%',
         height: '100%',
         zIndex: 4,
-        justifyContent: 'center',
-        alignItems: 'center',
-        flexDirection: 'column',
-    },
-    eulaDetails: {
-        flex: '1 1 0',
-        display: 'flex',
-        flexDirection: 'column',
-        height: '100%',
-    },
-    eulaDetailSection: {
-        overflow: 'auto',
-        display: 'flex',
-        flexDirection: 'column',
-        flex: '1 1 0',
-        padding: `${theme.spacing(3)}px`,
-    },
-    loadingContainer: {
-        height: '100%',
-        paddingTop: `${theme.spacing(1)}px`,
-    },
-    overlayContainer: {
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        width: '100%',
-        height: '100%',
-        background: Colors.white[200],
-        zIndex: 3,
-        opacity: 0.2,
-    },
-    btnContainer: {
-        padding: `${theme.spacing(3)}px`,
-    },
-    reloadButton: {
-        width: '100%',
-    },
-    eulaContent: {
-        paddingTop: `${theme.spacing(1)}px`,
-    },
-    eulaConfirmationCheck: {
-        padding: `0 ${theme.spacing(3)}px`,
     },
 }));
 
 export const SpinnerOverlays = (): JSX.Element => {
     const dispatch = useDispatch();
     const classes = useStyles();
-    const spinnerCircleSize = 96;
     const [eulaAccepted, setEulaAccepted] = useState(false);
     const [eulaLoaded, setEulaLoaded] = useState(false);
 
@@ -142,51 +152,56 @@ export const SpinnerOverlays = (): JSX.Element => {
                 </Toolbar>
             </AppBar>
             <div className={classes.container}>
-                <Card className={classes.eulaContainer}>
+                <Card className={classes.card}>
                     {!eulaLoaded && (
-                        <div className={classes.loadingOverlayContainer}>
-                            <CircularProgress color="secondary" size={spinnerCircleSize} />
+                        <div className={classes.overlayBackground}>
+                            <CircularProgress size={96} variant={'indeterminate'} color="secondary" />
                         </div>
                     )}
-                    <div className={`${classes.eulaDetails} ${!eulaLoaded ? classes.overlayContainer : ''}`}>
-                        <div className={classes.eulaDetailSection}>
-                            <div>
-                                <Typography variant={'h6'}>{eulaDetails.title}</Typography>
-                            </div>
-                            {!eulaLoaded && (
-                                <div className={classes.loadingContainer}>
-                                    <Typography variant="subtitle1">{eulaDetails.loadingMessage}</Typography>
-                                </div>
-                            )}
-                            {eulaLoaded && <div className={classes.eulaContent}>{eulaDetails.eulaContent}</div>}
-                        </div>
-                        <div className={classes.eulaConfirmationCheck}>
-                            <FormControlLabel
-                                control={
-                                    <Checkbox
-                                        checked={eulaAccepted}
-                                        onChange={changeCheckboxState}
-                                        name="eulaConformation"
-                                        color="primary"
-                                    />
-                                }
-                                label="I have read and agree to the Terms & Conditions"
-                            />
-                        </div>
-                        <Divider />
-                        <div className={classes.btnContainer}>
-                            <Button
-                                variant={'contained'}
-                                color={'primary'}
-                                className={classes.reloadButton}
-                                onClick={reloadEulaDetails}
-                            >
-                                <Typography noWrap color={'inherit'}>
-                                    Reload
-                                </Typography>
-                            </Button>
-                        </div>
-                    </div>
+                    <CardHeader
+                        title={
+                            <Typography variant={'h6'} style={{ fontWeight: 600 }}>
+                                {eulaDetails.title}
+                            </Typography>
+                        }
+                        className={classes.cardTitle}
+                    />
+                    <CardContent className={classes.cardContent}>
+                        {eulaLoaded ? (
+                            <Typography className={classes.eulaContent}>
+                                {eulaLoaded && eulaDetails.eulaContent}
+                            </Typography>
+                        ) : (
+                            <Typography className={classes.eulaContent} variant="subtitle1">
+                                {eulaDetails.loadingMessage}
+                            </Typography>
+                        )}
+                        <FormControlLabel
+                            className={classes.eulaConfirmationCheck}
+                            control={
+                                <Checkbox
+                                    checked={eulaAccepted}
+                                    onChange={changeCheckboxState}
+                                    name="eulaConformation"
+                                    color="primary"
+                                />
+                            }
+                            label="I have read and agree to the Terms & Conditions"
+                        />
+                    </CardContent>
+                    <Divider />
+                    <CardActions className={classes.cardActions}>
+                        <Button
+                            variant={'contained'}
+                            color={'primary'}
+                            className={classes.reloadButton}
+                            onClick={reloadEulaDetails}
+                        >
+                            <Typography noWrap color={'inherit'}>
+                                Reload
+                            </Typography>
+                        </Button>
+                    </CardActions>
                 </Card>
             </div>
         </div>

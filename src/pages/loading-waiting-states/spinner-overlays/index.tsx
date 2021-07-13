@@ -19,7 +19,7 @@ import { makeStyles, Theme } from '@material-ui/core/styles';
 import MenuIcon from '@material-ui/icons/Menu';
 import { useDispatch } from 'react-redux';
 import { TOGGLE_DRAWER } from '../../../redux/actions';
-import { eulaDetails } from './eulaText';
+import { eulaText } from './eulaText';
 
 const useStyles = makeStyles((theme: Theme) => ({
     container: {
@@ -159,23 +159,13 @@ export const SpinnerOverlays = (): JSX.Element => {
                         </div>
                     )}
                     <CardHeader
-                        title={
-                            <Typography variant={'h6'} style={{ fontWeight: 600 }}>
-                                {eulaDetails.title}
-                            </Typography>
-                        }
+                        title={<Typography variant={'h6'}>End User License Agreement</Typography>}
                         className={classes.cardTitle}
                     />
                     <CardContent className={classes.cardContent}>
-                        {eulaLoaded ? (
-                            <Typography className={classes.eulaContent}>
-                                {eulaLoaded && eulaDetails.eulaContent}
-                            </Typography>
-                        ) : (
-                            <Typography className={classes.eulaContent} variant="subtitle1">
-                                {eulaDetails.loadingMessage}
-                            </Typography>
-                        )}
+                        <Typography className={classes.eulaContent} variant={eulaLoaded ? 'body1' : 'subtitle1'}>
+                            {eulaLoaded ? eulaText : 'Loading EULA...'}
+                        </Typography>
                         <FormControlLabel
                             className={classes.eulaConfirmationCheck}
                             control={

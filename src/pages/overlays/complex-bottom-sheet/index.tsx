@@ -287,6 +287,7 @@ export const ComplexBottomSheet = (): JSX.Element => {
                             <Hero
                                 icon={<Notifications />}
                                 label={'Alarms'}
+                                data-cy={'alarms'}
                                 classes={
                                     showAlarms
                                         ? { root: classes.hero, label: classes.activeIcon, icon: classes.activeIcon }
@@ -297,6 +298,7 @@ export const ComplexBottomSheet = (): JSX.Element => {
                             <Hero
                                 icon={<Settings />}
                                 label={'Settings'}
+                                data-cy={'settings'}
                                 classes={
                                     showSettings
                                         ? { root: classes.hero, label: classes.activeIcon, icon: classes.activeIcon }
@@ -307,6 +309,7 @@ export const ComplexBottomSheet = (): JSX.Element => {
                             <Hero
                                 icon={<Update />}
                                 label={'Sessions'}
+                                data-cy={'sessions'}
                                 classes={
                                     showSessions
                                         ? { root: classes.hero, label: classes.activeIcon, icon: classes.activeIcon }

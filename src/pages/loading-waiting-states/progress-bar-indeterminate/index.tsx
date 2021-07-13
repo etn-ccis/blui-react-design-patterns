@@ -1,5 +1,5 @@
 import React from 'react';
-import { AppBar, Toolbar, Typography, Hidden, IconButton } from '@material-ui/core';
+import { AppBar, Toolbar, Typography, Hidden, IconButton, useMediaQuery } from '@material-ui/core';
 import { makeStyles, Theme, useTheme } from '@material-ui/core/styles';
 import MenuIcon from '@material-ui/icons/Menu';
 import { useDispatch } from 'react-redux';
@@ -14,17 +14,17 @@ const useStyles = makeStyles((theme: Theme) => ({
         flexDirection: 'column',
         alignItems: 'center',
         height: `calc(100vh - ${theme.spacing(8)}px)`,
-    },
-    appbarRoot: {
-        padding: 0,
+        [theme.breakpoints.down('xs')]: {
+            height: `calc(100vh - ${theme.spacing(7)}px)`,
+        },
     },
     toolbarGutters: {
-        padding: '0 16px',
+        padding: `0px ${theme.spacing(2)}px`,
     },
     LinearProgressBarIndeterminate: {
         position: 'absolute',
         bottom: 0,
-        marginLeft: '-16px',
+        marginLeft: `-${theme.spacing(2)}px`,
         width: '100%',
     },
 }));
@@ -33,10 +33,11 @@ export const ProgressBarIndeterminate = (): JSX.Element => {
     const dispatch = useDispatch();
     const theme = useTheme();
     const classes = useStyles();
+    const isMobile = useMediaQuery(theme.breakpoints.down('xs'));
 
     return (
         <div style={{ backgroundColor: theme.palette.background.paper, minHeight: '100vh' }}>
-            <AppBar data-cy="pxb-toolbar" position={'sticky'} classes={{ root: classes.appbarRoot }}>
+            <AppBar data-cy="pxb-toolbar" position={'sticky'}>
                 <Toolbar classes={{ gutters: classes.toolbarGutters }}>
                     <Hidden mdUp={true}>
                         <IconButton
@@ -51,9 +52,15 @@ export const ProgressBarIndeterminate = (): JSX.Element => {
                             <MenuIcon />
                         </IconButton>
                     </Hidden>
-                    <Typography variant={'h6'} color={'inherit'}>
-                        Progress Bars (Indeterminate)
-                    </Typography>
+                    {isMobile ? (
+                        <Typography variant={'h6'} color={'inherit'}>
+                            Progress Bars (Indet.)
+                        </Typography>
+                    ) : (
+                        <Typography variant={'h6'} color={'inherit'}>
+                            Progress Bars (Indeterminate)
+                        </Typography>
+                    )}
                     <div />
                     <LinearProgress className={classes.LinearProgressBarIndeterminate} />
                 </Toolbar>

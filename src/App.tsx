@@ -43,18 +43,18 @@ export const App: React.FC = () => {
 
     const navItems: NavItem[] = [];
 
-    const createRoute = (page: RouteMetaData): NavItem => {
+    const createRoute = (page: RouteMetaData, itemKey: string): NavItem => {
         const subItems: NavItem[] = [];
         Object.keys(page).forEach((key: string): JSX.Element | null => {
             const subRoute = page[key as keyof RouteMetaData];
             if (typeof subRoute === 'object') {
-                subItems.push(createRoute(subRoute));
+                subItems.push(createRoute(subRoute, key));
             }
             return null;
         });
         return {
             title: page.title,
-            itemID: page.route || '',
+            itemID: page.route || itemKey,
             items: subItems.length > 0 ? subItems : undefined,
             onClick: page.route
                 ? (): void => {
@@ -65,7 +65,7 @@ export const App: React.FC = () => {
         };
     };
 
-    Object.keys(PAGES).forEach((key: string) => navItems.push(createRoute(PAGES[key as keyof Routes])));
+    Object.keys(PAGES).forEach((key: string) => navItems.push(createRoute(PAGES[key as keyof Routes], key)));
 
     const drawer = (
         <Drawer

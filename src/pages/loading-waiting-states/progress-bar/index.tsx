@@ -90,6 +90,9 @@ const useStyles = makeStyles((theme: Theme) => ({
             marginBottom: 0,
         },
     },
+    subTitle: {
+        color: Colors.black[200],
+    },
 }));
 const createFileItem = (): FolderItem => ({
     id: `${Math.random() * 100}`,
@@ -201,6 +204,9 @@ export const ProgressBar = (): JSX.Element => {
                         (item, i): JSX.Element => (
                             <div key={`itemKey${i}`} className={classes.infoListItemStyle}>
                                 <InfoListItem
+                                    classes={{
+                                        subtitle: classes.subTitle,
+                                    }}
                                     key={i}
                                     hidePadding
                                     ripple

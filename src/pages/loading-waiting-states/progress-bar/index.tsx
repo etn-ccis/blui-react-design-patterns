@@ -144,7 +144,7 @@ export const ProgressBar = (): JSX.Element => {
     }, [list]);
 
     return (
-        <div style={{ backgroundColor: theme.palette.background.paper, minHeight: '100vh' }}>
+        <div style={{ minHeight: '100vh' }}>
             <AppBar data-cy="pxb-toolbar" position={'sticky'}>
                 <Toolbar classes={{ gutters: classes.toolbarGutters }}>
                     <Hidden mdUp={true}>

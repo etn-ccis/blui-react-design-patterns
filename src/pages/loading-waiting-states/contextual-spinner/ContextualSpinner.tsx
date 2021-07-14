@@ -7,7 +7,8 @@ import { Menu, PlayArrow } from '@material-ui/icons';
 
 const useStyles = makeStyles((theme: Theme) => ({
     root: {
-        marginBottom: theme.spacing(1),
+        backgroundColor: theme.palette.background.paper,
+        minHeight: '100vh',
     },
     appbarRoot: {
         padding: 0,
@@ -67,7 +68,7 @@ export const ContextualSpinner = (): JSX.Element => {
     };
 
     return (
-        <div style={{ backgroundColor: theme.palette.background.paper, minHeight: '100vh' }}>
+        <div className={classes.root}>
             <AppBar data-cy="pxb-toolbar" position={'sticky'} classes={{ root: classes.appbarRoot }}>
                 <Toolbar classes={{ gutters: classes.toolbarGutters }}>
                     <Hidden mdUp={true}>

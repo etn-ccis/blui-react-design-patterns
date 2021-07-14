@@ -55,6 +55,10 @@ export const PAGES: Routes = {
             title: 'Progress Bars (Indet.)',
             route: 'progress-bar-indeterminate',
         },
+        CONTEXTUAL_SPINNER: {
+            title: 'Contextual Spinner',
+            route: 'contextual-spinner',
+        },
     },
     OVERLAYS: {
         title: 'Overlays',
@@ -115,6 +119,7 @@ export type Routes = {
     LOADING: RouteMetaData;
     LOADING_WAITING_STATES: RouteMetaData & {
         PROGRESS_BAR_INDETERMINATE: RouteMetaData;
+        CONTEXTUAL_SPINNER: RouteMetaData;
     };
     OVERLAYS: RouteMetaData & {
         // DIALOG: RouteMetaData;

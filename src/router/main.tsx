@@ -19,6 +19,7 @@ import { BasicBottomSheet } from '../pages/overlays/basic-bottom-sheet';
 import { ComplexBottomSheet } from '../pages/overlays/complex-bottom-sheet';
 import { DynamicStepper } from '../pages/dynamic-stepper';
 import { ProgressBarIndeterminate } from '../pages/loading-waiting-states/progress-bar-indeterminate';
+import { ContextualSpinner } from '../pages/loading-waiting-states/contextual-spinner/ContextualSpinner';
 /*
 The main page body, which contains the route definitions
 */
@@ -49,6 +50,11 @@ export const Main = (): JSX.Element => (
             exact
             path={`/${PAGES.LOADING_WAITING_STATES.PROGRESS_BAR_INDETERMINATE.route || ''}`}
             component={ProgressBarIndeterminate}
+        />
+        <Route
+            exact
+            path={`/${PAGES.LOADING_WAITING_STATES.CONTEXTUAL_SPINNER.route || ''}`}
+            component={ContextualSpinner}
         />
     </Switch>
 );

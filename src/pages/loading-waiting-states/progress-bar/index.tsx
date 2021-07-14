@@ -15,7 +15,7 @@ import {
 } from '@material-ui/core';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import MenuIcon from '@material-ui/icons/Menu';
-import { Folder, VerticalAlignTop, Description } from '@material-ui/icons';
+import { Folder, Publish, Description } from '@material-ui/icons';
 import LinearProgress, { LinearProgressProps } from '@material-ui/core/LinearProgress';
 import { useDispatch } from 'react-redux';
 import { TOGGLE_DRAWER } from '../../../redux/actions';
@@ -33,7 +33,7 @@ const foldersList = [
     { label: 'The Best UX Team', value: '3' },
     { label: 'The Best Management Team', value: '4' },
     { label: 'The Best Facility Team', value: '5' },
-    { label: 'The The Proudest Team', value: '6' },
+    { label: 'The Proudest Team', value: '6' },
 ];
 const LinearProgressWithLabel = (props: LinearProgressProps & { value: number }): JSX.Element => (
     <LinearProgress variant="determinate" {...props} />
@@ -54,16 +54,13 @@ const useStyles = makeStyles((theme: Theme) => ({
         color: Colors.black[50],
         borderColor: Colors.black[50],
     },
-    cardContentStyle: {
-        padding: 0,
-    },
-    formControlStyle: {
+    formControl: {
         width: '100%',
     },
     radioLabel: {
         display: 'flex',
     },
-    iconStyle: {
+    icon: {
         fill: Colors.gray[500],
         margin: `0 ${theme.spacing(2)}px 0 ${theme.spacing(1)}px`,
     },
@@ -84,7 +81,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         bottom: theme.spacing(3),
         right: theme.spacing(3),
     },
-    infoListItemStyle: {
+    infoList: {
         marginBottom: theme.spacing(2),
         '&:last-child': {
             marginBottom: 0,
@@ -170,16 +167,14 @@ export const ProgressBar = (): JSX.Element => {
                     <Button
                         variant={'contained'}
                         color={'primary'}
-                        startIcon={<VerticalAlignTop />}
+                        startIcon={<Publish />}
                         onClick={uploadFile}
                     >
-                        <Typography noWrap color={'inherit'}>
-                            UPLOAD NEW FILE
-                        </Typography>
+                        UPLOAD NEW FILE
                     </Button>
                 </div>
                 <Card>
-                    <FormControl className={classes.formControlStyle} component="fieldset">
+                    <FormControl className={classes.formControl} component="fieldset">
                         <RadioGroup aria-label="folder" name="folder" value="1">
                             {foldersList.map((option, i) => (
                                 <FormControlLabel
@@ -189,7 +184,7 @@ export const ProgressBar = (): JSX.Element => {
                                     control={<Radio />}
                                     label={
                                         <div className={classes.radioLabel}>
-                                            <Folder className={classes.iconStyle} />
+                                            <Folder className={classes.icon} />
                                             <Typography> {option.label} </Typography>
                                         </div>
                                     }
@@ -201,7 +196,7 @@ export const ProgressBar = (): JSX.Element => {
                 <List data-cy={'list-content'} disablePadding component="nav" className={classes.placementOfList}>
                     {list.map(
                         (item, i): JSX.Element => (
-                            <div key={`itemKey${i}`} className={classes.infoListItemStyle}>
+                            <div key={`itemKey${i}`} className={classes.infoList}>
                                 <InfoListItem
                                     classes={{
                                         subtitle: classes.subTitle,

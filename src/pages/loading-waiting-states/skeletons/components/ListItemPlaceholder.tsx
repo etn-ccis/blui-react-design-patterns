@@ -68,6 +68,7 @@ export const ListItemDensePlaceholder = (props: { animation?: 'pulse' | 'wave'; 
 
     return (
         <InfoListItem
+            iconAlign={'center'}
             divider={divider ? 'partial' : undefined}
             dense
             icon={

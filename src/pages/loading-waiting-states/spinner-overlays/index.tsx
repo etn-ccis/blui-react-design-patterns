@@ -155,7 +155,7 @@ export const SpinnerOverlays = (): JSX.Element => {
                 <Card className={classes.card}>
                     {!eulaLoaded && (
                         <div className={classes.overlayBackground}>
-                            <CircularProgress size={96} variant={'indeterminate'} color="secondary" />
+                            <CircularProgress size={96} />
                         </div>
                     )}
                     <CardHeader

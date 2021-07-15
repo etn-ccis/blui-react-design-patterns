@@ -8,7 +8,7 @@ import Color from 'color';
 
 const useStyles = makeStyles(() => ({
     skeletonRoot: {
-        color: colors.black[50],
+        backgroundColor: colors.black[50],
     },
     rightComponent: {
         color: Color(colors.black[300]).alpha(0.36).string(),

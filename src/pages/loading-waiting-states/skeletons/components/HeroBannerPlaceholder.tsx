@@ -10,7 +10,7 @@ const useStyles = makeStyles(() => ({
         height: '100%',
     },
     skeletonRoot: {
-        color: colors.black[50],
+        backgroundColor: colors.black[50],
     },
     centeredRow: {
         display: 'flex',

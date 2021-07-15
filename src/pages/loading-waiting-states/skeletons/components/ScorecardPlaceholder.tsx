@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         margin: theme.spacing(2),
     },
     skeletonRoot: {
-        color: colors.black[50],
+        backgroundColor: colors.black[50],
     },
     row: {
         display: 'flex',

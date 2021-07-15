@@ -73,17 +73,21 @@ export const Skeletons = (): JSX.Element => {
     const dispatch = useDispatch();
     const [isLoading, setIsLoading] = useState(true);
     const [animationStyle, setAnimationStyle] = useState<'pulse' | 'wave'>('pulse');
+    let refreshTimeout: ReturnType<typeof setTimeout>;
 
     const refreshData = (): void => {
         setIsLoading(true);
 
-        setTimeout((): void => {
+        refreshTimeout = setTimeout((): void => {
             setIsLoading(false);
         }, 3000);
     };
 
     useEffect(() => {
         refreshData();
+        return (): void => {
+            clearInterval(refreshTimeout);
+        };
     }, []);
 
     return (
@@ -108,7 +112,7 @@ export const Skeletons = (): JSX.Element => {
                     </Typography>
                     <Spacer />
                     <Tooltip title={'Refresh'}>
-                        <IconButton edge={'end'} color={'inherit'} onClick={refreshData}>
+                        <IconButton edge={'end'} color={'inherit'} onClick={refreshData} disabled={isLoading}>
                             <Refresh />
                         </IconButton>
                     </Tooltip>

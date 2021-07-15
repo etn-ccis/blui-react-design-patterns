@@ -13,6 +13,8 @@ import {
     FormControlLabel,
     FormControl,
     List,
+    Snackbar,
+    SnackbarContent,
 } from '@material-ui/core';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import MenuIcon from '@material-ui/icons/Menu';
@@ -20,11 +22,12 @@ import { Folder, Description, Publish } from '@material-ui/icons';
 import LinearProgress, { LinearProgressProps } from '@material-ui/core/LinearProgress';
 import { useDispatch } from 'react-redux';
 import { TOGGLE_DRAWER } from '../../../redux/actions';
-import { InfoListItem } from '@pxblue/react-components';
 import * as Colors from '@pxblue/colors';
 type FolderItem = {
     id: number;
     name: string;
+    open: boolean;
+    duration: number | null;
     buttonLabel: string;
     progress: number;
     status: string;
@@ -56,7 +59,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
     uploadButtonContainer: {
         textAlign: 'right',
-        paddingBottom: theme.spacing(2),
+        paddingBottom: `${theme.spacing(2)}px`,
     },
     closeButtonContainer: {
         color: Colors.black[50],
@@ -69,8 +72,14 @@ const useStyles = makeStyles((theme: Theme) => ({
         display: 'flex',
     },
     icon: {
-        fill: Colors.gray[500],
-        margin: `0 ${theme.spacing(2)}px 0 ${theme.spacing(1)}px`,
+        fill: Colors.black[200],
+        marginLeft: `${theme.spacing(0.5)}px`,
+    },
+    iconContainer: {
+        marginRight: '16px',
+        maxWidth: '40px',
+        minWidth: '2.5rem',
+        width: '2.5rem',
     },
     formLabel: {
         margin: 0,
@@ -103,11 +112,28 @@ const useStyles = makeStyles((theme: Theme) => ({
     subTitle: {
         color: Colors.black[200],
     },
+    snackbar: {
+        position: 'inherit',
+        transform: 'none',
+    },
+    SnackbarContent: {
+        borderRadius: 0,
+        padding: `0 ${theme.spacing(2)}px 0 ${theme.spacing(1)}px`,
+    },
+    messageContainer: {
+        display: 'flex',
+        alignItems: 'center',
+    },
+    messageTextContainer: {
+        marginRight: `${theme.spacing(3)}px`,
+    },
 }));
 const createFileItem = (increment: number): FolderItem => ({
     id: increment,
+    open: true,
+    duration: null,
     buttonLabel: 'Close',
-    name: `PX Blue is Awesome.pdf`,
+    name: 'PX Blue is Awesome.pdf',
     progress: 0,
     status: `Uploading (0%)`,
 });
@@ -119,7 +145,6 @@ export const ProgressBar = (): JSX.Element => {
 
     const [radioButtonvalue, setRadioButtonvalue] = useState('1');
     const [count, setCount] = useState(0);
-
     const changeRadioGroup = (event: React.ChangeEvent<HTMLInputElement>): void => {
         setRadioButtonvalue((event.target as HTMLInputElement).value);
     };
@@ -127,7 +152,7 @@ export const ProgressBar = (): JSX.Element => {
     const uploadFile = useCallback((): void => {
         setCount(count + 1);
         setFileUploadList((oldList) => [...oldList, createFileItem(count)]);
-    }, [fileUploadList]);
+    }, [fileUploadList, setFileUploadList]);
 
     const removInfoList = useCallback(
         (index: number, status: string): void => {
@@ -137,6 +162,16 @@ export const ProgressBar = (): JSX.Element => {
             setFileUploadList((oldList) => oldList.filter((item) => item.id !== index));
         },
         [fileUploadList]
+    );
+
+    const handleRequestClose = useCallback(
+        (event: any, reason: string) => {
+            if (reason === 'clickaway') {
+                return;
+            }
+            setFileUploadList((oldList) => oldList.filter((item) => item.progress !== 100));
+        },
+        [fileUploadList, setFileUploadList]
     );
 
     useEffect(() => {
@@ -154,12 +189,10 @@ export const ProgressBar = (): JSX.Element => {
                     const newItem: FolderItem = {
                         ...fileUploadList[i],
                         status: `Complete`,
-                        buttonLabel: 'View',
+                        buttonLabel: `View`,
+                        duration: 3000,
                     };
                     newList[i] = newItem;
-                    setTimeout(() => {
-                        setFileUploadList((oldList) => oldList.filter((item) => item.id !== fileUploadList[i].id));
-                    }, 3000);
                 }
             }
             setFileUploadList(newList);
@@ -219,7 +252,7 @@ export const ProgressBar = (): JSX.Element => {
                                         label={
                                             <div className={classes.radioLabel}>
                                                 <Folder className={classes.icon} />
-                                                <Typography> {option.label} </Typography>
+                                                <Typography style={{ marginLeft: '16px' }}> {option.label} </Typography>
                                             </div>
                                         }
                                     />
@@ -232,31 +265,42 @@ export const ProgressBar = (): JSX.Element => {
                     {fileUploadList.map(
                         (item, i): JSX.Element => (
                             <div key={`itemKey${item.id}`} className={classes.infoList}>
-                                <InfoListItem
-                                    classes={{
-                                        subtitle: classes.subTitle,
-                                    }}
-                                    key={i}
-                                    hidePadding
-                                    ripple
-                                    backgroundColor={Colors.black[900]}
-                                    fontColor={Colors.black[50]}
-                                    color={Colors.black[50]}
-                                    title={item.name}
-                                    subtitle={item.status}
-                                    icon={<Description />}
-                                    iconAlign="left"
-                                    iconColor={Colors.black[200]}
-                                    rightComponent={
-                                        <Button
-                                            variant="outlined"
-                                            className={classes.closeButtonContainer}
-                                            onClick={(): void => removInfoList(item.id, item.status)}
-                                        >
-                                            {item.buttonLabel}
-                                        </Button>
-                                    }
-                                />
+                                <Snackbar
+                                    classes={{ root: classes.snackbar }}
+                                    open={item.open}
+                                    autoHideDuration={item.duration}
+                                    onClose={handleRequestClose}
+                                >
+                                    <SnackbarContent
+                                        classes={{ root: classes.SnackbarContent }}
+                                        action={
+                                            <>
+                                                <Button
+                                                    variant="outlined"
+                                                    className={classes.closeButtonContainer}
+                                                    onClick={(): void => removInfoList(item.id, item.status)}
+                                                >
+                                                    {item.buttonLabel}
+                                                </Button>
+                                            </>
+                                        }
+                                        message={
+                                            <div className={classes.messageContainer}>
+                                                <div className={classes.iconContainer}>
+                                                    <Description className={classes.icon} />
+                                                </div>
+                                                <div className={classes.messageTextContainer}>
+                                                    <Typography variant={'subtitle1'} color={'inherit'}>
+                                                        {item.name}
+                                                    </Typography>
+                                                    <Typography variant={'subtitle2'} className={classes.subTitle}>
+                                                        {item.status}
+                                                    </Typography>
+                                                </div>
+                                            </div>
+                                        }
+                                    />
+                                </Snackbar>
                                 <LinearProgressWithLabel value={item.progress} key={`progress${i}`} />
                             </div>
                         )

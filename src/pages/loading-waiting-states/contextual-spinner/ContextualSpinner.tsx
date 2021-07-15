@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { makeStyles, useTheme, Theme } from '@material-ui/core/styles';
 import { AppBar, Toolbar, Hidden, IconButton, Typography, Button, Fab, CircularProgress } from '@material-ui/core';
 import { TOGGLE_DRAWER } from '../../../redux/actions';
@@ -7,10 +7,6 @@ import { Menu, PlayArrow } from '@material-ui/icons';
 import clsx from 'clsx';
 
 const useStyles = makeStyles((theme: Theme) => ({
-    root: {
-        backgroundColor: theme.palette.background.paper,
-        minHeight: '100vh',
-    },
     appbarRoot: {
         padding: 0,
     },
@@ -78,23 +74,25 @@ export const ContextualSpinner = (): JSX.Element => {
     const [isStartRoutineLoading, setIsStartRoutineLoading] = useState(false);
     const [shouldAnimate, setShouldAnimate] = useState(false);
 
-    const handleLoginClick = (): void => {
+    const handleLoginClick = useCallback((): void => {
         setIsLoginLoading(true);
-        setTimeout(() => {
+        const loginTimeout = setTimeout(() => {
             setIsLoginLoading(false);
+            clearInterval(loginTimeout);
         }, 3000);
-    };
+    }, []);
 
-    const handleStartRoutineClick = (): void => {
+    const handleStartRoutineClick = useCallback((): void => {
         setShouldAnimate(true);
         setIsStartRoutineLoading(true);
-        setTimeout(() => {
+        const startRoutineTimeout = setTimeout(() => {
             setIsStartRoutineLoading(false);
+            clearInterval(startRoutineTimeout);
         }, 3000);
-    };
+    }, []);
 
     return (
-        <div className={classes.root}>
+        <div>
             <AppBar data-cy="pxb-toolbar" position={'sticky'} classes={{ root: classes.appbarRoot }}>
                 <Toolbar classes={{ gutters: classes.toolbarGutters }}>
                     <Hidden mdUp={true}>
@@ -129,7 +127,7 @@ export const ContextualSpinner = (): JSX.Element => {
                 </Button>
                 <br />
                 <Fab
-                    variant={isStartRoutineLoading ? 'round' : 'extended'}
+                    variant={isStartRoutineLoading ? 'circular' : 'extended'}
                     color="primary"
                     className={isStartRoutineLoading ? classes.startRoutineLoadingButton : classes.startRoutineButton}
                     onClick={handleStartRoutineClick}

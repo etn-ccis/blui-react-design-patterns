@@ -63,6 +63,10 @@ export const PAGES: Routes = {
             title: 'Skeletons',
             route: 'skeletons',
         },
+        SPINNER_OVERLAYS: {
+            title: 'Spinner Overlays',
+            route: 'spinner-overlays',
+        },
     },
     OVERLAYS: {
         title: 'Overlays',
@@ -125,6 +129,7 @@ export type Routes = {
         PROGRESS_BAR_INDETERMINATE: RouteMetaData;
         CONTEXTUAL_SPINNER: RouteMetaData;
         SKELETONS: RouteMetaData;
+        SPINNER_OVERLAYS: RouteMetaData;
     };
     OVERLAYS: RouteMetaData & {
         // DIALOG: RouteMetaData;

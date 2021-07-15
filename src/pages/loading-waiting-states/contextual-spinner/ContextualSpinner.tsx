@@ -1,15 +1,12 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState, useEffect } from 'react';
 import { makeStyles, useTheme, Theme } from '@material-ui/core/styles';
 import { AppBar, Toolbar, Hidden, IconButton, Typography, Button, Fab, CircularProgress } from '@material-ui/core';
 import { TOGGLE_DRAWER } from '../../../redux/actions';
 import { useDispatch } from 'react-redux';
 import { Menu, PlayArrow } from '@material-ui/icons';
+import clsx from 'clsx';
 
 const useStyles = makeStyles((theme: Theme) => ({
-    root: {
-        backgroundColor: theme.palette.background.paper,
-        minHeight: '100vh',
-    },
     appbarRoot: {
         padding: 0,
     },
@@ -31,7 +28,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         width: 156,
         height: 56,
         borderRadius: 29,
-        transition: 'width 300ms',
+        transition: theme.transitions.create('width', { duration: theme.transitions.duration.standard }),
         overflow: 'hidden',
         whiteSpace: 'nowrap',
         justifyContent: 'flex-start',
@@ -39,10 +36,33 @@ const useStyles = makeStyles((theme: Theme) => ({
     startRoutineLoadingButton: {
         width: 56,
         borderRadius: 29,
-        transition: 'width 300ms',
+        paddingLeft: 18,
+        transition: theme.transitions.create('width', { duration: theme.transitions.duration.standard }),
+        justifyContent: 'flex-start',
     },
     playArrow: {
         marginRight: theme.spacing(1),
+        opacity: 1,
+    },
+    '@keyframes show': {
+        from: { opacity: 0 },
+        to: { opacity: 1 },
+    },
+    '@keyframes hide': {
+        from: { opacity: 1 },
+        to: { opacity: 0 },
+    },
+    showAnimation: {
+        animationName: '$show',
+        animationDuration: `${theme.transitions.duration.standard}ms`,
+        animationTimingFunction: 'linear',
+        animationIterationCount: 1,
+    },
+    hideAnimation: {
+        animationName: '$hide',
+        animationDuration: `${theme.transitions.duration.standard}ms`,
+        animationTimingFunction: 'linear',
+        animationIterationCount: 1,
     },
 }));
 
@@ -52,23 +72,37 @@ export const ContextualSpinner = (): JSX.Element => {
     const dispatch = useDispatch();
     const [isLoginLoading, setIsLoginLoading] = useState(false);
     const [isStartRoutineLoading, setIsStartRoutineLoading] = useState(false);
+    const [shouldAnimate, setShouldAnimate] = useState(false);
+    let loginTimeout: ReturnType<typeof setTimeout>;
+    let startRoutineTimeout: ReturnType<typeof setTimeout>;
 
-    const handleLoginClick = (): void => {
+    const handleLoginClick = useCallback((): void => {
         setIsLoginLoading(true);
-        setTimeout(() => {
+        loginTimeout = setTimeout(() => {
             setIsLoginLoading(false);
+            clearInterval(loginTimeout);
         }, 3000);
-    };
+    }, []);
 
-    const handleStartRoutineClick = (): void => {
+    const handleStartRoutineClick = useCallback((): void => {
+        setShouldAnimate(true);
         setIsStartRoutineLoading(true);
-        setTimeout(() => {
+        startRoutineTimeout = setTimeout(() => {
             setIsStartRoutineLoading(false);
+            clearInterval(startRoutineTimeout);
         }, 3000);
-    };
+    }, []);
+
+    useEffect(
+        () => (): void => {
+            clearInterval(loginTimeout);
+            clearInterval(startRoutineTimeout);
+        },
+        []
+    );
 
     return (
-        <div className={classes.root}>
+        <div>
             <AppBar data-cy="pxb-toolbar" position={'sticky'} classes={{ root: classes.appbarRoot }}>
                 <Toolbar classes={{ gutters: classes.toolbarGutters }}>
                     <Hidden mdUp={true}>
@@ -103,16 +137,29 @@ export const ContextualSpinner = (): JSX.Element => {
                 </Button>
                 <br />
                 <Fab
-                    variant={isStartRoutineLoading ? 'round' : 'extended'}
+                    variant={isStartRoutineLoading ? 'circular' : 'extended'}
                     color="primary"
                     className={isStartRoutineLoading ? classes.startRoutineLoadingButton : classes.startRoutineButton}
                     onClick={handleStartRoutineClick}
                 >
                     {isStartRoutineLoading ? (
-                        <CircularProgress size={'20px'} color={'inherit'} />
+                        <CircularProgress
+                            size={'20px'}
+                            color={'inherit'}
+                            className={isStartRoutineLoading ? classes.showAnimation : classes.hideAnimation}
+                        />
                     ) : (
                         <>
-                            <PlayArrow className={classes.playArrow} />
+                            <PlayArrow
+                                className={clsx([
+                                    classes.playArrow,
+                                    shouldAnimate
+                                        ? isStartRoutineLoading
+                                            ? classes.hideAnimation
+                                            : classes.showAnimation
+                                        : '',
+                                ])}
+                            />
                             Start Routine
                         </>
                     )}

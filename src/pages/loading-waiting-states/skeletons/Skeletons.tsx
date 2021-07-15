@@ -112,9 +112,11 @@ export const Skeletons = (): JSX.Element => {
                     </Typography>
                     <Spacer />
                     <Tooltip title={'Refresh'}>
-                        <IconButton edge={'end'} color={'inherit'} onClick={refreshData} disabled={isLoading}>
-                            <Refresh />
-                        </IconButton>
+                        <span>
+                            <IconButton edge={'end'} color={'inherit'} onClick={refreshData} disabled={isLoading}>
+                                <Refresh />
+                            </IconButton>
+                        </span>
                     </Tooltip>
                 </Toolbar>
             </AppBar>

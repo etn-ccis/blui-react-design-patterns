@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         height: 284,
     },
     header: {
-        height: 97,
+        height: 100,
         backgroundColor: colors.black[100],
         display: 'flex',
         flexDirection: 'column',
@@ -35,12 +35,17 @@ const useStyles = makeStyles((theme: Theme) => ({
         '& :first-child': {
             marginRight: theme.spacing(3),
         },
-        marginBottom: theme.spacing(1),
     },
     centeredColumn: {
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
+    },
+    leftCardContent: {
+        flex: 1,
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'space-between',
     },
     cardActions: {
         height: 52,
@@ -83,9 +88,9 @@ export const ScorecardPlaceholder = (props: { animation: 'pulse' | 'wave' }): JS
                     ></Skeleton>
                 </div>
             </div>
-            <CardContent style={{ marginBottom: 6 }}>
+            <CardContent style={{ marginTop: 3 }}>
                 <div className={classes.row}>
-                    <div style={{ flex: 1 }}>
+                    <div className={classes.leftCardContent}>
                         <div className={classes.centeredRow}>
                             <Skeleton
                                 animation={animation}

@@ -59,6 +59,10 @@ export const PAGES: Routes = {
             title: 'Contextual Spinner',
             route: 'contextual-spinner',
         },
+        SPINNER_OVERLAYS: {
+            title: 'Spinner Overlays',
+            route: 'spinner-overlays',
+        },
     },
     OVERLAYS: {
         title: 'Overlays',
@@ -120,6 +124,7 @@ export type Routes = {
     LOADING_WAITING_STATES: RouteMetaData & {
         PROGRESS_BAR_INDETERMINATE: RouteMetaData;
         CONTEXTUAL_SPINNER: RouteMetaData;
+        SPINNER_OVERLAYS: RouteMetaData;
     };
     OVERLAYS: RouteMetaData & {
         // DIALOG: RouteMetaData;

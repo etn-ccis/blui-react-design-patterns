@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useState, useEffect } from 'react';
 import { makeStyles, useTheme, Theme } from '@material-ui/core/styles';
 import { AppBar, Toolbar, Hidden, IconButton, Typography, Button, Fab, CircularProgress } from '@material-ui/core';
 import { TOGGLE_DRAWER } from '../../../redux/actions';
@@ -73,10 +73,12 @@ export const ContextualSpinner = (): JSX.Element => {
     const [isLoginLoading, setIsLoginLoading] = useState(false);
     const [isStartRoutineLoading, setIsStartRoutineLoading] = useState(false);
     const [shouldAnimate, setShouldAnimate] = useState(false);
+    let loginTimeout: ReturnType<typeof setTimeout>;
+    let startRoutineTimeout: ReturnType<typeof setTimeout>;
 
     const handleLoginClick = useCallback((): void => {
         setIsLoginLoading(true);
-        const loginTimeout = setTimeout(() => {
+        loginTimeout = setTimeout(() => {
             setIsLoginLoading(false);
             clearInterval(loginTimeout);
         }, 3000);
@@ -85,11 +87,19 @@ export const ContextualSpinner = (): JSX.Element => {
     const handleStartRoutineClick = useCallback((): void => {
         setShouldAnimate(true);
         setIsStartRoutineLoading(true);
-        const startRoutineTimeout = setTimeout(() => {
+        startRoutineTimeout = setTimeout(() => {
             setIsStartRoutineLoading(false);
             clearInterval(startRoutineTimeout);
         }, 3000);
     }, []);
+
+    useEffect(
+        () => (): void => {
+            clearInterval(loginTimeout);
+            clearInterval(startRoutineTimeout);
+        },
+        []
+    );
 
     return (
         <div>

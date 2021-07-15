@@ -3,6 +3,7 @@ import {
     AppBar,
     Button,
     Card,
+    CardContent,
     Toolbar,
     Typography,
     Hidden,
@@ -15,15 +16,16 @@ import {
 } from '@material-ui/core';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import MenuIcon from '@material-ui/icons/Menu';
-import { Folder, Publish, Description } from '@material-ui/icons';
+import { Folder, Description, Publish } from '@material-ui/icons';
 import LinearProgress, { LinearProgressProps } from '@material-ui/core/LinearProgress';
 import { useDispatch } from 'react-redux';
 import { TOGGLE_DRAWER } from '../../../redux/actions';
 import { InfoListItem } from '@pxblue/react-components';
 import * as Colors from '@pxblue/colors';
 type FolderItem = {
-    id: string;
+    id: number;
     name: string;
+    buttonLabel: string;
     progress: number;
     status: string;
 };
@@ -45,6 +47,12 @@ const useStyles = makeStyles((theme: Theme) => ({
         padding: `${theme.spacing(2)}px ${theme.spacing(2)}px`,
         maxWidth: 600,
         margin: '0 auto',
+    },
+    cardContent: {
+        padding: 0,
+        '&:last-child': {
+            paddingBottom: 0,
+        },
     },
     uploadButtonContainer: {
         textAlign: 'right',
@@ -68,7 +76,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         margin: 0,
         width: '100%',
         padding: theme.spacing(1),
-        borderBottom: `1px solid ${Colors.gray[50]}`,
+        borderBottom: `1px solid ${theme.palette.divider}`,
         '&:last-child': {
             borderBottom: 'none',
         },
@@ -80,6 +88,11 @@ const useStyles = makeStyles((theme: Theme) => ({
         position: 'absolute',
         bottom: theme.spacing(3),
         right: theme.spacing(3),
+        [theme.breakpoints.down('xs')]: {
+            bottom: 0,
+            right: 0,
+            width: '100%',
+        },
     },
     infoList: {
         marginBottom: theme.spacing(2),
@@ -91,9 +104,10 @@ const useStyles = makeStyles((theme: Theme) => ({
         color: Colors.black[200],
     },
 }));
-const createFileItem = (): FolderItem => ({
-    id: `${Math.random() * 100}`,
-    name: 'PX Blue is Awesome.pdf',
+const createFileItem = (increment: number): FolderItem => ({
+    id: increment,
+    buttonLabel: 'Close',
+    name: `PX Blue is Awesome.pdf`,
     progress: 0,
     status: `Uploading (0%)`,
 });
@@ -101,43 +115,62 @@ const createFileItem = (): FolderItem => ({
 export const ProgressBar = (): JSX.Element => {
     const dispatch = useDispatch();
     const classes = useStyles();
-    const [list, setUploadFileList] = useState<FolderItem[]>(uploadFileList);
+    const [fileUploadList, setFileUploadList] = useState<FolderItem[]>(uploadFileList);
+
+    const [radioButtonvalue, setRadioButtonvalue] = useState('1');
+    const [count, setCount] = useState(0);
+
+    const changeRadioGroup = (event: React.ChangeEvent<HTMLInputElement>): void => {
+        setRadioButtonvalue((event.target as HTMLInputElement).value);
+    };
 
     const uploadFile = useCallback((): void => {
-        setUploadFileList((oldList) => [...oldList, createFileItem()]);
-    }, [list, setUploadFileList]);
+        setCount(count + 1);
+        setFileUploadList((oldList) => [...oldList, createFileItem(count)]);
+    }, [fileUploadList]);
+
+    const removInfoList = useCallback(
+        (index: number, status: string): void => {
+            if (status === 'Complete') {
+                return;
+            }
+            setFileUploadList((oldList) => oldList.filter((item) => item.id !== index));
+        },
+        [fileUploadList]
+    );
 
     useEffect(() => {
         const progressInterval = setInterval(() => {
-            const newList = [...list];
-            for (let i = 0; i < list.length; i++) {
-                if (list[i].progress < 100) {
+            const newList = [...fileUploadList];
+            for (let i = 0; i < fileUploadList.length; i++) {
+                if (fileUploadList[i].progress < 100) {
                     const newItem: FolderItem = {
-                        ...list[i],
-                        progress: list[i].progress + 1,
-                        status: `Uploading (${list[i].progress + 1})`,
+                        ...fileUploadList[i],
+                        progress: fileUploadList[i].progress + 1,
+                        status: `Uploading (${fileUploadList[i].progress + 1})%`,
                     };
                     newList[i] = newItem;
                 } else {
                     const newItem: FolderItem = {
-                        ...list[i],
+                        ...fileUploadList[i],
                         status: `Complete`,
+                        buttonLabel: 'View',
                     };
                     newList[i] = newItem;
                     setTimeout(() => {
-                        setUploadFileList((oldList) => oldList.filter((item) => item.id !== list[i].id));
-                    }, 10000);
+                        setFileUploadList((oldList) => oldList.filter((item) => item.id !== fileUploadList[i].id));
+                    }, 3000);
                 }
             }
-            setUploadFileList(newList);
+            setFileUploadList(newList);
         }, 100);
-        if (list.length < 1) {
+        if (fileUploadList.length < 1) {
             clearInterval(progressInterval);
         }
         return (): void => {
             clearInterval(progressInterval);
         };
-    }, [list]);
+    }, [fileUploadList]);
 
     return (
         <div style={{ minHeight: '100vh' }}>
@@ -164,39 +197,41 @@ export const ProgressBar = (): JSX.Element => {
             </AppBar>
             <div className={classes.container}>
                 <div className={classes.uploadButtonContainer}>
-                    <Button
-                        variant={'contained'}
-                        color={'primary'}
-                        startIcon={<Publish />}
-                        onClick={uploadFile}
-                    >
+                    <Button variant={'contained'} color={'primary'} startIcon={<Publish />} onClick={uploadFile}>
                         UPLOAD NEW FILE
                     </Button>
                 </div>
                 <Card>
-                    <FormControl className={classes.formControl} component="fieldset">
-                        <RadioGroup aria-label="folder" name="folder" value="1">
-                            {foldersList.map((option, i) => (
-                                <FormControlLabel
-                                    className={classes.formLabel}
-                                    key={i}
-                                    value={option.value}
-                                    control={<Radio />}
-                                    label={
-                                        <div className={classes.radioLabel}>
-                                            <Folder className={classes.icon} />
-                                            <Typography> {option.label} </Typography>
-                                        </div>
-                                    }
-                                />
-                            ))}
-                        </RadioGroup>
-                    </FormControl>
+                    <CardContent className={classes.cardContent}>
+                        <FormControl className={classes.formControl} component="fieldset">
+                            <RadioGroup
+                                aria-label="folder"
+                                name="folder"
+                                value={radioButtonvalue}
+                                onChange={changeRadioGroup}
+                            >
+                                {foldersList.map((option, i) => (
+                                    <FormControlLabel
+                                        className={classes.formLabel}
+                                        key={i}
+                                        value={option.value}
+                                        control={<Radio />}
+                                        label={
+                                            <div className={classes.radioLabel}>
+                                                <Folder className={classes.icon} />
+                                                <Typography> {option.label} </Typography>
+                                            </div>
+                                        }
+                                    />
+                                ))}
+                            </RadioGroup>
+                        </FormControl>
+                    </CardContent>
                 </Card>
                 <List data-cy={'list-content'} disablePadding component="nav" className={classes.placementOfList}>
-                    {list.map(
+                    {fileUploadList.map(
                         (item, i): JSX.Element => (
-                            <div key={`itemKey${i}`} className={classes.infoList}>
+                            <div key={`itemKey${item.id}`} className={classes.infoList}>
                                 <InfoListItem
                                     classes={{
                                         subtitle: classes.subTitle,
@@ -213,8 +248,12 @@ export const ProgressBar = (): JSX.Element => {
                                     iconAlign="left"
                                     iconColor={Colors.black[200]}
                                     rightComponent={
-                                        <Button variant="outlined" className={classes.closeButtonContainer}>
-                                            Cancel
+                                        <Button
+                                            variant="outlined"
+                                            className={classes.closeButtonContainer}
+                                            onClick={(): void => removInfoList(item.id, item.status)}
+                                        >
+                                            {item.buttonLabel}
                                         </Button>
                                     }
                                 />

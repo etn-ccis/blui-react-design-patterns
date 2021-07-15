@@ -13,9 +13,6 @@ const useStyles = makeStyles(() => ({
     rightComponent: {
         color: Color(colors.black[300]).alpha(0.36).string(),
     },
-    divider: {
-        color: Color(colors.black[300]).alpha(0.36).string(), // @TODO: Why isn't this working...
-    },
 }));
 
 export const ListItemPlaceholder = (props: { animation?: 'pulse' | 'wave'; divider?: boolean }): JSX.Element => {
@@ -24,7 +21,6 @@ export const ListItemPlaceholder = (props: { animation?: 'pulse' | 'wave'; divid
 
     return (
         <InfoListItem
-            classes={{ divider: classes.divider }}
             divider={divider ? 'partial' : undefined}
             icon={
                 <Skeleton
@@ -72,7 +68,6 @@ export const ListItemDensePlaceholder = (props: { animation?: 'pulse' | 'wave'; 
 
     return (
         <InfoListItem
-            classes={{ divider: classes.divider }}
             divider={divider ? 'partial' : undefined}
             dense
             icon={

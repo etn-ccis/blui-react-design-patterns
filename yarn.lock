@@ -2503,6 +2503,11 @@
   optionalDependencies:
     eslint-plugin-react "^7.16.0"
 
+"@pxblue/icons-mui@^2.4.0":
+  version "2.4.0"
+  resolved "https://registry.yarnpkg.com/@pxblue/icons-mui/-/icons-mui-2.4.0.tgz#12576ce8053fb11c96c93a1d63d81ec0abd0eb35"
+  integrity sha512-P8oWO2XE0MCNCnMqkw4f470wvMoCnKlxVJ3TnlG6r12B4Q0rdS0z5M2pooZDdt8/bZt4yKwn59OOigElADKcGA==
+
 "@pxblue/prettier-config@^1.0.2":
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/@pxblue/prettier-config/-/prettier-config-1.0.2.tgz#fb00503df6557b66c3d91d43c9101e614c35d2ec"

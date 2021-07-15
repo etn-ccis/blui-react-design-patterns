@@ -9,8 +9,8 @@ import Color from 'color';
 
 const useStyles = makeStyles((theme: Theme) => ({
     root: {
-        width: 384,
-        height: 288,
+        width: 400,
+        height: 284,
     },
     header: {
         height: 97,
@@ -83,7 +83,7 @@ export const ScorecardPlaceholder = (props: { animation: 'pulse' | 'wave' }): JS
                     ></Skeleton>
                 </div>
             </div>
-            <CardContent style={{ marginBottom: 8 }}>
+            <CardContent style={{ marginBottom: 6 }}>
                 <div className={classes.row}>
                     <div style={{ flex: 1 }}>
                         <div className={classes.centeredRow}>

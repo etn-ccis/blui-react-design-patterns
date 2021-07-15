@@ -64,6 +64,9 @@ const useStyles = makeStyles((theme: Theme) => ({
     closeButtonContainer: {
         color: Colors.black[50],
         borderColor: Colors.black[50],
+        [theme.breakpoints.up('sm')]: {
+            width: '80px',
+        },
     },
     formControl: {
         width: '100%',
@@ -76,10 +79,11 @@ const useStyles = makeStyles((theme: Theme) => ({
         marginLeft: `${theme.spacing(0.5)}px`,
     },
     iconContainer: {
-        marginRight: '16px',
+        marginRight: `${theme.spacing(2)}px`,
         maxWidth: '40px',
-        minWidth: '2.5rem',
-        width: '2.5rem',
+        minWidth: '40px',
+        width: '40px',
+        marginTop: `${theme.spacing(1)}px`,
     },
     formLabel: {
         margin: 0,
@@ -164,15 +168,12 @@ export const ProgressBar = (): JSX.Element => {
         [fileUploadList]
     );
 
-    const handleRequestClose = useCallback(
-        (event: any, reason: string) => {
-            if (reason === 'clickaway') {
-                return;
-            }
-            setFileUploadList((oldList) => oldList.filter((item) => item.progress !== 100));
-        },
-        [fileUploadList, setFileUploadList]
-    );
+    const handleRequestClose = useCallback((event: any, reason: string, id: number) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setFileUploadList((oldList) => oldList.filter((item) => item.id !== id));
+    }, []);
 
     useEffect(() => {
         const progressInterval = setInterval(() => {
@@ -182,7 +183,7 @@ export const ProgressBar = (): JSX.Element => {
                     const newItem: FolderItem = {
                         ...fileUploadList[i],
                         progress: fileUploadList[i].progress + 1,
-                        status: `Uploading (${fileUploadList[i].progress + 1})%`,
+                        status: `Uploading (${fileUploadList[i].progress + 1}%)`,
                     };
                     newList[i] = newItem;
                 } else {
@@ -269,7 +270,7 @@ export const ProgressBar = (): JSX.Element => {
                                     classes={{ root: classes.snackbar }}
                                     open={item.open}
                                     autoHideDuration={item.duration}
-                                    onClose={handleRequestClose}
+                                    onClose={(e, reason): void => handleRequestClose(e, reason, item.id)}
                                 >
                                     <SnackbarContent
                                         classes={{ root: classes.SnackbarContent }}

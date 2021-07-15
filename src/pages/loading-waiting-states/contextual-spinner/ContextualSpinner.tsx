@@ -4,6 +4,7 @@ import { AppBar, Toolbar, Hidden, IconButton, Typography, Button, Fab, CircularP
 import { TOGGLE_DRAWER } from '../../../redux/actions';
 import { useDispatch } from 'react-redux';
 import { Menu, PlayArrow } from '@material-ui/icons';
+import clsx from 'clsx';
 
 const useStyles = makeStyles((theme: Theme) => ({
     root: {
@@ -31,7 +32,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         width: 156,
         height: 56,
         borderRadius: 29,
-        transition: 'width 300ms',
+        transition: theme.transitions.create('width', { duration: theme.transitions.duration.standard }),
         overflow: 'hidden',
         whiteSpace: 'nowrap',
         justifyContent: 'flex-start',
@@ -39,10 +40,33 @@ const useStyles = makeStyles((theme: Theme) => ({
     startRoutineLoadingButton: {
         width: 56,
         borderRadius: 29,
-        transition: 'width 300ms',
+        paddingLeft: 18,
+        transition: theme.transitions.create('width', { duration: theme.transitions.duration.standard }),
+        justifyContent: 'flex-start',
     },
     playArrow: {
         marginRight: theme.spacing(1),
+        opacity: 1,
+    },
+    '@keyframes show': {
+        from: { opacity: 0 },
+        to: { opacity: 1 },
+    },
+    '@keyframes hide': {
+        from: { opacity: 1 },
+        to: { opacity: 0 },
+    },
+    showAnimation: {
+        animationName: '$show',
+        animationDuration: `${theme.transitions.duration.standard}ms`,
+        animationTimingFunction: 'linear',
+        animationIterationCount: 1,
+    },
+    hideAnimation: {
+        animationName: '$hide',
+        animationDuration: `${theme.transitions.duration.standard}ms`,
+        animationTimingFunction: 'linear',
+        animationIterationCount: 1,
     },
 }));
 
@@ -52,6 +76,7 @@ export const ContextualSpinner = (): JSX.Element => {
     const dispatch = useDispatch();
     const [isLoginLoading, setIsLoginLoading] = useState(false);
     const [isStartRoutineLoading, setIsStartRoutineLoading] = useState(false);
+    const [shouldAnimate, setShouldAnimate] = useState(false);
 
     const handleLoginClick = (): void => {
         setIsLoginLoading(true);
@@ -61,6 +86,7 @@ export const ContextualSpinner = (): JSX.Element => {
     };
 
     const handleStartRoutineClick = (): void => {
+        setShouldAnimate(true);
         setIsStartRoutineLoading(true);
         setTimeout(() => {
             setIsStartRoutineLoading(false);
@@ -109,10 +135,23 @@ export const ContextualSpinner = (): JSX.Element => {
                     onClick={handleStartRoutineClick}
                 >
                     {isStartRoutineLoading ? (
-                        <CircularProgress size={'20px'} color={'inherit'} />
+                        <CircularProgress
+                            size={'20px'}
+                            color={'inherit'}
+                            className={isStartRoutineLoading ? classes.showAnimation : classes.hideAnimation}
+                        />
                     ) : (
                         <>
-                            <PlayArrow className={classes.playArrow} />
+                            <PlayArrow
+                                className={clsx([
+                                    classes.playArrow,
+                                    shouldAnimate
+                                        ? isStartRoutineLoading
+                                            ? classes.hideAnimation
+                                            : classes.showAnimation
+                                        : '',
+                                ])}
+                            />
                             Start Routine
                         </>
                     )}

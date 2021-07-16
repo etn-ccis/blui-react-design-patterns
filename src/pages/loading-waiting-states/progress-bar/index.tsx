@@ -26,9 +26,6 @@ import * as Colors from '@pxblue/colors';
 type FolderItem = {
     id: number;
     name: string;
-    open: boolean;
-    duration: number | null;
-    buttonLabel: string;
     progress: number;
     status: string;
 };
@@ -134,9 +131,6 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 const createFileItem = (increment: number): FolderItem => ({
     id: increment,
-    open: true,
-    duration: null,
-    buttonLabel: 'Close',
     name: 'PX Blue is Awesome.pdf',
     progress: 0,
     status: `Uploading (0%)`,
@@ -158,15 +152,12 @@ export const ProgressBar = (): JSX.Element => {
         setFileUploadList((oldList) => [...oldList, createFileItem(count)]);
     }, [fileUploadList, setFileUploadList]);
 
-    const removInfoList = useCallback(
-        (index: number, status: string): void => {
-            if (status === 'Complete') {
-                return;
-            }
-            setFileUploadList((oldList) => oldList.filter((item) => item.id !== index));
-        },
-        [fileUploadList]
-    );
+    const removeListItem = useCallback((id: number, status: string): void => {
+        if (status === 'Complete') {
+            return;
+        }
+        setFileUploadList((oldList) => oldList.filter((item) => item.id !== id));
+    }, []);
 
     const handleRequestClose = useCallback((event: any, reason: string, id: number) => {
         if (reason === 'clickaway') {
@@ -180,18 +171,17 @@ export const ProgressBar = (): JSX.Element => {
             const newList = [...fileUploadList];
             for (let i = 0; i < fileUploadList.length; i++) {
                 if (fileUploadList[i].progress < 100) {
+                    const newPercent = Math.min(100, fileUploadList[i].progress + Math.ceil(Math.random() * 5));
                     const newItem: FolderItem = {
                         ...fileUploadList[i],
-                        progress: fileUploadList[i].progress + 1,
-                        status: `Uploading (${fileUploadList[i].progress + 1}%)`,
+                        progress: newPercent,
+                        status: `Uploading (${newPercent}%)`,
                     };
                     newList[i] = newItem;
                 } else {
                     const newItem: FolderItem = {
                         ...fileUploadList[i],
                         status: `Complete`,
-                        buttonLabel: `View`,
-                        duration: 3000,
                     };
                     newList[i] = newItem;
                 }
@@ -268,8 +258,8 @@ export const ProgressBar = (): JSX.Element => {
                             <div key={`itemKey${item.id}`} className={classes.infoList}>
                                 <Snackbar
                                     classes={{ root: classes.snackbar }}
-                                    open={item.open}
-                                    autoHideDuration={item.duration}
+                                    open={true}
+                                    autoHideDuration={item.progress === 100 ? 3000 : null}
                                     onClose={(e, reason): void => handleRequestClose(e, reason, item.id)}
                                 >
                                     <SnackbarContent
@@ -279,9 +269,9 @@ export const ProgressBar = (): JSX.Element => {
                                                 <Button
                                                     variant="outlined"
                                                     className={classes.closeButtonContainer}
-                                                    onClick={(): void => removInfoList(item.id, item.status)}
+                                                    onClick={(): void => removeListItem(item.id, item.status)}
                                                 >
-                                                    {item.buttonLabel}
+                                                    {item.progress === 100 ? 'View' : 'Cancel'}
                                                 </Button>
                                             </>
                                         }

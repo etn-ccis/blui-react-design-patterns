@@ -1,20 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { makeStyles, useTheme, Theme } from '@material-ui/core/styles';
-import {
-    AppBar,
-    Toolbar,
-    Hidden,
-    IconButton,
-    Typography,
-    Button,
-    ButtonGroup,
-    Tooltip,
-    Card,
-    List,
-} from '@material-ui/core';
+import { AppBar, Toolbar, Hidden, IconButton, Typography, Button, ButtonGroup, Card, List } from '@material-ui/core';
 import { TOGGLE_DRAWER } from '../../../redux/actions';
 import { useDispatch } from 'react-redux';
-import { Cloud, KeyboardArrowRight, ListAlt, Menu, Notifications, Refresh } from '@material-ui/icons';
+import { Cloud, KeyboardArrowRight, ListAlt, Menu, Notifications } from '@material-ui/icons';
 import { ScorecardPlaceholder } from './components/ScorecardPlaceholder';
 import { ListItemDensePlaceholder, ListItemPlaceholder } from './components/ListItemPlaceholder';
 import { HeroBannerPlaceholder } from './components/HeroBannerPlaceholder';
@@ -74,12 +63,16 @@ export const Skeletons = (): JSX.Element => {
     const [isLoading, setIsLoading] = useState(true);
     const [animationStyle, setAnimationStyle] = useState<'pulse' | 'wave'>('pulse');
     let refreshTimeout: ReturnType<typeof setTimeout>;
+    let looperTimeout: ReturnType<typeof setTimeout>;
 
     const refreshData = (): void => {
         setIsLoading(true);
 
         refreshTimeout = setTimeout((): void => {
             setIsLoading(false);
+            looperTimeout = setTimeout((): void => {
+                refreshData();
+            }, 5000);
         }, 3000);
     };
 
@@ -87,6 +80,7 @@ export const Skeletons = (): JSX.Element => {
         refreshData();
         return (): void => {
             clearInterval(refreshTimeout);
+            clearInterval(looperTimeout);
         };
     }, []);
 
@@ -111,13 +105,6 @@ export const Skeletons = (): JSX.Element => {
                         Skeletons
                     </Typography>
                     <Spacer />
-                    <Tooltip title={'Refresh'}>
-                        <span>
-                            <IconButton edge={'end'} color={'inherit'} onClick={refreshData} disabled={isLoading}>
-                                <Refresh />
-                            </IconButton>
-                        </span>
-                    </Tooltip>
                 </Toolbar>
             </AppBar>
             <div className={classes.exampleContainer}>
@@ -154,7 +141,6 @@ export const Skeletons = (): JSX.Element => {
                         headerTitle={'Substation 3'}
                         headerSubtitle={'High Humidity Alarm'}
                         headerInfo={'4 Devices'}
-                        headerColor={colors.blue[500]}
                         headerFontColor={colors.white[50]}
                         headerBackgroundImage={backgroundImage}
                         actionRow={

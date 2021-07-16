@@ -82,12 +82,12 @@ export const ListItemDensePlaceholder = (props: { animation?: 'pulse' | 'wave'; 
             }
             leftComponent={
                 <div style={{ display: 'flex', flexDirection: 'column' }}>
-                    <Skeleton animation={animation} width={45} height={12} classes={{ root: classes.skeletonRoot }} />
+                    <Skeleton animation={animation} width={56} height={14} classes={{ root: classes.skeletonRoot }} />
                     <Skeleton
                         key="subtitle"
                         animation={animation}
-                        width={34}
-                        height={12}
+                        width={40}
+                        height={14}
                         classes={{ root: classes.skeletonRoot }}
                     />
                 </div>

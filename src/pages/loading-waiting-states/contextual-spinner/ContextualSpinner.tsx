@@ -4,7 +4,6 @@ import { AppBar, Toolbar, Hidden, IconButton, Typography, Button, Fab, CircularP
 import { TOGGLE_DRAWER } from '../../../redux/actions';
 import { useDispatch } from 'react-redux';
 import { Menu, PlayArrow } from '@material-ui/icons';
-import clsx from 'clsx';
 
 const useStyles = makeStyles((theme: Theme) => ({
     appbarRoot: {
@@ -149,19 +148,19 @@ export const ContextualSpinner = (): JSX.Element => {
                             className={isStartRoutineLoading ? classes.showAnimation : classes.hideAnimation}
                         />
                     ) : (
-                        <>
-                            <PlayArrow
-                                className={clsx([
-                                    classes.playArrow,
-                                    shouldAnimate
-                                        ? isStartRoutineLoading
-                                            ? classes.hideAnimation
-                                            : classes.showAnimation
-                                        : '',
-                                ])}
-                            />
+                        <span
+                            className={
+                                shouldAnimate
+                                    ? isStartRoutineLoading
+                                        ? classes.hideAnimation
+                                        : classes.showAnimation
+                                    : ''
+                            }
+                            style={{ display: 'inherit' }}
+                        >
+                            <PlayArrow className={classes.playArrow} />
                             Start Routine
-                        </>
+                        </span>
                     )}
                 </Fab>
             </div>

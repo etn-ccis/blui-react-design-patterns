@@ -136,20 +136,20 @@ const createFileItem = (increment: number): FolderItem => ({
     status: `Uploading (0%)`,
 });
 
+let nextFileIndex = 0;
+
 export const ProgressBar = (): JSX.Element => {
     const dispatch = useDispatch();
     const classes = useStyles();
     const [fileUploadList, setFileUploadList] = useState<FolderItem[]>(uploadFileList);
 
     const [radioButtonvalue, setRadioButtonvalue] = useState('1');
-    const [count, setCount] = useState(0);
     const changeRadioGroup = (event: React.ChangeEvent<HTMLInputElement>): void => {
         setRadioButtonvalue((event.target as HTMLInputElement).value);
     };
 
     const uploadFile = useCallback((): void => {
-        setCount(count + 1);
-        setFileUploadList((oldList) => [...oldList, createFileItem(count)]);
+        setFileUploadList((oldList) => [...oldList, createFileItem(nextFileIndex++)]);
     }, [fileUploadList, setFileUploadList]);
 
     const removeListItem = useCallback((id: number, status: string): void => {

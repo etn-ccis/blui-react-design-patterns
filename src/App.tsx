@@ -72,7 +72,7 @@ export const App: React.FC = () => {
             open={open}
             width={DRAWER_WIDTH}
             ModalProps={{
-                onBackdropClick: (): void => {
+                onClose: (): void => {
                     dispatch({ type: TOGGLE_DRAWER, payload: !open });
                 },
             }}

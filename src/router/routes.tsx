@@ -51,6 +51,10 @@ export const PAGES: Routes = {
     },
     LOADING_WAITING_STATES: {
         title: 'Loading & Waiting',
+        PROGRESS_BAR: {
+            title: 'Progress Bars',
+            route: 'progress-bar',
+        },
         PROGRESS_BAR_INDETERMINATE: {
             title: 'Progress Bars (Indet.)',
             route: 'progress-bar-indeterminate',
@@ -126,6 +130,7 @@ export type Routes = {
     };
     LOADING: RouteMetaData;
     LOADING_WAITING_STATES: RouteMetaData & {
+        PROGRESS_BAR: RouteMetaData;
         PROGRESS_BAR_INDETERMINATE: RouteMetaData;
         CONTEXTUAL_SPINNER: RouteMetaData;
         SKELETONS: RouteMetaData;

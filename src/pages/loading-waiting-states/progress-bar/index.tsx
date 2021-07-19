@@ -23,10 +23,7 @@ import LinearProgress, { LinearProgressProps } from '@material-ui/core/LinearPro
 import { useDispatch } from 'react-redux';
 import { TOGGLE_DRAWER } from '../../../redux/actions';
 import * as Colors from '@pxblue/colors';
-import {
-    CSSTransition,
-    TransitionGroup,
-  } from 'react-transition-group';
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
 type FolderItem = {
     id: number;
     name: string;
@@ -150,7 +147,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     snackbarActive: {
         opacity: 0,
         transition: 'opacity 500ms ease-in',
-    }
+    },
 }));
 const createFileItem = (increment: number): FolderItem => ({
     id: increment,
@@ -276,65 +273,69 @@ export const ProgressBar = (): JSX.Element => {
                     </CardContent>
                 </Card>
                 <List data-cy={'list-content'} disablePadding component="nav" className={classes.placementOfList}>
-                <TransitionGroup>
-                    {fileUploadList.map(
-                        (item, i): JSX.Element => (
-                            <CSSTransition
-                                key={`transitionKey${item.id}`}
-                                timeout={500}
-                                className={classes.snackbarItem}
-                                classNames={{
-                                    enter: classes.snackbarEnter,
-                                    enterActive:
-                                    classes.snackbarEnterActive,
-                                    exit: classes.snackbar,
-                                    exitActive:
-                                    classes.snackbarActive,
-                                }}
+                    <TransitionGroup>
+                        {fileUploadList.map(
+                            (item, i): JSX.Element => (
+                                <CSSTransition
+                                    key={`transitionKey${item.id}`}
+                                    timeout={500}
+                                    className={classes.snackbarItem}
+                                    classNames={{
+                                        enter: classes.snackbarEnter,
+                                        enterActive: classes.snackbarEnterActive,
+                                        exit: classes.snackbar,
+                                        exitActive: classes.snackbarActive,
+                                    }}
                                 >
-                            <div key={`itemKey${item.id}`}>
-                                <Snackbar
-                                    classes={{ root: classes.snackbarRoot }}
-                                    open={true}
-                                    autoHideDuration={item.progress === 100 ? 3000 : null}
-                                    onClose={(e, reason): void => handleRequestClose(e, reason, item.id)}
-                                >
-                                    <SnackbarContent
-                                        classes={{ root: classes.SnackbarContent, action: classes.snackbarAction  }}
-                                        action={
-                                            <>
-                                                <Button
-                                                    variant="outlined"
-                                                    className={classes.closeButtonContainer}
-                                                    onClick={(): void => removeListItem(item.id, item.status)}
-                                                >
-                                                    {item.progress === 100 ? 'View' : 'Cancel'}
-                                                </Button>
-                                            </>
-                                        }
-                                        message={
-                                            <div className={classes.messageContainer}>
-                                                <div className={classes.iconContainer}>
-                                                    <Description className={classes.icon} />
-                                                </div>
-                                                <div className={classes.messageTextContainer}>
-                                                    <Typography variant={'subtitle1'} color={'inherit'}>
-                                                        {item.name}
-                                                    </Typography>
-                                                    <Typography variant={'subtitle2'} className={classes.subTitle}>
-                                                        {item.status}
-                                                    </Typography>
-                                                </div>
-                                            </div>
-                                        }
-                                    />
-                                </Snackbar>
-                                <LinearProgressWithLabel value={item.progress} key={`progress${i}`} />
-                            </div>
-                            </CSSTransition>
-                        )
-                    )}
-                </TransitionGroup>
+                                    <div key={`itemKey${item.id}`}>
+                                        <Snackbar
+                                            classes={{ root: classes.snackbarRoot }}
+                                            open={true}
+                                            autoHideDuration={item.progress === 100 ? 3000 : null}
+                                            onClose={(e, reason): void => handleRequestClose(e, reason, item.id)}
+                                        >
+                                            <SnackbarContent
+                                                classes={{
+                                                    root: classes.SnackbarContent,
+                                                    action: classes.snackbarAction,
+                                                }}
+                                                action={
+                                                    <>
+                                                        <Button
+                                                            variant="outlined"
+                                                            className={classes.closeButtonContainer}
+                                                            onClick={(): void => removeListItem(item.id, item.status)}
+                                                        >
+                                                            {item.progress === 100 ? 'View' : 'Cancel'}
+                                                        </Button>
+                                                    </>
+                                                }
+                                                message={
+                                                    <div className={classes.messageContainer}>
+                                                        <div className={classes.iconContainer}>
+                                                            <Description className={classes.icon} />
+                                                        </div>
+                                                        <div className={classes.messageTextContainer}>
+                                                            <Typography variant={'subtitle1'} color={'inherit'}>
+                                                                {item.name}
+                                                            </Typography>
+                                                            <Typography
+                                                                variant={'subtitle2'}
+                                                                className={classes.subTitle}
+                                                            >
+                                                                {item.status}
+                                                            </Typography>
+                                                        </div>
+                                                    </div>
+                                                }
+                                            />
+                                        </Snackbar>
+                                        <LinearProgressWithLabel value={item.progress} key={`progress${i}`} />
+                                    </div>
+                                </CSSTransition>
+                            )
+                        )}
+                    </TransitionGroup>
                 </List>
             </div>
         </div>

@@ -23,6 +23,10 @@ import LinearProgress, { LinearProgressProps } from '@material-ui/core/LinearPro
 import { useDispatch } from 'react-redux';
 import { TOGGLE_DRAWER } from '../../../redux/actions';
 import * as Colors from '@pxblue/colors';
+import {
+    CSSTransition,
+    TransitionGroup,
+  } from 'react-transition-group';
 type FolderItem = {
     id: number;
     name: string;
@@ -104,7 +108,7 @@ const useStyles = makeStyles((theme: Theme) => ({
             width: '100%',
         },
     },
-    infoList: {
+    snackbarItem: {
         marginBottom: theme.spacing(2),
         '&:last-child': {
             marginBottom: 0,
@@ -113,9 +117,14 @@ const useStyles = makeStyles((theme: Theme) => ({
     subTitle: {
         color: Colors.black[200],
     },
-    snackbar: {
+    snackbarRoot: {
         position: 'inherit',
         transform: 'none',
+    },
+    snackbarAction: {
+        [theme.breakpoints.down('md')]: {
+            paddingLeft: 0,
+        },
     },
     SnackbarContent: {
         borderRadius: 0,
@@ -128,6 +137,20 @@ const useStyles = makeStyles((theme: Theme) => ({
     messageTextContainer: {
         marginRight: `${theme.spacing(3)}px`,
     },
+    snackbarEnter: {
+        opacity: 0,
+    },
+    snackbarEnterActive: {
+        opacity: 1,
+        transition: 'opacity 500ms ease-in',
+    },
+    snackbar: {
+        opacity: 1,
+    },
+    snackbarActive: {
+        opacity: 0,
+        transition: 'opacity 500ms ease-in',
+    }
 }));
 const createFileItem = (increment: number): FolderItem => ({
     id: increment,
@@ -253,17 +276,31 @@ export const ProgressBar = (): JSX.Element => {
                     </CardContent>
                 </Card>
                 <List data-cy={'list-content'} disablePadding component="nav" className={classes.placementOfList}>
+                <TransitionGroup>
                     {fileUploadList.map(
                         (item, i): JSX.Element => (
-                            <div key={`itemKey${item.id}`} className={classes.infoList}>
+                            <CSSTransition
+                                key={`transitionKey${item.id}`}
+                                timeout={500}
+                                className={classes.snackbarItem}
+                                classNames={{
+                                    enter: classes.snackbarEnter,
+                                    enterActive:
+                                    classes.snackbarEnterActive,
+                                    exit: classes.snackbar,
+                                    exitActive:
+                                    classes.snackbarActive,
+                                }}
+                                >
+                            <div key={`itemKey${item.id}`}>
                                 <Snackbar
-                                    classes={{ root: classes.snackbar }}
+                                    classes={{ root: classes.snackbarRoot }}
                                     open={true}
                                     autoHideDuration={item.progress === 100 ? 3000 : null}
                                     onClose={(e, reason): void => handleRequestClose(e, reason, item.id)}
                                 >
                                     <SnackbarContent
-                                        classes={{ root: classes.SnackbarContent }}
+                                        classes={{ root: classes.SnackbarContent, action: classes.snackbarAction  }}
                                         action={
                                             <>
                                                 <Button
@@ -294,8 +331,10 @@ export const ProgressBar = (): JSX.Element => {
                                 </Snackbar>
                                 <LinearProgressWithLabel value={item.progress} key={`progress${i}`} />
                             </div>
+                            </CSSTransition>
                         )
                     )}
+                </TransitionGroup>
                 </List>
             </div>
         </div>

@@ -15,7 +15,8 @@ import {
     List,
     Snackbar,
 } from '@material-ui/core';
-import { makeStyles, Theme } from '@material-ui/core/styles';
+import { makeStyles, Theme, createTheme, MuiThemeProvider } from '@material-ui/core/styles';
+import * as PXBThemes from '@pxblue/react-themes';
 import MenuIcon from '@material-ui/icons/Menu';
 import { Folder, Description, Publish } from '@material-ui/icons';
 import LinearProgress, { LinearProgressProps } from '@material-ui/core/LinearProgress';
@@ -58,11 +59,6 @@ const useStyles = makeStyles((theme: Theme) => ({
     uploadButtonContainer: {
         textAlign: 'right',
         paddingBottom: `${theme.spacing(2)}px`,
-    },
-    buttonContainer: {
-        color: Colors.black[50],
-        borderColor: Colors.black[50],
-        width: '80px',
     },
     formControl: {
         width: '100%',
@@ -109,12 +105,10 @@ const useStyles = makeStyles((theme: Theme) => ({
             marginBottom: 0,
         },
     },
-    subTitle: {
-        color: Colors.black[200],
-    },
     snackbarRoot: {
         position: 'inherit',
         transform: 'none',
+        backgroundColor: Colors.black[900],
     },
 }));
 const createFileItem = (increment: number): FolderItem => ({
@@ -257,30 +251,24 @@ export const ProgressBar = (): JSX.Element => {
                                     TransitionProps={{ timeout: 300, onExited: (): void => handleExited(item.id) }}
                                 >
                                     <div>
-                                        <InfoListItem
-                                            classes={{
-                                                subtitle: classes.subTitle,
-                                            }}
-                                            key={`infolist${item.id}`}
-                                            backgroundColor={Colors.black[900]}
-                                            fontColor={Colors.black[50]}
-                                            color={Colors.black[50]}
-                                            title={item.name}
-                                            subtitle={item.status}
-                                            icon={<Description />}
-                                            iconAlign="left"
-                                            iconColor={Colors.black[200]}
-                                            rightComponent={
-                                                <Button
-                                                    variant="outlined"
-                                                    className={classes.buttonContainer}
-                                                    onClick={(): void => removeListItem(item.id, item.status)}
-                                                >
-                                                    {item.progress === 100 ? 'View' : 'Cancel'}
-                                                </Button>
-                                            }
-                                        />
-                                        <LinearProgressWithLabel value={item.progress} key={`progress${i}`} />
+                                        <MuiThemeProvider theme={createTheme(PXBThemes.blueDark)}>
+                                            <InfoListItem
+                                                key={`infolist${item.id}`}
+                                                title={item.name}
+                                                subtitle={item.status}
+                                                icon={<Description />}
+                                                rightComponent={
+                                                    <Button
+                                                        variant="outlined"
+                                                        style={{ width: 80 }}
+                                                        onClick={(): void => removeListItem(item.id, item.status)}
+                                                    >
+                                                        {item.progress === 100 ? 'View' : 'Cancel'}
+                                                    </Button>
+                                                }
+                                            />
+                                            <LinearProgressWithLabel value={item.progress} key={`progress${i}`} />
+                                        </MuiThemeProvider>
                                     </div>
                                 </Snackbar>
                             </div>

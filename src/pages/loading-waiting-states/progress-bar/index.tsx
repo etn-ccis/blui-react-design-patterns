@@ -110,6 +110,16 @@ const useStyles = makeStyles((theme: Theme) => ({
         transform: 'none',
         backgroundColor: Colors.black[900],
     },
+    bottomCenter: {
+        left: 0,
+        right: 0,
+        bottom: 0,
+        [theme.breakpoints.down('xs')]: {
+            '& div:first-child': {
+                width: '100%',
+            },
+        },
+    },
 }));
 const createFileItem = (increment: number): FolderItem => ({
     id: increment,
@@ -244,7 +254,10 @@ export const ProgressBar = (): JSX.Element => {
                         (item, i): JSX.Element => (
                             <div key={`itemKey${item.id}`} className={classes.fileUploadItem}>
                                 <Snackbar
-                                    classes={{ root: classes.snackbarRoot }}
+                                    classes={{
+                                        root: classes.snackbarRoot,
+                                        anchorOriginBottomCenter: classes.bottomCenter,
+                                    }}
                                     open={item.open}
                                     autoHideDuration={item.progress === 100 ? 3000 : null}
                                     onClose={(e, reason): void => handleRequestClose(e, reason, item.id)}

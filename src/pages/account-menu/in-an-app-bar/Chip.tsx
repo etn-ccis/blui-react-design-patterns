@@ -11,23 +11,21 @@ const useStyles = makeStyles((theme: Theme) => ({
         width: `${theme.spacing(3)}px`,
     },
     chipLabel: {
-        marginRight:`${theme.spacing(1)}px`,
+        marginRight: `${theme.spacing(1)}px`,
     },
     chipLabelIcon: {
         height: 16,
-        width: 16
+        width: 16,
     },
     chipLabelContainer: {
         display: 'flex',
-        alignItems:'center'
-    }
+        alignItems: 'center',
+    },
 }));
 
-
-
 type ChipProps = {
-    variant: "default" | "outlined" | undefined;
-    size: "small" | "medium" | undefined;
+    variant: 'default' | 'outlined' | undefined;
+    size: 'small' | 'medium' | undefined;
     leftIcon: React.ReactElement;
     label: string;
     rightIcon: React.ReactElement;
@@ -46,7 +44,9 @@ export const Chip = (props: ChipProps): JSX.Element => {
             icon={leftIcon}
             label={
                 <div className={classes.chipLabelContainer}>
-                    <Typography variant={'body2'} className={classes.chipLabel}>{label}</Typography>
+                    <Typography variant={'body2'} className={classes.chipLabel}>
+                        {label}
+                    </Typography>
                     {rightIcon}
                 </div>
             }

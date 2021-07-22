@@ -128,7 +128,7 @@ export type Routes = {
     ACCOUNT_MENU: RouteMetaData & {
         IN_AN_APP_BAR: RouteMetaData;
         IN_A_DRAWER: RouteMetaData;
-    },
+    };
     APP_BAR: RouteMetaData & {
         COLLAPSIBLE: RouteMetaData;
         SEARCH: RouteMetaData;

@@ -5,7 +5,7 @@
     "dependencies": {
         "@fontsource/noto-sans": "^4.1.0",
         "@material-ui/core": "^4.12.1",
-        "@material-ui/icons": "^4.5.1",
+        "@material-ui/icons": "^4.11.2",
         "@material-ui/lab": "^4.0.0-alpha.57",
         "@pxblue/colors": "^3.0.0",
         "@pxblue/icons-mui": "^2.4.0",

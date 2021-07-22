@@ -1,15 +1,38 @@
 import React from 'react';
-import { AppBar, Avatar, Badge, Hidden, Toolbar, IconButton, Typography, Chip } from '@material-ui/core';
+import { AppBar, Avatar, Badge, Hidden, Toolbar, IconButton, Typography } from '@material-ui/core';
+// import Chip from '@material-ui/core/Chip';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import MenuIcon from '@material-ui/icons/Menu';
 import InfoIcon from '@material-ui/icons/Info';
+import { LockOpen, Settings, VpnKey, Email, ExitToApp, AccountCircle } from '@material-ui/icons';
 import ExpandMoreOutlinedIcon from '@material-ui/icons/ExpandMoreOutlined';
 import { Spacer, UserMenu } from '@pxblue/react-components';
-import { LockOpen, Settings, VpnKey, Email, ExitToApp, AccountCircle } from '@material-ui/icons';
+import { Chip } from './Chip';
 import { useDispatch } from 'react-redux';
 import { TOGGLE_DRAWER } from '../../../redux/actions';
 import * as colors from '@pxblue/colors';
+
 const avatarImage = require('../../../assets/avatar_40.png').default;
+const menuGroupItems = [
+    {
+        items: [
+            {
+                title: 'Change Password',
+                icon: <VpnKey />,
+            },
+            {
+                title: 'Preferences',
+                icon: <Settings />,
+            },
+            {
+                title: 'Log Out',
+                icon: <ExitToApp />,
+            }
+        ],
+    },
+];
+const avatarTitle = 'Chima Thabani';
+const avatarSubtitile = 'CThabani@example.com';
 
 const useStyles = makeStyles((theme: Theme) => ({
     toolbarGutters: {
@@ -49,6 +72,9 @@ const useStyles = makeStyles((theme: Theme) => ({
             textOverflow: 'ellipsis',
         },
     },
+    paper: {
+        marginTop: `${theme.spacing(1)}px`,
+    },
     userMenuChip: {
         width: '112px',
         height: `${theme.spacing(4)}px`,
@@ -57,23 +83,21 @@ const useStyles = makeStyles((theme: Theme) => ({
         height: `${theme.spacing(3)}px`,
         width: `${theme.spacing(3)}px`,
     },
-    paper: {
-        marginTop: `${theme.spacing(1)}px`,
-    }
 }));
 
 export const InAnAppBar = (): JSX.Element => {
     const dispatch = useDispatch();
     const classes = useStyles();
-    const handleDelete = (): void => {
-        /* eslint-disable-next-line no-console */
-        console.info('You clicked the delete icon.');
-    };
+    
+    // const handleDelete = (): void => {
+    //     /* eslint-disable-next-line no-console */
+    //     console.info('You clicked the delete icon.');
+    // };
 
-    const clicked = (): void => {
-        /* eslint-disable-next-line no-console */
-        console.info('You clicked the clicked usermenu.');
-    };
+    // const clicked = (): void => {
+    //     /* eslint-disable-next-line no-console */
+    //     console.info('You clicked the clicked usermenu.');
+    // };
     return (
         <div style={{ minHeight: '100vh' }}>
             <AppBar data-cy="pxb-toolbar" position={'sticky'}>
@@ -99,21 +123,22 @@ export const InAnAppBar = (): JSX.Element => {
             </AppBar>
             <div>
                 <div className={classes.appBarHeader}>
-                    <Typography variant={'body1'} color="inherit">
+                    <Typography variant={'body1'}>
                         Click on each avatar to see the account menu. Resize the screen to view the account menu / user menu rendered responsively.
                     </Typography>
                 </div>
                 <div className={classes.appBarContainer}>
+                    {/* First Example */}
                     <AppBar position="static" color="inherit" className={classes.appBar}>
                         <Toolbar classes={{ gutters: classes.toolbarGutters }}>
-                            <IconButton color={'inherit'} edge={'start'}>
+                            <IconButton edge={'start'}>
                                 <MenuIcon />
                             </IconButton>
                             <div className={classes.textContainer}>
-                                <Typography variant={'h6'} color={'inherit'}>
+                                <Typography variant={'h6'} >
                                     Generic Icon Avatar
                                 </Typography>
-                                <Typography variant={'body1'} color={'inherit'} className={classes.subtitle}>
+                                <Typography variant={'body1'} className={classes.subtitle}>
                                     Shared / Anonymous Account
                                 </Typography>
                             </div>
@@ -140,23 +165,15 @@ export const InAnAppBar = (): JSX.Element => {
                                 ]}
                                 MenuProps={
                                     {
-                                        // anchorOrigin:{
-                                        //     vertical: 'bottom',
-                                        //     horizontal: 'left',
-                                        //   },
-                                        //   transformOrigin:{
-                                        //     vertical: 'top',
-                                        //     horizontal: 'center',
-                                        //   },
-                                        anchorOrigin:{
+                                        anchorOrigin: {
                                             vertical: 'bottom',
                                             horizontal: 'right',
-                                          },
-                                          transformOrigin:{
+                                        },
+                                        transformOrigin: {
                                             vertical: 'top',
                                             horizontal: 'right',
-                                          },
-                                        classes: { paper: classes.paper }
+                                        },
+                                        classes: { paper: classes.paper },
                                     }
                                 }
                             />
@@ -165,50 +182,25 @@ export const InAnAppBar = (): JSX.Element => {
                     {/* Second Example */}
                     <AppBar position="static" color="inherit" className={classes.appBar}>
                         <Toolbar classes={{ gutters: classes.toolbarGutters }}>
-                            <IconButton color={'inherit'} edge={'start'}>
+                            <IconButton edge={'start'}>
                                 <MenuIcon />
                             </IconButton>
                             <div className={classes.textContainer}>
-                                <Typography variant={'h6'} color={'inherit'}>
+                                <Typography variant={'h6'}>
                                     Basic Letter Avatar
                                 </Typography>
-                                <Typography variant={'body1'} color={'inherit'} className={classes.subtitle}>
+                                <Typography variant={'body1'} className={classes.subtitle}>
                                     Showing User’s Initials
                                 </Typography>
                             </div>
                             <Spacer />
                             <UserMenu
                                 avatar={<Avatar>CT</Avatar>}
-                                menuGroups={[
-                                    {
-                                        items: [
-                                            {
-                                                title: 'Change Password',
-                                                icon: <VpnKey />,
-                                            },
-                                            {
-                                                title: 'Preferences',
-                                                icon: <Settings />,
-                                            },
-                                            {
-                                                title: 'Logout',
-                                                icon: <ExitToApp />,
-                                            }
-                                        ],
-                                    },
-                                ]}
-                                menuTitle='Chima Thabani'
-                                menuSubtitle='CThabani@example.com'
+                                menuGroups={menuGroupItems}
+                                menuTitle={avatarTitle}
+                                menuSubtitle={avatarSubtitile}
                                 MenuProps={
                                     {
-                                        // anchorOrigin:{
-                                        //     vertical: 'bottom',
-                                        //     horizontal: 'center',
-                                        //   },
-                                        //   transformOrigin:{
-                                        //     vertical: 'top',
-                                        //     horizontal: 'center',
-                                        //   },
                                         anchorOrigin: {
                                             vertical: 'bottom',
                                             horizontal: 'right',
@@ -226,50 +218,33 @@ export const InAnAppBar = (): JSX.Element => {
                     {/* Third Example */}
                     <AppBar position="static" color="inherit" className={classes.appBar}>
                         <Toolbar classes={{ gutters: classes.toolbarGutters }}>
-                            <IconButton color={'inherit'} edge={'start'}>
+                            <IconButton edge={'start'}>
                                 <MenuIcon />
                             </IconButton>
                             <div className={classes.textContainer}>
-                                <Typography variant={'h6'} color={'inherit'}>
+                                <Typography variant={'h6'}>
                                     Image Avatar
                                 </Typography>
-                                <Typography variant={'body1'} color={'inherit'} className={classes.subtitle}>
+                                <Typography variant={'body1'} className={classes.subtitle}>
                                     Showing A Custom Profile Picture
                                 </Typography>
                             </div>
                             <Spacer />
                             <UserMenu
                                 avatar={<Avatar alt="Chima Thabani" src={avatarImage} />}
-                                menuGroups={[
-                                    {
-                                        items: [
-                                            {
-                                                title: 'Change Password',
-                                                icon: <VpnKey />,
-                                            },
-                                            {
-                                                title: 'Preferences',
-                                                icon: <Settings />,
-                                            },
-                                            {
-                                                title: 'Logout',
-                                                icon: <ExitToApp />,
-                                            }
-                                        ],
-                                    },
-                                ]}
-                                menuTitle='Chima Thabani'
-                                menuSubtitle='CThabani@example.com'
+                                menuGroups={menuGroupItems}
+                                menuTitle={avatarTitle}
+                                menuSubtitle={avatarSubtitile}
                                 MenuProps={
                                     {
-                                        anchorOrigin:{
+                                        anchorOrigin: {
                                             vertical: 'bottom',
                                             horizontal: 'right',
-                                          },
-                                          transformOrigin:{
+                                        },
+                                        transformOrigin: {
                                             vertical: 'top',
                                             horizontal: 'right',
-                                          },
+                                        },
                                         classes: { paper: classes.paper }
                                     }
                                 }
@@ -279,14 +254,14 @@ export const InAnAppBar = (): JSX.Element => {
                     {/* Fourth Example */}
                     <AppBar position="static" color="inherit" className={classes.appBar}>
                         <Toolbar classes={{ gutters: classes.toolbarGutters }}>
-                            <IconButton color={'inherit'} edge={'start'}>
+                            <IconButton edge={'start'}>
                                 <MenuIcon />
                             </IconButton>
                             <div className={classes.textContainer}>
-                                <Typography variant={'h6'} color={'inherit'}>
+                                <Typography variant={'h6'}>
                                     Status Avatar
                                 </Typography>
-                                <Typography variant={'body1'} color={'inherit'} className={classes.subtitle}>
+                                <Typography variant={'body1'} className={classes.subtitle}>
                                     Avatar with Status Indicator
                                 </Typography>
                             </div>
@@ -322,18 +297,18 @@ export const InAnAppBar = (): JSX.Element => {
                                         ],
                                     },
                                 ]}
-                                menuTitle='Chima Thabani'
-                                menuSubtitle='CThabani@example.com'
+                                menuTitle={avatarTitle}
+                                menuSubtitle={avatarSubtitile}
                                 MenuProps={
                                     {
-                                        anchorOrigin:{
+                                        anchorOrigin: {
                                             vertical: 'bottom',
                                             horizontal: 'right',
-                                          },
-                                          transformOrigin:{
+                                        },
+                                        transformOrigin: {
                                             vertical: 'top',
                                             horizontal: 'right',
-                                          },
+                                        },
                                         classes: { paper: classes.paper }
                                     }
                                 }
@@ -347,74 +322,39 @@ export const InAnAppBar = (): JSX.Element => {
                                 <MenuIcon />
                             </IconButton>
                             <div className={classes.textContainer}>
-                                <Typography variant={'h6'} color={'inherit'}>
+                                <Typography variant={'h6'}>
                                     Text Menu
                                 </Typography>
-                                <Typography variant={'body1'} color={'inherit'} className={classes.subtitle}>
+                                <Typography variant={'body1'} className={classes.subtitle}>
                                     Calling Out the User Name
                                 </Typography>
                             </div>
                             <Spacer />
                             <UserMenu
-                                // classes={{root: classes.userMenuChip}}
-                                onClick={clicked}
                                 avatar={
-                                    // <Chip
-                                    //     variant="outlined"
-                                    //     size="small"
-                                    //     icon={<AccountCircle />}
-                                    //     label="Admin"
-                                    // />
                                     <Chip
-                                        classes={{ root: classes.userMenuChip, icon: classes.chipIcon }}
-                                        // icon={<AccountCircle />}
-                                        // label="Admin"
-                                        // clickable
-                                        // deleteIcon={<ExpandMoreOutlinedIcon />}
-                                        // onDelete={handleDelete}
-                                        // variant="outlined"
                                         variant="outlined"
                                         size="small"
-                                        icon={<AccountCircle />}
-                                        label="Admin"
-                                        clickable
-                                        onDelete={handleDelete}
-                                        deleteIcon={<ExpandMoreOutlinedIcon />}
+                                        leftIcon={<AccountCircle />}
+                                        label='Admin'
+                                        rightIcon={<ExpandMoreOutlinedIcon style={{height: 20, width:20}}/>}
                                     />
+                                    // <Chip variant="outlined" size="small" label="Basic" />
                                 }
-                                menuGroups={[
-                                    {
-                                        items: [
-                                            {
-                                                title: 'Change Password',
-                                                icon: <VpnKey />,
-                                            },
-                                            {
-                                                title: 'Preferences',
-                                                icon: <Settings />,
-                                            },
-                                            {
-                                                title: 'About',
-                                                icon: <Email />,
-                                            }
-                                        ],
-                                    },
-                                ]}
+                                menuGroups={menuGroupItems}
                                 MenuProps={
                                     {
-                                        anchorOrigin:{
+                                        anchorOrigin: {
                                             vertical: 'bottom',
                                             horizontal: 'right',
-                                          },
-                                          transformOrigin:{
+                                        },
+                                        transformOrigin: {
                                             vertical: 'top',
                                             horizontal: 'right',
-                                          },
+                                        },
                                         classes: { paper: classes.paper }
                                     }
                                 }
-                            // menuTitle='Chima Thabani'
-                            // menuSubtitle='CThabani@example.com'
                             />
                         </Toolbar>
                     </AppBar>

@@ -1,9 +1,11 @@
 import React from 'react';
-import { AppBar, Avatar, Badge, Hidden, Toolbar, IconButton, Typography } from '@material-ui/core';
+import { AppBar, Avatar, Badge, Hidden, Toolbar, IconButton, Typography, Chip } from '@material-ui/core';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import MenuIcon from '@material-ui/icons/Menu';
+import InfoIcon from '@material-ui/icons/Info';
+import ExpandMoreOutlinedIcon from '@material-ui/icons/ExpandMoreOutlined';
 import { Spacer, UserMenu } from '@pxblue/react-components';
-import { Email, Settings, VpnKey } from '@material-ui/icons';
+import { LockOpen, Settings, VpnKey, Email, ExitToApp, AccountCircle } from '@material-ui/icons';
 import { useDispatch } from 'react-redux';
 import { TOGGLE_DRAWER } from '../../../redux/actions';
 import * as colors from '@pxblue/colors';
@@ -36,9 +38,8 @@ const useStyles = makeStyles((theme: Theme) => ({
         color: colors.green[500],
         boxShadow: `0 0 0 2px ${theme.palette.background.paper}`,
     },
-    iconButton: {
-        paddingLeft: `${theme.spacing(2)}px`,
-        paddingRight: `${theme.spacing(4)}px`,
+    textContainer: {
+        marginLeft: `${theme.spacing(2.5)}px`,
     },
     subtitle: {
         [theme.breakpoints.down('md')]: {
@@ -47,13 +48,32 @@ const useStyles = makeStyles((theme: Theme) => ({
             whiteSpace: 'nowrap',
             textOverflow: 'ellipsis',
         },
+    },
+    userMenuChip: {
+        width: '112px',
+        height: `${theme.spacing(4)}px`,
+    },
+    chipIcon: {
+        height: `${theme.spacing(3)}px`,
+        width: `${theme.spacing(3)}px`,
+    },
+    paper: {
+        marginTop: `${theme.spacing(1)}px`,
     }
 }));
 
 export const InAnAppBar = (): JSX.Element => {
     const dispatch = useDispatch();
     const classes = useStyles();
+    const handleDelete = (): void => {
+        /* eslint-disable-next-line no-console */
+        console.info('You clicked the delete icon.');
+    };
 
+    const clicked = (): void => {
+        /* eslint-disable-next-line no-console */
+        console.info('You clicked the clicked usermenu.');
+    };
     return (
         <div style={{ minHeight: '100vh' }}>
             <AppBar data-cy="pxb-toolbar" position={'sticky'}>
@@ -86,10 +106,10 @@ export const InAnAppBar = (): JSX.Element => {
                 <div className={classes.appBarContainer}>
                     <AppBar position="static" color="inherit" className={classes.appBar}>
                         <Toolbar classes={{ gutters: classes.toolbarGutters }}>
-                            <IconButton color={'inherit'} edge={'start'} className={classes.iconButton}>
+                            <IconButton color={'inherit'} edge={'start'}>
                                 <MenuIcon />
                             </IconButton>
-                            <div>
+                            <div className={classes.textContainer}>
                                 <Typography variant={'h6'} color={'inherit'}>
                                     Generic Icon Avatar
                                 </Typography>
@@ -105,7 +125,7 @@ export const InAnAppBar = (): JSX.Element => {
                                         items: [
                                             {
                                                 title: 'Log In',
-                                                icon: <Settings />,
+                                                icon: <LockOpen />,
                                             },
                                             {
                                                 title: 'Register',
@@ -113,21 +133,42 @@ export const InAnAppBar = (): JSX.Element => {
                                             },
                                             {
                                                 title: 'About',
-                                                icon: <Email />,
+                                                icon: <InfoIcon />,
                                             }
                                         ],
                                     },
                                 ]}
+                                MenuProps={
+                                    {
+                                        // anchorOrigin:{
+                                        //     vertical: 'bottom',
+                                        //     horizontal: 'left',
+                                        //   },
+                                        //   transformOrigin:{
+                                        //     vertical: 'top',
+                                        //     horizontal: 'center',
+                                        //   },
+                                        anchorOrigin:{
+                                            vertical: 'bottom',
+                                            horizontal: 'right',
+                                          },
+                                          transformOrigin:{
+                                            vertical: 'top',
+                                            horizontal: 'right',
+                                          },
+                                        classes: { paper: classes.paper }
+                                    }
+                                }
                             />
                         </Toolbar>
                     </AppBar>
                     {/* Second Example */}
                     <AppBar position="static" color="inherit" className={classes.appBar}>
                         <Toolbar classes={{ gutters: classes.toolbarGutters }}>
-                            <IconButton color={'inherit'} edge={'start'} className={classes.iconButton}>
+                            <IconButton color={'inherit'} edge={'start'}>
                                 <MenuIcon />
                             </IconButton>
-                            <div>
+                            <div className={classes.textContainer}>
                                 <Typography variant={'h6'} color={'inherit'}>
                                     Basic Letter Avatar
                                 </Typography>
@@ -150,24 +191,45 @@ export const InAnAppBar = (): JSX.Element => {
                                                 icon: <Settings />,
                                             },
                                             {
-                                                title: 'About',
-                                                icon: <Email />,
+                                                title: 'Logout',
+                                                icon: <ExitToApp />,
                                             }
                                         ],
                                     },
                                 ]}
                                 menuTitle='Chima Thabani'
                                 menuSubtitle='CThabani@example.com'
+                                MenuProps={
+                                    {
+                                        // anchorOrigin:{
+                                        //     vertical: 'bottom',
+                                        //     horizontal: 'center',
+                                        //   },
+                                        //   transformOrigin:{
+                                        //     vertical: 'top',
+                                        //     horizontal: 'center',
+                                        //   },
+                                        anchorOrigin: {
+                                            vertical: 'bottom',
+                                            horizontal: 'right',
+                                        },
+                                        transformOrigin: {
+                                            vertical: 'top',
+                                            horizontal: 'right',
+                                        },
+                                        classes: { paper: classes.paper }
+                                    }
+                                }
                             />
                         </Toolbar>
                     </AppBar>
                     {/* Third Example */}
                     <AppBar position="static" color="inherit" className={classes.appBar}>
                         <Toolbar classes={{ gutters: classes.toolbarGutters }}>
-                            <IconButton color={'inherit'} edge={'start'} className={classes.iconButton}>
+                            <IconButton color={'inherit'} edge={'start'}>
                                 <MenuIcon />
                             </IconButton>
-                            <div>
+                            <div className={classes.textContainer}>
                                 <Typography variant={'h6'} color={'inherit'}>
                                     Image Avatar
                                 </Typography>
@@ -190,24 +252,37 @@ export const InAnAppBar = (): JSX.Element => {
                                                 icon: <Settings />,
                                             },
                                             {
-                                                title: 'About',
-                                                icon: <Email />,
+                                                title: 'Logout',
+                                                icon: <ExitToApp />,
                                             }
                                         ],
                                     },
                                 ]}
                                 menuTitle='Chima Thabani'
                                 menuSubtitle='CThabani@example.com'
+                                MenuProps={
+                                    {
+                                        anchorOrigin:{
+                                            vertical: 'bottom',
+                                            horizontal: 'right',
+                                          },
+                                          transformOrigin:{
+                                            vertical: 'top',
+                                            horizontal: 'right',
+                                          },
+                                        classes: { paper: classes.paper }
+                                    }
+                                }
                             />
                         </Toolbar>
                     </AppBar>
                     {/* Fourth Example */}
                     <AppBar position="static" color="inherit" className={classes.appBar}>
                         <Toolbar classes={{ gutters: classes.toolbarGutters }}>
-                            <IconButton color={'inherit'} edge={'start'} className={classes.iconButton}>
+                            <IconButton color={'inherit'} edge={'start'}>
                                 <MenuIcon />
                             </IconButton>
-                            <div>
+                            <div className={classes.textContainer}>
                                 <Typography variant={'h6'} color={'inherit'}>
                                     Status Avatar
                                 </Typography>
@@ -241,24 +316,37 @@ export const InAnAppBar = (): JSX.Element => {
                                                 icon: <Settings />,
                                             },
                                             {
-                                                title: 'About',
-                                                icon: <Email />,
+                                                title: 'Logout',
+                                                icon: <ExitToApp />,
                                             }
                                         ],
                                     },
                                 ]}
                                 menuTitle='Chima Thabani'
                                 menuSubtitle='CThabani@example.com'
+                                MenuProps={
+                                    {
+                                        anchorOrigin:{
+                                            vertical: 'bottom',
+                                            horizontal: 'right',
+                                          },
+                                          transformOrigin:{
+                                            vertical: 'top',
+                                            horizontal: 'right',
+                                          },
+                                        classes: { paper: classes.paper }
+                                    }
+                                }
                             />
                         </Toolbar>
                     </AppBar>
                     {/* Fifth Example */}
-                    {/* <AppBar position="static" color="inherit" className={classes.appBar}>
+                    <AppBar position="static" color="inherit" className={classes.appBar}>
                         <Toolbar classes={{ gutters: classes.toolbarGutters }}>
-                            <IconButton color={'inherit'} edge={'start'} className={classes.iconButton}>
+                            <IconButton color={'inherit'} edge={'start'}>
                                 <MenuIcon />
                             </IconButton>
-                            <div>
+                            <div className={classes.textContainer}>
                                 <Typography variant={'h6'} color={'inherit'}>
                                     Text Menu
                                 </Typography>
@@ -268,12 +356,30 @@ export const InAnAppBar = (): JSX.Element => {
                             </div>
                             <Spacer />
                             <UserMenu
+                                // classes={{root: classes.userMenuChip}}
+                                onClick={clicked}
                                 avatar={
+                                    // <Chip
+                                    //     variant="outlined"
+                                    //     size="small"
+                                    //     icon={<AccountCircle />}
+                                    //     label="Admin"
+                                    // />
                                     <Chip
+                                        classes={{ root: classes.userMenuChip, icon: classes.chipIcon }}
+                                        // icon={<AccountCircle />}
+                                        // label="Admin"
+                                        // clickable
+                                        // deleteIcon={<ExpandMoreOutlinedIcon />}
+                                        // onDelete={handleDelete}
+                                        // variant="outlined"
                                         variant="outlined"
                                         size="small"
                                         icon={<AccountCircle />}
                                         label="Admin"
+                                        clickable
+                                        onDelete={handleDelete}
+                                        deleteIcon={<ExpandMoreOutlinedIcon />}
                                     />
                                 }
                                 menuGroups={[
@@ -294,11 +400,24 @@ export const InAnAppBar = (): JSX.Element => {
                                         ],
                                     },
                                 ]}
-                                menuTitle='Chima Thabani'
-                                menuSubtitle='CThabani@example.com'
+                                MenuProps={
+                                    {
+                                        anchorOrigin:{
+                                            vertical: 'bottom',
+                                            horizontal: 'right',
+                                          },
+                                          transformOrigin:{
+                                            vertical: 'top',
+                                            horizontal: 'right',
+                                          },
+                                        classes: { paper: classes.paper }
+                                    }
+                                }
+                            // menuTitle='Chima Thabani'
+                            // menuSubtitle='CThabani@example.com'
                             />
                         </Toolbar>
-                    </AppBar> */}
+                    </AppBar>
                 </div>
             </div>
         </div>

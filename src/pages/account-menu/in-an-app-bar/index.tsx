@@ -3,7 +3,7 @@ import { AppBar, Avatar, Badge, Hidden, Toolbar, IconButton, Typography } from '
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import MenuIcon from '@material-ui/icons/Menu';
 import InfoIcon from '@material-ui/icons/Info';
-import { LockOpen, Settings, VpnKey, Email, ExitToApp, AccountCircle } from '@material-ui/icons';
+import { AccountCircle, Apps, ExitToApp, LockOpen, Settings, VpnKey } from '@material-ui/icons';
 import ExpandMoreOutlinedIcon from '@material-ui/icons/ExpandMoreOutlined';
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import { Spacer, UserMenu } from '@pxblue/react-components';
@@ -145,7 +145,7 @@ export const InAnAppBar = (): JSX.Element => {
                                             },
                                             {
                                                 title: 'Register',
-                                                icon: <Email />,
+                                                icon: <Apps />,
                                             },
                                             {
                                                 title: 'About',

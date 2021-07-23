@@ -1,4 +1,4 @@
-import React, {useCallback, useState} from 'react';
+import React, { useCallback, useState } from 'react';
 import { AppBar, Avatar, Badge, Hidden, Toolbar, IconButton, Typography } from '@material-ui/core';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import MenuIcon from '@material-ui/icons/Menu';
@@ -126,7 +126,9 @@ export const InAnAppBar = (): JSX.Element => {
                                 <MenuIcon />
                             </IconButton>
                             <div className={classes.textContainer}>
-                                <Typography variant={'h6'} noWrap>Generic Icon Avatar</Typography>
+                                <Typography variant={'h6'} noWrap>
+                                    Generic Icon Avatar
+                                </Typography>
                                 <Typography variant={'body1'} noWrap>
                                     Shared / Anonymous Account
                                 </Typography>
@@ -173,7 +175,9 @@ export const InAnAppBar = (): JSX.Element => {
                                 <MenuIcon />
                             </IconButton>
                             <div className={classes.textContainer}>
-                                <Typography variant={'h6'} noWrap>Basic Letter Avatar</Typography>
+                                <Typography variant={'h6'} noWrap>
+                                    Basic Letter Avatar
+                                </Typography>
                                 <Typography variant={'body1'} noWrap>
                                     Showing User’s Initials
                                 </Typography>
@@ -205,7 +209,9 @@ export const InAnAppBar = (): JSX.Element => {
                                 <MenuIcon />
                             </IconButton>
                             <div className={classes.textContainer}>
-                                <Typography variant={'h6'} noWrap>Image Avatar</Typography>
+                                <Typography variant={'h6'} noWrap>
+                                    Image Avatar
+                                </Typography>
                                 <Typography variant={'body1'} noWrap>
                                     Showing A Custom Profile Picture
                                 </Typography>
@@ -237,7 +243,9 @@ export const InAnAppBar = (): JSX.Element => {
                                 <MenuIcon />
                             </IconButton>
                             <div className={classes.textContainer}>
-                                <Typography variant={'h6'} noWrap>Status Avatar</Typography>
+                                <Typography variant={'h6'} noWrap>
+                                    Status Avatar
+                                </Typography>
                                 <Typography variant={'body1'} noWrap>
                                     Avatar with Status Indicator
                                 </Typography>
@@ -298,7 +306,9 @@ export const InAnAppBar = (): JSX.Element => {
                                 <MenuIcon />
                             </IconButton>
                             <div className={classes.textContainer}>
-                                <Typography variant={'h6'} noWrap>Text Menu</Typography>
+                                <Typography variant={'h6'} noWrap>
+                                    Text Menu
+                                </Typography>
                                 <Typography variant={'body1'} noWrap>
                                     Calling Out the User Name
                                 </Typography>
@@ -312,8 +322,8 @@ export const InAnAppBar = (): JSX.Element => {
                                         size="small"
                                         icon={<AccountCircle />}
                                         label="Admin"
-                                        rightIcon={chipToggled ? <ExpandMoreOutlinedIcon/> : <ExpandLessIcon/>}
-                                        style={{backgroundColor: chipToggled ? colors.white[500]:colors.white[50] }}
+                                        rightIcon={chipToggled ? <ExpandMoreOutlinedIcon /> : <ExpandLessIcon />}
+                                        style={{ backgroundColor: chipToggled ? colors.white[500] : colors.white[50] }}
                                     />
                                 }
                                 menuGroups={menuGroupItems}

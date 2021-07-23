@@ -11,9 +11,6 @@ const useStyles = makeStyles((theme: Theme) => ({
         height: `${theme.spacing(3)}px`,
         width: `${theme.spacing(3)}px`,
     },
-    chipLabel: {
-        marginRight: `${theme.spacing(1)}px`,
-    },
     chipLabelIcon: {
         height: 16,
         width: 16,
@@ -40,7 +37,7 @@ export const Chip = (props: ChipProps): JSX.Element => {
             classes={{ root: classes.userMenuChip, icon: classes.chipIcon }}
             label={
                 <div className={classes.chipLabelContainer}>
-                    <Typography variant={'body2'} className={classes.chipLabel}>
+                    <Typography variant={'body2'}>
                         {label}
                     </Typography>
                     {rightIcon}

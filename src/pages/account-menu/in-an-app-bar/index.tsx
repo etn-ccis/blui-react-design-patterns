@@ -322,7 +322,7 @@ export const InAnAppBar = (): JSX.Element => {
                                         size="small"
                                         icon={<AccountCircle />}
                                         label="Admin"
-                                        rightIcon={chipToggled ? <ExpandMoreOutlinedIcon /> : <ExpandLessIcon />}
+                                        rightIcon={chipToggled ?  <ExpandLessIcon /> : <ExpandMoreOutlinedIcon />}
                                         style={{ backgroundColor: chipToggled ? colors.white[500] : colors.white[50] }}
                                     />
                                 }

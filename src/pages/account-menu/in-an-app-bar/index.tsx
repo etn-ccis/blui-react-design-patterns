@@ -1,11 +1,11 @@
-import React from 'react';
+import React, {useCallback, useState} from 'react';
 import { AppBar, Avatar, Badge, Hidden, Toolbar, IconButton, Typography } from '@material-ui/core';
-// import Chip from '@material-ui/core/Chip';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import MenuIcon from '@material-ui/icons/Menu';
 import InfoIcon from '@material-ui/icons/Info';
 import { LockOpen, Settings, VpnKey, Email, ExitToApp, AccountCircle } from '@material-ui/icons';
 import ExpandMoreOutlinedIcon from '@material-ui/icons/ExpandMoreOutlined';
+import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import { Spacer, UserMenu } from '@pxblue/react-components';
 import { Chip } from './Chip';
 import { useDispatch } from 'react-redux';
@@ -63,14 +63,8 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
     textContainer: {
         marginLeft: `${theme.spacing(2.5)}px`,
-    },
-    subtitle: {
-        [theme.breakpoints.down('md')]: {
-            width: '192px',
-            overflow: 'hidden',
-            whiteSpace: 'nowrap',
-            textOverflow: 'ellipsis',
-        },
+        overflow: 'hidden',
+        whiteSpace: 'nowrap',
     },
     paper: {
         marginTop: `${theme.spacing(1)}px`,
@@ -88,16 +82,12 @@ const useStyles = makeStyles((theme: Theme) => ({
 export const InAnAppBar = (): JSX.Element => {
     const dispatch = useDispatch();
     const classes = useStyles();
+    const [chipToggled, setChipToggled] = useState(false);
 
-    // const handleDelete = (): void => {
-    //     /* eslint-disable-next-line no-console */
-    //     console.info('You clicked the delete icon.');
-    // };
+    const toggleChip = useCallback((): void => {
+        setChipToggled(!chipToggled);
+    }, [chipToggled]);
 
-    // const clicked = (): void => {
-    //     /* eslint-disable-next-line no-console */
-    //     console.info('You clicked the clicked usermenu.');
-    // };
     return (
         <div style={{ minHeight: '100vh' }}>
             <AppBar data-cy="pxb-toolbar" position={'sticky'}>
@@ -129,15 +119,15 @@ export const InAnAppBar = (): JSX.Element => {
                     </Typography>
                 </div>
                 <div className={classes.appBarContainer}>
-                    {/* First Example */}
+                    {/* Generic Icon Avatar Example */}
                     <AppBar position="static" color="inherit" className={classes.appBar}>
                         <Toolbar classes={{ gutters: classes.toolbarGutters }}>
                             <IconButton edge={'start'}>
                                 <MenuIcon />
                             </IconButton>
                             <div className={classes.textContainer}>
-                                <Typography variant={'h6'}>Generic Icon Avatar</Typography>
-                                <Typography variant={'body1'} className={classes.subtitle}>
+                                <Typography variant={'h6'} noWrap>Generic Icon Avatar</Typography>
+                                <Typography variant={'body1'} noWrap>
                                     Shared / Anonymous Account
                                 </Typography>
                             </div>
@@ -176,15 +166,15 @@ export const InAnAppBar = (): JSX.Element => {
                             />
                         </Toolbar>
                     </AppBar>
-                    {/* Second Example */}
+                    {/* Basic Letter Avatar Example */}
                     <AppBar position="static" color="inherit" className={classes.appBar}>
                         <Toolbar classes={{ gutters: classes.toolbarGutters }}>
                             <IconButton edge={'start'}>
                                 <MenuIcon />
                             </IconButton>
                             <div className={classes.textContainer}>
-                                <Typography variant={'h6'}>Basic Letter Avatar</Typography>
-                                <Typography variant={'body1'} className={classes.subtitle}>
+                                <Typography variant={'h6'} noWrap>Basic Letter Avatar</Typography>
+                                <Typography variant={'body1'} noWrap>
                                     Showing User’s Initials
                                 </Typography>
                             </div>
@@ -208,15 +198,15 @@ export const InAnAppBar = (): JSX.Element => {
                             />
                         </Toolbar>
                     </AppBar>
-                    {/* Third Example */}
+                    {/* Image Avatar Example */}
                     <AppBar position="static" color="inherit" className={classes.appBar}>
                         <Toolbar classes={{ gutters: classes.toolbarGutters }}>
                             <IconButton edge={'start'}>
                                 <MenuIcon />
                             </IconButton>
                             <div className={classes.textContainer}>
-                                <Typography variant={'h6'}>Image Avatar</Typography>
-                                <Typography variant={'body1'} className={classes.subtitle}>
+                                <Typography variant={'h6'} noWrap>Image Avatar</Typography>
+                                <Typography variant={'body1'} noWrap>
                                     Showing A Custom Profile Picture
                                 </Typography>
                             </div>
@@ -240,15 +230,15 @@ export const InAnAppBar = (): JSX.Element => {
                             />
                         </Toolbar>
                     </AppBar>
-                    {/* Fourth Example */}
+                    {/* Status Avatar Example */}
                     <AppBar position="static" color="inherit" className={classes.appBar}>
                         <Toolbar classes={{ gutters: classes.toolbarGutters }}>
                             <IconButton edge={'start'}>
                                 <MenuIcon />
                             </IconButton>
                             <div className={classes.textContainer}>
-                                <Typography variant={'h6'}>Status Avatar</Typography>
-                                <Typography variant={'body1'} className={classes.subtitle}>
+                                <Typography variant={'h6'} noWrap>Status Avatar</Typography>
+                                <Typography variant={'body1'} noWrap>
                                     Avatar with Status Indicator
                                 </Typography>
                             </div>
@@ -301,29 +291,30 @@ export const InAnAppBar = (): JSX.Element => {
                             />
                         </Toolbar>
                     </AppBar>
-                    {/* Fifth Example */}
+                    {/* Text Menu Example */}
                     <AppBar position="static" color="inherit" className={classes.appBar}>
                         <Toolbar classes={{ gutters: classes.toolbarGutters }}>
                             <IconButton color={'inherit'} edge={'start'}>
                                 <MenuIcon />
                             </IconButton>
                             <div className={classes.textContainer}>
-                                <Typography variant={'h6'}>Text Menu</Typography>
-                                <Typography variant={'body1'} className={classes.subtitle}>
+                                <Typography variant={'h6'} noWrap>Text Menu</Typography>
+                                <Typography variant={'body1'} noWrap>
                                     Calling Out the User Name
                                 </Typography>
                             </div>
                             <Spacer />
                             <UserMenu
+                                onClick={toggleChip}
                                 avatar={
                                     <Chip
                                         variant="outlined"
                                         size="small"
-                                        leftIcon={<AccountCircle />}
+                                        icon={<AccountCircle />}
                                         label="Admin"
-                                        rightIcon={<ExpandMoreOutlinedIcon style={{ height: 20, width: 20 }} />}
+                                        rightIcon={chipToggled ? <ExpandMoreOutlinedIcon/> : <ExpandLessIcon/>}
+                                        style={{backgroundColor: chipToggled ? colors.white[500]:colors.white[50] }}
                                     />
-                                    // <Chip variant="outlined" size="small" label="Basic" />
                                 }
                                 menuGroups={menuGroupItems}
                                 MenuProps={{

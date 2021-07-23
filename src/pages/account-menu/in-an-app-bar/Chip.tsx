@@ -1,10 +1,11 @@
 import React from 'react';
-import { Chip as MuiChip, Typography, makeStyles, Theme, useTheme } from '@material-ui/core';
+import { Chip as MuiChip, ChipProps as MuiChipProps, Typography, makeStyles, Theme, useTheme } from '@material-ui/core';
 
 const useStyles = makeStyles((theme: Theme) => ({
     userMenuChip: {
         width: '112px',
         height: `${theme.spacing(4)}px`,
+        cursor: 'pointer',
     },
     chipIcon: {
         height: `${theme.spacing(3)}px`,
@@ -23,25 +24,20 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
 }));
 
-type ChipProps = {
-    variant: 'default' | 'outlined' | undefined;
-    size: 'small' | 'medium' | undefined;
-    leftIcon: React.ReactElement;
+type ChipProps = MuiChipProps & {
     label: string;
     rightIcon: React.ReactElement;
 };
 
 export const Chip = (props: ChipProps): JSX.Element => {
-    const { variant, size, leftIcon, label, rightIcon } = props;
+    const { label, rightIcon, ...chipProps } = props;
     const theme = useTheme();
     const classes = useStyles(theme);
 
     return (
         <MuiChip
+            {...chipProps}
             classes={{ root: classes.userMenuChip, icon: classes.chipIcon }}
-            variant={variant}
-            size={size}
-            icon={leftIcon}
             label={
                 <div className={classes.chipLabelContainer}>
                     <Typography variant={'body2'} className={classes.chipLabel}>

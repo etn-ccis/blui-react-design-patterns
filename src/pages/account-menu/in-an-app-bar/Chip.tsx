@@ -37,9 +37,7 @@ export const Chip = (props: ChipProps): JSX.Element => {
             classes={{ root: classes.userMenuChip, icon: classes.chipIcon }}
             label={
                 <div className={classes.chipLabelContainer}>
-                    <Typography variant={'body2'}>
-                        {label}
-                    </Typography>
+                    <Typography variant={'body2'}>{label}</Typography>
                     {rightIcon}
                 </div>
             }

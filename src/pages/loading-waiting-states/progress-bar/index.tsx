@@ -14,12 +14,14 @@ import {
     FormControl,
     List,
     Snackbar,
+    useMediaQuery,
+    useTheme,
 } from '@material-ui/core';
 import { makeStyles, Theme, createTheme, MuiThemeProvider } from '@material-ui/core/styles';
 import * as PXBThemes from '@pxblue/react-themes';
 import MenuIcon from '@material-ui/icons/Menu';
 import { Folder, Description, Publish } from '@material-ui/icons';
-import LinearProgress, { LinearProgressProps } from '@material-ui/core/LinearProgress';
+import LinearProgress from '@material-ui/core/LinearProgress';
 import { useDispatch } from 'react-redux';
 import { TOGGLE_DRAWER } from '../../../redux/actions';
 import * as Colors from '@pxblue/colors';
@@ -39,9 +41,6 @@ const foldersList = [
     { label: 'The Best Facility Team', value: '5' },
     { label: 'The Proudest Team', value: '6' },
 ];
-const LinearProgressWithLabel = (props: LinearProgressProps & { value: number }): JSX.Element => (
-    <LinearProgress variant="determinate" {...props} />
-);
 const uploadFileList: FolderItem[] = [];
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -108,17 +107,6 @@ const useStyles = makeStyles((theme: Theme) => ({
     snackbarRoot: {
         position: 'inherit',
         transform: 'none',
-        backgroundColor: Colors.black[900],
-    },
-    bottomCenter: {
-        left: 0,
-        right: 0,
-        bottom: 0,
-        [theme.breakpoints.down('xs')]: {
-            '& div:first-child': {
-                width: '100%',
-            },
-        },
     },
 }));
 const createFileItem = (increment: number): FolderItem => ({
@@ -134,6 +122,9 @@ let nextFileIndex = 0;
 export const ProgressBar = (): JSX.Element => {
     const dispatch = useDispatch();
     const classes = useStyles();
+    const theme = useTheme();
+    const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+
     const [fileUploadList, setFileUploadList] = useState<FolderItem[]>(uploadFileList);
 
     const [radioButtonvalue, setRadioButtonvalue] = useState('1');
@@ -145,14 +136,14 @@ export const ProgressBar = (): JSX.Element => {
         setFileUploadList((oldList) => [...oldList, createFileItem(nextFileIndex++)]);
     }, [fileUploadList, setFileUploadList]);
 
-    const removeListItem = useCallback((id: number, status: string): void => {
+    const markUploadComplete = useCallback((id: number, status: string): void => {
         if (status === 'Complete') {
             return;
         }
         setFileUploadList((oldList) => oldList.map((item) => (item.id === id ? { ...item, open: false } : item)));
     }, []);
 
-    const handleExited = useCallback((id: number) => {
+    const removeFileFromList = useCallback((id: number) => {
         setFileUploadList((oldList) => oldList.filter((item) => item.id !== id));
     }, []);
 
@@ -251,36 +242,36 @@ export const ProgressBar = (): JSX.Element => {
                 </Card>
                 <List data-cy={'list-content'} disablePadding component="nav" className={classes.placementOfList}>
                     {fileUploadList.map(
-                        (item, i): JSX.Element => (
-                            <div key={`itemKey${item.id}`} className={classes.fileUploadItem}>
+                        (item): JSX.Element => (
+                            <div key={item.id} className={classes.fileUploadItem}>
                                 <Snackbar
                                     classes={{
                                         root: classes.snackbarRoot,
-                                        anchorOriginBottomCenter: classes.bottomCenter,
                                     }}
                                     open={item.open}
                                     autoHideDuration={item.progress === 100 ? 3000 : null}
                                     onClose={(e, reason): void => handleRequestClose(e, reason, item.id)}
-                                    TransitionProps={{ timeout: 300, onExited: (): void => handleExited(item.id) }}
+                                    TransitionProps={{ timeout: 100, onExited: (): void => removeFileFromList(item.id) }}
+                                    anchorOrigin={isMobile ? { vertical: 'bottom', horizontal: 'center' } : { vertical: 'bottom', horizontal: 'right' }}
                                 >
                                     <div>
                                         <MuiThemeProvider theme={createTheme(PXBThemes.blueDark)}>
                                             <InfoListItem
-                                                key={`infolist${item.id}`}
                                                 title={item.name}
                                                 subtitle={item.status}
                                                 icon={<Description />}
+                                                backgroundColor={Colors.black[900]}
                                                 rightComponent={
                                                     <Button
                                                         variant="outlined"
                                                         style={{ width: 80 }}
-                                                        onClick={(): void => removeListItem(item.id, item.status)}
+                                                        onClick={(): void => markUploadComplete(item.id, item.status)}
                                                     >
                                                         {item.progress === 100 ? 'View' : 'Cancel'}
                                                     </Button>
                                                 }
                                             />
-                                            <LinearProgressWithLabel value={item.progress} key={`progress${i}`} />
+                                            <LinearProgress variant={'determinate'} value={item.progress} />
                                         </MuiThemeProvider>
                                     </div>
                                 </Snackbar>

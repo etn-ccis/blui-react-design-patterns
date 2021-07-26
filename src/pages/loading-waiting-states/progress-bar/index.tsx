@@ -136,8 +136,8 @@ export const ProgressBar = (): JSX.Element => {
         setFileUploadList((oldList) => [...oldList, createFileItem(nextFileIndex++)]);
     }, [fileUploadList, setFileUploadList]);
 
-    const markUploadComplete = useCallback((id: number, status: string): void => {
-        if (status === 'Complete') {
+    const markUploadComplete = useCallback((id: number, status: string, reason?: string): void => {
+        if ((reason && reason === 'clickaway') || status === 'complete') {
             return;
         }
         setFileUploadList((oldList) => oldList.map((item) => (item.id === id ? { ...item, open: false } : item)));
@@ -145,13 +145,6 @@ export const ProgressBar = (): JSX.Element => {
 
     const removeFileFromList = useCallback((id: number) => {
         setFileUploadList((oldList) => oldList.filter((item) => item.id !== id));
-    }, []);
-
-    const handleRequestClose = useCallback((event: any, reason: string, id: number) => {
-        if (reason === 'clickaway') {
-            return;
-        }
-        setFileUploadList((oldList) => oldList.map((item) => (item.id === id ? { ...item, open: false } : item)));
     }, []);
 
     useEffect(() => {
@@ -250,9 +243,16 @@ export const ProgressBar = (): JSX.Element => {
                                     }}
                                     open={item.open}
                                     autoHideDuration={item.progress === 100 ? 3000 : null}
-                                    onClose={(e, reason): void => handleRequestClose(e, reason, item.id)}
-                                    TransitionProps={{ timeout: 100, onExited: (): void => removeFileFromList(item.id) }}
-                                    anchorOrigin={isMobile ? { vertical: 'bottom', horizontal: 'center' } : { vertical: 'bottom', horizontal: 'right' }}
+                                    onClose={(e, reason): void => markUploadComplete(item.id, item.status, reason)}
+                                    TransitionProps={{
+                                        timeout: 100,
+                                        onExited: (): void => removeFileFromList(item.id),
+                                    }}
+                                    anchorOrigin={
+                                        isMobile
+                                            ? { vertical: 'bottom', horizontal: 'center' }
+                                            : { vertical: 'bottom', horizontal: 'right' }
+                                    }
                                 >
                                     <div>
                                         <MuiThemeProvider theme={createTheme(PXBThemes.blueDark)}>

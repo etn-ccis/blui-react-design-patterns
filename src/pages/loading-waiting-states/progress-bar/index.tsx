@@ -14,20 +14,24 @@ import {
     FormControl,
     List,
     Snackbar,
-    SnackbarContent,
+    useMediaQuery,
+    useTheme,
 } from '@material-ui/core';
-import { makeStyles, Theme } from '@material-ui/core/styles';
+import { makeStyles, Theme, createTheme, MuiThemeProvider } from '@material-ui/core/styles';
+import * as PXBThemes from '@pxblue/react-themes';
 import MenuIcon from '@material-ui/icons/Menu';
 import { Folder, Description, Publish } from '@material-ui/icons';
-import LinearProgress, { LinearProgressProps } from '@material-ui/core/LinearProgress';
+import LinearProgress from '@material-ui/core/LinearProgress';
 import { useDispatch } from 'react-redux';
 import { TOGGLE_DRAWER } from '../../../redux/actions';
 import * as Colors from '@pxblue/colors';
+import { InfoListItem } from '@pxblue/react-components';
 type FolderItem = {
     id: number;
     name: string;
     progress: number;
     status: string;
+    open: boolean;
 };
 const foldersList = [
     { label: 'The Best Dev Team', value: '1' },
@@ -37,9 +41,6 @@ const foldersList = [
     { label: 'The Best Facility Team', value: '5' },
     { label: 'The Proudest Team', value: '6' },
 ];
-const LinearProgressWithLabel = (props: LinearProgressProps & { value: number }): JSX.Element => (
-    <LinearProgress variant="determinate" {...props} />
-);
 const uploadFileList: FolderItem[] = [];
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -57,13 +58,6 @@ const useStyles = makeStyles((theme: Theme) => ({
     uploadButtonContainer: {
         textAlign: 'right',
         paddingBottom: `${theme.spacing(2)}px`,
-    },
-    closeButtonContainer: {
-        color: Colors.black[50],
-        borderColor: Colors.black[50],
-        [theme.breakpoints.up('sm')]: {
-            width: '80px',
-        },
     },
     formControl: {
         width: '100%',
@@ -104,29 +98,15 @@ const useStyles = makeStyles((theme: Theme) => ({
             width: '100%',
         },
     },
-    infoList: {
+    fileUploadItem: {
         marginBottom: theme.spacing(2),
         '&:last-child': {
             marginBottom: 0,
         },
     },
-    subTitle: {
-        color: Colors.black[200],
-    },
-    snackbar: {
+    snackbarRoot: {
         position: 'inherit',
         transform: 'none',
-    },
-    SnackbarContent: {
-        borderRadius: 0,
-        padding: `0 ${theme.spacing(2)}px 0 ${theme.spacing(1)}px`,
-    },
-    messageContainer: {
-        display: 'flex',
-        alignItems: 'center',
-    },
-    messageTextContainer: {
-        marginRight: `${theme.spacing(3)}px`,
     },
 }));
 const createFileItem = (increment: number): FolderItem => ({
@@ -134,6 +114,7 @@ const createFileItem = (increment: number): FolderItem => ({
     name: 'PX Blue is Awesome.pdf',
     progress: 0,
     status: `Uploading (0%)`,
+    open: true,
 });
 
 let nextFileIndex = 0;
@@ -141,6 +122,9 @@ let nextFileIndex = 0;
 export const ProgressBar = (): JSX.Element => {
     const dispatch = useDispatch();
     const classes = useStyles();
+    const theme = useTheme();
+    const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+
     const [fileUploadList, setFileUploadList] = useState<FolderItem[]>(uploadFileList);
 
     const [radioButtonvalue, setRadioButtonvalue] = useState('1');
@@ -152,17 +136,16 @@ export const ProgressBar = (): JSX.Element => {
         setFileUploadList((oldList) => [...oldList, createFileItem(nextFileIndex++)]);
     }, [fileUploadList, setFileUploadList]);
 
-    const removeListItem = useCallback((id: number, status: string): void => {
-        if (status === 'Complete') {
-            return;
-        }
-        setFileUploadList((oldList) => oldList.filter((item) => item.id !== id));
-    }, []);
-
-    const handleRequestClose = useCallback((event: any, reason: string, id: number) => {
+    const markUploadComplete = useCallback((id: number, status: string, reason?: string): void => {
         if (reason === 'clickaway') {
             return;
+        } else if (!reason && status === 'Complete') {
+            return;
         }
+        setFileUploadList((oldList) => oldList.map((item) => (item.id === id ? { ...item, open: false } : item)));
+    }, []);
+
+    const removeFileFromList = useCallback((id: number) => {
         setFileUploadList((oldList) => oldList.filter((item) => item.id !== id));
     }, []);
 
@@ -254,45 +237,47 @@ export const ProgressBar = (): JSX.Element => {
                 </Card>
                 <List data-cy={'list-content'} disablePadding component="nav" className={classes.placementOfList}>
                     {fileUploadList.map(
-                        (item, i): JSX.Element => (
-                            <div key={`itemKey${item.id}`} className={classes.infoList}>
+                        (item): JSX.Element => (
+                            <div key={item.id} className={classes.fileUploadItem}>
                                 <Snackbar
-                                    classes={{ root: classes.snackbar }}
-                                    open={true}
+                                    classes={{
+                                        root: classes.snackbarRoot,
+                                    }}
+                                    open={item.open}
                                     autoHideDuration={item.progress === 100 ? 3000 : null}
-                                    onClose={(e, reason): void => handleRequestClose(e, reason, item.id)}
+                                    onClose={(e, reason): void => markUploadComplete(item.id, item.status, reason)}
+                                    TransitionProps={{
+                                        timeout: 300,
+                                        onExited: (): void => removeFileFromList(item.id),
+                                    }}
+                                    anchorOrigin={
+                                        isMobile
+                                            ? { vertical: 'bottom', horizontal: 'center' }
+                                            : { vertical: 'bottom', horizontal: 'right' }
+                                    }
                                 >
-                                    <SnackbarContent
-                                        classes={{ root: classes.SnackbarContent }}
-                                        action={
-                                            <>
-                                                <Button
-                                                    variant="outlined"
-                                                    className={classes.closeButtonContainer}
-                                                    onClick={(): void => removeListItem(item.id, item.status)}
-                                                >
-                                                    {item.progress === 100 ? 'View' : 'Cancel'}
-                                                </Button>
-                                            </>
-                                        }
-                                        message={
-                                            <div className={classes.messageContainer}>
-                                                <div className={classes.iconContainer}>
-                                                    <Description className={classes.icon} />
-                                                </div>
-                                                <div className={classes.messageTextContainer}>
-                                                    <Typography variant={'subtitle1'} color={'inherit'}>
-                                                        {item.name}
-                                                    </Typography>
-                                                    <Typography variant={'subtitle2'} className={classes.subTitle}>
-                                                        {item.status}
-                                                    </Typography>
-                                                </div>
-                                            </div>
-                                        }
-                                    />
+                                    <div>
+                                        <MuiThemeProvider theme={createTheme(PXBThemes.blueDark)}>
+                                            <InfoListItem
+                                                style={{ boxShadow: theme.shadows[6] }}
+                                                title={item.name}
+                                                subtitle={item.status}
+                                                icon={<Description />}
+                                                backgroundColor={Colors.black[900]}
+                                                rightComponent={
+                                                    <Button
+                                                        variant="outlined"
+                                                        style={{ width: 80 }}
+                                                        onClick={(): void => markUploadComplete(item.id, item.status)}
+                                                    >
+                                                        {item.progress === 100 ? 'View' : 'Cancel'}
+                                                    </Button>
+                                                }
+                                            />
+                                            <LinearProgress variant={'determinate'} value={item.progress} />
+                                        </MuiThemeProvider>
+                                    </div>
                                 </Snackbar>
-                                <LinearProgressWithLabel value={item.progress} key={`progress${i}`} />
                             </div>
                         )
                     )}

@@ -137,7 +137,9 @@ export const ProgressBar = (): JSX.Element => {
     }, [fileUploadList, setFileUploadList]);
 
     const markUploadComplete = useCallback((id: number, status: string, reason?: string): void => {
-        if ((reason && reason === 'clickaway') || status === 'complete') {
+        if (reason === 'clickaway') {
+            return;
+        } else if (!reason && status === 'Complete') {
             return;
         }
         setFileUploadList((oldList) => oldList.map((item) => (item.id === id ? { ...item, open: false } : item)));
@@ -245,7 +247,7 @@ export const ProgressBar = (): JSX.Element => {
                                     autoHideDuration={item.progress === 100 ? 3000 : null}
                                     onClose={(e, reason): void => markUploadComplete(item.id, item.status, reason)}
                                     TransitionProps={{
-                                        timeout: 100,
+                                        timeout: 300,
                                         onExited: (): void => removeFileFromList(item.id),
                                     }}
                                     anchorOrigin={
@@ -257,6 +259,7 @@ export const ProgressBar = (): JSX.Element => {
                                     <div>
                                         <MuiThemeProvider theme={createTheme(PXBThemes.blueDark)}>
                                             <InfoListItem
+                                                style={{ boxShadow: theme.shadows[6] }}
                                                 title={item.name}
                                                 subtitle={item.status}
                                                 icon={<Description />}

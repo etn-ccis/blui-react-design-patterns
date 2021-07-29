@@ -17,7 +17,7 @@ import {
     useMediaQuery,
     useTheme,
 } from '@material-ui/core';
-import { makeStyles, Theme, createTheme, MuiThemeProvider } from '@material-ui/core/styles';
+import { makeStyles, Theme, createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
 import * as PXBThemes from '@pxblue/react-themes';
 import MenuIcon from '@material-ui/icons/Menu';
 import { Folder, Description, Publish } from '@material-ui/icons';
@@ -257,7 +257,7 @@ export const ProgressBar = (): JSX.Element => {
                                     }
                                 >
                                     <div>
-                                        <MuiThemeProvider theme={createTheme(PXBThemes.blueDark)}>
+                                        <MuiThemeProvider theme={createMuiTheme(PXBThemes.blueDark)}>
                                             <InfoListItem
                                                 style={{ boxShadow: theme.shadows[6] }}
                                                 title={item.name}

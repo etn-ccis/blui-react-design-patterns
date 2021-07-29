@@ -46,7 +46,7 @@ export const Chip = (props: ChipProps): JSX.Element => {
                     {rightIcon}
                 </div>
             }
-            clickable={false}
+            clickable={true}
         />
     );
 };

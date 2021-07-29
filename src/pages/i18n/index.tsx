@@ -126,7 +126,7 @@ export const I18N = (): JSX.Element => {
                 <Toolbar classes={{ gutters: classes.toolbarGutters }}>
                     <Hidden mdUp>
                         <IconButton
-                            data-cy="toolbar-menu"
+                            data-cy={'toolbar-menu'}
                             color={'inherit'}
                             onClick={(): void => {
                                 dispatch({ type: TOGGLE_DRAWER, payload: true });
@@ -137,12 +137,13 @@ export const I18N = (): JSX.Element => {
                             <MenuIcon />
                         </IconButton>
                     </Hidden>
-                    <Typography variant={'h6'} color={'inherit'}>
+                    <Typography data-cy={'toolbar-title'} variant={'h6'} color={'inherit'}>
                         {t('I18N')}
                     </Typography>
                     <Spacer />
                     <Tooltip title={t('VIEW_I18N_SIDE_NAV') || ''}>
                         <IconButton
+                            data-cy={'R2L-menu'}
                             color={'inherit'}
                             onClick={(): void => setDrawerOpen(!drawerOpen)}
                             edge={isRTL() ? 'start' : 'end'}
@@ -156,6 +157,7 @@ export const I18N = (): JSX.Element => {
 
             <Toolbar>
                 <Select
+                    data-cy={'change-language'}
                     value={lang}
                     onChange={(event): void => changeLanguage(String(event.target.value))}
                     style={{ padding: theme.spacing(0.5), minWidth: theme.spacing(20), marginLeft: theme.spacing(0.5) }}

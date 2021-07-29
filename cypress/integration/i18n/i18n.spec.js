@@ -11,7 +11,7 @@ describe('i18n international', () => {
     });
 
     it('should display language in dropdown', () => {
-        cy.get('.MuiSelect-root').click()
+        cy.get('[data-cy=change-language]').click()
         cy.get('.MuiPaper-root > .MuiList-root').should('contain', 'English')
         .should('contain', 'Spanish')
         .should('contain', 'German')
@@ -26,13 +26,13 @@ describe('i18n international', () => {
     });
 
     it('should display list items in spanish', () => {
-        cy.get('.MuiSelect-root').click()
+        cy.get('[data-cy=change-language]').click()
         cy.contains('Spanish').click()
         cy.get('#item-list').should('contain', 'Manzana')
     });
 
     it('should display list items in german', () => {
-        cy.get('.MuiSelect-root').click()
+        cy.get('[data-cy=change-language]').click()
         cy.contains('German').click()
         cy.get('#item-list').should('contain', 'Apfel')
     });
@@ -44,23 +44,20 @@ describe('i18n international', () => {
     });
 
     it('should display list items in french', () => {
-        cy.get('.MuiSelect-root').click()
+        cy.get('[data-cy=change-language]').click()
         cy.contains('French').click()
         cy.get('#item-list').should('contain', 'Pomme')
     });
 
     it('should display list items in portuguese', () => {
-        cy.get('.MuiSelect-root').click()
+        cy.get('[data-cy=change-language]').click()
         cy.contains('Portuguese').click()
         cy.get('#item-list').should('contain', 'Maçã')
     });
 
     it('should display list items in chinese', () => {
-        cy.get('.MuiSelect-root').click()
+        cy.get('[data-cy=change-language]').click()
         cy.contains('Chinese').click()
         cy.get('#item-list').should('contain', '苹果')
     });
-
-//    it('TODO test RTL', () => {
-        
-    });
+});

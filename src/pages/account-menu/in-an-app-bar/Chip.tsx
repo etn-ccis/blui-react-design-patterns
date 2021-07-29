@@ -3,7 +3,6 @@ import { Chip as MuiChip, ChipProps as MuiChipProps, Typography, makeStyles, The
 
 const useStyles = makeStyles((theme: Theme) => ({
     userMenuChip: {
-        width: '112px',
         height: `${theme.spacing(4)}px`,
         cursor: 'pointer',
     },
@@ -18,6 +17,10 @@ const useStyles = makeStyles((theme: Theme) => ({
     chipLabelContainer: {
         display: 'flex',
         alignItems: 'center',
+        marginRight: `-${theme.spacing(1)}px`,
+    },
+    chipLabelText: {
+        marginRight: `${theme.spacing(1)}px`,
     },
 }));
 
@@ -37,7 +40,9 @@ export const Chip = (props: ChipProps): JSX.Element => {
             classes={{ root: classes.userMenuChip, icon: classes.chipIcon }}
             label={
                 <div className={classes.chipLabelContainer}>
-                    <Typography variant={'body2'}>{label}</Typography>
+                    <Typography variant={'body2'} className={classes.chipLabelText}>
+                        {label}
+                    </Typography>
                     {rightIcon}
                 </div>
             }

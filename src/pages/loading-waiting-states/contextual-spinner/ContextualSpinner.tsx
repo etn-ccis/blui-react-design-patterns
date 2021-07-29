@@ -136,7 +136,7 @@ export const ContextualSpinner = (): JSX.Element => {
                 </Button>
                 <br />
                 <Fab
-                    variant={isStartRoutineLoading ? 'circular' : 'extended'}
+                    variant={isStartRoutineLoading ? 'round' : 'extended'}
                     color="primary"
                     className={isStartRoutineLoading ? classes.startRoutineLoadingButton : classes.startRoutineButton}
                     onClick={handleStartRoutineClick}

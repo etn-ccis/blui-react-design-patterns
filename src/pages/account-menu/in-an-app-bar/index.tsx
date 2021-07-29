@@ -254,7 +254,7 @@ export const InAnAppBar = (): JSX.Element => {
                             <UserMenu
                                 avatar={
                                     <Badge
-                                        overlap="circular"
+                                        overlap="circle"
                                         anchorOrigin={{
                                             vertical: 'bottom',
                                             horizontal: 'right',
@@ -265,24 +265,7 @@ export const InAnAppBar = (): JSX.Element => {
                                         {<Avatar alt="Chima Thabani" src={avatarImage} />}
                                     </Badge>
                                 }
-                                menuGroups={[
-                                    {
-                                        items: [
-                                            {
-                                                title: 'Change Password',
-                                                icon: <VpnKey />,
-                                            },
-                                            {
-                                                title: 'Preferences',
-                                                icon: <Settings />,
-                                            },
-                                            {
-                                                title: 'Logout',
-                                                icon: <ExitToApp />,
-                                            },
-                                        ],
-                                    },
-                                ]}
+                                menuGroups={menuGroupItems}
                                 menuTitle={avatarTitle}
                                 menuSubtitle={avatarSubtitile}
                                 MenuProps={{
@@ -319,10 +302,15 @@ export const InAnAppBar = (): JSX.Element => {
                                 avatar={
                                     <Chip
                                         variant="outlined"
-                                        size="small"
-                                        icon={<AccountCircle />}
+                                        icon={<AccountCircle style={{ color: colors.gray[500], marginLeft: '4px' }} />}
                                         label="Admin"
-                                        rightIcon={chipToggled ? <ExpandLessIcon /> : <ExpandMoreOutlinedIcon />}
+                                        rightIcon={
+                                            chipToggled ? (
+                                                <ExpandLessIcon fontSize={'small'} />
+                                            ) : (
+                                                <ExpandMoreOutlinedIcon fontSize={'small'} />
+                                            )
+                                        }
                                         style={{ backgroundColor: chipToggled ? colors.white[500] : colors.white[50] }}
                                     />
                                 }

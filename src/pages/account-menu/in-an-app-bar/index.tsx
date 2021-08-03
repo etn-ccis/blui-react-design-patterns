@@ -19,14 +19,17 @@ const menuGroupItems = [
             {
                 title: 'Change Password',
                 icon: <VpnKey />,
+                onClick: (): void => {},
             },
             {
                 title: 'Preferences',
                 icon: <Settings />,
+                onClick: (): void => {},
             },
             {
                 title: 'Log Out',
                 icon: <ExitToApp />,
+                onClick: (): void => {},
             },
         ],
     },
@@ -61,21 +64,16 @@ const useStyles = makeStyles((theme: Theme) => ({
         color: colors.green[500],
         boxShadow: `0 0 0 2px ${theme.palette.background.paper}`,
     },
+    paper: {
+        marginTop: `${theme.spacing(1)}px`,
+    },
+    subtitle: {
+        marginTop: `-${theme.spacing(0.5)}px`,
+    },
     textContainer: {
         marginLeft: `${theme.spacing(2.5)}px`,
         overflow: 'hidden',
         whiteSpace: 'nowrap',
-    },
-    paper: {
-        marginTop: `${theme.spacing(1)}px`,
-    },
-    userMenuChip: {
-        width: '112px',
-        height: `${theme.spacing(4)}px`,
-    },
-    chipIcon: {
-        height: `${theme.spacing(3)}px`,
-        width: `${theme.spacing(3)}px`,
     },
 }));
 
@@ -85,8 +83,8 @@ export const InAnAppBar = (): JSX.Element => {
     const [chipToggled, setChipToggled] = useState(false);
 
     const toggleChip = useCallback((): void => {
-        setChipToggled(!chipToggled);
-    }, [chipToggled]);
+        setChipToggled((oldValue) => !oldValue);
+    }, []);
 
     return (
         <div style={{ minHeight: '100vh' }}>
@@ -129,8 +127,8 @@ export const InAnAppBar = (): JSX.Element => {
                                 <Typography variant={'h6'} noWrap>
                                     Generic Icon Avatar
                                 </Typography>
-                                <Typography variant={'body1'} noWrap>
-                                    Shared / Anonymous Account
+                                <Typography variant={'body1'} className={classes.subtitle} noWrap>
+                                    Shared / Anonymous Account / Unauthenticated
                                 </Typography>
                             </div>
                             <Spacer />
@@ -142,14 +140,17 @@ export const InAnAppBar = (): JSX.Element => {
                                             {
                                                 title: 'Log In',
                                                 icon: <LockOpen />,
+                                                onClick: (): void => {},
                                             },
                                             {
                                                 title: 'Register',
                                                 icon: <Apps />,
+                                                onClick: (): void => {},
                                             },
                                             {
                                                 title: 'About',
                                                 icon: <InfoIcon />,
+                                                onClick: (): void => {},
                                             },
                                         ],
                                     },
@@ -165,6 +166,8 @@ export const InAnAppBar = (): JSX.Element => {
                                     },
                                     classes: { paper: classes.paper },
                                 }}
+                                onOpen={(): void => {}}
+                                onClose={(): void => {}}
                             />
                         </Toolbar>
                     </AppBar>
@@ -178,7 +181,7 @@ export const InAnAppBar = (): JSX.Element => {
                                 <Typography variant={'h6'} noWrap>
                                     Basic Letter Avatar
                                 </Typography>
-                                <Typography variant={'body1'} noWrap>
+                                <Typography variant={'body1'} className={classes.subtitle} noWrap>
                                     Showing User’s Initials
                                 </Typography>
                             </div>
@@ -199,6 +202,8 @@ export const InAnAppBar = (): JSX.Element => {
                                     },
                                     classes: { paper: classes.paper },
                                 }}
+                                onOpen={(): void => {}}
+                                onClose={(): void => {}}
                             />
                         </Toolbar>
                     </AppBar>
@@ -212,7 +217,7 @@ export const InAnAppBar = (): JSX.Element => {
                                 <Typography variant={'h6'} noWrap>
                                     Image Avatar
                                 </Typography>
-                                <Typography variant={'body1'} noWrap>
+                                <Typography variant={'body1'} className={classes.subtitle} noWrap>
                                     Showing A Custom Profile Picture
                                 </Typography>
                             </div>
@@ -233,6 +238,8 @@ export const InAnAppBar = (): JSX.Element => {
                                     },
                                     classes: { paper: classes.paper },
                                 }}
+                                onOpen={(): void => {}}
+                                onClose={(): void => {}}
                             />
                         </Toolbar>
                     </AppBar>
@@ -246,7 +253,7 @@ export const InAnAppBar = (): JSX.Element => {
                                 <Typography variant={'h6'} noWrap>
                                     Status Avatar
                                 </Typography>
-                                <Typography variant={'body1'} noWrap>
+                                <Typography variant={'body1'} className={classes.subtitle} noWrap>
                                     Avatar with Status Indicator
                                 </Typography>
                             </div>
@@ -279,6 +286,8 @@ export const InAnAppBar = (): JSX.Element => {
                                     },
                                     classes: { paper: classes.paper },
                                 }}
+                                onOpen={(): void => {}}
+                                onClose={(): void => {}}
                             />
                         </Toolbar>
                     </AppBar>
@@ -292,7 +301,7 @@ export const InAnAppBar = (): JSX.Element => {
                                 <Typography variant={'h6'} noWrap>
                                     Text Menu
                                 </Typography>
-                                <Typography variant={'body1'} noWrap>
+                                <Typography variant={'body1'} className={classes.subtitle} noWrap>
                                     Calling Out the User Name
                                 </Typography>
                             </div>
@@ -311,7 +320,7 @@ export const InAnAppBar = (): JSX.Element => {
                                                 <ExpandMoreOutlinedIcon fontSize={'small'} />
                                             )
                                         }
-                                        style={{ backgroundColor: chipToggled ? colors.white[500] : colors.white[50] }}
+                                        highlight={chipToggled}
                                     />
                                 }
                                 menuGroups={menuGroupItems}
@@ -326,6 +335,8 @@ export const InAnAppBar = (): JSX.Element => {
                                     },
                                     classes: { paper: classes.paper },
                                 }}
+                                onOpen={(): void => {}}
+                                onClose={(): void => {}}
                             />
                         </Toolbar>
                     </AppBar>

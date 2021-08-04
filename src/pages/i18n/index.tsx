@@ -186,6 +186,7 @@ export const I18N = (): JSX.Element => {
             <List id={'item-list'}>
                 {fruits.map((fruit, index) => (
                     <InfoListItem
+                        data-cy={'list-item-row'}
                         key={index}
                         onClick={(): void => selectFruit(fruit.name)}
                         ripple={true}

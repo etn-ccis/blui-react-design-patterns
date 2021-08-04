@@ -36,8 +36,8 @@ describe('R2L', () => {
     it('should display item list RTL', () => {
         cy.get('[data-cy=change-language]').click()
         cy.contains('Arabic').click()
-        cy.get('.makeStyles-root-373').first()
-        .invoke('attr', 'style')
-        .should('eq', 'text-align: right;')
+        cy.contains('موز')
+        // cy.get('.makeStyles-root').first()
+        .invoke('prop', 'offsetLeft').should('be.greaterThan', 10)
     });
 });

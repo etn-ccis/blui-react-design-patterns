@@ -116,7 +116,7 @@ export const SpinnerOverlays = (): JSX.Element => {
         let timer: NodeJS.Timeout;
         if (!eulaLoaded) {
             timer = setTimeout(() => {
-                setEulaLoaded(true);
+                setEulaLoaded(false);
             }, 3000);
         }
         return (): void => {

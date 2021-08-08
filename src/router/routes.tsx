@@ -5,10 +5,10 @@ export const PAGES: Routes = {
             title: 'In an App Bar',
             route: 'in-an-app-bar',
         },
-        // IN_A_DRAWER: {
-        //     title: 'In a Drawer',
-        //     route: 'in-a-drawer',
-        // },
+        IN_A_DRAWER: {
+            title: 'In a Drawer',
+            route: 'in-a-drawer',
+        },
     },
     APP_BAR: {
         title: 'App Bar',
@@ -123,7 +123,7 @@ export type RouteMetaData = {
 export type Routes = {
     ACCOUNT_MENU: RouteMetaData & {
         IN_AN_APP_BAR: RouteMetaData;
-        // IN_A_DRAWER: RouteMetaData;
+        IN_A_DRAWER: RouteMetaData;
     };
     APP_BAR: RouteMetaData & {
         COLLAPSIBLE: RouteMetaData;

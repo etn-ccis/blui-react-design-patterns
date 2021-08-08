@@ -23,7 +23,7 @@ import { SpinnerOverlays } from '../pages/loading-waiting-states/spinner-overlay
 import { ContextualSpinner } from '../pages/loading-waiting-states/contextual-spinner/ContextualSpinner';
 import { Skeletons } from '../pages/loading-waiting-states/skeletons/Skeletons';
 import { InAnAppBar } from '../pages/account-menu/in-an-app-bar';
-// import { InADrawer } from '../pages/account-menu/in-a-drawer';
+import { InADrawer } from '../pages/account-menu/in-a-drawer';
 /*
 The main page body, which contains the route definitions
 */
@@ -67,6 +67,6 @@ export const Main = (): JSX.Element => (
             component={SpinnerOverlays}
         />
         <Route exact path={`/${PAGES.ACCOUNT_MENU.IN_AN_APP_BAR.route || ''}`} component={InAnAppBar} />
-        {/* <Route exact path={`/${PAGES.ACCOUNT_MENU.IN_A_DRAWER.route || ''}`} component={InADrawer} /> */}
+        <Route exact path={`/${PAGES.ACCOUNT_MENU.IN_A_DRAWER.route || ''}`} component={InADrawer} />
     </Switch>
 );

@@ -12,7 +12,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import MenuOpenIcon from '@material-ui/icons/MenuOpen';
 import { useDispatch } from 'react-redux';
 import { TOGGLE_DRAWER } from '../../../redux/actions';
-import { Drawer } from './Drawer';
+import { PxbDrawer } from './Drawer';
 
 const useStyles = makeStyles((theme: Theme) => ({
     container: {
@@ -61,7 +61,7 @@ export const InADrawer = (): JSX.Element => {
     return (
         <div style={{ backgroundColor: theme.palette.background.paper, minHeight: '100vh' }}>
             <AppBar data-cy="pxb-toolbar" position={'sticky'}>
-            <Drawer
+            <PxbDrawer
                     open={drawerOpen}
                     drawerToggler={(): void => {
                         setDrawerOpen(!drawerOpen);

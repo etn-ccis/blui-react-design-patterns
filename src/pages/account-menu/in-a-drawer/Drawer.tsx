@@ -14,34 +14,9 @@ const backgroundImage = require('../../../assets/topology_40.png').default;
 const useStyles = makeStyles((theme: Theme) => ({
     closeIcon: {
         marginRight: `-${theme.spacing(2)}px`,
-        marginTop: `-${theme.spacing(2)}px`,
+        marginTop: `-${theme.spacing(4)}px`,
     },
-    drawer: {
-        maxWidth: '85%',
-        width: 292,
-    },
-    drawerAvatar: {
-        display: 'flex',
-        justifyContent: 'space-between',
-        width: '100%'
-    },
-    header: {
-        // height: '180px',
-        color: 'white',
-        background: theme.palette.primary.main,
-        padding: `${theme.spacing(2)}px ${theme.spacing(2)}px ${theme.spacing(0.5)}px`,
-    },
-    flexVert: {
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'stretch',
-    },
-    flexVertBottom: {
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'flex-start',
-        justifyContent: 'flex-end',
-    },
+
     subtitle: {
         marginTop: `-${theme.spacing(0.5)}px`,
     },
@@ -100,7 +75,7 @@ export const PxbDrawer = (props: DrawerProps): JSX.Element => {
             drawer={
                 <Drawer
                     open={open}
-                    width={'292'}
+                    width={292}
                     variant={variant}
                     condensed={false}
                     ModalProps={{
@@ -112,27 +87,24 @@ export const PxbDrawer = (props: DrawerProps): JSX.Element => {
                     <DrawerHeader
                         backgroundImage={backgroundImage}
                         backgroundOpacity={0.5}
-                        icon={<Avatar alt="Chima Thabani" src={avatarImage} />}
+                        // icon={<Avatar alt="Chima Thabani" src={avatarImage} />}
                         titleContent={
-                            <div
+                            <div style={{width: '100%', padding: '16px 16px 4px'}}>
+                                <div
                                 style={{
                                     display: 'flex',
                                     justifyContent: 'space-between',
                                     zIndex: 1,
-                                    padding: '0 16px',
+                                    // padding: '0 16px',
                                     alignItems: 'center',
                                     width: '100%',
                                     height: '100%',
                                 }}
                             >
                                 <div>
-                                    <Typography variant={'h6'} color={'inherit'}>
-                                        Chima Thabani
-                                    </Typography>
-                                    <Typography variant={'body1'} color={'inherit'} className={classes.subtitle}>
-                                        CThabani@example.com
-                                    </Typography>
+                                    <Avatar alt="Chima Thabani" src={avatarImage} />
                                 </div>
+                                
                                 <IconButton
                                     data-cy="toolbar-menu"
                                     color={'inherit'}
@@ -143,6 +115,16 @@ export const PxbDrawer = (props: DrawerProps): JSX.Element => {
                                     <CloseIcon />
                                 </IconButton>
                             </div>
+                            <div style={{paddingTop: '16px'}}>
+                                    <Typography variant={'h6'} color={'inherit'}>
+                                        Chima Thabani
+                                    </Typography>
+                                    <Typography variant={'body1'} color={'inherit'} className={classes.subtitle}>
+                                        CThabani@example.com
+                                    </Typography>
+                                </div>
+                            </div>
+                            
                         }
                     />
                     <DrawerBody>

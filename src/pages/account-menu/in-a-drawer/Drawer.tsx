@@ -3,20 +3,26 @@ import { Avatar, IconButton, Typography, makeStyles, Theme, useTheme } from '@ma
 import { Dashboard, Notifications, ExitToApp, Settings, VpnKey} from '@material-ui/icons';
 import AssessmentIcon from '@material-ui/icons/Assessment';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
-// import {  } from '@material-ui/icons';
 import { Drawer, DrawerBody, DrawerHeader, DrawerNavGroup, DrawerLayout, DrawerFooter, NavItem } from '@pxblue/react-components';
 import CloseIcon from '@material-ui/icons/Close';
 import WebAssetIcon from '@material-ui/icons/WebAsset';
-// import clsx from 'clsx';
 
-const backgroundImage = require('../../../assets/topology_40.png').default;
+const backgroundImage = require('../../../assets/cubes.png').default;
+const linearGradientOverlayImage = `linear-gradient(to right, rgba(0, 123, 193, 1) 20%, rgba(0, 123, 193, 0.2) 100%), url(${backgroundImage})`
 
 const useStyles = makeStyles((theme: Theme) => ({
+    avatarSize: {
+        height: '48px',
+        width: '48px',
+    },
+    backgroundGradient: {
+        backgroundImage: `${linearGradientOverlayImage}`,
+        backgroundSize: 'auto',
+    },
     closeIcon: {
         marginRight: `-${theme.spacing(2)}px`,
         marginTop: `-${theme.spacing(4)}px`,
     },
-
     subtitle: {
         marginTop: `-${theme.spacing(0.5)}px`,
     },
@@ -33,10 +39,8 @@ export const PxbDrawer = (props: DrawerProps): JSX.Element => {
     const { open, drawerToggler } = props;
     const theme = useTheme();
     const classes = useStyles(theme);
-    // const [selected, setSelected] = useState('');
     const variant = 'temporary';
     const [selected, setSelected] = useState('1');
-    // const isDarkMode = useDarkMode();
 
     const navGroupItems: NavItem[] = [
         {
@@ -86,8 +90,8 @@ export const PxbDrawer = (props: DrawerProps): JSX.Element => {
                 >
                     <DrawerHeader
                         backgroundImage={backgroundImage}
+                        classes={{background: classes.backgroundGradient}}
                         backgroundOpacity={0.5}
-                        // icon={<Avatar alt="Chima Thabani" src={avatarImage} />}
                         titleContent={
                             <div style={{width: '100%', padding: '16px 16px 4px'}}>
                                 <div
@@ -95,14 +99,13 @@ export const PxbDrawer = (props: DrawerProps): JSX.Element => {
                                     display: 'flex',
                                     justifyContent: 'space-between',
                                     zIndex: 1,
-                                    // padding: '0 16px',
                                     alignItems: 'center',
                                     width: '100%',
                                     height: '100%',
                                 }}
                             >
                                 <div>
-                                    <Avatar alt="Chima Thabani" src={avatarImage} />
+                                    <Avatar alt="Chima Thabani" src={avatarImage} classes={{root: classes.avatarSize}} />
                                 </div>
                                 
                                 <IconButton
@@ -115,7 +118,7 @@ export const PxbDrawer = (props: DrawerProps): JSX.Element => {
                                     <CloseIcon />
                                 </IconButton>
                             </div>
-                            <div style={{paddingTop: '16px'}}>
+                            <div style={{paddingTop: '16px', position: 'relative'}}>
                                     <Typography variant={'h6'} color={'inherit'}>
                                         Chima Thabani
                                     </Typography>

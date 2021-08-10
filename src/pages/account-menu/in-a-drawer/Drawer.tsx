@@ -147,33 +147,31 @@ export const PxbDrawer = (props: DrawerProps): JSX.Element => {
                     />
                     <DrawerBody>
                         <DrawerNavGroup items={navGroupItems} />
-                        {/* <Spacer /> */}
-                        
                     </DrawerBody>
                     <DrawerFooter
                     divider={true}
                     >
                     <DrawerNavGroup
                             hidePadding
-                            titleContent={<Typography variant={'inherit'}>My account</Typography>}
+                            title={'My Account'}
                             items={[
                                 {
                                     title: 'Change Password',
                                     itemID: 'change password',
                                     onClick: (): void => {},
-                                    rightComponent: <VpnKey />,
+                                    icon: <VpnKey />,
                                 },
                                 {
                                     title: 'Preferences',
                                     itemID: 'preferences',
                                     onClick: (): void => {},
-                                    rightComponent: <Settings />,
+                                    icon: <Settings />,
                                 },
                                 {
                                     title: 'Logout',
                                     itemID: 'logout',
                                     onClick: (): void => {},
-                                    rightComponent: <ExitToApp />,
+                                    icon: <ExitToApp />,
                                 },
                             ]}
                         />

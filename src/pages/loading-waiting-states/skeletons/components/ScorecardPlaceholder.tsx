@@ -65,7 +65,7 @@ export const ScorecardPlaceholder = (props: { animation: 'pulse' | 'wave' }): JS
     return (
         <Card className={classes.root}>
             <div className={classes.header}>
-                <div className={classes.headerSkeletonContainer}>
+                <div className={classes.headerSkeletonContainer} data-cy={'skeleton'}>
                     <Skeleton
                         animation={animation}
                         width={180}

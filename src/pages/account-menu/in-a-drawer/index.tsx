@@ -1,12 +1,5 @@
-import React, {useState}from 'react';
-import {
-    AppBar,
-    Button,
-    Toolbar,
-    Typography,
-    Hidden,
-    IconButton
-} from '@material-ui/core';
+import React, { useState } from 'react';
+import { AppBar, Button, Toolbar, Typography, Hidden, IconButton } from '@material-ui/core';
 import { makeStyles, Theme, useTheme } from '@material-ui/core/styles';
 import MenuIcon from '@material-ui/icons/Menu';
 import MenuOpenIcon from '@material-ui/icons/MenuOpen';
@@ -49,7 +42,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         alignItems: 'center',
         flexDirection: 'column',
         justifyContent: 'center',
-    }
+    },
 }));
 
 export const InADrawer = (): JSX.Element => {
@@ -61,7 +54,7 @@ export const InADrawer = (): JSX.Element => {
     return (
         <div style={{ backgroundColor: theme.palette.background.paper, minHeight: '100vh' }}>
             <AppBar data-cy="pxb-toolbar" position={'sticky'}>
-            <PxbDrawer
+                <PxbDrawer
                     open={drawerOpen}
                     drawerToggler={(): void => {
                         setDrawerOpen(!drawerOpen);
@@ -87,16 +80,16 @@ export const InADrawer = (): JSX.Element => {
                     <div />
                 </Toolbar>
             </AppBar>
-            <div  className={classes.buttonContainer}>
+            <div className={classes.buttonContainer}>
                 <Button
                     variant={'contained'}
                     color={'primary'}
-                    startIcon={<MenuOpenIcon/>}
+                    startIcon={<MenuOpenIcon />}
                     className={classes.centerButton}
                     onClick={(): void => setDrawerOpen(!drawerOpen)}
                 >
                     <Typography noWrap color={'inherit'}>
-                    Open Drawer
+                        Open Drawer
                     </Typography>
                 </Button>
             </div>

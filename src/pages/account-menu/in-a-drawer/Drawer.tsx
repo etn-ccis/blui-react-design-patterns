@@ -1,14 +1,22 @@
 import React, { useState } from 'react';
 import { Avatar, IconButton, Typography, makeStyles, Theme, useTheme } from '@material-ui/core';
-import { Dashboard, Notifications, ExitToApp, Settings, VpnKey} from '@material-ui/icons';
+import { Dashboard, Notifications, ExitToApp, Settings, VpnKey } from '@material-ui/icons';
 import AssessmentIcon from '@material-ui/icons/Assessment';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
-import { Drawer, DrawerBody, DrawerHeader, DrawerNavGroup, DrawerLayout, DrawerFooter, NavItem } from '@pxblue/react-components';
+import {
+    Drawer,
+    DrawerBody,
+    DrawerHeader,
+    DrawerNavGroup,
+    DrawerLayout,
+    DrawerFooter,
+    NavItem,
+} from '@pxblue/react-components';
 import CloseIcon from '@material-ui/icons/Close';
 import WebAssetIcon from '@material-ui/icons/WebAsset';
 
-const backgroundImage = require('../../../assets/cubes.png').default;
-const linearGradientOverlayImage = `linear-gradient(to right, rgba(0, 123, 193, 1) 20%, rgba(0, 123, 193, 0.2) 100%), url(${backgroundImage})`
+const backgroundImage = require('../../../assets/cubes_tile.png').default;
+const linearGradientOverlayImage = `linear-gradient(to right, rgba(0, 123, 193, 1) 22.4%, rgba(0, 123, 193, 0.2) 100%), url(${backgroundImage})`;
 
 const useStyles = makeStyles((theme: Theme) => ({
     avatarSize: {
@@ -17,11 +25,28 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
     backgroundGradient: {
         backgroundImage: `${linearGradientOverlayImage}`,
-        backgroundSize: 'auto',
+        backgroundSize: 'contain',
+        backgroundPosition: 'right',
     },
     closeIcon: {
         marginRight: `-${theme.spacing(2)}px`,
         marginTop: `-${theme.spacing(4)}px`,
+    },
+    extendedHeader: {
+        width: '100%',
+        padding: '16px 16px 4px',
+    },
+    header: {
+        display: 'flex',
+        justifyContent: 'space-between',
+        zIndex: 1,
+        alignItems: 'center',
+        width: '100%',
+        height: '100%',
+    },
+    headerDetails: {
+        paddingTop: '16px',
+        position: 'relative',
     },
     subtitle: {
         marginTop: `-${theme.spacing(0.5)}px`,
@@ -74,6 +99,29 @@ export const PxbDrawer = (props: DrawerProps): JSX.Element => {
             onClick: (): void => setSelected('5'),
         },
     ];
+
+    const ExtendedDrawerHeader = (): JSX.Element => (
+        <div className={classes.extendedHeader}>
+            <div className={classes.header}>
+                <Avatar alt="Chima Thabani" src={avatarImage} classes={{ root: classes.avatarSize }} />
+                <IconButton
+                    data-cy="toolbar-menu"
+                    color={'inherit'}
+                    edge={'end'}
+                    classes={{ edgeEnd: classes.closeIcon }}
+                    onClick={drawerToggler}
+                >
+                    <CloseIcon />
+                </IconButton>
+            </div>
+            <div className={classes.headerDetails}>
+                <Typography variant={'h6'}>Chima Thabani</Typography>
+                <Typography variant={'body1'} className={classes.subtitle}>
+                    CThabani@example.com
+                </Typography>
+            </div>
+        </div>
+    );
     return (
         <DrawerLayout
             drawer={
@@ -90,53 +138,15 @@ export const PxbDrawer = (props: DrawerProps): JSX.Element => {
                 >
                     <DrawerHeader
                         backgroundImage={backgroundImage}
-                        classes={{background: classes.backgroundGradient}}
+                        classes={{ background: classes.backgroundGradient }}
                         backgroundOpacity={0.5}
-                        titleContent={
-                            <div style={{width: '100%', padding: '16px 16px 4px'}}>
-                                <div
-                                style={{
-                                    display: 'flex',
-                                    justifyContent: 'space-between',
-                                    zIndex: 1,
-                                    alignItems: 'center',
-                                    width: '100%',
-                                    height: '100%',
-                                }}
-                            >
-                                <div>
-                                    <Avatar alt="Chima Thabani" src={avatarImage} classes={{root: classes.avatarSize}} />
-                                </div>
-                                
-                                <IconButton
-                                    data-cy="toolbar-menu"
-                                    color={'inherit'}
-                                    edge={'end'}
-                                    classes={{ edgeEnd: classes.closeIcon }}
-                                    onClick={drawerToggler}
-                                >
-                                    <CloseIcon />
-                                </IconButton>
-                            </div>
-                            <div style={{paddingTop: '16px', position: 'relative'}}>
-                                    <Typography variant={'h6'} color={'inherit'}>
-                                        Chima Thabani
-                                    </Typography>
-                                    <Typography variant={'body1'} color={'inherit'} className={classes.subtitle}>
-                                        CThabani@example.com
-                                    </Typography>
-                                </div>
-                            </div>
-                            
-                        }
+                        titleContent={<ExtendedDrawerHeader />}
                     />
                     <DrawerBody>
                         <DrawerNavGroup items={navGroupItems} />
                     </DrawerBody>
-                    <DrawerFooter
-                    divider={true}
-                    >
-                    <DrawerNavGroup
+                    <DrawerFooter divider={true}>
+                        <DrawerNavGroup
                             hidePadding
                             title={'My Account'}
                             items={[
@@ -163,7 +173,6 @@ export const PxbDrawer = (props: DrawerProps): JSX.Element => {
                     </DrawerFooter>
                 </Drawer>
             }
-        >
-        </DrawerLayout>
+        ></DrawerLayout>
     );
 };

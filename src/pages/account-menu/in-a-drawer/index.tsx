@@ -56,7 +56,7 @@ export const InADrawer = (): JSX.Element => {
             <AppBar data-cy="pxb-toolbar" position={'sticky'}>
                 <PxbDrawer
                     open={drawerOpen}
-                    drawerToggler={(): void => {
+                    toggleDrawer={(): void => {
                         setDrawerOpen(!drawerOpen);
                     }}
                 />

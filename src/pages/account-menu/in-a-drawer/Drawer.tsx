@@ -13,7 +13,7 @@ import {
     NavItem,
 } from '@pxblue/react-components';
 import CloseIcon from '@material-ui/icons/Close';
-import WebAssetIcon from '@material-ui/icons/WebAsset';
+import { Device } from '@pxblue/icons-mui';
 
 const backgroundImage = require('../../../assets/cubes_tile.png').default;
 const linearGradientOverlayImage = `linear-gradient(to right, rgba(0, 123, 193, 1) 22.4%, rgba(0, 123, 193, 0.2) 100%), url(${backgroundImage})`;
@@ -55,13 +55,13 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 type DrawerProps = {
     open: boolean;
-    drawerToggler: () => void;
+    toggleDrawer: () => void;
 };
 
 const avatarImage = require('../../../assets/avatar_40.png').default;
 
 export const PxbDrawer = (props: DrawerProps): JSX.Element => {
-    const { open, drawerToggler } = props;
+    const { open, toggleDrawer } = props;
     const theme = useTheme();
     const classes = useStyles(theme);
     const variant = 'temporary';
@@ -95,12 +95,12 @@ export const PxbDrawer = (props: DrawerProps): JSX.Element => {
         {
             title: 'Assets',
             itemID: '5',
-            icon: <WebAssetIcon />,
+            icon: <Device />,
             onClick: (): void => setSelected('5'),
         },
     ];
 
-    const ExtendedDrawerHeader = (): JSX.Element => (
+    const DrawerHeaderContent = (): JSX.Element => (
         <div className={classes.extendedHeader}>
             <div className={classes.header}>
                 <Avatar alt="Chima Thabani" src={avatarImage} classes={{ root: classes.avatarSize }} />
@@ -109,7 +109,7 @@ export const PxbDrawer = (props: DrawerProps): JSX.Element => {
                     color={'inherit'}
                     edge={'end'}
                     classes={{ edgeEnd: classes.closeIcon }}
-                    onClick={drawerToggler}
+                    onClick={toggleDrawer}
                 >
                     <CloseIcon />
                 </IconButton>
@@ -131,7 +131,7 @@ export const PxbDrawer = (props: DrawerProps): JSX.Element => {
                     variant={variant}
                     condensed={false}
                     ModalProps={{
-                        onBackdropClick: drawerToggler,
+                        onBackdropClick: toggleDrawer,
                     }}
                     activeItem={selected}
                     activeItemBackgroundShape={'round'}
@@ -140,7 +140,7 @@ export const PxbDrawer = (props: DrawerProps): JSX.Element => {
                         backgroundImage={backgroundImage}
                         classes={{ background: classes.backgroundGradient }}
                         backgroundOpacity={0.5}
-                        titleContent={<ExtendedDrawerHeader />}
+                        titleContent={<DrawerHeaderContent />}
                     />
                     <DrawerBody>
                         <DrawerNavGroup items={navGroupItems} />

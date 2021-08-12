@@ -9,8 +9,8 @@ import {
     DrawerHeader,
     DrawerNavGroup,
     DrawerLayout,
-    DrawerFooter,
     NavItem,
+    Spacer,
 } from '@pxblue/react-components';
 import CloseIcon from '@material-ui/icons/Close';
 import { Device } from '@pxblue/icons-mui';
@@ -67,7 +67,7 @@ export const PxbDrawer = (props: DrawerProps): JSX.Element => {
     const variant = 'temporary';
     const [selected, setSelected] = useState('1');
 
-    const navGroupItems: NavItem[] = [
+    const navGroupItems1: NavItem[] = [
         {
             title: 'Dashboard',
             itemID: '1',
@@ -97,6 +97,27 @@ export const PxbDrawer = (props: DrawerProps): JSX.Element => {
             itemID: '5',
             icon: <Device />,
             onClick: (): void => setSelected('5'),
+        },
+    ];
+
+    const navGroupItems2: NavItem[] = [
+        {
+            title: 'Change Password',
+            itemID: '6',
+            onClick: (): void => setSelected('6'),
+            icon: <VpnKey />,
+        },
+        {
+            title: 'Preferences',
+            itemID: '7',
+            onClick: (): void => setSelected('7'),
+            icon: <Settings />,
+        },
+        {
+            title: 'Logout',
+            itemID: '8',
+            onClick: (): void => setSelected('8'),
+            icon: <ExitToApp />,
         },
     ];
 
@@ -143,34 +164,10 @@ export const PxbDrawer = (props: DrawerProps): JSX.Element => {
                         titleContent={<DrawerHeaderContent />}
                     />
                     <DrawerBody>
-                        <DrawerNavGroup items={navGroupItems} />
+                        <DrawerNavGroup items={navGroupItems1} />
+                        <Spacer />
+                        <DrawerNavGroup hidePadding title={'My Account'} items={navGroupItems2} />
                     </DrawerBody>
-                    <DrawerFooter divider={true}>
-                        <DrawerNavGroup
-                            hidePadding
-                            title={'My Account'}
-                            items={[
-                                {
-                                    title: 'Change Password',
-                                    itemID: 'change password',
-                                    onClick: (): void => {},
-                                    icon: <VpnKey />,
-                                },
-                                {
-                                    title: 'Preferences',
-                                    itemID: 'preferences',
-                                    onClick: (): void => {},
-                                    icon: <Settings />,
-                                },
-                                {
-                                    title: 'Logout',
-                                    itemID: 'logout',
-                                    onClick: (): void => {},
-                                    icon: <ExitToApp />,
-                                },
-                            ]}
-                        />
-                    </DrawerFooter>
                 </Drawer>
             }
         ></DrawerLayout>

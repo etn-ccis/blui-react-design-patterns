@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
     extendedHeader: {
         width: '100%',
-        padding: '16px 16px 4px',
+        padding: `${theme.spacing(2)}px ${theme.spacing(2)}px ${theme.spacing(0.5)}px`,
     },
     header: {
         display: 'flex',
@@ -45,7 +45,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         height: '100%',
     },
     headerDetails: {
-        paddingTop: '16px',
+        paddingTop: `${theme.spacing(2)}px`,
         position: 'relative',
     },
     subtitle: {

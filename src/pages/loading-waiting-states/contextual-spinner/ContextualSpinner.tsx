@@ -127,6 +127,7 @@ export const ContextualSpinner = (): JSX.Element => {
                     Click on the buttons below to see the spinners.
                 </Typography>
                 <Button
+                    data-cy={'login-btn'}
                     variant={'contained'}
                     color="primary"
                     className={classes.loginButton}
@@ -136,6 +137,7 @@ export const ContextualSpinner = (): JSX.Element => {
                 </Button>
                 <br />
                 <Fab
+                    data-cy={'start-btn'}
                     variant={isStartRoutineLoading ? 'round' : 'extended'}
                     color="primary"
                     className={isStartRoutineLoading ? classes.startRoutineLoadingButton : classes.startRoutineButton}

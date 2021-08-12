@@ -204,7 +204,13 @@ export const ProgressBar = (): JSX.Element => {
             </AppBar>
             <div className={classes.container}>
                 <div className={classes.uploadButtonContainer}>
-                    <Button variant={'contained'} color={'primary'} startIcon={<Publish />} onClick={uploadFile}>
+                    <Button
+                        data-cy={'upload-btn'}
+                        variant={'contained'}
+                        color={'primary'}
+                        startIcon={<Publish />}
+                        onClick={uploadFile}
+                    >
                         UPLOAD NEW FILE
                     </Button>
                 </div>
@@ -259,6 +265,7 @@ export const ProgressBar = (): JSX.Element => {
                                     <div>
                                         <MuiThemeProvider theme={createMuiTheme(PXBThemes.blueDark)}>
                                             <InfoListItem
+                                                data-cy={'upload-status-snackbar'}
                                                 style={{ boxShadow: theme.shadows[6] }}
                                                 title={item.name}
                                                 subtitle={item.status}

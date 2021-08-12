@@ -183,6 +183,7 @@ export const SpinnerOverlays = (): JSX.Element => {
                     <Divider />
                     <CardActions className={classes.cardActions}>
                         <Button
+                            data-cy={'reload'}
                             variant={'contained'}
                             color={'primary'}
                             className={classes.reloadButton}

@@ -12,6 +12,13 @@ describe('Complex bottom sheet', () => {
         cy.get('[data-cy=pxb-toolbar]').should('contain', 'Complex Bottom Sheet');
     });
 
+    it('should dismiss overlay when page is selected', () => {
+        cy.get('[data-cy=action-menu]').click()
+        cy.get('[data-cy=btm-sheet-sort]').should('be.visible')
+        cy.get('body').click(top, {force: true})
+        cy.get('[data-cy=btm-sheet-sort]').should('not.be.visible')
+    });
+
     it('should open overlay and action items display', () => {
         cy.get('[data-cy=action-menu]').click()
         cy.get('[data-cy=btm-sheet-sort]').should('contain', 'Sort By')
@@ -25,12 +32,6 @@ describe('Complex bottom sheet', () => {
         cy.get('[data-cy=btm-sheet-cancel]').should('contain', 'Close')
     });
 
-    it('should dismiss overlay when page is selected', () => {
-        cy.get('[data-cy=action-menu]').click()
-        cy.get('[data-cy=btm-sheet-sort]').should('be.visible')
-        cy.get('body').click(top, {force: true})
-        cy.get('[data-cy=btm-sheet-sort]').should('not.be.visible')
-    });
     it('should display empty state', () => {
         cy.get('[data-cy=action-menu]').click()
         cy.get('[data-cy=active-alarms]').click()

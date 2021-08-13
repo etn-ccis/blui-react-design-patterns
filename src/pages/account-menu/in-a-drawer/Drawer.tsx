@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Avatar, IconButton, Typography, makeStyles, Theme, useTheme } from '@material-ui/core';
 import { Dashboard, Notifications, ExitToApp, Settings, VpnKey } from '@material-ui/icons';
 import AssessmentIcon from '@material-ui/icons/Assessment';
@@ -65,38 +65,38 @@ export const PxbDrawer = (props: DrawerProps): JSX.Element => {
     const theme = useTheme();
     const classes = useStyles(theme);
     const variant = 'temporary';
-    const [selected, setSelected] = useState('1');
+    const selected = '1';
 
     const navGroupItems1: NavItem[] = [
         {
             title: 'Dashboard',
             itemID: '1',
             icon: <Dashboard />,
-            onClick: (): void => setSelected('1'),
+            onClick: (): void => toggleDrawer(),
         },
         {
             title: 'Notifications',
             itemID: '2',
             icon: <Notifications />,
-            onClick: (): void => setSelected('2'),
+            onClick: (): void => toggleDrawer(),
         },
         {
             title: 'Locations',
             itemID: '3',
             icon: <LocationOnIcon />,
-            onClick: (): void => setSelected('3'),
+            onClick: (): void => toggleDrawer(),
         },
         {
             title: 'Analytics',
             itemID: '4',
             icon: <AssessmentIcon />,
-            onClick: (): void => setSelected('4'),
+            onClick: (): void => toggleDrawer(),
         },
         {
             title: 'Assets',
             itemID: '5',
             icon: <Device />,
-            onClick: (): void => setSelected('5'),
+            onClick: (): void => toggleDrawer(),
         },
     ];
 
@@ -104,19 +104,19 @@ export const PxbDrawer = (props: DrawerProps): JSX.Element => {
         {
             title: 'Change Password',
             itemID: '6',
-            onClick: (): void => setSelected('6'),
+            onClick: (): void => toggleDrawer(),
             icon: <VpnKey />,
         },
         {
             title: 'Preferences',
             itemID: '7',
-            onClick: (): void => setSelected('7'),
+            onClick: (): void => toggleDrawer(),
             icon: <Settings />,
         },
         {
             title: 'Logout',
             itemID: '8',
-            onClick: (): void => setSelected('8'),
+            onClick: (): void => toggleDrawer(),
             icon: <ExitToApp />,
         },
     ];

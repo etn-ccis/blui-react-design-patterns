@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { CollapsibleAppBar } from '.';
+import { Collapsible } from '.';
 import Enzyme from 'enzyme';
 // import Adapter from 'enzyme-adapter-react-16';
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
@@ -15,7 +15,7 @@ it('renders without crashing', () => {
     const div = document.createElement('div');
     ReactDOM.render(
         <Provider store={store}>
-            <CollapsibleAppBar />
+            <Collapsible />
         </Provider>,
         div
     );

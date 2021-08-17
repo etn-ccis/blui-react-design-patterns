@@ -9,7 +9,7 @@ import {
     NavItem,
     Spacer,
 } from '@pxblue/react-components';
-import { OpenInNew } from '@material-ui/icons';
+import { OpenInNew, Menu } from '@material-ui/icons';
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router';
 import { Main } from './router/main';
@@ -23,6 +23,8 @@ import { DRAWER_WIDTH } from './assets/constants';
 export const App: React.FC = () => {
     const history = useHistory();
     const open = useSelector((state: AppState) => state.app.drawerOpen);
+    const showMenuIcon = ['collapsible'];
+    const [collapsibleRoute, setCollapsibleRoute] = useState(false);
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
     const dispatch = useDispatch();
@@ -31,6 +33,11 @@ export const App: React.FC = () => {
 
     const navigate = (id: string): void => {
         history.push(id);
+        if (showMenuIcon.includes(id)) {
+            setCollapsibleRoute(true);
+        } else {
+            setCollapsibleRoute(false);
+        }
         setSelected(id);
     };
 
@@ -82,6 +89,7 @@ export const App: React.FC = () => {
             <DrawerHeader
                 title={'PX Blue'}
                 subtitle={'React Design Patterns'}
+                icon={collapsibleRoute ? <Menu /> : undefined}
                 onClick={(): void => {
                     navigate('/');
                     dispatch({ type: TOGGLE_DRAWER, payload: false });

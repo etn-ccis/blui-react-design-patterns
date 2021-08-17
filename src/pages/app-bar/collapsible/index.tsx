@@ -100,7 +100,7 @@ export const Collapsible = (): JSX.Element => {
                     </div>
                 </Toolbar>
             </AppBar>
-            <div style={{ height: '2000px' }}></div>
+            <div style={{ height: '80vh' }}></div>
         </div>
     );
 };

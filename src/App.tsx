@@ -1,4 +1,4 @@
-import { Divider, useMediaQuery, useTheme, Typography } from '@material-ui/core';
+import { Divider, makeStyles, useMediaQuery, useTheme, Typography } from '@material-ui/core';
 import {
     Drawer,
     DrawerBody,
@@ -20,7 +20,17 @@ import { AppState } from './redux/reducers';
 import { TOGGLE_DRAWER } from './redux/actions';
 import { DRAWER_WIDTH } from './assets/constants';
 
+const backgroundImage = require('./assets/topology_40.png').default;
+const linearGradientOverlayImage = `linear-gradient(to right, rgba(0, 123, 193, 1) 22.4%, rgba(0, 123, 193, 0.2) 100%), url(${backgroundImage})`;
+
+const useStyles = makeStyles(() => ({
+    backgroundGradient: {
+        backgroundImage: `${linearGradientOverlayImage}`,
+    },
+}));
+
 export const App: React.FC = () => {
+    const classes = useStyles();
     const history = useHistory();
     const open = useSelector((state: AppState) => state.app.drawerOpen);
     const showMenuIcon = ['collapsible'];
@@ -31,20 +41,26 @@ export const App: React.FC = () => {
 
     const [selected, setSelected] = useState('');
 
-    const navigate = (id: string): void => {
-        history.push(id);
-        if (showMenuIcon.includes(id)) {
+    const checkCollapsibleRoute = (path: string): void => {
+        if (showMenuIcon.includes(path)) {
             setCollapsibleRoute(true);
         } else {
             setCollapsibleRoute(false);
         }
+    };
+
+    const navigate = (id: string): void => {
+        history.push(id);
+        checkCollapsibleRoute(id);
         setSelected(id);
     };
 
     useEffect(() => {
         const pathname = window.location.pathname;
         if (pathname) {
-            setSelected(pathname.replace('/', ''));
+            const route = pathname.replace('/', '');
+            checkCollapsibleRoute(route);
+            setSelected(route);
         }
     }, []);
 
@@ -87,6 +103,9 @@ export const App: React.FC = () => {
             activeItem={selected}
         >
             <DrawerHeader
+                backgroundImage={backgroundImage}
+                backgroundOpacity={0.5}
+                classes={{ background: classes.backgroundGradient }}
                 title={'PX Blue'}
                 subtitle={'React Design Patterns'}
                 icon={collapsibleRoute ? <Menu /> : undefined}

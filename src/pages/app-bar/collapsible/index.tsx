@@ -1,11 +1,13 @@
 import React from 'react';
-import { Badge, Hidden, IconButton, Toolbar, Theme } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
-import MenuIcon from '@material-ui/icons/Menu';
+import { Badge, Hidden, IconButton, Toolbar, useMediaQuery } from '@material-ui/core';
+import { makeStyles, Theme, useTheme } from '@material-ui/core/styles';
 import HelpIcon from '@material-ui/icons/Help';
+import MenuIcon from '@material-ui/icons/Menu';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import { AppBar, Spacer, ThreeLiner } from '@pxblue/react-components';
+import { useDispatch } from 'react-redux';
+import { TOGGLE_DRAWER } from '../../../redux/actions';
 
 const backgroundImage = require('../../../assets/collapsible_app_bar_demo.jpg').default;
 const linearGradientOverlayImage = `linear-gradient(to bottom, rgba(0, 123, 193, 1) 22.4%, rgba(0, 123, 193, 0.2) 100%), url(${backgroundImage})`;
@@ -38,8 +40,10 @@ const useStyles = makeStyles((theme: Theme) => ({
         },
         '& $info': {
             fontSize: '1rem',
-            fontWeight: 400,
             marginTop: '-0.25rem',
+        },
+        '& $backgroundGradient': {
+            backgroundImage: 'none',
         },
     },
     toolbarGutters: {
@@ -54,12 +58,15 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 export const Collapsible = (): JSX.Element => {
+    const dispatch = useDispatch();
+    const theme = useTheme();
     const classes = useStyles();
+    const isMobile = useMediaQuery(theme.breakpoints.down('xs'));
     return (
         <div style={{ minHeight: '100vh' }}>
             <AppBar
                 expandedHeight={200}
-                collapsedHeight={64}
+                collapsedHeight={isMobile ? 56 : 64}
                 scrollThreshold={136}
                 animationDuration={300}
                 backgroundImage={backgroundImage}
@@ -72,7 +79,13 @@ export const Collapsible = (): JSX.Element => {
             >
                 <Toolbar classes={{ gutters: classes.toolbarGutters }}>
                     <Hidden mdUp={true}>
-                        <IconButton color={'inherit'} edge={'start'}>
+                        <IconButton
+                            onClick={(): void => {
+                                dispatch({ type: TOGGLE_DRAWER, payload: true });
+                            }}
+                            color={'inherit'}
+                            edge={'start'}
+                        >
                             <MenuIcon />
                         </IconButton>
                     </Hidden>
@@ -100,7 +113,7 @@ export const Collapsible = (): JSX.Element => {
                     </div>
                 </Toolbar>
             </AppBar>
-            <div style={{ height: '80vh' }}></div>
+            <div style={{ height: '2000px' }}></div>
         </div>
     );
 };

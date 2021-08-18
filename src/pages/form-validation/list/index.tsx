@@ -51,6 +51,9 @@ const useStyles = makeStyles((theme: Theme) => ({
     toolbarGutters: {
         padding: '0 16px',
     },
+    skinnyInput: {
+        paddingTop: 11,
+    }
 }));
 
 export const ListFormValidation = (): JSX.Element => {
@@ -112,7 +115,10 @@ export const ListFormValidation = (): JSX.Element => {
                                 <TextField
                                     id="filled-basic"
                                     value={ip}
-                                    style={{ paddingTop: 12 }}
+                                    InputProps={{ classes: {
+                                            input: classes.skinnyInput
+                                        }
+                                    }}
                                     onChange={onNewPasswordChange}
                                     variant="filled"
                                 />

@@ -94,7 +94,7 @@ export const ListFormValidation = (): JSX.Element => {
                         </IconButton>
                     </Hidden>
                     <Typography variant={'h6'} color={'inherit'}>
-                        Change Password
+                        In a List
                     </Typography>
                 </Toolbar>
             </AppBar>
@@ -112,7 +112,7 @@ export const ListFormValidation = (): JSX.Element => {
                                 <TextField
                                     id="filled-basic"
                                     value={ip}
-                                    style={{ paddingTop: 11 }}
+                                    style={{ paddingTop: 12 }}
                                     onChange={onNewPasswordChange}
                                     variant="filled"
                                 />

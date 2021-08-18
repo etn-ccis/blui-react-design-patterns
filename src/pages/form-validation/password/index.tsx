@@ -136,22 +136,22 @@ export const PasswordFormValidation = (): JSX.Element => {
     const [showNewPassword, setShowNewPassword] = useState<boolean>(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState<boolean>(false);
     const [passwordErrors, setPasswordErrors] = useState({
-        minLengthRequired: 'required',
-        atLeast1UpperCharRequired: 'required',
-        atLeast1LowerCharRequired: 'required',
-        atLeast1NumberRequired: 'required',
-        atLeast1SplCharRequired: 'required',
+        minLengthRequired: false,
+        atLeast1UpperCharRequired: false,
+        atLeast1LowerCharRequired: false,
+        atLeast1NumberRequired: false,
+        atLeast1SplCharRequired: false,
     });
 
     const theme = useTheme();
     const classes = useStyles(theme);
     const dispatch = useDispatch();
 
-    const getPasswordCriteriaIcon = (error: FormError): JSX.Element => (
+    const getPasswordCriteriaIcon = (error: boolean): JSX.Element => (
         <Done
             style={{
                 fontSize: 16,
-                color: error ? Colors.gray[200] : theme.palette.primary.main,
+                color: error ? theme.palette.primary.main : Colors.gray[200],
                 marginRight: theme.spacing(),
             }}
         />
@@ -181,7 +181,7 @@ export const PasswordFormValidation = (): JSX.Element => {
     const validateNewPassword = useCallback((): void => {
         const tempNewPassword = newPassword;
         let tempNewPasswordError = '';
-        if (!tempNewPassword.trim() || Object.values(passwordErrors).includes('required')) {
+        if (!tempNewPassword.trim() || Object.values(passwordErrors).includes(false)) {
             tempNewPasswordError = 'required';
         }
         setNewPasswordError(tempNewPasswordError);
@@ -196,14 +196,13 @@ export const PasswordFormValidation = (): JSX.Element => {
     }, [newPasswordError, validateNewPassword, setNewPasswordError]);
 
     useEffect(() => {
-        const tempPasswordErrors = {
-            minLengthRequired: newPassword.length >= 8 ? '' : 'required',
-            atLeast1UpperCharRequired: upperCharRegex.test(newPassword) ? '' : 'required',
-            atLeast1LowerCharRequired: lowerCharRegex.test(newPassword) ? '' : 'required',
-            atLeast1NumberRequired: numberRegex.test(newPassword) ? '' : 'required',
-            atLeast1SplCharRequired: splCharRegex.test(newPassword) ? '' : 'required',
-        };
-        setPasswordErrors(tempPasswordErrors);
+        setPasswordErrors({
+            minLengthRequired: newPassword.length >= 8,
+            atLeast1UpperCharRequired: upperCharRegex.test(newPassword),
+            atLeast1LowerCharRequired: lowerCharRegex.test(newPassword),
+            atLeast1NumberRequired: numberRegex.test(newPassword),
+            atLeast1SplCharRequired: splCharRegex.test(newPassword),
+        });
     }, [newPassword]);
 
     const onNewPasswordChange: OnChangeHandler = useCallback(
@@ -212,6 +211,21 @@ export const PasswordFormValidation = (): JSX.Element => {
             validatePasswordCriteria();
         },
         [setNewPassword, validatePasswordCriteria]
+    );
+
+    const meetsRequirements = useCallback(
+        (): boolean =>
+            Boolean(passwordErrors.atLeast1LowerCharRequired) &&
+            Boolean(passwordErrors.atLeast1NumberRequired) &&
+            Boolean(passwordErrors.atLeast1SplCharRequired) &&
+            Boolean(passwordErrors.minLengthRequired) &&
+            Boolean(passwordErrors.atLeast1UpperCharRequired),
+        [passwordErrors]
+    );
+
+    const submitEnabled = useCallback(
+        (): boolean => meetsRequirements() && newPassword === confirmPassword && Boolean(currentPassword),
+        [meetsRequirements, newPassword, confirmPassword, currentPassword]
     );
 
     const validateConfirmPassword = useCallback((): void => {
@@ -390,16 +404,26 @@ export const PasswordFormValidation = (): JSX.Element => {
                         <Spacer />
                         <Divider className={clsx(classes.divider, classes.bottomDivider)} />
                         <div className={classes.submitButtonContainer}>
-                            <Button color={'primary'} variant="outlined">
-                                Back
+                            <Button color={'primary'} style={{ width: 100 }} variant="outlined">
+                                Cancel
                             </Button>
                             <Spacer />
-                            <Button color={'primary'} variant="contained" disabled>
-                                Done
+                            <Button
+                                color={'primary'}
+                                style={{ width: 100 }}
+                                variant="contained"
+                                disabled={!submitEnabled()}
+                            >
+                                Submit
                             </Button>
                         </div>
                         <div className={classes.mobileSubmitButtonContainer}>
-                            <Button color={'primary'} style={{ width: '100%' }} variant="contained" disabled>
+                            <Button
+                                color={'primary'}
+                                style={{ width: '100%' }}
+                                variant="contained"
+                                disabled={!submitEnabled()}
+                            >
                                 Submit
                             </Button>
                         </div>

@@ -99,8 +99,8 @@ const useStyles = makeStyles((theme: Theme) => ({
         },
     },
     submitButtonContainer: {
-        paddingTop: theme.spacing(4),
-        paddingBottom: theme.spacing(4),
+        paddingTop: theme.spacing(3),
+        paddingBottom: theme.spacing(3),
         display: 'flex',
         [theme.breakpoints.down('xs')]: {
             display: 'none',

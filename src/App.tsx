@@ -33,34 +33,21 @@ export const App: React.FC = () => {
     const classes = useStyles();
     const history = useHistory();
     const open = useSelector((state: AppState) => state.app.drawerOpen);
-    const showMenuIcon = ['collapsible'];
-    const [collapsibleRoute, setCollapsibleRoute] = useState(false);
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
     const dispatch = useDispatch();
 
     const [selected, setSelected] = useState('');
 
-    const checkCollapsibleRoute = (path: string): void => {
-        if (showMenuIcon.includes(path)) {
-            setCollapsibleRoute(true);
-        } else {
-            setCollapsibleRoute(false);
-        }
-    };
-
     const navigate = (id: string): void => {
         history.push(id);
-        checkCollapsibleRoute(id);
         setSelected(id);
     };
 
     useEffect(() => {
         const pathname = window.location.pathname;
         if (pathname) {
-            const route = pathname.replace('/', '');
-            checkCollapsibleRoute(route);
-            setSelected(route);
+            setSelected(pathname.replace('/', ''));
         }
     }, []);
 
@@ -101,6 +88,7 @@ export const App: React.FC = () => {
             }}
             variant={isMobile ? 'temporary' : 'permanent'}
             activeItem={selected}
+            activeItemBackgroundShape={'round'}
         >
             <DrawerHeader
                 backgroundImage={backgroundImage}
@@ -108,7 +96,7 @@ export const App: React.FC = () => {
                 classes={{ background: classes.backgroundGradient }}
                 title={'PX Blue'}
                 subtitle={'React Design Patterns'}
-                icon={collapsibleRoute ? <Menu /> : undefined}
+                icon={<Menu />}
                 onClick={(): void => {
                     navigate('/');
                     dispatch({ type: TOGGLE_DRAWER, payload: false });

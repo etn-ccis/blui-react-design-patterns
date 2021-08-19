@@ -31,9 +31,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         flexDirection: 'column',
         alignItems: 'center',
         maxWidth: 686,
-        marginRight: theme.spacing(4),
-        marginLeft: theme.spacing(4),
-        marginTop: theme.spacing(4),
+        margin: theme.spacing(4),
         width: '100%',
         [theme.breakpoints.down('xs')]: {
             margin: 0,

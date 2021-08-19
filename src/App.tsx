@@ -1,4 +1,4 @@
-import { Divider, makeStyles, useMediaQuery, useTheme, Typography } from '@material-ui/core';
+import { Divider, IconButton, makeStyles, useMediaQuery, useTheme, Theme, Typography } from '@material-ui/core';
 import {
     Drawer,
     DrawerBody,
@@ -9,7 +9,8 @@ import {
     NavItem,
     Spacer,
 } from '@pxblue/react-components';
-import { OpenInNew, Menu } from '@material-ui/icons';
+import { OpenInNew } from '@material-ui/icons';
+import CloseIcon from '@material-ui/icons/Close';
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router';
 import { Main } from './router/main';
@@ -23,9 +24,28 @@ import { DRAWER_WIDTH } from './assets/constants';
 const backgroundImage = require('./assets/topology_40.png').default;
 const linearGradientOverlayImage = `linear-gradient(to right, rgba(0, 123, 193, 1) 22.4%, rgba(0, 123, 193, 0.2) 100%), url(${backgroundImage})`;
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme: Theme) => ({
     backgroundGradient: {
         backgroundImage: `${linearGradientOverlayImage}`,
+    },
+    closeIcon: {
+        marginRight: `-${theme.spacing(2)}px`,
+        marginTop: `-${theme.spacing(2)}px`,
+    },
+    header: {
+        display: 'flex',
+        justifyContent: 'space-between',
+        zIndex: 1,
+        padding: `0 ${theme.spacing(2)}px`,
+        alignItems: 'center',
+        width: '100%',
+        height: '100%',
+    },
+    headerDetails: {
+        flex: 1,
+    },
+    subtitle: {
+        marginTop: `-${theme.spacing(1)}px`,
     },
 }));
 
@@ -94,13 +114,35 @@ export const App: React.FC = () => {
                 backgroundImage={backgroundImage}
                 backgroundOpacity={0.5}
                 classes={{ background: classes.backgroundGradient }}
-                title={'PX Blue'}
-                subtitle={'React Design Patterns'}
-                icon={<Menu />}
-                onClick={(): void => {
-                    navigate('/');
-                    dispatch({ type: TOGGLE_DRAWER, payload: false });
-                }}
+                titleContent={
+                    <div className={classes.header}>
+                        <div
+                            className={classes.headerDetails}
+                            onClick={(): void => {
+                                navigate('/');
+                                dispatch({ type: TOGGLE_DRAWER, payload: false });
+                            }}
+                        >
+                            <Typography variant="h6">PX Blue</Typography>
+                            <Typography variant="body1" className={classes.subtitle}>
+                                React Design Patterns
+                            </Typography>
+                        </div>
+                        {isMobile && (
+                            <IconButton
+                                data-cy="toolbar-menu"
+                                color={'inherit'}
+                                edge={'end'}
+                                classes={{ edgeEnd: classes.closeIcon }}
+                                onClick={(): void => {
+                                    dispatch({ type: TOGGLE_DRAWER, payload: false });
+                                }}
+                            >
+                                <CloseIcon />
+                            </IconButton>
+                        )}
+                    </div>
+                }
                 style={{ cursor: 'pointer' }}
             />
             <DrawerBody>

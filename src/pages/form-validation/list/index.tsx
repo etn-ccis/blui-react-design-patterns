@@ -10,14 +10,14 @@ import {
     Toolbar,
     Typography,
 } from '@material-ui/core';
-import MenuIcon from '@material-ui/icons/Menu';
+import { Dns, Menu, Report } from '@material-ui/icons';
+import List from '@material-ui/core/List';
 import { makeStyles, Theme, useTheme } from '@material-ui/core/styles';
 import { useDispatch } from 'react-redux';
 import { TOGGLE_DRAWER } from '../../../redux/actions';
 import { InfoListItem } from '@pxblue/react-components';
-import List from '@material-ui/core/List';
-import ReportIcon from '@material-ui/icons/Report';
-import { Dns } from '@material-ui/icons';
+
+type OnChangeHandler = InputProps['onChange'];
 
 const useStyles = makeStyles((theme: Theme) => ({
     containerWrapper: {
@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        maxWidth: 800,
+        maxWidth: 686,
         marginRight: theme.spacing(4),
         marginLeft: theme.spacing(4),
         marginTop: theme.spacing(4),
@@ -39,10 +39,6 @@ const useStyles = makeStyles((theme: Theme) => ({
             margin: 0,
             minHeight: 'calc(100vh - 56px)',
         },
-    },
-    passwordCriteria: {
-        paddingTop: 0,
-        paddingBottom: 0,
     },
     appbarRoot: {
         padding: 0,
@@ -56,7 +52,6 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 export const ListFormValidation = (): JSX.Element => {
-    type OnChangeHandler = InputProps['onChange'];
 
     const theme = useTheme();
     const classes = useStyles(theme);
@@ -92,7 +87,7 @@ export const ListFormValidation = (): JSX.Element => {
                             edge={'start'}
                             style={{ marginRight: 20 }}
                         >
-                            <MenuIcon />
+                            <Menu />
                         </IconButton>
                     </Hidden>
                     <Typography variant={'h6'} color={'inherit'}>
@@ -128,7 +123,7 @@ export const ListFormValidation = (): JSX.Element => {
                         <InfoListItem
                             hidePadding
                             key={'item2'}
-                            icon={<ReportIcon />}
+                            icon={<Report />}
                             title={'Insight Report'}
                             subtitle={'Auto-report every 2 months'}
                             rightComponent={<Switch name="demo-switch" />}

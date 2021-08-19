@@ -109,7 +109,7 @@ export const ListFormValidation = (): JSX.Element => {
                             hidePadding
                             key={'item1'}
                             icon={<Dns />}
-                            divider={'full'}
+                            divider={'partial'}
                             title={'IP Address'}
                             rightComponent={
                                 <TextField

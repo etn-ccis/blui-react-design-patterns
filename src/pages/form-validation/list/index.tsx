@@ -100,7 +100,6 @@ export const ListFormValidation = (): JSX.Element => {
                 <Card className={classes.container} elevation={4}>
                     <List disablePadding style={{ width: '100%' }}>
                         <InfoListItem
-                            hidePadding
                             icon={<Dns />}
                             divider={'partial'}
                             title={'IP Address'}
@@ -120,7 +119,6 @@ export const ListFormValidation = (): JSX.Element => {
                         ></InfoListItem>
 
                         <InfoListItem
-                            hidePadding
                             icon={<Report />}
                             title={'Insight Report'}
                             subtitle={'Auto-report every 2 months'}

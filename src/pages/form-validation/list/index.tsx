@@ -68,7 +68,6 @@ export const ListFormValidation = (): JSX.Element => {
     return (
         <div
             style={{
-                backgroundColor: '#E5E5E5',
                 color: theme.palette.text.primary,
                 minHeight: '100vh',
                 display: 'flex',

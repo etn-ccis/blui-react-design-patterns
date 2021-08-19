@@ -22,7 +22,7 @@ export const PAGES: Routes = {
         },
     },
     FORM_VALIDATION: {
-        title: 'Form Validation',
+        title: 'Forms and Validation',
         LIST: {
             title: 'In a List',
             route: 'in-a-list',

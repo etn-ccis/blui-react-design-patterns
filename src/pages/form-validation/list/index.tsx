@@ -68,7 +68,7 @@ export const ListFormValidation = (): JSX.Element => {
         (event) => {
             setIp(event.target.value);
         },
-        [setIp]
+        []
     );
 
     return (

@@ -27,15 +27,13 @@ const useStyles = makeStyles((theme: Theme) => ({
         flex: '1 1 0',
     },
     container: {
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
         maxWidth: 686,
         margin: theme.spacing(4),
         width: '100%',
         [theme.breakpoints.down('xs')]: {
             margin: 0,
-            minHeight: 'calc(100vh - 56px)',
+            borderRadius: 0,
+            boxShadow: 'none',
         },
     },
     appbarRoot: {
@@ -50,28 +48,17 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 export const ListFormValidation = (): JSX.Element => {
-
     const theme = useTheme();
     const classes = useStyles(theme);
     const [ip, setIp] = useState('10.0.0.1');
     const dispatch = useDispatch();
 
-    const onIpChange: OnChangeHandler = useCallback(
-        (event) => {
-            setIp(event.target.value);
-        },
-        []
-    );
+    const onIpChange: OnChangeHandler = useCallback((event) => {
+        setIp(event.target.value);
+    }, []);
 
     return (
-        <div
-            style={{
-                color: theme.palette.text.primary,
-                minHeight: '100vh',
-                display: 'flex',
-                flexDirection: 'column',
-            }}
-        >
+        <>
             <AppBar data-cy="pxb-toolbar" position={'sticky'} classes={{ root: classes.appbarRoot }}>
                 <Toolbar classes={{ gutters: classes.toolbarGutters }}>
                     <Hidden mdUp>
@@ -117,6 +104,7 @@ export const ListFormValidation = (): JSX.Element => {
 
                         <InfoListItem
                             icon={<Report />}
+                            divider={'full'}
                             title={'Insight Report'}
                             subtitle={'Auto-report every 2 months'}
                             rightComponent={<Switch name="demo-switch" />}
@@ -124,6 +112,6 @@ export const ListFormValidation = (): JSX.Element => {
                     </List>
                 </Card>
             </div>
-        </div>
+        </>
     );
 };

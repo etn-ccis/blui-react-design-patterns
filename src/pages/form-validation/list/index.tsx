@@ -58,7 +58,7 @@ export const ListFormValidation = (): JSX.Element => {
     const [ip, setIp] = useState('10.0.0.1');
     const dispatch = useDispatch();
 
-    const onNewPasswordChange: OnChangeHandler = useCallback(
+    const onIpChange: OnChangeHandler = useCallback(
         (event) => {
             setIp(event.target.value);
         },
@@ -114,7 +114,7 @@ export const ListFormValidation = (): JSX.Element => {
                                             input: classes.skinnyInput,
                                         },
                                     }}
-                                    onChange={onNewPasswordChange}
+                                    onChange={onIpChange}
                                     variant="filled"
                                 />
                             }

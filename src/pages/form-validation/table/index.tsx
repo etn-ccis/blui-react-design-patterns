@@ -44,7 +44,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 const createData = (id: number, name: string, min: number, max: number): any => ({ id, name, min, max });
 
-const rows = [createData(1, 'Power', 123, 456), createData(2, 'Expert', 123, 456), createData(3, 'Blue', 123, 456)];
+const rows = [createData(1, 'Power', 123, 456), createData(2, 'Xpert', 123, 456), createData(3, 'Blue', 123, 456)];
 
 export const TableFormValidation = (): JSX.Element => {
     const theme = useTheme();

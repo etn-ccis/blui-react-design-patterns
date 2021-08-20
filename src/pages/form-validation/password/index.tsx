@@ -29,19 +29,25 @@ const useStyles = makeStyles((theme: Theme) => ({
         justifyContent: 'center',
         alignItems: 'center',
         flex: '1 1 0',
+        margin: theme.spacing(4),
+        height: '100%',
+        [theme.breakpoints.down('xs')]: {
+            margin: theme.spacing(0),
+        }
     },
     container: {
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
         backgroundColor: 'white',
+        height: '100%',
+        maxHeight: '100%',
         paddingTop: theme.spacing(4),
         paddingLeft: theme.spacing(3),
         paddingRight: theme.spacing(3),
         width: 450,
         [theme.breakpoints.down('xs')]: {
             width: '100%',
-            minHeight: 'calc(100vh - 56px)',
             paddingTop: theme.spacing(2),
             paddingLeft: theme.spacing(2),
             paddingRight: theme.spacing(2),
@@ -253,9 +259,8 @@ export const PasswordFormValidation = (): JSX.Element => {
     return (
         <div
             style={{
-                backgroundColor: '#E5E5E5',
                 color: theme.palette.text.primary,
-                minHeight: '100vh',
+                height: '100vh',
                 display: 'flex',
                 flexDirection: 'column',
             }}
@@ -287,7 +292,7 @@ export const PasswordFormValidation = (): JSX.Element => {
                         <Typography variant={'h6'} className={classes.sectionHeader}>
                             Change Password
                         </Typography>
-                        <div style={{ overflow: 'auto', flex: '1', boxSizing: 'border-box' }}>
+                        <div style={{ overflow: 'auto', flex: '1 1 0px', overflowX: 'hidden'}}>
                             <Typography variant={'body1'}>
                                 Password must be at least 8 characters long, contain at least one uppercase character,
                                 one lowercase character, one number, and one special character.

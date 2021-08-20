@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         flex: '1 1 0',
     },
     container: {
-        maxWidth: 686,
+        maxWidth: 600,
         margin: theme.spacing(3),
         width: '100%',
         [theme.breakpoints.down('xs')]: {

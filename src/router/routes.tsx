@@ -27,10 +27,6 @@ export const PAGES: Routes = {
             title: 'In a List',
             route: 'in-a-list',
         },
-        PASSWORD: {
-            title: 'Password',
-            route: 'password',
-        },
     },
     I18N: {
         title: 'Internationalization',
@@ -137,7 +133,6 @@ export type Routes = {
         SEARCH: RouteMetaData;
     };
     FORM_VALIDATION: RouteMetaData & {
-        PASSWORD: RouteMetaData;
         LIST: RouteMetaData;
     };
     I18N: RouteMetaData;

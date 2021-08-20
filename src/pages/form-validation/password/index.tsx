@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         height: '100%',
         [theme.breakpoints.down('xs')]: {
             margin: theme.spacing(0),
-        }
+        },
     },
     container: {
         display: 'flex',
@@ -292,7 +292,7 @@ export const PasswordFormValidation = (): JSX.Element => {
                         <Typography variant={'h6'} className={classes.sectionHeader}>
                             Change Password
                         </Typography>
-                        <div style={{ overflow: 'auto', flex: '1 1 0px', overflowX: 'hidden'}}>
+                        <div style={{ overflow: 'auto', flex: '1 1 0px', overflowX: 'hidden' }}>
                             <Typography variant={'body1'}>
                                 Password must be at least 8 characters long, contain at least one uppercase character,
                                 one lowercase character, one number, and one special character.

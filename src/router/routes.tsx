@@ -27,6 +27,10 @@ export const PAGES: Routes = {
             title: 'In a List',
             route: 'in-a-list',
         },
+        TABLE: {
+            title: 'In a Table',
+            route: 'in-a-table',
+        }
     },
     I18N: {
         title: 'Internationalization',
@@ -134,6 +138,7 @@ export type Routes = {
     };
     FORM_VALIDATION: RouteMetaData & {
         LIST: RouteMetaData;
+        TABLE: RouteMetaData;
     };
     I18N: RouteMetaData;
     LISTS: RouteMetaData & {

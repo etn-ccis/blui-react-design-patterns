@@ -33,27 +33,27 @@ const useStyles = makeStyles((theme: Theme) => ({
         height: '100%',
         [theme.breakpoints.down('xs')]: {
             margin: theme.spacing(0),
+            alignItems: 'start'
         },
     },
     container: {
         display: 'flex',
         flexDirection: 'column',
-        alignItems: 'center',
         backgroundColor: 'white',
-        height: '100%',
-        maxHeight: '100%',
         paddingTop: theme.spacing(4),
         paddingLeft: theme.spacing(3),
         paddingRight: theme.spacing(3),
         width: 450,
         [theme.breakpoints.down('xs')]: {
             width: '100%',
+            height: '100%',
             paddingTop: theme.spacing(2),
             paddingLeft: theme.spacing(2),
             paddingRight: theme.spacing(2),
         },
     },
     sectionHeader: {
+        width: '100%',
         marginBottom: 16,
         [theme.breakpoints.down('xs')]: {
             display: 'none',
@@ -64,13 +64,6 @@ const useStyles = makeStyles((theme: Theme) => ({
         [theme.breakpoints.down('xs')]: {
             marginTop: theme.spacing(3),
         },
-    },
-    block: {
-        display: 'flex',
-        flexDirection: 'column',
-        flex: 1,
-        maxWidth: 600,
-        paddingBottom: 0,
     },
     passwordCriteria: {
         paddingTop: 0,
@@ -104,6 +97,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         },
     },
     submitButtonContainer: {
+        width: '100%',
         paddingTop: theme.spacing(3),
         paddingBottom: theme.spacing(3),
         display: 'flex',
@@ -288,150 +282,148 @@ export const PasswordFormValidation = (): JSX.Element => {
 
             <div className={classes.containerWrapper}>
                 <Card className={classes.container} elevation={4}>
-                    <div className={classes.block}>
-                        <Typography variant={'h6'} className={classes.sectionHeader}>
-                            Change Password
+                    <Typography variant={'h6'} className={classes.sectionHeader}>
+                        Change Password
+                    </Typography>
+                    <div style={{ flex: '1 1 auto' }}>
+                        <Typography variant={'body1'}>
+                            Password must be at least 8 characters long, contain at least one uppercase character, one
+                            lowercase character, one number, and one special character.
                         </Typography>
-                        <div style={{ overflow: 'auto', flex: '1 1 0px', overflowX: 'hidden' }}>
-                            <Typography variant={'body1'}>
-                                Password must be at least 8 characters long, contain at least one uppercase character,
-                                one lowercase character, one number, and one special character.
-                            </Typography>
 
-                            <Divider className={clsx(classes.divider, classes.topDivider)} />
-                            <form>
-                                <TextField
-                                    id={'currentPassword'}
-                                    label={'Old Password'}
-                                    type={showcurrentPassword ? 'text' : 'password'}
-                                    onChange={onCurrentPasswordChange}
-                                    value={currentPassword}
-                                    error={Boolean(currentPasswordError)}
-                                    onBlur={validateCurrentPassword}
-                                    required
-                                    fullWidth
-                                    variant={'filled'}
-                                    InputProps={{
-                                        endAdornment: (
-                                            <InputAdornment position={'end'}>
-                                                <IconButton
-                                                    style={{ height: 36, width: 36 }}
-                                                    onClick={(): void => setShowcurrentPassword(!showcurrentPassword)}
-                                                >
-                                                    {showcurrentPassword && <Visibility />}
-                                                    {!showcurrentPassword && <VisibilityOff />}
-                                                </IconButton>
-                                            </InputAdornment>
-                                        ),
-                                    }}
-                                />
+                        <Divider className={clsx(classes.divider, classes.topDivider)} />
+                        <form>
+                            <TextField
+                                id={'currentPassword'}
+                                label={'Old Password'}
+                                type={showcurrentPassword ? 'text' : 'password'}
+                                onChange={onCurrentPasswordChange}
+                                value={currentPassword}
+                                error={Boolean(currentPasswordError)}
+                                onBlur={validateCurrentPassword}
+                                required
+                                fullWidth
+                                variant={'filled'}
+                                InputProps={{
+                                    endAdornment: (
+                                        <InputAdornment position={'end'}>
+                                            <IconButton
+                                                style={{ height: 36, width: 36 }}
+                                                onClick={(): void => setShowcurrentPassword(!showcurrentPassword)}
+                                            >
+                                                {showcurrentPassword && <Visibility />}
+                                                {!showcurrentPassword && <VisibilityOff />}
+                                            </IconButton>
+                                        </InputAdornment>
+                                    ),
+                                }}
+                            />
 
-                                <TextField
-                                    className={classes.newPasswordInputField}
-                                    id={'newPassword'}
-                                    label={'New Password'}
-                                    type={showNewPassword ? 'text' : 'password'}
-                                    onChange={onNewPasswordChange}
-                                    value={newPassword}
-                                    error={Boolean(newPasswordError)}
-                                    onBlur={validateNewPassword}
-                                    required
-                                    fullWidth
-                                    variant={'filled'}
-                                    InputProps={{
-                                        endAdornment: (
-                                            <InputAdornment position={'end'}>
-                                                <IconButton
-                                                    style={{ height: 36, width: 36 }}
-                                                    onClick={(): void => setShowNewPassword(!showNewPassword)}
-                                                >
-                                                    {showNewPassword && <Visibility />}
-                                                    {!showNewPassword && <VisibilityOff />}
-                                                </IconButton>
-                                            </InputAdornment>
-                                        ),
-                                    }}
-                                />
+                            <TextField
+                                className={classes.newPasswordInputField}
+                                id={'newPassword'}
+                                label={'New Password'}
+                                type={showNewPassword ? 'text' : 'password'}
+                                onChange={onNewPasswordChange}
+                                value={newPassword}
+                                error={Boolean(newPasswordError)}
+                                onBlur={validateNewPassword}
+                                required
+                                fullWidth
+                                variant={'filled'}
+                                InputProps={{
+                                    endAdornment: (
+                                        <InputAdornment position={'end'}>
+                                            <IconButton
+                                                style={{ height: 36, width: 36 }}
+                                                onClick={(): void => setShowNewPassword(!showNewPassword)}
+                                            >
+                                                {showNewPassword && <Visibility />}
+                                                {!showNewPassword && <VisibilityOff />}
+                                            </IconButton>
+                                        </InputAdornment>
+                                    ),
+                                }}
+                            />
 
-                                <List disablePadding component={'ul'} style={{ marginTop: 8 }}>
-                                    <ListItem disableGutters className={classes.passwordCriteria}>
-                                        {getPasswordCriteriaIcon(passwordErrors.minLengthRequired)}
-                                        <Typography variant={'caption'}>At least 8 characters in length</Typography>
-                                    </ListItem>
-                                    <ListItem disableGutters className={classes.passwordCriteria}>
-                                        {getPasswordCriteriaIcon(passwordErrors.atLeast1NumberRequired)}
-                                        <Typography variant={'caption'}>At least 1 digit</Typography>
-                                    </ListItem>
-                                    <ListItem disableGutters className={classes.passwordCriteria}>
-                                        {getPasswordCriteriaIcon(passwordErrors.atLeast1UpperCharRequired)}
-                                        <Typography variant={'caption'}>At least 1 uppercase letter</Typography>
-                                    </ListItem>
-                                    <ListItem disableGutters className={classes.passwordCriteria}>
-                                        {getPasswordCriteriaIcon(passwordErrors.atLeast1LowerCharRequired)}
-                                        <Typography variant={'caption'}>At least 1 lowercase letter</Typography>
-                                    </ListItem>
-                                    <ListItem disableGutters className={classes.passwordCriteria}>
-                                        {getPasswordCriteriaIcon(passwordErrors.atLeast1SplCharRequired)}
-                                        <Typography variant={'caption'}>
-                                            At least 1 special character: (valid: ! @ # $ ^ &)
-                                        </Typography>
-                                    </ListItem>
-                                </List>
+                            <List disablePadding component={'ul'} style={{ marginTop: 8 }}>
+                                <ListItem disableGutters className={classes.passwordCriteria}>
+                                    {getPasswordCriteriaIcon(passwordErrors.minLengthRequired)}
+                                    <Typography variant={'caption'}>At least 8 characters in length</Typography>
+                                </ListItem>
+                                <ListItem disableGutters className={classes.passwordCriteria}>
+                                    {getPasswordCriteriaIcon(passwordErrors.atLeast1NumberRequired)}
+                                    <Typography variant={'caption'}>At least 1 digit</Typography>
+                                </ListItem>
+                                <ListItem disableGutters className={classes.passwordCriteria}>
+                                    {getPasswordCriteriaIcon(passwordErrors.atLeast1UpperCharRequired)}
+                                    <Typography variant={'caption'}>At least 1 uppercase letter</Typography>
+                                </ListItem>
+                                <ListItem disableGutters className={classes.passwordCriteria}>
+                                    {getPasswordCriteriaIcon(passwordErrors.atLeast1LowerCharRequired)}
+                                    <Typography variant={'caption'}>At least 1 lowercase letter</Typography>
+                                </ListItem>
+                                <ListItem disableGutters className={classes.passwordCriteria}>
+                                    {getPasswordCriteriaIcon(passwordErrors.atLeast1SplCharRequired)}
+                                    <Typography variant={'caption'}>
+                                        At least 1 special character: (valid: ! @ # $ ^ &)
+                                    </Typography>
+                                </ListItem>
+                            </List>
 
-                                <TextField
-                                    className={classes.newPasswordInputField}
-                                    id={'confirmPassword'}
-                                    label={'Confirm Password'}
-                                    type={showConfirmPassword ? 'text' : 'password'}
-                                    helperText={confirmPasswordError}
-                                    onChange={onConfirmPasswordChange}
-                                    value={confirmPassword}
-                                    error={Boolean(confirmPasswordError)}
-                                    onBlur={validateConfirmPassword}
-                                    required
-                                    fullWidth
-                                    variant={'filled'}
-                                    InputProps={{
-                                        endAdornment: (
-                                            <InputAdornment position={'end'}>
-                                                <IconButton
-                                                    style={{ height: 36, width: 36 }}
-                                                    onClick={(): void => setShowConfirmPassword(!showConfirmPassword)}
-                                                >
-                                                    {showConfirmPassword && <Visibility />}
-                                                    {!showConfirmPassword && <VisibilityOff />}
-                                                </IconButton>
-                                            </InputAdornment>
-                                        ),
-                                    }}
-                                />
-                            </form>
-                        </div>
-                        <Divider className={clsx(classes.divider, classes.bottomDivider)} />
-                        <div className={classes.submitButtonContainer}>
-                            <Button color={'primary'} style={{ width: 100 }} variant="outlined">
-                                Cancel
-                            </Button>
-                            <Spacer />
-                            <Button
-                                color={'primary'}
-                                style={{ width: 100 }}
-                                variant="contained"
-                                disabled={!submitEnabled()}
-                            >
-                                Submit
-                            </Button>
-                        </div>
-                        <div className={classes.mobileSubmitButtonContainer}>
-                            <Button
-                                color={'primary'}
-                                style={{ width: '100%' }}
-                                variant="contained"
-                                disabled={!submitEnabled()}
-                            >
-                                Submit
-                            </Button>
-                        </div>
+                            <TextField
+                                className={classes.newPasswordInputField}
+                                id={'confirmPassword'}
+                                label={'Confirm Password'}
+                                type={showConfirmPassword ? 'text' : 'password'}
+                                helperText={confirmPasswordError}
+                                onChange={onConfirmPasswordChange}
+                                value={confirmPassword}
+                                error={Boolean(confirmPasswordError)}
+                                onBlur={validateConfirmPassword}
+                                required
+                                fullWidth
+                                variant={'filled'}
+                                InputProps={{
+                                    endAdornment: (
+                                        <InputAdornment position={'end'}>
+                                            <IconButton
+                                                style={{ height: 36, width: 36 }}
+                                                onClick={(): void => setShowConfirmPassword(!showConfirmPassword)}
+                                            >
+                                                {showConfirmPassword && <Visibility />}
+                                                {!showConfirmPassword && <VisibilityOff />}
+                                            </IconButton>
+                                        </InputAdornment>
+                                    ),
+                                }}
+                            />
+                        </form>
+                    </div>
+                    <Divider className={clsx(classes.divider, classes.bottomDivider)} />
+                    <div className={classes.submitButtonContainer}>
+                        <Button color={'primary'} style={{ width: 100 }} variant="outlined">
+                            Cancel
+                        </Button>
+                        <Spacer />
+                        <Button
+                            color={'primary'}
+                            style={{ width: 100 }}
+                            variant="contained"
+                            disabled={!submitEnabled()}
+                        >
+                            Submit
+                        </Button>
+                    </div>
+                    <div className={classes.mobileSubmitButtonContainer}>
+                        <Button
+                            color={'primary'}
+                            style={{ width: '100%' }}
+                            variant="contained"
+                            disabled={!submitEnabled()}
+                        >
+                            Submit
+                        </Button>
                     </div>
                 </Card>
             </div>

@@ -9,14 +9,15 @@ import {
     TableCell,
     TableContainer,
     TableHead,
-    TableRow, TextField,
+    TableRow,
+    TextField,
     Toolbar,
     Typography,
 } from '@material-ui/core';
-import {Menu} from '@material-ui/icons';
-import {makeStyles, Theme, useTheme} from '@material-ui/core/styles';
-import {useDispatch} from 'react-redux';
-import {TOGGLE_DRAWER} from '../../../redux/actions';
+import { Menu } from '@material-ui/icons';
+import { makeStyles, Theme, useTheme } from '@material-ui/core/styles';
+import { useDispatch } from 'react-redux';
+import { TOGGLE_DRAWER } from '../../../redux/actions';
 
 const useStyles = makeStyles((theme: Theme) => ({
     toolbarGutters: {
@@ -26,7 +27,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         padding: 0,
     },
     textFieldRoot: {
-        width: 128
+        width: 128,
     },
     skinnyInput: {
         paddingTop: 11,
@@ -37,28 +38,23 @@ const useStyles = makeStyles((theme: Theme) => ({
         marginTop: theme.spacing(4),
         marginLeft: theme.spacing(2),
         marginRight: theme.spacing(2),
-        boxSizing: 'border-box'
-    }
+        boxSizing: 'border-box',
+    },
 }));
 
-const createData = (id: number, name: string, min: number, max: number): any => ({id, name, min, max });
+const createData = (id: number, name: string, min: number, max: number): any => ({ id, name, min, max });
 
-const rows = [
-    createData(1, 'Power', 123, 456),
-    createData(2, 'Expert', 123, 456),
-    createData(3, 'Blue', 123, 456)
-];
+const rows = [createData(1, 'Power', 123, 456), createData(2, 'Expert', 123, 456), createData(3, 'Blue', 123, 456)];
 
 export const TableFormValidation = (): JSX.Element => {
     const theme = useTheme();
     const classes = useStyles(theme);
     const dispatch = useDispatch();
 
-
     const getTable = (): JSX.Element => (
-        <TableContainer component={Paper} className={classes.tableContainer} >
+        <TableContainer component={Paper} className={classes.tableContainer}>
             <Table>
-                <TableHead style={{ fontWeight: 600}} >
+                <TableHead style={{ fontWeight: 600 }}>
                     <TableRow>
                         <TableCell>ID</TableCell>
                         <TableCell align="right">Name</TableCell>
@@ -110,18 +106,67 @@ export const TableFormValidation = (): JSX.Element => {
 
     const getList = (): JSX.Element => (
         <>
-        {rows.map((row) => (
-                <div key={row.id}>
-                    <div>#{row.id}</div>
-                    <div>
-                        <div>
+            {rows.map((row) => (
+                <div key={row.id} style={{ display: 'flex', flexDirection: 'column' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', height: 64 }}>
+                        <Typography variant={'body1'} style={{ width: '20%', paddingLeft: theme.spacing(2) }}>
+                            #{row.id}
+                        </Typography>
+                        <Typography variant={'h6'} style={{ width: '80%' }}>
                             {row.name}
-                        </div>
-                        <div>Min</div>
-                        <div>Max</div>
+                        </Typography>
                     </div>
-                    <div>
-                        <div></div>
+                    <div style={{ display: 'flex', alignItems: 'center', height: 64 }}>
+                        <div style={{ width: '20%' }}></div>
+                        <Typography variant={'subtitle1'} style={{ width: '40%' }}>
+                            Min
+                        </Typography>
+                        <div style={{ width: '40%' }}>
+                            <TextField
+                                variant="filled"
+                                value={row.min}
+                                classes={{
+                                    root: classes.textFieldRoot,
+                                }}
+                                InputProps={{
+                                    classes: {
+                                        input: classes.skinnyInput,
+                                    },
+                                }}
+                            />
+                        </div>
+                    </div>
+                    <div style={{ display: 'flex', alignItems: 'center', height: 72 }}>
+                        <div style={{ width: '20%' }}></div>
+                        <div
+                            style={{
+                                display: 'flex',
+                                height: '100%',
+                                width: '80%',
+                                borderBottom: 'solid 1px',
+                                borderBottomColor: theme.palette.divider,
+                                alignItems: 'center',
+                                paddingBottom: 8,
+                            }}
+                        >
+                            <Typography variant={'subtitle1'} style={{ flex: 1 }}>
+                                Max
+                            </Typography>
+                            <div style={{ flex: 1 }}>
+                                <TextField
+                                    variant="filled"
+                                    value={row.max}
+                                    classes={{
+                                        root: classes.textFieldRoot,
+                                    }}
+                                    InputProps={{
+                                        classes: {
+                                            input: classes.skinnyInput,
+                                        },
+                                    }}
+                                />
+                            </div>
+                        </div>
                     </div>
                 </div>
             ))}
@@ -151,11 +196,9 @@ export const TableFormValidation = (): JSX.Element => {
                 </Toolbar>
             </AppBar>
 
-            <Hidden xsDown>
-                { getTable() }
-            </Hidden>
+            <Hidden xsDown>{getTable()}</Hidden>
             <Hidden smUp>
-                { getList() }
+                <div style={{ height: '100%', background: 'white' }}>{getList()}</div>
             </Hidden>
         </>
     );

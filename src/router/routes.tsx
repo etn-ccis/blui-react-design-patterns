@@ -30,7 +30,7 @@ export const PAGES: Routes = {
         TABLE: {
             title: 'In a Table',
             route: 'in-a-table',
-        }
+        },
     },
     I18N: {
         title: 'Internationalization',

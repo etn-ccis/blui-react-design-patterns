@@ -22,8 +22,11 @@ export const PAGES: Routes = {
         },
     },
     FORM_VALIDATION: {
-        title: 'Form Validation',
-        route: 'form-validation',
+        title: 'Forms and Validation',
+        LIST: {
+            title: 'In a List',
+            route: 'in-a-list',
+        },
     },
     I18N: {
         title: 'Internationalization',
@@ -129,7 +132,9 @@ export type Routes = {
         COLLAPSIBLE: RouteMetaData;
         SEARCH: RouteMetaData;
     };
-    FORM_VALIDATION: RouteMetaData;
+    FORM_VALIDATION: RouteMetaData & {
+        LIST: RouteMetaData;
+    };
     I18N: RouteMetaData;
     LISTS: RouteMetaData & {
         ACTION_LIST: RouteMetaData;

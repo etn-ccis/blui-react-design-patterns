@@ -131,10 +131,10 @@ export const PasswordFormValidation = (): JSX.Element => {
     const [newPasswordError, setNewPasswordError] = useState<FormError>();
     const [confirmPassword, setConfirmPassword] = useState('');
     const [confirmPasswordError, setConfirmPasswordError] = useState<FormError>();
-    const [showcurrentPassword, setShowcurrentPassword] = useState<boolean>(false);
+    const [showCurrentPassword, setShowCurrentPassword] = useState<boolean>(false);
     const [showNewPassword, setShowNewPassword] = useState<boolean>(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState<boolean>(false);
-    const [passwordErrors, setPasswordErrors] = useState({
+    const [passwordRequirements, setPasswordRequirements] = useState({
         minLengthRequired: false,
         atLeast1UpperCharRequired: false,
         atLeast1LowerCharRequired: false,
@@ -146,11 +146,11 @@ export const PasswordFormValidation = (): JSX.Element => {
     const classes = useStyles(theme);
     const dispatch = useDispatch();
 
-    const getPasswordCriteriaIcon = (error: boolean): JSX.Element => (
+    const getPasswordCriteriaIcon = (meetsRequirement: boolean): JSX.Element => (
         <Done
             style={{
                 fontSize: 16,
-                color: error ? theme.palette.primary.main : Colors.gray[200],
+                color: meetsRequirement ?  Colors.gray[200] : theme.palette.primary.main,
                 marginRight: theme.spacing(),
             }}
         />
@@ -160,7 +160,7 @@ export const PasswordFormValidation = (): JSX.Element => {
         const tempcurrentPassword = currentPassword;
         let tempcurrentPasswordError = '';
         if (!tempcurrentPassword.trim()) {
-            tempcurrentPasswordError = 'required';
+            tempcurrentPasswordError = 'Required';
         }
         setCurrentPasswordError(tempcurrentPasswordError);
     }, [currentPassword, setCurrentPasswordError]);
@@ -180,11 +180,11 @@ export const PasswordFormValidation = (): JSX.Element => {
     const validateNewPassword = useCallback((): void => {
         const tempNewPassword = newPassword;
         let tempNewPasswordError = '';
-        if (!tempNewPassword.trim() || Object.values(passwordErrors).includes(false)) {
-            tempNewPasswordError = 'required';
+        if (!tempNewPassword.trim() || Object.values(passwordRequirements).includes(false)) {
+            tempNewPasswordError = 'Required';
         }
         setNewPasswordError(tempNewPasswordError);
-    }, [newPassword, passwordErrors, setNewPasswordError]);
+    }, [newPassword, passwordRequirements, setNewPasswordError]);
 
     const validatePasswordCriteria = useCallback((): void => {
         if (newPasswordError) {
@@ -195,7 +195,7 @@ export const PasswordFormValidation = (): JSX.Element => {
     }, [newPasswordError, validateNewPassword, setNewPasswordError]);
 
     useEffect(() => {
-        setPasswordErrors({
+        setPasswordRequirements({
             minLengthRequired: newPassword.length >= 8,
             atLeast1UpperCharRequired: upperCharRegex.test(newPassword),
             atLeast1LowerCharRequired: lowerCharRegex.test(newPassword),
@@ -214,12 +214,12 @@ export const PasswordFormValidation = (): JSX.Element => {
 
     const meetsRequirements = useCallback(
         (): boolean =>
-            Boolean(passwordErrors.atLeast1LowerCharRequired) &&
-            Boolean(passwordErrors.atLeast1NumberRequired) &&
-            Boolean(passwordErrors.atLeast1SplCharRequired) &&
-            Boolean(passwordErrors.minLengthRequired) &&
-            Boolean(passwordErrors.atLeast1UpperCharRequired),
-        [passwordErrors]
+            Boolean(passwordRequirements.atLeast1LowerCharRequired) &&
+            Boolean(passwordRequirements.atLeast1NumberRequired) &&
+            Boolean(passwordRequirements.atLeast1SplCharRequired) &&
+            Boolean(passwordRequirements.minLengthRequired) &&
+            Boolean(passwordRequirements.atLeast1UpperCharRequired),
+        [passwordRequirements]
     );
 
     const submitEnabled = useCallback(
@@ -231,7 +231,7 @@ export const PasswordFormValidation = (): JSX.Element => {
         const tempConfirmPassword = confirmPassword;
         let tempConfirmPasswordError = '';
         if (!tempConfirmPassword.trim()) {
-            tempConfirmPasswordError = 'required';
+            tempConfirmPasswordError = 'Required';
         } else if (newPassword !== confirmPassword) {
             tempConfirmPasswordError = 'Passwords do not match';
         }
@@ -241,11 +241,7 @@ export const PasswordFormValidation = (): JSX.Element => {
     const onConfirmPasswordChange: OnChangeHandler = useCallback(
         (event) => {
             setConfirmPassword(event.target.value);
-            if (confirmPasswordError) {
-                validateConfirmPassword();
-            } else {
-                setConfirmPasswordError(null);
-            }
+            validateConfirmPassword();
         },
         [setConfirmPassword, confirmPasswordError, validateConfirmPassword, setConfirmPasswordError]
     );
@@ -296,7 +292,7 @@ export const PasswordFormValidation = (): JSX.Element => {
                             <TextField
                                 id={'currentPassword'}
                                 label={'Old Password'}
-                                type={showcurrentPassword ? 'text' : 'password'}
+                                type={showCurrentPassword ? 'text' : 'password'}
                                 onChange={onCurrentPasswordChange}
                                 value={currentPassword}
                                 error={Boolean(currentPasswordError)}
@@ -309,10 +305,10 @@ export const PasswordFormValidation = (): JSX.Element => {
                                         <InputAdornment position={'end'}>
                                             <IconButton
                                                 style={{ height: 36, width: 36 }}
-                                                onClick={(): void => setShowcurrentPassword(!showcurrentPassword)}
+                                                onClick={(): void => setShowCurrentPassword(!showCurrentPassword)}
                                             >
-                                                {showcurrentPassword && <Visibility />}
-                                                {!showcurrentPassword && <VisibilityOff />}
+                                                {showCurrentPassword && <Visibility />}
+                                                {!showCurrentPassword && <VisibilityOff />}
                                             </IconButton>
                                         </InputAdornment>
                                     ),
@@ -348,23 +344,23 @@ export const PasswordFormValidation = (): JSX.Element => {
 
                             <List disablePadding component={'ul'} style={{ marginTop: 8 }}>
                                 <ListItem disableGutters className={classes.passwordCriteria}>
-                                    {getPasswordCriteriaIcon(passwordErrors.minLengthRequired)}
+                                    {getPasswordCriteriaIcon(passwordRequirements.minLengthRequired)}
                                     <Typography variant={'caption'}>At least 8 characters in length</Typography>
                                 </ListItem>
                                 <ListItem disableGutters className={classes.passwordCriteria}>
-                                    {getPasswordCriteriaIcon(passwordErrors.atLeast1NumberRequired)}
+                                    {getPasswordCriteriaIcon(passwordRequirements.atLeast1NumberRequired)}
                                     <Typography variant={'caption'}>At least 1 digit</Typography>
                                 </ListItem>
                                 <ListItem disableGutters className={classes.passwordCriteria}>
-                                    {getPasswordCriteriaIcon(passwordErrors.atLeast1UpperCharRequired)}
+                                    {getPasswordCriteriaIcon(passwordRequirements.atLeast1UpperCharRequired)}
                                     <Typography variant={'caption'}>At least 1 uppercase letter</Typography>
                                 </ListItem>
                                 <ListItem disableGutters className={classes.passwordCriteria}>
-                                    {getPasswordCriteriaIcon(passwordErrors.atLeast1LowerCharRequired)}
+                                    {getPasswordCriteriaIcon(passwordRequirements.atLeast1LowerCharRequired)}
                                     <Typography variant={'caption'}>At least 1 lowercase letter</Typography>
                                 </ListItem>
                                 <ListItem disableGutters className={classes.passwordCriteria}>
-                                    {getPasswordCriteriaIcon(passwordErrors.atLeast1SplCharRequired)}
+                                    {getPasswordCriteriaIcon(passwordRequirements.atLeast1SplCharRequired)}
                                     <Typography variant={'caption'}>
                                         At least 1 special character: (valid: ! @ # $ ^ &)
                                     </Typography>

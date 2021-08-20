@@ -52,7 +52,6 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
     backgroundGradient: {
         backgroundImage: `${linearGradientOverlayImage}`,
-        backgroundSize: 'unset',
         backgroundPosition: 'center',
     },
 }));

@@ -10,7 +10,7 @@ import {
     Toolbar,
     Typography,
 } from '@material-ui/core';
-import { Dns, Menu, Report } from '@material-ui/icons';
+import { Dns, Menu, Timeline } from '@material-ui/icons';
 import List from '@material-ui/core/List';
 import { makeStyles, Theme, useTheme } from '@material-ui/core/styles';
 import { useDispatch } from 'react-redux';
@@ -41,6 +41,11 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
     toolbarGutters: {
         padding: '0 16px',
+    },
+    textFieldRoot: {
+        [theme.breakpoints.down('xs')]: {
+            width: 138,
+        },
     },
     skinnyInput: {
         paddingTop: 11,
@@ -90,6 +95,9 @@ export const ListFormValidation = (): JSX.Element => {
                             rightComponent={
                                 <TextField
                                     id="filled-basic"
+                                    classes={{
+                                        root: classes.textFieldRoot,
+                                    }}
                                     value={ip}
                                     InputProps={{
                                         classes: {
@@ -103,7 +111,7 @@ export const ListFormValidation = (): JSX.Element => {
                         ></InfoListItem>
 
                         <InfoListItem
-                            icon={<Report />}
+                            icon={<Timeline />}
                             divider={'full'}
                             title={'Insight Report'}
                             subtitle={'Auto-report every 2 months'}

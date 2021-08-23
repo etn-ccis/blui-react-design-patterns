@@ -27,6 +27,10 @@ export const PAGES: Routes = {
             title: 'In a List',
             route: 'in-a-list',
         },
+        SECTIONED_FORM: {
+            title: 'Sectioned Form',
+            route: 'in-a-sectioned-form',
+        },
     },
     I18N: {
         title: 'Internationalization',
@@ -134,6 +138,7 @@ export type Routes = {
     };
     FORM_VALIDATION: RouteMetaData & {
         LIST: RouteMetaData;
+        SECTIONED_FORM: RouteMetaData;
     };
     I18N: RouteMetaData;
     LISTS: RouteMetaData & {

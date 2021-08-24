@@ -111,7 +111,10 @@ export const TableFormValidation = (): JSX.Element => {
             {rows.map((row, index) => (
                 <div key={row.id} style={{ display: 'flex', flexDirection: 'column' }}>
                     <div style={{ display: 'flex', alignItems: 'center', height: 64 }}>
-                        <Typography variant={'body1'} style={{ width: '20%', paddingLeft: theme.spacing(2), color: Colors.gray[500] }}>
+                        <Typography
+                            variant={'body1'}
+                            style={{ width: '20%', paddingLeft: theme.spacing(2), color: Colors.gray[500] }}
+                        >
                             #{row.id}
                         </Typography>
                         <Typography variant={'h6'} style={{ width: '80%' }}>

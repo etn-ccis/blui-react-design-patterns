@@ -10,6 +10,7 @@ import {
     Hidden,
     IconButton,
     InputLabel,
+    InputProps,
     MenuItem,
     Select,
     TextField,
@@ -26,6 +27,7 @@ import clsx from 'clsx';
 import * as Colors from '@pxblue/colors';
 
 const mobileInputMarginSpacing = 4;
+type OnChangeHandler = InputProps['onChange'];
 
 const useStyles = makeStyles((theme: Theme) => ({
     containerWrapper: {
@@ -58,6 +60,10 @@ const useStyles = makeStyles((theme: Theme) => ({
     divider: {
         marginTop: theme.spacing(5),
         marginBottom: theme.spacing(5),
+        [theme.breakpoints.down('xs')]: {
+            marginLeft: -theme.spacing(2),
+            marginRight: -theme.spacing(2),
+        },
     },
     icon: {
         marginRight: theme.spacing(2),
@@ -141,10 +147,43 @@ export const SectionedFormValidation = (): JSX.Element => {
     const [lastName, setLastName] = useState('');
     const [email, setEmail] = useState('');
     const [zip, setZip] = useState('');
+    const [emailError, setEmailError] = useState('');
     const [showRequiredError, setShowRequiredError] = useState(false);
     const MAX_CHARS_LIMIT = 50;
     const pxbProtection = 'PXB Protection';
     const pxbProtectionDescription = 'PXB Protection provides a three-year power expert warranty.';
+
+    const emailRegex = new RegExp(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i);
+
+    const validateEmail = useCallback(
+        (value: string): void => {
+            const tempEmail = value;
+            let tempEmailError = '';
+            if (!tempEmail.trim()) {
+                tempEmailError = 'Required';
+            } else if (!emailRegex.test(tempEmail)) {
+                tempEmailError = 'Please enter a valid email address';
+            }
+            setEmailError(tempEmailError);
+        },
+        [setEmailError]
+    );
+
+    const onEmailBlur = useCallback((): void => {
+        validateEmail(email);
+    }, [validateEmail, email]);
+
+    const onEmailChange: OnChangeHandler = useCallback(
+        (event) => {
+            setEmail(event.target.value);
+            if (emailError) {
+                validateEmail(event.target.value);
+            } else {
+                setEmailError('');
+            }
+        },
+        [setEmail, emailError, validateEmail, setEmailError]
+    );
 
     const characterLimitsHelperText = (
         <>
@@ -153,9 +192,44 @@ export const SectionedFormValidation = (): JSX.Element => {
         </>
     );
 
+    const getEmailHelperText = useCallback(
+        (value) => {
+            if (!showRequiredError) {
+                return '';
+            }
+            return showRequiredError && !value ? 'Required' : emailError;
+        },
+        [showRequiredError, emailError]
+    );
+
     const getRequiredHelperText = useCallback((value) => (showRequiredError && !value ? 'Required' : ''), [
         showRequiredError,
     ]);
+
+    const onSubmit = (): void => {
+        setShowRequiredError(true);
+        let requiredEl;
+        if (!name) {
+            requiredEl = document.getElementById('name-field');
+        } else if (!address) {
+            requiredEl = document.getElementById('address-field');
+        } else if (!city) {
+            requiredEl = document.getElementById('city-field');
+        } else if (!state) {
+            requiredEl = document.getElementById('state-field');
+        } else if (!zip) {
+            requiredEl = document.getElementById('zip-field');
+        } else if (!firstName) {
+            requiredEl = document.getElementById('first-name-field');
+        } else if (!email) {
+            requiredEl = document.getElementById('email-field');
+        }
+        if (requiredEl) {
+            requiredEl.scrollIntoView(true);
+            window.scrollBy(0, -64);
+            requiredEl.focus();
+        }
+    };
 
     return (
         <>
@@ -188,6 +262,7 @@ export const SectionedFormValidation = (): JSX.Element => {
                     </div>
                     <div>
                         <TextField
+                            id={'name-field'}
                             className={classes.textField}
                             value={name}
                             label={'Name'}
@@ -264,6 +339,7 @@ export const SectionedFormValidation = (): JSX.Element => {
 
                     <div className={classes.formLine}>
                         <TextField
+                            id={'address-field'}
                             className={classes.textField}
                             value={address}
                             label={'Address'}
@@ -286,6 +362,7 @@ export const SectionedFormValidation = (): JSX.Element => {
                     </div>
                     <div className={classes.formLine}>
                         <TextField
+                            id={'city-field'}
                             className={classes.textField}
                             value={city}
                             label={'City'}
@@ -301,6 +378,7 @@ export const SectionedFormValidation = (): JSX.Element => {
                         <FormControl variant={'filled'} required={true} fullWidth className={classes.textField}>
                             <InputLabel id="select-state">State</InputLabel>
                             <Select
+                                id={'state-field'}
                                 labelId="select-state"
                                 value={state}
                                 error={showRequiredError && !state}
@@ -314,6 +392,7 @@ export const SectionedFormValidation = (): JSX.Element => {
                         </FormControl>
 
                         <TextField
+                            id={'zip-field'}
                             className={clsx(classes.zipInput, classes.textField)}
                             value={zip}
                             label={'Zip'}
@@ -344,6 +423,7 @@ export const SectionedFormValidation = (): JSX.Element => {
 
                     <div className={classes.formLine}>
                         <TextField
+                            id={'first-name-field'}
                             className={clsx(classes.firstNameFormField, classes.textField)}
                             value={firstName}
                             label={'First Name'}
@@ -364,15 +444,17 @@ export const SectionedFormValidation = (): JSX.Element => {
 
                     <div className={classes.formLine}>
                         <TextField
+                            id={'email-field'}
                             className={classes.textField}
                             value={email}
                             label={'Email'}
                             variant="filled"
-                            onChange={(e): void => setEmail(e.target.value)}
                             required={true}
                             InputLabelProps={{ required: false }}
-                            error={showRequiredError && !email}
-                            helperText={getRequiredHelperText(email)}
+                            error={(showRequiredError && Boolean(emailError)) || (showRequiredError && !email)}
+                            helperText={getEmailHelperText(email)}
+                            onChange={onEmailChange}
+                            onBlur={onEmailBlur}
                         />
                     </div>
 
@@ -381,7 +463,7 @@ export const SectionedFormValidation = (): JSX.Element => {
                             className={classes.submitButton}
                             color={'primary'}
                             variant={'contained'}
-                            onClick={(): void => setShowRequiredError(true)}
+                            onClick={onSubmit}
                         >
                             Submit
                         </Button>

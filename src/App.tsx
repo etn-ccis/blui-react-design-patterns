@@ -22,16 +22,8 @@ import { TOGGLE_DRAWER } from './redux/actions';
 import { DRAWER_WIDTH } from './assets/constants';
 
 const backgroundImage = require('./assets/topology_40.png').default;
-const linearGradientOverlayImage = `linear-gradient(to right, rgba(0, 123, 193, 1) 22.4%, rgba(0, 123, 193, 0.2) 100%), url(${backgroundImage})`;
 
 const useStyles = makeStyles((theme: Theme) => ({
-    backgroundGradient: {
-        backgroundImage: `${linearGradientOverlayImage}`,
-    },
-    closeIcon: {
-        marginRight: `-${theme.spacing(2)}px`,
-        marginTop: `-${theme.spacing(2)}px`,
-    },
     header: {
         display: 'flex',
         justifyContent: 'space-between',
@@ -40,6 +32,9 @@ const useStyles = makeStyles((theme: Theme) => ({
         alignItems: 'center',
         width: '100%',
         height: '100%',
+        [theme.breakpoints.down('sm')]: {
+            padding: `0 ${theme.spacing(2)}px 0 0`,
+        },
     },
     headerDetails: {
         flex: 1,
@@ -113,7 +108,20 @@ export const App: React.FC = () => {
             <DrawerHeader
                 backgroundImage={backgroundImage}
                 backgroundOpacity={0.5}
-                classes={{ background: classes.backgroundGradient }}
+                icon={
+                    isMobile ? (
+                        <IconButton
+                            data-cy="toolbar-menu"
+                            color={'inherit'}
+                            edge={'start'}
+                            onClick={(): void => {
+                                dispatch({ type: TOGGLE_DRAWER, payload: false });
+                            }}
+                        >
+                            <CloseIcon />
+                        </IconButton>
+                    ) : undefined
+                }
                 titleContent={
                     <div className={classes.header}>
                         <div
@@ -128,19 +136,6 @@ export const App: React.FC = () => {
                                 React Design Patterns
                             </Typography>
                         </div>
-                        {isMobile && (
-                            <IconButton
-                                data-cy="toolbar-menu"
-                                color={'inherit'}
-                                edge={'end'}
-                                classes={{ edgeEnd: classes.closeIcon }}
-                                onClick={(): void => {
-                                    dispatch({ type: TOGGLE_DRAWER, payload: false });
-                                }}
-                            >
-                                <CloseIcon />
-                            </IconButton>
-                        )}
                     </div>
                 }
                 style={{ cursor: 'pointer' }}

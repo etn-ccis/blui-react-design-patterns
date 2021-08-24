@@ -97,7 +97,7 @@ export const ResponsiveTable = (): JSX.Element => {
                 </List>
             </Hidden>
             <Hidden xsDown>
-                <Table>
+                <Table id='responsive-list-table'>
                     <TableHead>
                         <TableRow>
                             <TableCell>Name</TableCell>

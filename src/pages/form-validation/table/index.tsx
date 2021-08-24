@@ -17,6 +17,7 @@ import {
 import { Menu } from '@material-ui/icons';
 import { makeStyles, Theme, useTheme } from '@material-ui/core/styles';
 import { useDispatch } from 'react-redux';
+import * as Colors from '@pxblue/colors';
 import { TOGGLE_DRAWER } from '../../../redux/actions';
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -31,10 +32,10 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
     skinnyInput: {
         paddingTop: 11,
-        textAlign: 'right'
+        textAlign: 'right',
     },
     tableContainer: {
-        maxWidth: 800,
+        maxWidth: 650,
         width: 'auto',
         marginTop: theme.spacing(4),
         marginLeft: theme.spacing(2),
@@ -107,10 +108,10 @@ export const TableFormValidation = (): JSX.Element => {
 
     const getList = (): JSX.Element => (
         <>
-            {rows.map((row) => (
+            {rows.map((row, index) => (
                 <div key={row.id} style={{ display: 'flex', flexDirection: 'column' }}>
                     <div style={{ display: 'flex', alignItems: 'center', height: 64 }}>
-                        <Typography variant={'body1'} style={{ width: '20%', paddingLeft: theme.spacing(2) }}>
+                        <Typography variant={'body1'} style={{ width: '20%', paddingLeft: theme.spacing(2), color: Colors.gray[500] }}>
                             #{row.id}
                         </Typography>
                         <Typography variant={'h6'} style={{ width: '80%' }}>
@@ -137,14 +138,22 @@ export const TableFormValidation = (): JSX.Element => {
                             />
                         </div>
                     </div>
-                    <div style={{ display: 'flex', alignItems: 'center', height: 72 }}>
+                    <div
+                        style={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            height: 72,
+                            borderBottom: index === rows.length - 1 ? 'solid 1px' : '',
+                            borderBottomColor: theme.palette.divider,
+                        }}
+                    >
                         <div style={{ width: '20%' }}></div>
                         <div
                             style={{
                                 display: 'flex',
                                 height: '100%',
                                 width: '80%',
-                                borderBottom: 'solid 1px',
+                                borderBottom: index === rows.length - 1 ? '' : 'solid 1px',
                                 borderBottomColor: theme.palette.divider,
                                 alignItems: 'center',
                                 paddingBottom: 8,
@@ -199,8 +208,12 @@ export const TableFormValidation = (): JSX.Element => {
 
             <Hidden xsDown>{getTable()}</Hidden>
             <Hidden smUp>
-                <div style={{ height: '100%', background: 'white' }}>{getList()}</div>
+                <div style={{ background: 'white' }}>{getList()}</div>
             </Hidden>
+            <Typography style={{ padding: theme.spacing(2) }} variant={'body1'}>
+                Remember that in a real application you would need to implement form validations to check, for example,
+                &quot;Min&quot; is less than &quot;Max&quot;.
+            </Typography>
         </>
     );
 };

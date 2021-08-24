@@ -31,6 +31,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
     skinnyInput: {
         paddingTop: 11,
+        textAlign: 'right'
     },
     tableContainer: {
         maxWidth: 800,
@@ -64,7 +65,7 @@ export const TableFormValidation = (): JSX.Element => {
                 </TableHead>
                 <TableBody>
                     {rows.map((row) => (
-                        <TableRow key={row.id}>
+                        <TableRow key={row.id} hover={false}>
                             <TableCell component="th" scope="row">
                                 {row.id}
                             </TableCell>

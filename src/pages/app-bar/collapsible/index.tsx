@@ -41,6 +41,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         '& $info': {
             fontSize: '1rem',
             marginTop: '-0.25rem',
+            fontWeight: 400,
         },
         '& $backgroundGradient': {
             backgroundImage: 'none',

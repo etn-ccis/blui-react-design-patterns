@@ -60,13 +60,12 @@ const useStyles = makeStyles((theme: Theme) => ({
     divider: {
         marginTop: theme.spacing(5),
         marginBottom: theme.spacing(5),
-        [theme.breakpoints.down('xs')]: {
-            marginLeft: -theme.spacing(2),
-            marginRight: -theme.spacing(2),
-        },
+        marginLeft: -theme.spacing(2),
+        marginRight: -theme.spacing(2),
     },
     icon: {
         marginRight: theme.spacing(2),
+        color: theme.palette.text.secondary,
         [theme.breakpoints.down('xs')]: {
             marginRight: theme.spacing(4),
         },

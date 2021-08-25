@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
     expanded: {
         '& $liner': {
-            top: 64,
+            top: 80,
         },
     },
     collapsed: {

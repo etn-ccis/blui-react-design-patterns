@@ -22,7 +22,7 @@ import { TOGGLE_DRAWER } from '../../../redux/actions';
 
 const useStyles = makeStyles((theme: Theme) => ({
     toolbarGutters: {
-        padding: '0 16px',
+        padding: `0 ${theme.spacing(2)}px`,
     },
     appbarRoot: {
         padding: 0,

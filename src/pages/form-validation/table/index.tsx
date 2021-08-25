@@ -17,7 +17,6 @@ import {
 import { Menu } from '@material-ui/icons';
 import { makeStyles, Theme, useTheme } from '@material-ui/core/styles';
 import { useDispatch } from 'react-redux';
-import * as Colors from '@pxblue/colors';
 import { TOGGLE_DRAWER } from '../../../redux/actions';
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -56,7 +55,7 @@ export const TableFormValidation = (): JSX.Element => {
     const getTable = (): JSX.Element => (
         <TableContainer component={Paper} className={classes.tableContainer}>
             <Table>
-                <TableHead style={{ fontWeight: 600 }}>
+                <TableHead>
                     <TableRow>
                         <TableCell>ID</TableCell>
                         <TableCell align="right">Name</TableCell>
@@ -113,7 +112,7 @@ export const TableFormValidation = (): JSX.Element => {
                     <div style={{ display: 'flex', alignItems: 'center', height: 64 }}>
                         <Typography
                             variant={'body1'}
-                            style={{ width: '20%', paddingLeft: theme.spacing(2), color: Colors.gray[500] }}
+                            style={{ width: '20%', paddingLeft: theme.spacing(2), color: theme.palette.text.secondary }}
                         >
                             #{row.id}
                         </Typography>

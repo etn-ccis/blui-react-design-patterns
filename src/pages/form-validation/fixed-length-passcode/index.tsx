@@ -72,8 +72,6 @@ export const FixedLengthPasscodeValidation = (): JSX.Element => {
         setSuccess(false);
         setTimeout(() => {
                 setLoading(false);
-                // eslint-disable-next-line no-console
-                console.log(currPasscode);
                 if (String(currPasscode) === '123456') {
                     setSuccess(true);
                     setError(false);
@@ -90,12 +88,13 @@ export const FixedLengthPasscodeValidation = (): JSX.Element => {
     };
 
     const onPasscodeChange: OnChangeHandler = useCallback((event) => {
-        if (isNaN(event.target.value)) {
+        const currPasscode = event.target.value;
+        if (isNaN(currPasscode)) {
             return;
         }
-        setPasscode(event.target.value);
-        if (passcode.length === maxLength-1) {
-            onSubmit(event.target.value);
+        setPasscode(currPasscode);
+        if (currPasscode.length === maxLength) {
+            onSubmit(currPasscode);
         }
     }, [passcode]);
 
@@ -103,13 +102,13 @@ export const FixedLengthPasscodeValidation = (): JSX.Element => {
         if (success) {
             return '';
         }
-        if (blurred) {
+        if (blurred && passcode.length < maxLength) {
             return 'Please enter a six-digit passcode.';
         }
         if (error) {
             return 'Incorrect Passcode.'
         }
-    }, [blurred, error, success]);
+    }, [blurred, error, success, passcode]);
 
     const resetForm = (): void => {
         setBlurred(false);

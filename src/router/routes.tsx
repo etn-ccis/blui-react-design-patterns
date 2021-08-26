@@ -11,7 +11,7 @@ export const PAGES: Routes = {
         },
     },
     APP_BAR: {
-        title: 'App Bar',
+        title: 'App Bars',
         COLLAPSIBLE: {
             title: 'Collapsible',
             route: 'collapsible',

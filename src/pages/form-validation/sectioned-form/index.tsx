@@ -220,13 +220,24 @@ export const SectionedFormValidation = (): JSX.Element => {
             requiredEl = document.getElementById('zip-field');
         } else if (!firstName) {
             requiredEl = document.getElementById('first-name-field');
-        } else if (!email) {
+        } else if (!email || !emailRegex.test(email)) {
             requiredEl = document.getElementById('email-field');
         }
         if (requiredEl) {
             requiredEl.scrollIntoView(true);
             window.scrollBy(0, -64);
             requiredEl.focus();
+        } else {
+            setShowRequiredError(false);
+            setName('');
+            setAddress('');
+            setAddressLine2('');
+            setCity('');
+            setState('');
+            setZip('');
+            setFirstName('');
+            setLastName('');
+            setEmail('');
         }
     };
 

@@ -77,7 +77,7 @@ export const Collapsible = (): JSX.Element => {
                     background: classes.backgroundGradient,
                 }}
             >
-                <Toolbar classes={{ gutters: classes.toolbarGutters }}>
+                <Toolbar data-cy={'toolbar'} classes={{ gutters: classes.toolbarGutters }}>
                     <Hidden mdUp={true}>
                         <IconButton
                             onClick={(): void => {

@@ -410,8 +410,8 @@ export const SectionedFormValidation = (): JSX.Element => {
                             onChange={(e): void => {
                                 if (!isNaN(Number(e.target.value))) {
                                     setZip(e.target.value);
-                                }}
-                            }
+                                }
+                            }}
                             InputLabelProps={{ required: false }}
                             required={true}
                             error={showRequiredError && !zip}
@@ -472,8 +472,11 @@ export const SectionedFormValidation = (): JSX.Element => {
                         />
                     </div>
 
-                    <Hidden smUp >
-                        <Divider className={classes.divider} style={{marginBottom: -theme.spacing(3), marginTop: theme.spacing(4)}} />
+                    <Hidden smUp>
+                        <Divider
+                            className={classes.divider}
+                            style={{ marginBottom: -theme.spacing(3), marginTop: theme.spacing(4) }}
+                        />
                     </Hidden>
 
                     <div className={classes.submitButtonContainer}>

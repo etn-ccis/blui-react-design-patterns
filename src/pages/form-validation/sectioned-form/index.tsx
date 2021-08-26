@@ -396,7 +396,11 @@ export const SectionedFormValidation = (): JSX.Element => {
                             value={zip}
                             label={'Zip'}
                             variant="filled"
-                            onChange={(e): void => setZip(e.target.value)}
+                            onChange={(e): void => {
+                                if (!isNaN(Number(e.target.value))) {
+                                    setZip(e.target.value);
+                                }}
+                            }
                             InputLabelProps={{ required: false }}
                             required={true}
                             error={showRequiredError && !zip}

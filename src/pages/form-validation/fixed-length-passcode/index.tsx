@@ -1,7 +1,8 @@
-import React, {useCallback, useState} from 'react';
+import React, { useCallback, useState } from 'react';
 import {
     AppBar,
-    Button, CircularProgress,
+    Button,
+    CircularProgress,
     Divider,
     Hidden,
     IconButton,
@@ -11,10 +12,10 @@ import {
     Toolbar,
     Typography,
 } from '@material-ui/core';
-import {Done, Menu, Refresh} from '@material-ui/icons';
-import {makeStyles, Theme, useTheme} from '@material-ui/core/styles';
-import {useDispatch} from 'react-redux';
-import {TOGGLE_DRAWER} from '../../../redux/actions';
+import { Done, Menu, Refresh } from '@material-ui/icons';
+import { makeStyles, Theme, useTheme } from '@material-ui/core/styles';
+import { useDispatch } from 'react-redux';
+import { TOGGLE_DRAWER } from '../../../redux/actions';
 import * as Colors from '@pxblue/colors';
 
 type OnChangeHandler = InputProps['onChange'];
@@ -32,7 +33,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         alignItems: 'start',
         flex: '1 1 0',
         backgroundColor: 'white',
-        height: 'calc(100vh - 64px)'
+        height: 'calc(100vh - 64px)',
     },
     container: {
         width: '100%',
@@ -42,9 +43,9 @@ const useStyles = makeStyles((theme: Theme) => ({
     submitButton: {
         marginTop: theme.spacing(4),
         [theme.breakpoints.down('xs')]: {
-            width: '100%'
+            width: '100%',
         },
-    }
+    },
 }));
 
 export const FixedLengthPasscodeValidation = (): JSX.Element => {
@@ -62,41 +63,43 @@ export const FixedLengthPasscodeValidation = (): JSX.Element => {
     setTimeout(() => {
         const input = document.getElementById(inputId);
         if (input) {
-            input.focus()
+            input.focus();
         }
-    })
+    });
 
     const onSubmit = (currPasscode: string): void => {
         setLoading(true);
         setError(false);
         setSuccess(false);
         setTimeout(() => {
-                setLoading(false);
-                if (String(currPasscode) === '123456') {
-                    setSuccess(true);
-                    setError(false);
-                } else {
-                    setError(true);
-                    const input = document.getElementById(inputId) as HTMLInputElement;
-                    if (input) {
-                        input.focus();
-                        input.select();
-                    }
+            setLoading(false);
+            if (String(currPasscode) === '123456') {
+                setSuccess(true);
+                setError(false);
+            } else {
+                setError(true);
+                const input = document.getElementById(inputId) as HTMLInputElement;
+                if (input) {
+                    input.focus();
+                    input.select();
                 }
-            }, 2000
-        )
+            }
+        }, 2000);
     };
 
-    const onPasscodeChange: OnChangeHandler = useCallback((event) => {
-        const currPasscode = event.target.value;
-        if (isNaN(currPasscode)) {
-            return;
-        }
-        setPasscode(currPasscode);
-        if (currPasscode.length === maxLength) {
-            onSubmit(currPasscode);
-        }
-    }, [passcode]);
+    const onPasscodeChange: OnChangeHandler = useCallback(
+        (event) => {
+            const currPasscode = event.target.value;
+            if (isNaN(currPasscode)) {
+                return;
+            }
+            setPasscode(currPasscode);
+            if (currPasscode.length === maxLength) {
+                onSubmit(currPasscode);
+            }
+        },
+        [passcode]
+    );
 
     const getErrorText = useCallback(() => {
         if (success) {
@@ -106,7 +109,7 @@ export const FixedLengthPasscodeValidation = (): JSX.Element => {
             return 'Please enter a six-digit passcode.';
         }
         if (error) {
-            return 'Incorrect Passcode.'
+            return 'Incorrect Passcode.';
         }
     }, [blurred, error, success, passcode]);
 
@@ -116,7 +119,7 @@ export const FixedLengthPasscodeValidation = (): JSX.Element => {
         setSuccess(false);
         setError(false);
         setPasscode('');
-    }
+    };
 
     return (
         <>
@@ -143,9 +146,15 @@ export const FixedLengthPasscodeValidation = (): JSX.Element => {
 
             <div className={classes.containerWrapper}>
                 <div className={classes.container}>
-                    <Typography variant={'body1'}>Please enter the <strong>six-digit passcode</strong> we just send to you. The passcode is valid for 15 minutes.</Typography>
-                    <Typography variant={'body1'} style={{ marginTop: theme.spacing(1) }}>For the purpose of this demonstration, passcode <strong>123456</strong> will pass. Any other 6-digit passcode will fail.</Typography>
-                    <Divider style={{marginTop: theme.spacing(4), marginBottom: theme.spacing(4) }}/>
+                    <Typography variant={'body1'}>
+                        Please enter the <strong>six-digit passcode</strong> we just send to you. The passcode is valid
+                        for 15 minutes.
+                    </Typography>
+                    <Typography variant={'body1'} style={{ marginTop: theme.spacing(1) }}>
+                        For the purpose of this demonstration, passcode <strong>123456</strong> will pass. Any other
+                        6-digit passcode will fail.
+                    </Typography>
+                    <Divider style={{ marginTop: theme.spacing(4), marginBottom: theme.spacing(4) }} />
                     <TextField
                         style={{ width: '100%', height: 72 }}
                         id={inputId}
@@ -155,17 +164,21 @@ export const FixedLengthPasscodeValidation = (): JSX.Element => {
                         variant="filled"
                         inputProps={{
                             inputMode: 'numeric',
-                            maxLength
+                            maxLength,
                         }}
                         InputProps={{
-                          endAdornment:
-                              <InputAdornment position="end">
-                                  {loading && <CircularProgress style={{ height: 24, width: 24 }} />}
-                                  {success && <Done style={{ color: Colors.green[500] }} />}
-                              </InputAdornment>
+                            endAdornment: (
+                                <InputAdornment position="end">
+                                    {loading && <CircularProgress style={{ height: 24, width: 24 }} />}
+                                    {success && <Done style={{ color: Colors.green[500] }} />}
+                                </InputAdornment>
+                            ),
                         }}
-                        onBlur={(): void => { setBlurred(true); setError(true) }}
-                        helperText={getErrorText() }
+                        onBlur={(): void => {
+                            setBlurred(true);
+                            setError(true);
+                        }}
+                        helperText={getErrorText()}
                         error={error}
                         disabled={loading}
                     />
@@ -176,7 +189,7 @@ export const FixedLengthPasscodeValidation = (): JSX.Element => {
                         onClick={resetForm}
                         disabled={loading}
                     >
-                        <Refresh style={{ marginRight: theme.spacing(1) }}/>
+                        <Refresh style={{ marginRight: theme.spacing(1) }} />
                         Reset Form
                     </Button>
                 </div>

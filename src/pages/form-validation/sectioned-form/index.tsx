@@ -457,6 +457,10 @@ export const SectionedFormValidation = (): JSX.Element => {
                         />
                     </div>
 
+                    <Hidden smUp >
+                        <Divider className={classes.divider} style={{marginBottom: -theme.spacing(3), marginTop: theme.spacing(4)}} />
+                    </Hidden>
+
                     <div className={classes.submitButtonContainer}>
                         <Button
                             className={classes.submitButton}

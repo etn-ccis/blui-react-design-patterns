@@ -158,7 +158,14 @@ export const FixedLengthPasscodeValidation = (): JSX.Element => {
                         For the purpose of this demonstration, passcode <strong>123456</strong> will pass. Any other
                         6-digit passcode will fail.
                     </Typography>
-                    <Divider style={{ marginTop: theme.spacing(5), marginBottom: theme.spacing(4), marginLeft: -theme.spacing(2), marginRight: -theme.spacing(2) }} />
+                    <Divider
+                        style={{
+                            marginTop: theme.spacing(5),
+                            marginBottom: theme.spacing(4),
+                            marginLeft: -theme.spacing(2),
+                            marginRight: -theme.spacing(2),
+                        }}
+                    />
                     <TextField
                         style={{ width: '100%', height: 72 }}
                         id={inputId}

@@ -80,6 +80,7 @@ export const Collapsible = (): JSX.Element => {
                 <Toolbar data-cy={'toolbar'} classes={{ gutters: classes.toolbarGutters }}>
                     <Hidden mdUp={true}>
                         <IconButton
+                        data-cy="toolbar-menu"
                             onClick={(): void => {
                                 dispatch({ type: TOGGLE_DRAWER, payload: true });
                             }}

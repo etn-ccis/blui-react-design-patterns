@@ -8,6 +8,7 @@ import NotificationsIcon from '@material-ui/icons/Notifications';
 import { AppBar, Spacer, ThreeLiner } from '@pxblue/react-components';
 import { useDispatch } from 'react-redux';
 import { TOGGLE_DRAWER } from '../../../redux/actions';
+import { getBodyFiller } from '../utils/utils';
 
 const backgroundImage = require('../../../assets/collapsible_app_bar_demo.jpg').default;
 const linearGradientOverlayImage = `linear-gradient(to bottom, rgba(0, 123, 193, 1) 22.4%, rgba(0, 123, 193, 0.2) 100%), url(${backgroundImage})`;
@@ -113,7 +114,7 @@ export const Collapsible = (): JSX.Element => {
                     </div>
                 </Toolbar>
             </AppBar>
-            <div style={{ height: '2000px' }}></div>
+            <div>{getBodyFiller()}</div>
         </div>
     );
 };

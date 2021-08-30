@@ -186,7 +186,9 @@ export const SectionedFormValidation = (): JSX.Element => {
     const characterLimitsHelperText = (
         <>
             <span>{!name && showRequiredError ? 'Required' : 'For example, Facility or Campus name'}</span>
-            <span style={{ float: 'right', color: theme.palette.text.secondary }}>{`${name.length}/${MAX_CHARS_LIMIT}`}</span>
+            <span
+                style={{ float: 'right', color: theme.palette.text.secondary }}
+            >{`${name.length}/${MAX_CHARS_LIMIT}`}</span>
         </>
     );
 

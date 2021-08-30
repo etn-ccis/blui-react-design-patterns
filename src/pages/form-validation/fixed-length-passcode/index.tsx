@@ -50,6 +50,9 @@ const useStyles = makeStyles((theme: Theme) => ({
             width: '100%',
         },
     },
+    details: {
+        marginTop: theme.spacing(1)
+    }
 }));
 
 export const FixedLengthPasscodeValidation = (): JSX.Element => {
@@ -154,7 +157,7 @@ export const FixedLengthPasscodeValidation = (): JSX.Element => {
                         Please enter the <strong>six-digit passcode</strong> we just send to you. The passcode is valid
                         for 15 minutes.
                     </Typography>
-                    <Typography variant={'body1'} style={{ marginTop: theme.spacing(1) }}>
+                    <Typography variant={'body1'} className={classes.details}>
                         For the purpose of this demonstration, passcode <strong>123456</strong> will pass. Any other
                         6-digit passcode will fail.
                     </Typography>
@@ -193,7 +196,7 @@ export const FixedLengthPasscodeValidation = (): JSX.Element => {
                         }}
                         helperText={getErrorText()}
                         error={error}
-                        disabled={loading}
+                        disabled={loading || success}
                     />
                     <Button
                         className={classes.submitButton}

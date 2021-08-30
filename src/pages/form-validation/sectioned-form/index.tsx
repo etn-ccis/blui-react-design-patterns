@@ -24,7 +24,6 @@ import { useDispatch } from 'react-redux';
 import { TOGGLE_DRAWER } from '../../../redux/actions';
 import { Factory } from '@pxblue/icons-mui';
 import clsx from 'clsx';
-import * as Colors from '@pxblue/colors';
 
 const mobileInputMarginSpacing = 4;
 type OnChangeHandler = InputProps['onChange'];
@@ -187,7 +186,7 @@ export const SectionedFormValidation = (): JSX.Element => {
     const characterLimitsHelperText = (
         <>
             <span>{!name && showRequiredError ? 'Required' : 'For example, Facility or Campus name'}</span>
-            <span style={{ float: 'right' }}>{`${name.length}/${MAX_CHARS_LIMIT}`}</span>
+            <span style={{ float: 'right', color: theme.palette.text.secondary }}>{`${name.length}/${MAX_CHARS_LIMIT}`}</span>
         </>
     );
 
@@ -306,7 +305,7 @@ export const SectionedFormValidation = (): JSX.Element => {
                         <Hidden xsDown>
                             <FormControlLabel control={<Checkbox name="checkedC" />} label={pxbProtection} />
                             <Tooltip title={pxbProtectionDescription} arrow placement={'top'}>
-                                <HelpOutline style={{ color: 'rgba(66, 78, 84, .3)' }} />
+                                <HelpOutline style={{ color: theme.palette.text.disabled }} />
                             </Tooltip>
                         </Hidden>
                         <Hidden smUp>
@@ -325,7 +324,7 @@ export const SectionedFormValidation = (): JSX.Element => {
                                 />
                                 <div>
                                     <Typography variant={'body1'}>PXB Protection</Typography>
-                                    <Typography variant={'body2'} style={{ color: Colors.gray[500] }}>
+                                    <Typography variant={'body2'} style={{ color: theme.palette.text.secondary }}>
                                         PXB Protection provides a three-year power xpert warranty.
                                     </Typography>
                                 </div>

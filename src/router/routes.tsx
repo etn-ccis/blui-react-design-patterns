@@ -11,7 +11,7 @@ export const PAGES: Routes = {
         },
     },
     APP_BAR: {
-        title: 'App Bar',
+        title: 'App Bars',
         COLLAPSIBLE: {
             title: 'Collapsible',
             route: 'collapsible',
@@ -30,6 +30,10 @@ export const PAGES: Routes = {
         FIXED_LENGTH_PASSCODE: {
             title: 'Fixed Length Passcode',
             route: 'fixed-length-passcode',
+        },
+        SECTIONED_FORM: {
+            title: 'Sectioned Form',
+            route: 'in-a-sectioned-form',
         },
     },
     I18N: {
@@ -138,6 +142,7 @@ export type Routes = {
     };
     FORM_VALIDATION: RouteMetaData & {
         LIST: RouteMetaData;
+        SECTIONED_FORM: RouteMetaData;
         FIXED_LENGTH_PASSCODE: RouteMetaData;
     };
     I18N: RouteMetaData;

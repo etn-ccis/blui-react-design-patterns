@@ -67,12 +67,12 @@ export const FixedLengthPasscodeValidation = (): JSX.Element => {
     const maxLength = 6;
     const inputId = 'passcode-input';
 
-    setTimeout(() => {
+    useEffect(() => {
         const input = document.getElementById(inputId);
         if (input) {
             input.focus();
         }
-    });
+    }, [])
 
     const onSubmit = (currPasscode: string): void => {
         setLoading(true);

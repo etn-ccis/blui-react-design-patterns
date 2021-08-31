@@ -25,6 +25,7 @@ import { Skeletons } from '../pages/loading-waiting-states/skeletons/Skeletons';
 import { InAnAppBar } from '../pages/account-menu/in-an-app-bar';
 import { InADrawer } from '../pages/account-menu/in-a-drawer';
 import { ListFormValidation } from '../pages/form-validation/list';
+import { FixedLengthPasscodeValidation } from '../pages/form-validation/fixed-length-passcode';
 import { SectionedFormValidation } from '../pages/form-validation/sectioned-form';
 import { TableFormValidation } from '../pages/form-validation/table';
 /*
@@ -45,6 +46,11 @@ export const Main = (): JSX.Element => (
             component={SectionedFormValidation}
         />
         <Route exact path={`/${PAGES.FORM_VALIDATION.TABLE.route || ''}`} component={TableFormValidation} />
+        <Route
+            exact
+            path={`/${PAGES.FORM_VALIDATION.FIXED_LENGTH_PASSCODE.route || ''}`}
+            component={FixedLengthPasscodeValidation}
+        />
         <Route exact path={`/${PAGES.I18N.route || ''}`} component={I18N} />
 
         <Route exact path={`/${PAGES.LISTS.ACTION_LIST.route || ''}`} component={ActionList} />

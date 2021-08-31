@@ -27,6 +27,10 @@ export const PAGES: Routes = {
             title: 'In a List',
             route: 'in-a-list',
         },
+        FIXED_LENGTH_PASSCODE: {
+            title: 'Fixed Length Passcode',
+            route: 'fixed-length-passcode',
+        },
         TABLE: {
             title: 'In a Table',
             route: 'in-a-table',
@@ -143,6 +147,7 @@ export type Routes = {
     FORM_VALIDATION: RouteMetaData & {
         LIST: RouteMetaData;
         SECTIONED_FORM: RouteMetaData;
+        FIXED_LENGTH_PASSCODE: RouteMetaData;
         TABLE: RouteMetaData;
     };
     I18N: RouteMetaData;

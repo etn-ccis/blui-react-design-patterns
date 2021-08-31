@@ -109,7 +109,7 @@ export const TableFormValidation = (): JSX.Element => {
     const getList = (): JSX.Element => (
         <>
             {rows.map((row, index) => (
-                <div key={index} style={{marginBottom: theme.spacing(2)}}>
+                <div key={index} style={{ marginBottom: theme.spacing(2) }}>
                     <InfoListItem
                         icon={
                             <Typography variant={'body1'} style={{ color: theme.palette.text.secondary }}>
@@ -152,9 +152,11 @@ export const TableFormValidation = (): JSX.Element => {
                             />
                         }
                     />
-                    <InfoListItem  title={''}
-                                   style={{height: theme.spacing(2), marginBottom: -theme.spacing(2)}}
-                                   divider={index === rows.length - 1 ? 'full' : 'partial'} />
+                    <InfoListItem
+                        title={''}
+                        style={{ height: theme.spacing(2), marginBottom: -theme.spacing(2) }}
+                        divider={index === rows.length - 1 ? 'full' : 'partial'}
+                    />
                 </div>
             ))}
         </>

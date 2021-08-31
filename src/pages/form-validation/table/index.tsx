@@ -109,9 +109,8 @@ export const TableFormValidation = (): JSX.Element => {
     const getList = (): JSX.Element => (
         <>
             {rows.map((row, index) => (
-                <>
+                <div key={index} style={{marginBottom: theme.spacing(2)}}>
                     <InfoListItem
-                        key={`name${index}`}
                         icon={
                             <Typography variant={'body1'} style={{ color: theme.palette.text.secondary }}>
                                 #{row.id}
@@ -120,7 +119,6 @@ export const TableFormValidation = (): JSX.Element => {
                         title={<Typography variant={'h6'}>{row.name}</Typography>}
                     />
                     <InfoListItem
-                        key={`min${index}`}
                         title={'Min'}
                         rightComponent={
                             <TextField
@@ -138,9 +136,7 @@ export const TableFormValidation = (): JSX.Element => {
                         }
                     />
                     <InfoListItem
-                        key={`min${index}`}
                         title={'Max'}
-                        divider={index === rows.length - 1 ? 'full' : 'partial'}
                         rightComponent={
                             <TextField
                                 variant="filled"
@@ -156,7 +152,10 @@ export const TableFormValidation = (): JSX.Element => {
                             />
                         }
                     />
-                </>
+                    <InfoListItem  title={''}
+                                   style={{height: theme.spacing(2), marginBottom: -theme.spacing(2)}}
+                                   divider={index === rows.length - 1 ? 'full' : 'partial'} />
+                </div>
             ))}
         </>
     );

@@ -61,9 +61,9 @@ export const FixedLengthPasscodeValidation = (): JSX.Element => {
     const dispatch = useDispatch();
     const [passcode, setPasscode] = useState('');
     const [success, setSuccess] = useState(false);
-    const [error, setError] = useState(false);
     const [loading, setLoading] = useState(false);
-    const [blurred, setBlurred] = useState(false);
+    const [blurredDuringEntry, setBlurredDuringEntry] = useState(false);
+    const [incorrectPasscode, setIncorrectPasscode] = useState(false);
     const maxLength = 6;
     const inputId = 'passcode-input';
 
@@ -76,15 +76,16 @@ export const FixedLengthPasscodeValidation = (): JSX.Element => {
 
     const onSubmit = (currPasscode: string): void => {
         setLoading(true);
-        setError(false);
+        setBlurredDuringEntry(false);
         setSuccess(false);
         setTimeout(() => {
             setLoading(false);
             if (String(currPasscode) === '123456') {
                 setSuccess(true);
-                setError(false);
+                setBlurredDuringEntry(false);
             } else {
-                setError(true);
+                setBlurredDuringEntry(false);
+                setIncorrectPasscode(true);
                 const input = document.getElementById(inputId) as HTMLInputElement;
                 if (input) {
                     input.focus();
@@ -99,6 +100,7 @@ export const FixedLengthPasscodeValidation = (): JSX.Element => {
         if (isNaN(currPasscode)) {
             return;
         }
+        setIncorrectPasscode(false);
         setPasscode(currPasscode);
         if (currPasscode.length === maxLength) {
             onSubmit(currPasscode);
@@ -106,23 +108,29 @@ export const FixedLengthPasscodeValidation = (): JSX.Element => {
     }, []);
 
     const getErrorText = useCallback(() => {
+        if (incorrectPasscode) {
+            return 'Incorrect Passcode';
+        }
         if (success) {
             return '';
         }
-        if (blurred && passcode.length < maxLength) {
+        if (blurredDuringEntry && passcode.length < maxLength) {
             return 'Please enter a six-digit passcode.';
         }
-        if (error) {
-            return 'Incorrect Passcode.';
-        }
-    }, [blurred, error, success, passcode]);
+    }, [blurredDuringEntry, success, passcode, incorrectPasscode]);
 
     const resetForm = (): void => {
-        setBlurred(false);
+        setBlurredDuringEntry(false);
         setLoading(false);
         setSuccess(false);
-        setError(false);
         setPasscode('');
+        setIncorrectPasscode(false);
+        setTimeout(() => {
+            const input = document.getElementById(inputId) as HTMLInputElement;
+            if (input) {
+                input.focus();
+            }
+        });
     };
 
     return (
@@ -186,13 +194,10 @@ export const FixedLengthPasscodeValidation = (): JSX.Element => {
                             ),
                         }}
                         onBlur={(): void => {
-                            if (!success) {
-                                setBlurred(true);
-                                setError(true);
-                            }
+                            setBlurredDuringEntry(true);
                         }}
                         helperText={getErrorText()}
-                        error={error}
+                        error={blurredDuringEntry || incorrectPasscode}
                         disabled={loading || success}
                     />
                     <Button

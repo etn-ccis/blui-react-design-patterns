@@ -25,6 +25,7 @@ import { Skeletons } from '../pages/loading-waiting-states/skeletons/Skeletons';
 import { InAnAppBar } from '../pages/account-menu/in-an-app-bar';
 import { InADrawer } from '../pages/account-menu/in-a-drawer';
 import { ListFormValidation } from '../pages/form-validation/list';
+import { FixedLengthPasscodeValidation } from '../pages/form-validation/fixed-length-passcode';
 import { SectionedFormValidation } from '../pages/form-validation/sectioned-form';
 /*
 The main page body, which contains the route definitions
@@ -42,6 +43,11 @@ export const Main = (): JSX.Element => (
             exact
             path={`/${PAGES.FORM_VALIDATION.SECTIONED_FORM.route || ''}`}
             component={SectionedFormValidation}
+        />
+        <Route
+            exact
+            path={`/${PAGES.FORM_VALIDATION.FIXED_LENGTH_PASSCODE.route || ''}`}
+            component={FixedLengthPasscodeValidation}
         />
         <Route exact path={`/${PAGES.I18N.route || ''}`} component={I18N} />
 

@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {
     AppBar,
     Button,
@@ -105,7 +105,7 @@ export const FixedLengthPasscodeValidation = (): JSX.Element => {
                 onSubmit(currPasscode);
             }
         },
-        [passcode]
+        []
     );
 
     const getErrorText = useCallback(() => {

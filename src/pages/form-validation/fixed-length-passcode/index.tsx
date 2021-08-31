@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import {
     AppBar,
     Button,
@@ -51,8 +51,8 @@ const useStyles = makeStyles((theme: Theme) => ({
         },
     },
     details: {
-        marginTop: theme.spacing(1)
-    }
+        marginTop: theme.spacing(1),
+    },
 }));
 
 export const FixedLengthPasscodeValidation = (): JSX.Element => {
@@ -72,7 +72,7 @@ export const FixedLengthPasscodeValidation = (): JSX.Element => {
         if (input) {
             input.focus();
         }
-    }, [])
+    }, []);
 
     const onSubmit = (currPasscode: string): void => {
         setLoading(true);
@@ -94,19 +94,16 @@ export const FixedLengthPasscodeValidation = (): JSX.Element => {
         }, 2000);
     };
 
-    const onPasscodeChange: OnChangeHandler = useCallback(
-        (event) => {
-            const currPasscode = event.target.value;
-            if (isNaN(currPasscode)) {
-                return;
-            }
-            setPasscode(currPasscode);
-            if (currPasscode.length === maxLength) {
-                onSubmit(currPasscode);
-            }
-        },
-        []
-    );
+    const onPasscodeChange: OnChangeHandler = useCallback((event) => {
+        const currPasscode = event.target.value;
+        if (isNaN(currPasscode)) {
+            return;
+        }
+        setPasscode(currPasscode);
+        if (currPasscode.length === maxLength) {
+            onSubmit(currPasscode);
+        }
+    }, []);
 
     const getErrorText = useCallback(() => {
         if (success) {

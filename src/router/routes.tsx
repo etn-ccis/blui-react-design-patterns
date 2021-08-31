@@ -35,6 +35,10 @@ export const PAGES: Routes = {
             title: 'Sectioned Form',
             route: 'in-a-sectioned-form',
         },
+        VERIFY_ON_SUBMIT: {
+            title: 'Verify on Submit',
+            route: 'verify-on-submit',
+        },
     },
     I18N: {
         title: 'Internationalization',
@@ -144,6 +148,7 @@ export type Routes = {
         LIST: RouteMetaData;
         SECTIONED_FORM: RouteMetaData;
         FIXED_LENGTH_PASSCODE: RouteMetaData;
+        VERIFY_ON_SUBMIT: RouteMetaData;
     };
     I18N: RouteMetaData;
     LISTS: RouteMetaData & {

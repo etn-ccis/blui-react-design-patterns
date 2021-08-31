@@ -18,6 +18,7 @@ import { Menu } from '@material-ui/icons';
 import { makeStyles, Theme, useTheme } from '@material-ui/core/styles';
 import { useDispatch } from 'react-redux';
 import { TOGGLE_DRAWER } from '../../../redux/actions';
+import { InfoListItem } from '@pxblue/react-components';
 
 const useStyles = makeStyles((theme: Theme) => ({
     toolbarGutters: {
@@ -108,6 +109,56 @@ export const TableFormValidation = (): JSX.Element => {
     const getList = (): JSX.Element => (
         <>
             {rows.map((row, index) => (
+                <>
+                    <InfoListItem
+                        key={`name${index}`}
+                        icon={
+                            <Typography variant={'body1'} style={{ color: theme.palette.text.secondary }}>
+                                #{row.id}
+                            </Typography>
+                        }
+                        title={<Typography variant={'h6'}>{row.name}</Typography>}
+                    />
+                    <InfoListItem
+                        key={`min${index}`}
+                        title={'Min'}
+                        rightComponent={
+                            <TextField
+                                variant="filled"
+                                value={row.min}
+                                classes={{
+                                    root: classes.textFieldRoot,
+                                }}
+                                InputProps={{
+                                    classes: {
+                                        input: classes.skinnyInput,
+                                    },
+                                }}
+                            />
+                        }
+                    />
+                    <InfoListItem
+                        key={`min${index}`}
+                        title={'Max'}
+                        divider={index === rows.length - 1 ? 'full' : 'partial'}
+                        rightComponent={
+                            <TextField
+                                variant="filled"
+                                value={row.max}
+                                classes={{
+                                    root: classes.textFieldRoot,
+                                }}
+                                InputProps={{
+                                    classes: {
+                                        input: classes.skinnyInput,
+                                    },
+                                }}
+                            />
+                        }
+                    />
+                </>
+            ))}
+            {/*
                 <div key={row.id} style={{ display: 'flex', flexDirection: 'column' }}>
                     <div style={{ display: 'flex', alignItems: 'center', height: 64 }}>
                         <Typography
@@ -181,7 +232,8 @@ export const TableFormValidation = (): JSX.Element => {
                         </div>
                     </div>
                 </div>
-            ))}
+
+                 */}
         </>
     );
 

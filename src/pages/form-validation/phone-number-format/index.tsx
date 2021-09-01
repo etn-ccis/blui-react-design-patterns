@@ -69,7 +69,7 @@ export const PhoneNumberFormatValidation = (): JSX.Element => {
         { code: 'IN', name: '+91 (IN)', placeholder: '#### ### ###', maxLength: '12', errorCode: 'Indian' },
     ];
 
-    const transform = (value: string, country: string): string => {
+    const transformUserInput = (value: string, country: string): string => {
         let formatPhone = value.replace(/\s/g, '');
         switch (country) {
             case 'RU': {
@@ -107,9 +107,7 @@ export const PhoneNumberFormatValidation = (): JSX.Element => {
         }
     };
 
-    const isValidPhoneNumber = useCallback(() => {
-        // eslint-disable-next-line no-console
-        console.log('testing');
+    const isValidPhoneNumber = useCallback((): boolean => {
         switch (countryCode) {
             case 'RU': {
                 return /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{2})[-. ]?([0-9]{2})$/.test(phoneNumber);
@@ -129,8 +127,7 @@ export const PhoneNumberFormatValidation = (): JSX.Element => {
     }, [countryCode, phoneNumber]);
 
     const onPhoneNumberChange: OnChangeHandler = useCallback((event) => {
-        const phone = transform(event.target.value, countryCode);
-        setPhoneNumber(phone);
+        setPhoneNumber(transformUserInput(event.target.value, countryCode));
     }, []);
 
     const getCountryName = (): string => {
@@ -202,8 +199,6 @@ export const PhoneNumberFormatValidation = (): JSX.Element => {
                                 name: 'Country Code',
                             }}
                             onChange={(event): void => {
-                                // eslint-disable-next-line no-console
-                                console.log(event.target.value);
                                 setCountryCode(String(event.target.value));
                             }}
                         >

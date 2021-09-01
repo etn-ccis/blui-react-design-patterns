@@ -36,7 +36,7 @@ export const PAGES: Routes = {
             route: 'in-a-sectioned-form',
         },
         PHONE_NUMBER_FORMAT: {
-            title: 'Phone NUmber Format',
+            title: 'Phone Number Format',
             route: 'phone-number-format',
         },
     },

@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useCallback, useState} from 'react';
 import {
     AppBar,
     FormControl,
@@ -19,6 +19,14 @@ import {TOGGLE_DRAWER} from '../../../redux/actions';
 
 type OnChangeHandler = InputProps['onChange'];
 
+type CountryDetails = {
+    code: string;
+    name: string;
+    placeholder: string;
+    maxLength: string;
+    errorCode: string;
+};
+
 const useStyles = makeStyles((theme: Theme) => ({
     appbarRoot: {
         padding: 0,
@@ -35,6 +43,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         height: 'calc(100vh - 64px)',
     },
     container: {
+        display: 'flex',
         width: '100%',
         maxWidth: 480,
         margin: theme.spacing(4),
@@ -59,23 +68,112 @@ export const PhoneNumberFormatValidation = (): JSX.Element => {
     const classes = useStyles(theme);
     const dispatch = useDispatch();
     const [phoneNumber, setPhoneNumber] = useState('');
-    const maxLength = 6;
-    const inputId = 'passcode-input';
-
-    useEffect(() => {
-        const input = document.getElementById(inputId);
-        if (input) {
-            input.focus();
+    const [countryCode, setCountryCode] = useState('US');
+    const [blurred, setBlurred] = useState(false);
+    const countries: CountryDetails[] = [
+        { code: 'US', name: '+1 (US)', placeholder: '### ### ####', maxLength: '12', errorCode: 'U.S.' },
+        { code: 'CA', name: '+1 (CA)', placeholder: '### ### ####', maxLength: '12', errorCode: 'Canadian' },
+        { code: 'RU', name: '+7 (RU)', placeholder: '### ### ## ##', maxLength: '13', errorCode: 'Russian' },
+        { code: 'EG', name: '+20 (EG)', placeholder: '# #######', maxLength: '9', errorCode: 'Egyptian' },
+        { code: 'IN', name: '+91 (IN)', placeholder: '#### ### ###', maxLength: '12', errorCode: 'Indian' },
+    ];
+    
+    const transform = (value: string, country: string): string => {
+        let formatPhone = value.replace(/\s/g, '');
+        switch (country) {
+            case 'RU': {
+                if (formatPhone.length > 3 && formatPhone.length <= 6)
+                    formatPhone = `${formatPhone.slice(0, 3)} ${formatPhone.slice(3)}`;
+                else if (formatPhone.length > 6 && formatPhone.length <= 8)
+                    formatPhone = `${formatPhone.slice(0, 3)} ${formatPhone.slice(3, 6)} ${formatPhone.slice(6)}`;
+                else if (formatPhone.length > 8)
+                    formatPhone = `${formatPhone.slice(0, 3)} ${formatPhone.slice(3, 6)} ${formatPhone.slice(
+                        6,
+                        8
+                    )} ${formatPhone.slice(8)}`;
+                return formatPhone;
+            }
+            case 'EG': {
+                if (formatPhone.length > 1) formatPhone = `${formatPhone.slice(0, 1)} ${formatPhone.slice(1)}`;
+                return formatPhone;
+            }
+            case 'IN': {
+                if (formatPhone.length > 4 && formatPhone.length <= 7)
+                    formatPhone = `${formatPhone.slice(0, 4)} ${formatPhone.slice(4)}`;
+                else if (formatPhone.length > 7)
+                    formatPhone = `${formatPhone.slice(0, 4)} ${formatPhone.slice(4, 7)} ${formatPhone.slice(7)}`;
+                return formatPhone;
+            }
+            case 'US':
+            case 'CA':
+            default: {
+                if (formatPhone.length > 3 && formatPhone.length <= 6)
+                    formatPhone = `${formatPhone.slice(0, 3)} ${formatPhone.slice(3)}`;
+                else if (formatPhone.length > 6)
+                    formatPhone = `${formatPhone.slice(0, 3)} ${formatPhone.slice(3, 6)} ${formatPhone.slice(6)}`;
+                return formatPhone;
+            }
         }
-    }, []);
+    }
+
+    const isValidPhoneNumber = useCallback(() => {
+        // eslint-disable-next-line no-console
+        console.log('testing');
+        switch (countryCode) {
+            case 'RU': {
+                return /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{2})[-. ]?([0-9]{2})$/.test(phoneNumber);
+            }
+            case 'EG': {
+                return /^\(?([0-9]{1})\)?[-. ]?([0-9]{7})$/.test(phoneNumber);
+            }
+            case 'IN': {
+                return /^\(?([0-9]{4})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{3})$/.test(phoneNumber);
+            }
+            case 'US':
+            case 'CA':
+            default: {
+                return /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/.test(phoneNumber);
+            }
+        }
+    }, [countryCode, phoneNumber]);
 
     const onPhoneNumberChange: OnChangeHandler = useCallback((event) => {
-        // eslint-disable-next-line no-console
-        console.log(event);
-        setPhoneNumber(event.target.value);
+        const phone = transform(event.target.value, countryCode);
+        setPhoneNumber(phone);
     }, []);
 
-    const getErrorText = useCallback((): string => 'TODO', []);
+    const getCountryName = (): string => {
+        for (const country of countries) {
+            if (countryCode === country.code) {
+                return country.errorCode;
+            }
+        }
+        return '';
+    }
+
+    const getMaxLength = (): number => {
+        for (const country of countries) {
+            if (countryCode === country.code) {
+                return Number(country.maxLength);
+            }
+        }
+        return 0;
+    }
+
+    const getPlaceholder = (): string => {
+        for (const country of countries) {
+            if (countryCode === country.code) {
+                return country.placeholder;
+            }
+        }
+        return '';
+    }
+
+    const showErrorText = (): boolean => blurred && !isValidPhoneNumber();
+
+    const getErrorText = useCallback((): string =>
+            showErrorText() ? `Please enter a valid ${getCountryName()} phone number.` : '',
+            [blurred, countryCode, isValidPhoneNumber]);
 
     return (
         <>
@@ -95,41 +193,49 @@ export const PhoneNumberFormatValidation = (): JSX.Element => {
                         </IconButton>
                     </Hidden>
                     <Typography variant={'h6'} color={'inherit'}>
-                        Phone Number Format{' '}
+                        Phone Number Format
                     </Typography>
                 </Toolbar>
             </AppBar>
 
             <div className={classes.containerWrapper}>
                 <div className={classes.container}>
-                    <FormControl variant={'filled'}>
-                        <InputLabel htmlFor="country-code-label">Level</InputLabel>
-
+                    <FormControl variant={'filled'} style={{ width: 200, marginRight: theme.spacing(2) }}>
+                        <InputLabel htmlFor="country-code-label">Country Code</InputLabel>
                         <Select
                             fullWidth
+                            value={countryCode}
                             labelId={'country-code-label'}
-                            value={'Country Code'}
                             inputProps={{
-                                name: 'level',
-                                id: 'select-level',
+                                name: 'Country Code',
+                            }}
+                            onChange={(event): void => {
+                                // eslint-disable-next-line no-console
+                                console.log(event.target.value);
+                                setCountryCode(String(event.target.value));
                             }}
                         >
-                            <MenuItem value={'level I'}>Level I (Regional)</MenuItem>
-                            <MenuItem value={'level II'}>Level II (Regional)</MenuItem>
-                            <MenuItem value={'level III'}>Level III (Regional)</MenuItem>
+                            {countries.map((country) => <MenuItem key={country.code} value={country.code}>{country.name}</MenuItem>)}
                         </Select>
                     </FormControl>
                     <TextField
                         style={{ width: '100%', height: 72 }}
-                        id={inputId}
                         label={'Phone Number'}
                         value={phoneNumber}
+                        placeholder={getPlaceholder()}
                         onChange={onPhoneNumberChange}
                         variant="filled"
                         inputProps={{
                             inputMode: 'numeric',
-                            maxLength,
+                            maxLength: getMaxLength()
                         }}
+                        onFocus={(): void => {
+                            setBlurred(false);
+                        }}
+                        onBlur={(): void => {
+                            setBlurred(true);
+                        }}
+                        error={showErrorText()}
                         helperText={getErrorText()}
                     />
                 </div>

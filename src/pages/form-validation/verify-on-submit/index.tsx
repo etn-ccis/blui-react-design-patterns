@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         padding: 0,
     },
     toolbarGutters: {
-        padding: '0 16px',
+        padding: `0  ${theme.spacing(4)}px`,
     },
     containerWrapper: {
         display: 'flex',
@@ -34,6 +34,9 @@ const useStyles = makeStyles((theme: Theme) => ({
         backgroundColor: 'white',
         height: 'calc(100vh - 64px)',
         overflow: 'hidden',
+        [theme.breakpoints.down('xs')]: {
+            height: 'calc(100vh - 56px)',
+        },
     },
     container: {
         height: '100%',
@@ -46,8 +49,9 @@ const useStyles = makeStyles((theme: Theme) => ({
         },
     },
     submitButton: {
+        height: 36,
         marginTop: theme.spacing(4),
-        width: 135,
+        width: 147,
         [theme.breakpoints.down('xs')]: {
             width: '100%',
         },
@@ -61,20 +65,12 @@ const useStyles = makeStyles((theme: Theme) => ({
         marginLeft: -theme.spacing(0.5),
         fontSize: 16,
     },
-    paper: {
-        zIndex: 1,
-        position: 'relative',
-        margin: theme.spacing(1),
-    },
-    svg: {
-        width: 100,
-        height: 100,
-    },
-    polygon: {
-        fill: theme.palette.common.white,
-        stroke: theme.palette.divider,
-        strokeWidth: 1,
-    },
+    deviceAdded: {
+        display: 'flex',
+        alignItems: 'center',
+        height: '100%',
+        justifyContent: 'center'
+    }
 }));
 
 export const VerifyOnSubmitValidation = (): JSX.Element => {
@@ -159,7 +155,7 @@ export const VerifyOnSubmitValidation = (): JSX.Element => {
                                 Find Device
                             </Typography>
                             <Typography variant={'body1'} style={{ marginBottom: theme.spacing(4) }}>
-                                For the sake of this example, serial number 123 will yield a successful device search.
+                                For the sake of this example, serial number <strong>123</strong> will yield a successful device search.
                             </Typography>
                             <TextField
                                 style={{ width: '100%', height: 72 }}
@@ -190,7 +186,7 @@ export const VerifyOnSubmitValidation = (): JSX.Element => {
                                     {!loading && (
                                         <>
                                             <Search className={classes.searchIcon} />
-                                            Find Device
+                                            Search Device
                                         </>
                                     )}
                                     {loading && (
@@ -211,7 +207,7 @@ export const VerifyOnSubmitValidation = (): JSX.Element => {
                         timeout={slideAnimationDurationMs}
                     >
                         <div
-                            style={{ display: 'flex', alignItems: 'center', height: '100%', justifyContent: 'center' }}
+                           className={classes.deviceAdded}
                         >
                             <EmptyState
                                 title={'Success'}

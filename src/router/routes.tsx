@@ -35,6 +35,10 @@ export const PAGES: Routes = {
             title: 'Sectioned Form',
             route: 'in-a-sectioned-form',
         },
+        PHONE_NUMBER_FORMAT: {
+            title: 'Phone NUmber Format',
+            route: 'phone-number-format',
+        },
     },
     I18N: {
         title: 'Internationalization',
@@ -144,6 +148,7 @@ export type Routes = {
         LIST: RouteMetaData;
         SECTIONED_FORM: RouteMetaData;
         FIXED_LENGTH_PASSCODE: RouteMetaData;
+        PHONE_NUMBER_FORMAT: RouteMetaData;
     };
     I18N: RouteMetaData;
     LISTS: RouteMetaData & {

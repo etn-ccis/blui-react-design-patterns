@@ -291,7 +291,6 @@ export const SectionedFormValidation = (): JSX.Element => {
                             <Select
                                 fullWidth
                                 labelId="select-level"
-                                label={'help'}
                                 value={level}
                                 onChange={(e): void => setLevel(String(e.target.value))}
                                 inputProps={{

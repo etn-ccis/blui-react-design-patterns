@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         textAlign: 'right',
     },
     tableContainer: {
-        maxWidth: 650,
+        maxWidth: 528,
         width: 'auto',
         marginTop: theme.spacing(4),
         marginLeft: theme.spacing(2),

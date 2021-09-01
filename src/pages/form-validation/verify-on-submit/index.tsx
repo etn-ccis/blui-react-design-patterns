@@ -69,8 +69,8 @@ const useStyles = makeStyles((theme: Theme) => ({
         display: 'flex',
         alignItems: 'center',
         height: '100%',
-        justifyContent: 'center'
-    }
+        justifyContent: 'center',
+    },
 }));
 
 export const VerifyOnSubmitValidation = (): JSX.Element => {
@@ -155,7 +155,8 @@ export const VerifyOnSubmitValidation = (): JSX.Element => {
                                 Find Device
                             </Typography>
                             <Typography variant={'body1'} style={{ marginBottom: theme.spacing(4) }}>
-                                For the sake of this example, serial number <strong>123</strong> will yield a successful device search.
+                                For the sake of this example, serial number <strong>123</strong> will yield a successful
+                                device search.
                             </Typography>
                             <TextField
                                 style={{ width: '100%', height: 72 }}
@@ -206,9 +207,7 @@ export const VerifyOnSubmitValidation = (): JSX.Element => {
                         unmountOnExit
                         timeout={slideAnimationDurationMs}
                     >
-                        <div
-                           className={classes.deviceAdded}
-                        >
+                        <div className={classes.deviceAdded}>
                             <EmptyState
                                 title={'Success'}
                                 description={`Device "${serialNumber}" has been added to your repository.`}

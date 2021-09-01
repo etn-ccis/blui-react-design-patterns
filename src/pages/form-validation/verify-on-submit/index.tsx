@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import {
     AppBar,
     Button,
@@ -6,14 +6,16 @@ import {
     Hidden,
     IconButton,
     InputProps,
+    Slide,
     TextField,
     Toolbar,
     Typography,
 } from '@material-ui/core';
-import {Menu, Search} from '@material-ui/icons';
-import {makeStyles, Theme, useTheme} from '@material-ui/core/styles';
-import {useDispatch} from 'react-redux';
-import {TOGGLE_DRAWER} from '../../../redux/actions';
+import { Add, CheckCircle, Menu, Search } from '@material-ui/icons';
+import { makeStyles, Theme, useTheme } from '@material-ui/core/styles';
+import { useDispatch } from 'react-redux';
+import { TOGGLE_DRAWER } from '../../../redux/actions';
+import { EmptyState } from '@pxblue/react-components';
 
 type OnChangeHandler = InputProps['onChange'];
 
@@ -31,13 +33,15 @@ const useStyles = makeStyles((theme: Theme) => ({
         flex: '1 1 0',
         backgroundColor: 'white',
         height: 'calc(100vh - 64px)',
+        overflow: 'hidden',
     },
     container: {
+        height: '100%',
         width: '100%',
         maxWidth: 480,
-        margin: theme.spacing(4),
+        padding: theme.spacing(4),
         [theme.breakpoints.down('xs')]: {
-            margin: theme.spacing(2),
+            padding: theme.spacing(2),
             maxWidth: '100%',
         },
     },
@@ -48,18 +52,29 @@ const useStyles = makeStyles((theme: Theme) => ({
             width: '100%',
         },
     },
-    details: {
-        marginTop: theme.spacing(1),
-    },
     buttonContainer: {
         display: 'flex',
-        justifyContent: 'flex-end'
+        justifyContent: 'flex-end',
     },
     searchIcon: {
         marginRight: theme.spacing(1),
-        marginLeft:  -theme.spacing(0.5),
-        fontSize: 16
-    }
+        marginLeft: -theme.spacing(0.5),
+        fontSize: 16,
+    },
+    paper: {
+        zIndex: 1,
+        position: 'relative',
+        margin: theme.spacing(1),
+    },
+    svg: {
+        width: 100,
+        height: 100,
+    },
+    polygon: {
+        fill: theme.palette.common.white,
+        stroke: theme.palette.divider,
+        strokeWidth: 1,
+    },
 }));
 
 export const VerifyOnSubmitValidation = (): JSX.Element => {
@@ -68,9 +83,12 @@ export const VerifyOnSubmitValidation = (): JSX.Element => {
     const dispatch = useDispatch();
     const [serialNumber, setSerialNumber] = useState('');
     const [errorMsg, setErrorMsg] = useState('');
-  //  const [success, setSuccess] = useState(false);
+    const [deviceAdded, setDeviceAdded] = useState(false);
+    const [showDeviceAddedScreen, setShowDeviceAddedScreen] = useState(false);
+    const [showAddDeviceScreen, setShowAddDeviceScreen] = useState(true);
     const [loading, setLoading] = useState(false);
-    const inputId = 'passcode-input';
+    const inputId = 'serialNumber';
+    const slideAnimationDurationMs = 250;
 
     useEffect(() => {
         const input = document.getElementById(inputId);
@@ -94,9 +112,15 @@ export const VerifyOnSubmitValidation = (): JSX.Element => {
                 if (input) {
                     input.focus();
                 }
+            } else {
+                setDeviceAdded(true);
+                setShowAddDeviceScreen(false);
+                setTimeout(() => {
+                    setShowDeviceAddedScreen(true);
+                }, slideAnimationDurationMs);
             }
         }, 2000);
-    }
+    };
 
     return (
         <>
@@ -123,43 +147,95 @@ export const VerifyOnSubmitValidation = (): JSX.Element => {
 
             <div className={classes.containerWrapper}>
                 <div className={classes.container}>
-                    <Typography variant={'h6'} style={{ marginBottom: theme.spacing(2) }}>
-                        Find Device
-                    </Typography>
-                    <Typography variant={'body1'} style={{ marginBottom: theme.spacing(4) }}>
-                        For the sake of this example, serial number 123 will yield a successful device search.
-                    </Typography>
-                    <TextField
-                        style={{ width: '100%', height: 72 }}
-                        id={inputId}
-                        label={'Serial Number'}
-                        value={serialNumber}
-                        onChange={onSerialNumberChange}
-                        variant="filled"
-                        error={Boolean(errorMsg)}
-                        helperText={errorMsg}
-                    />
+                    <Slide
+                        direction="right"
+                        in={showAddDeviceScreen}
+                        mountOnEnter
+                        unmountOnExit
+                        timeout={deviceAdded ? slideAnimationDurationMs : 0}
+                    >
+                        <div>
+                            <Typography variant={'h6'} style={{ marginBottom: theme.spacing(2) }}>
+                                Find Device
+                            </Typography>
+                            <Typography variant={'body1'} style={{ marginBottom: theme.spacing(4) }}>
+                                For the sake of this example, serial number 123 will yield a successful device search.
+                            </Typography>
+                            <TextField
+                                style={{ width: '100%', height: 72 }}
+                                id={inputId}
+                                label={'Serial Number'}
+                                value={serialNumber}
+                                onChange={onSerialNumberChange}
+                                variant="filled"
+                                error={Boolean(errorMsg)}
+                                helperText={errorMsg}
+                                onKeyUp={(event): void => {
+                                    if (event.key === 'Enter') {
+                                        onSubmit(serialNumber);
+                                    }
+                                }}
+                            />
 
-                    <div className={classes.buttonContainer}>
-                        <Button
-                            className={classes.submitButton}
-                            color={'primary'}
-                            variant={'contained'}
-                            onClick={(): void => {
-                                onSubmit(serialNumber)
-                            }}
-                            disabled={!serialNumber}
+                            <div className={classes.buttonContainer}>
+                                <Button
+                                    className={classes.submitButton}
+                                    color={'primary'}
+                                    variant={'contained'}
+                                    onClick={(): void => {
+                                        onSubmit(serialNumber);
+                                    }}
+                                    disabled={!serialNumber}
+                                >
+                                    {!loading && (
+                                        <>
+                                            <Search className={classes.searchIcon} />
+                                            Find Device
+                                        </>
+                                    )}
+                                    {loading && (
+                                        <CircularProgress
+                                            style={{ height: 20, width: 20, color: theme.palette.background.paper }}
+                                        />
+                                    )}
+                                </Button>
+                            </div>
+                        </div>
+                    </Slide>
+
+                    <Slide
+                        direction="left"
+                        in={showDeviceAddedScreen}
+                        mountOnEnter
+                        unmountOnExit
+                        timeout={slideAnimationDurationMs}
+                    >
+                        <div
+                            style={{ display: 'flex', alignItems: 'center', height: '100%', justifyContent: 'center' }}
                         >
-                            { !loading &&
-                                <>
-                                    <Search className={classes.searchIcon} />
-                                    Find Device
-                                </>
-                            }
-                            {loading && <CircularProgress style={{ height: 20, width: 20, color: theme.palette.background.paper }} />}
-                        </Button>
-                    </div>
-
+                            <EmptyState
+                                title={'Success'}
+                                description={`Device "${serialNumber}" has been added to your repository.`}
+                                icon={<CheckCircle fontSize={'inherit'} />}
+                                actions={
+                                    <Button
+                                        color={'primary'}
+                                        variant={'outlined'}
+                                        onClick={(): void => {
+                                            setShowDeviceAddedScreen(false);
+                                            setSerialNumber('');
+                                            setTimeout(() => {
+                                                setShowAddDeviceScreen(true);
+                                            }, slideAnimationDurationMs);
+                                        }}
+                                    >
+                                        <Add />
+                                        Add Another Device
+                                    </Button>
+                                }
+                            />
+                        </div>
+                    </Slide>
                 </div>
             </div>
         </>

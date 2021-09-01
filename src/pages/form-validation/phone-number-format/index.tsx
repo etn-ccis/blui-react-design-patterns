@@ -1,4 +1,4 @@
-import React, {useCallback, useState} from 'react';
+import React, { useCallback, useState } from 'react';
 import {
     AppBar,
     FormControl,
@@ -12,10 +12,10 @@ import {
     Toolbar,
     Typography,
 } from '@material-ui/core';
-import {Menu} from '@material-ui/icons';
-import {makeStyles, Theme, useTheme} from '@material-ui/core/styles';
-import {useDispatch} from 'react-redux';
-import {TOGGLE_DRAWER} from '../../../redux/actions';
+import { Menu } from '@material-ui/icons';
+import { makeStyles, Theme, useTheme } from '@material-ui/core/styles';
+import { useDispatch } from 'react-redux';
+import { TOGGLE_DRAWER } from '../../../redux/actions';
 
 type OnChangeHandler = InputProps['onChange'];
 
@@ -52,15 +52,6 @@ const useStyles = makeStyles((theme: Theme) => ({
             maxWidth: '100%',
         },
     },
-    submitButton: {
-        marginTop: theme.spacing(4),
-        [theme.breakpoints.down('xs')]: {
-            width: '100%',
-        },
-    },
-    details: {
-        marginTop: theme.spacing(1),
-    },
 }));
 
 export const PhoneNumberFormatValidation = (): JSX.Element => {
@@ -77,7 +68,7 @@ export const PhoneNumberFormatValidation = (): JSX.Element => {
         { code: 'EG', name: '+20 (EG)', placeholder: '# #######', maxLength: '9', errorCode: 'Egyptian' },
         { code: 'IN', name: '+91 (IN)', placeholder: '#### ### ###', maxLength: '12', errorCode: 'Indian' },
     ];
-    
+
     const transform = (value: string, country: string): string => {
         let formatPhone = value.replace(/\s/g, '');
         switch (country) {
@@ -114,7 +105,7 @@ export const PhoneNumberFormatValidation = (): JSX.Element => {
                 return formatPhone;
             }
         }
-    }
+    };
 
     const isValidPhoneNumber = useCallback(() => {
         // eslint-disable-next-line no-console
@@ -149,7 +140,7 @@ export const PhoneNumberFormatValidation = (): JSX.Element => {
             }
         }
         return '';
-    }
+    };
 
     const getMaxLength = (): number => {
         for (const country of countries) {
@@ -158,7 +149,7 @@ export const PhoneNumberFormatValidation = (): JSX.Element => {
             }
         }
         return 0;
-    }
+    };
 
     const getPlaceholder = (): string => {
         for (const country of countries) {
@@ -167,13 +158,14 @@ export const PhoneNumberFormatValidation = (): JSX.Element => {
             }
         }
         return '';
-    }
+    };
 
     const showErrorText = (): boolean => blurred && !isValidPhoneNumber();
 
-    const getErrorText = useCallback((): string =>
-            showErrorText() ? `Please enter a valid ${getCountryName()} phone number.` : '',
-            [blurred, countryCode, isValidPhoneNumber]);
+    const getErrorText = useCallback(
+        (): string => (showErrorText() ? `Please enter a valid ${getCountryName()} phone number.` : ''),
+        [blurred, countryCode, isValidPhoneNumber]
+    );
 
     return (
         <>
@@ -215,7 +207,11 @@ export const PhoneNumberFormatValidation = (): JSX.Element => {
                                 setCountryCode(String(event.target.value));
                             }}
                         >
-                            {countries.map((country) => <MenuItem key={country.code} value={country.code}>{country.name}</MenuItem>)}
+                            {countries.map((country) => (
+                                <MenuItem key={country.code} value={country.code}>
+                                    {country.name}
+                                </MenuItem>
+                            ))}
                         </Select>
                     </FormControl>
                     <TextField
@@ -227,7 +223,7 @@ export const PhoneNumberFormatValidation = (): JSX.Element => {
                         variant="filled"
                         inputProps={{
                             inputMode: 'numeric',
-                            maxLength: getMaxLength()
+                            maxLength: getMaxLength(),
                         }}
                         onFocus={(): void => {
                             setBlurred(false);

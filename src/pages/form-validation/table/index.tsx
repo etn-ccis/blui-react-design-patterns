@@ -59,7 +59,7 @@ export const TableFormValidation = (): JSX.Element => {
                 <TableHead>
                     <TableRow>
                         <TableCell>ID</TableCell>
-                        <TableCell align="right">Name</TableCell>
+                        <TableCell align="left">Name</TableCell>
                         <TableCell align="right">Min</TableCell>
                         <TableCell align="right">Max</TableCell>
                     </TableRow>
@@ -70,7 +70,7 @@ export const TableFormValidation = (): JSX.Element => {
                             <TableCell component="th" scope="row">
                                 {row.id}
                             </TableCell>
-                            <TableCell align="right">{row.name}</TableCell>
+                            <TableCell align="left">{row.name}</TableCell>
                             <TableCell align="right">
                                 <TextField
                                     variant="filled"
@@ -109,7 +109,7 @@ export const TableFormValidation = (): JSX.Element => {
     const getList = (): JSX.Element => (
         <>
             {rows.map((row, index) => (
-                <div key={index} style={{ marginBottom: theme.spacing(2) }}>
+                <div key={index}>
                     <InfoListItem
                         icon={
                             <Typography variant={'body1'} style={{ color: theme.palette.text.secondary }}>
@@ -154,7 +154,7 @@ export const TableFormValidation = (): JSX.Element => {
                     />
                     <InfoListItem
                         title={''}
-                        style={{ height: theme.spacing(2), marginBottom: -theme.spacing(2) }}
+                        style={{ height: theme.spacing(2) }}
                         divider={index === rows.length - 1 ? 'full' : 'partial'}
                     />
                 </div>

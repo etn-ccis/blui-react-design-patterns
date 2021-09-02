@@ -70,7 +70,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         alignItems: 'center',
         height: '100%',
         justifyContent: 'center',
-    }
+    },
 }));
 
 export const VerifyOnSubmitValidation = (): JSX.Element => {
@@ -191,10 +191,12 @@ export const VerifyOnSubmitValidation = (): JSX.Element => {
                                         </>
                                     )}
                                     {loading && (
-                                        <CircularProgress style={{
-                                            height: 20,
-                                            width: 20,
-                                            color: theme.palette.background.paper}}
+                                        <CircularProgress
+                                            style={{
+                                                height: 20,
+                                                width: 20,
+                                                color: theme.palette.background.paper,
+                                            }}
                                         />
                                     )}
                                 </Button>

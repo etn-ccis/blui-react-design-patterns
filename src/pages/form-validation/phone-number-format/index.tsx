@@ -16,6 +16,7 @@ import { Menu } from '@material-ui/icons';
 import { makeStyles, Theme, useTheme } from '@material-ui/core/styles';
 import { useDispatch } from 'react-redux';
 import { TOGGLE_DRAWER } from '../../../redux/actions';
+import { checkPhoneNumber, transformUserInput } from './phone-number-utils';
 
 type OnChangeHandler = InputProps['onChange'];
 
@@ -69,66 +70,17 @@ export const PhoneNumberFormatValidation = (): JSX.Element => {
         { code: 'IN', name: '+91 (IN)', placeholder: '#### ### ###', maxLength: '12', errorCode: 'Indian' },
     ];
 
-    const transformUserInput = (value: string, country: string): string => {
-        let formatPhone = value.replace(/\s/g, '');
-        switch (country) {
-            case 'RU': {
-                if (formatPhone.length > 3 && formatPhone.length <= 6)
-                    formatPhone = `${formatPhone.slice(0, 3)} ${formatPhone.slice(3)}`;
-                else if (formatPhone.length > 6 && formatPhone.length <= 8)
-                    formatPhone = `${formatPhone.slice(0, 3)} ${formatPhone.slice(3, 6)} ${formatPhone.slice(6)}`;
-                else if (formatPhone.length > 8)
-                    formatPhone = `${formatPhone.slice(0, 3)} ${formatPhone.slice(3, 6)} ${formatPhone.slice(
-                        6,
-                        8
-                    )} ${formatPhone.slice(8)}`;
-                return formatPhone;
-            }
-            case 'EG': {
-                if (formatPhone.length > 1) formatPhone = `${formatPhone.slice(0, 1)} ${formatPhone.slice(1)}`;
-                return formatPhone;
-            }
-            case 'IN': {
-                if (formatPhone.length > 4 && formatPhone.length <= 7)
-                    formatPhone = `${formatPhone.slice(0, 4)} ${formatPhone.slice(4)}`;
-                else if (formatPhone.length > 7)
-                    formatPhone = `${formatPhone.slice(0, 4)} ${formatPhone.slice(4, 7)} ${formatPhone.slice(7)}`;
-                return formatPhone;
-            }
-            case 'US':
-            case 'CA':
-            default: {
-                if (formatPhone.length > 3 && formatPhone.length <= 6)
-                    formatPhone = `${formatPhone.slice(0, 3)} ${formatPhone.slice(3)}`;
-                else if (formatPhone.length > 6)
-                    formatPhone = `${formatPhone.slice(0, 3)} ${formatPhone.slice(3, 6)} ${formatPhone.slice(6)}`;
-                return formatPhone;
-            }
-        }
-    };
+    const isValidPhoneNumber = useCallback((): boolean => checkPhoneNumber(phoneNumber, countryCode), [
+        countryCode,
+        phoneNumber,
+    ]);
 
-    const isValidPhoneNumber = useCallback((): boolean => {
-        switch (countryCode) {
-            case 'RU': {
-                return /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{2})[-. ]?([0-9]{2})$/.test(phoneNumber);
-            }
-            case 'EG': {
-                return /^\(?([0-9]{1})\)?[-. ]?([0-9]{7})$/.test(phoneNumber);
-            }
-            case 'IN': {
-                return /^\(?([0-9]{4})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{3})$/.test(phoneNumber);
-            }
-            case 'US':
-            case 'CA':
-            default: {
-                return /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/.test(phoneNumber);
-            }
-        }
-    }, [countryCode, phoneNumber]);
-
-    const onPhoneNumberChange: OnChangeHandler = useCallback((event) => {
-        setPhoneNumber(transformUserInput(event.target.value, countryCode));
-    }, []);
+    const onPhoneNumberChange: OnChangeHandler = useCallback(
+        (event) => {
+            setPhoneNumber(transformUserInput(event.target.value, countryCode));
+        },
+        [countryCode]
+    );
 
     const getCountryName = (): string => {
         for (const country of countries) {

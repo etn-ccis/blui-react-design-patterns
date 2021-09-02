@@ -71,6 +71,11 @@ const useStyles = makeStyles((theme: Theme) => ({
         height: '100%',
         justifyContent: 'center',
     },
+    spinner: {
+        height: 20,
+        width: 20,
+        color: theme.palette.background.paper
+    }
 }));
 
 export const VerifyOnSubmitValidation = (): JSX.Element => {
@@ -191,8 +196,7 @@ export const VerifyOnSubmitValidation = (): JSX.Element => {
                                         </>
                                     )}
                                     {loading && (
-                                        <CircularProgress
-                                            style={{ height: 20, width: 20, color: theme.palette.background.paper }}
+                                        <CircularProgress className={classes.spinner}
                                         />
                                     )}
                                 </Button>

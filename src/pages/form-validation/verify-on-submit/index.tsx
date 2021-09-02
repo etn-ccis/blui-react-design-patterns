@@ -70,11 +70,6 @@ const useStyles = makeStyles((theme: Theme) => ({
         alignItems: 'center',
         height: '100%',
         justifyContent: 'center',
-    },
-    spinner: {
-        height: 20,
-        width: 20,
-        color: theme.palette.background.paper
     }
 }));
 
@@ -96,7 +91,7 @@ export const VerifyOnSubmitValidation = (): JSX.Element => {
         if (input) {
             input.focus();
         }
-    }, []);
+    }, [showAddDeviceScreen]);
 
     const onSerialNumberChange: OnChangeHandler = useCallback((event) => {
         setSerialNumber(event.target.value);
@@ -196,7 +191,10 @@ export const VerifyOnSubmitValidation = (): JSX.Element => {
                                         </>
                                     )}
                                     {loading && (
-                                        <CircularProgress className={classes.spinner}
+                                        <CircularProgress style={{
+                                            height: 20,
+                                            width: 20,
+                                            color: theme.palette.background.paper}}
                                         />
                                     )}
                                 </Button>

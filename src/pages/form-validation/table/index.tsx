@@ -1,6 +1,7 @@
 import React from 'react';
 import {
     AppBar,
+    Divider,
     Hidden,
     IconButton,
     Paper,
@@ -152,7 +153,10 @@ export const TableFormValidation = (): JSX.Element => {
                             />
                         }
                     />
-                    <Divider variant={'inset'} style={{marginTop: theme.spacing(1), marginBottom: theme.spacing(1)}} />
+                    <Divider
+                        variant={'inset'}
+                        style={{ marginTop: theme.spacing(1), marginBottom: theme.spacing(1) }}
+                    />
                 </div>
             ))}
         </>

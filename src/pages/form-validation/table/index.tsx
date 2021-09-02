@@ -152,11 +152,7 @@ export const TableFormValidation = (): JSX.Element => {
                             />
                         }
                     />
-                    <InfoListItem
-                        title={''}
-                        style={{ height: theme.spacing(2) }}
-                        divider={index === rows.length - 1 ? 'full' : 'partial'}
-                    />
+                    <Divider variant={'inset'} style={{marginTop: theme.spacing(1), marginBottom: theme.spacing(1)}} />
                 </div>
             ))}
         </>

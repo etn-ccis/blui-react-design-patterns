@@ -56,6 +56,15 @@ const useStyles = makeStyles((theme: Theme) => ({
         backgroundImage: `${linearGradientOverlayImage}`,
         backgroundPosition: 'center',
     },
+    bodyContent: {
+        maxWidth: '900px',
+        margin: '0 auto',
+        padding: `0 ${theme.spacing(2)}`,
+    },
+    toolbarRightContent: {
+        display: 'flex',
+        flexDirection: 'row',
+    },
 }));
 
 export const Collapsible = (): JSX.Element => {
@@ -99,7 +108,7 @@ export const Collapsible = (): JSX.Element => {
                         info={'Gary Steel Works'}
                         animationDuration={300}
                     />
-                    <div style={{ display: 'flex', flexDirection: 'row' }}>
+                    <div className={classes.toolbarRightContent}>
                         <IconButton color={'inherit'}>
                             <HelpIcon />
                         </IconButton>
@@ -114,7 +123,7 @@ export const Collapsible = (): JSX.Element => {
                     </div>
                 </Toolbar>
             </AppBar>
-            <div>{getBodyFiller()}</div>
+            <div className={classes.bodyContent}>{getBodyFiller()}</div>
         </div>
     );
 };

@@ -51,7 +51,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     submitButton: {
         height: 36,
         marginTop: theme.spacing(4),
-        width: 147,
+        width: 152,
         [theme.breakpoints.down('xs')]: {
             width: '100%',
         },
@@ -61,8 +61,6 @@ const useStyles = makeStyles((theme: Theme) => ({
         justifyContent: 'flex-end',
     },
     searchIcon: {
-        marginRight: theme.spacing(1),
-        marginLeft: -theme.spacing(0.5),
         fontSize: 16,
     },
     deviceAdded: {
@@ -179,6 +177,11 @@ export const VerifyOnSubmitValidation = (): JSX.Element => {
                                     className={classes.submitButton}
                                     color={'primary'}
                                     variant={'contained'}
+                                    startIcon={
+                                        <>
+                                            {!loading && <Search className={classes.searchIcon} />}
+                                        </>
+                                    }
                                     onClick={(): void => {
                                         onSubmit(serialNumber);
                                     }}
@@ -186,7 +189,6 @@ export const VerifyOnSubmitValidation = (): JSX.Element => {
                                 >
                                     {!loading && (
                                         <>
-                                            <Search className={classes.searchIcon} />
                                             Search Device
                                         </>
                                     )}
@@ -220,6 +222,7 @@ export const VerifyOnSubmitValidation = (): JSX.Element => {
                                     <Button
                                         color={'primary'}
                                         variant={'outlined'}
+                                        startIcon={<Add />}
                                         onClick={(): void => {
                                             setShowDeviceAddedScreen(false);
                                             setSerialNumber('');
@@ -228,7 +231,6 @@ export const VerifyOnSubmitValidation = (): JSX.Element => {
                                             }, slideAnimationDurationMs);
                                         }}
                                     >
-                                        <Add />
                                         Add Another Device
                                     </Button>
                                 }

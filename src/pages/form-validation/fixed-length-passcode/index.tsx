@@ -206,8 +206,8 @@ export const FixedLengthPasscodeValidation = (): JSX.Element => {
                         variant={'outlined'}
                         onClick={resetForm}
                         disabled={loading}
+                        startIcon={<Refresh />}
                     >
-                        <Refresh style={{ marginRight: theme.spacing(1) }} />
                         Reset Form
                     </Button>
                 </div>

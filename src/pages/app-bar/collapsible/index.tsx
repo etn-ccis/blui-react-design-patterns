@@ -8,6 +8,7 @@ import NotificationsIcon from '@material-ui/icons/Notifications';
 import { AppBar, Spacer, ThreeLiner } from '@pxblue/react-components';
 import { useDispatch } from 'react-redux';
 import { TOGGLE_DRAWER } from '../../../redux/actions';
+import { getBodyFiller } from '../utils/utils';
 
 const backgroundImage = require('../../../assets/collapsible_app_bar_demo.jpg').default;
 const linearGradientOverlayImage = `linear-gradient(to bottom, rgba(0, 123, 193, 1) 22.4%, rgba(0, 123, 193, 0.2) 100%), url(${backgroundImage})`;
@@ -55,6 +56,15 @@ const useStyles = makeStyles((theme: Theme) => ({
         backgroundImage: `${linearGradientOverlayImage}`,
         backgroundPosition: 'center',
     },
+    bodyContent: {
+        maxWidth: '900px',
+        margin: '0 auto',
+        padding: `0 ${theme.spacing(2)}`,
+    },
+    toolbarRightContent: {
+        display: 'flex',
+        flexDirection: 'row',
+    },
 }));
 
 export const Collapsible = (): JSX.Element => {
@@ -99,7 +109,7 @@ export const Collapsible = (): JSX.Element => {
                         info={'Gary Steel Works'}
                         animationDuration={300}
                     />
-                    <div style={{ display: 'flex', flexDirection: 'row' }}>
+                    <div className={classes.toolbarRightContent}>
                         <IconButton color={'inherit'}>
                             <HelpIcon />
                         </IconButton>
@@ -114,7 +124,7 @@ export const Collapsible = (): JSX.Element => {
                     </div>
                 </Toolbar>
             </AppBar>
-            <div style={{ height: '2000px' }}></div>
+            <div className={classes.bodyContent}>{getBodyFiller()}</div>
         </div>
     );
 };

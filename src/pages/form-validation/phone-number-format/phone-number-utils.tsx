@@ -36,6 +36,10 @@ export const transformUserInput = (value: string, country: string): string => {
     }
 };
 
+/**
+ * For application development teams, there are 3rd-party libraries that can be utilized to validate phone numbers.
+ * Example here: https://github.com/s-yadav/react-number-format
+ */
 export const checkPhoneNumber = (phoneNumber: string, countryCode: string): boolean => {
     switch (countryCode) {
         case 'RU': {

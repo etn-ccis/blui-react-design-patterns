@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         padding: 0,
     },
     toolbarGutters: {
-        padding: `0  ${theme.spacing(4)}px`,
+        padding: '0 16px',
     },
     containerWrapper: {
         display: 'flex',
@@ -177,21 +177,13 @@ export const VerifyOnSubmitValidation = (): JSX.Element => {
                                     className={classes.submitButton}
                                     color={'primary'}
                                     variant={'contained'}
-                                    startIcon={
-                                        <>
-                                            {!loading && <Search className={classes.searchIcon} />}
-                                        </>
-                                    }
+                                    startIcon={<>{!loading && <Search className={classes.searchIcon} />}</>}
                                     onClick={(): void => {
                                         onSubmit(serialNumber);
                                     }}
                                     disabled={!serialNumber}
                                 >
-                                    {!loading && (
-                                        <>
-                                            Search Device
-                                        </>
-                                    )}
+                                    {!loading && <>Search Device</>}
                                     {loading && (
                                         <CircularProgress
                                             style={{

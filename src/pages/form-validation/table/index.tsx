@@ -49,6 +49,10 @@ const createData = (id: number, name: string, min: number, max: number): any => 
 
 const rows = [createData(1, 'Power', 123, 456), createData(2, 'Xpert', 123, 456), createData(3, 'Blue', 123, 456)];
 
+const getLastRowStyles = (index: number): { borderBottomWidth: number } => ({
+    borderBottomWidth: index === rows.length - 1 ? 0 : 1,
+});
+
 export const TableFormValidation = (): JSX.Element => {
     const theme = useTheme();
     const classes = useStyles(theme);
@@ -66,13 +70,15 @@ export const TableFormValidation = (): JSX.Element => {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {rows.map((row) => (
+                    {rows.map((row, index) => (
                         <TableRow key={row.id} hover={false}>
-                            <TableCell component="th" scope="row">
+                            <TableCell component="th" scope="row" style={getLastRowStyles(index)}>
                                 {row.id}
                             </TableCell>
-                            <TableCell align="left">{row.name}</TableCell>
-                            <TableCell align="right">
+                            <TableCell align="left" style={getLastRowStyles(index)}>
+                                {row.name}
+                            </TableCell>
+                            <TableCell align="right" style={getLastRowStyles(index)}>
                                 <TextField
                                     variant="filled"
                                     value={row.min}
@@ -86,7 +92,7 @@ export const TableFormValidation = (): JSX.Element => {
                                     }}
                                 />
                             </TableCell>
-                            <TableCell align="right">
+                            <TableCell align="right" style={getLastRowStyles(index)}>
                                 <TextField
                                     variant="filled"
                                     value={row.max}
@@ -154,7 +160,7 @@ export const TableFormValidation = (): JSX.Element => {
                         }
                     />
                     <Divider
-                        variant={'inset'}
+                        variant={index === rows.length - 1 ? 'fullWidth' : 'inset'}
                         style={{ marginTop: theme.spacing(1), marginBottom: theme.spacing(1) }}
                     />
                 </div>

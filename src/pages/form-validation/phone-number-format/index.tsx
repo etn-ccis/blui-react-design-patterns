@@ -77,7 +77,11 @@ export const PhoneNumberFormatValidation = (): JSX.Element => {
 
     const onPhoneNumberChange: OnChangeHandler = useCallback(
         (event) => {
-            setPhoneNumber(transformUserInput(event.target.value, countryCode));
+            const onlyDigits = /^\d+$/;
+            const trimmed = event.target.value.replaceAll(' ', '');
+            if (onlyDigits.test(trimmed) || !trimmed) {
+                setPhoneNumber(transformUserInput(event.target.value, countryCode));
+            }
         },
         [countryCode]
     );
@@ -152,6 +156,7 @@ export const PhoneNumberFormatValidation = (): JSX.Element => {
                             }}
                             onChange={(event): void => {
                                 setCountryCode(String(event.target.value));
+                                setPhoneNumber(transformUserInput(phoneNumber, String(event.target.value)));
                             }}
                         >
                             {countries.map((country) => (

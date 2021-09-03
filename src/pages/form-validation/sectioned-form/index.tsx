@@ -260,7 +260,7 @@ export const SectionedFormValidation = (): JSX.Element => {
                         </IconButton>
                     </Hidden>
                     <Typography variant={'h6'} color={'inherit'}>
-                        In a List
+                        Sectioned Form
                     </Typography>
                 </Toolbar>
             </AppBar>

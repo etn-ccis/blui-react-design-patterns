@@ -1,7 +1,7 @@
 /// <reference types="cypress" />
 
 const sizes = ['iphone-6', 'ipad-2'];
-const urls = ['http://localhost:3000/collapsible', 'http://localhost:3000/search', 'http://localhost:3000/form-validation', 
+const urls = ['http://localhost:3000/collapsible', 'http://localhost:3000/search', 
 'http://localhost:3000/i18n', 'http://localhost:3000/action-list', 'http://localhost:3000/data-list', 
 'http://localhost:3000/multiselect-list', 'http://localhost:3000/sortable-list', 'http://localhost:3000/status-list', 
 'http://localhost:3000/responsive-table', 'http://localhost:3000/basic-bottom-sheet',

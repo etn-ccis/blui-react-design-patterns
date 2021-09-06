@@ -5,7 +5,7 @@ import { Switch, Route } from 'react-router-dom';
 import { LandingPage } from '../pages/LandingPage';
 import { PAGES } from './routes';
 import { SearchBar } from '../pages/app-bar/search-bar';
-import { CollapsibleAppBar } from '../pages/app-bar/collapsible-app-bar';
+import { Collapsible } from '../pages/app-bar/collapsible';
 import { I18N } from '../pages/i18n';
 import { FormValidation } from '../pages/form-validation';
 import { ActionList } from '../pages/lists/action-list';
@@ -25,6 +25,9 @@ import { Skeletons } from '../pages/loading-waiting-states/skeletons/Skeletons';
 import { InAnAppBar } from '../pages/account-menu/in-an-app-bar';
 import { InADrawer } from '../pages/account-menu/in-a-drawer';
 import { DropdownToolbar } from '../pages/app-bar/dropdown-toolbar';
+import { ListFormValidation } from '../pages/form-validation/list';
+import { FixedLengthPasscodeValidation } from '../pages/form-validation/fixed-length-passcode';
+import { SectionedFormValidation } from '../pages/form-validation/sectioned-form';
 /*
 The main page body, which contains the route definitions
 */
@@ -33,10 +36,21 @@ export const Main = (): JSX.Element => (
         <Route exact path={'/'} component={LandingPage} />
 
         <Route exact path={`/${PAGES.APP_BAR.SEARCH.route || ''}`} component={SearchBar} />
-        <Route exact path={`/${PAGES.APP_BAR.COLLAPSIBLE.route || ''}`} component={CollapsibleAppBar} />
+        <Route exact path={`/${PAGES.APP_BAR.COLLAPSIBLE.route || ''}`} component={Collapsible} />
         <Route exact path={`/${PAGES.APP_BAR.DROPDOWN_COLLAPSIBLE.route || ''}`} component={DropdownToolbar} />
 
         <Route exact path={`/${PAGES.FORM_VALIDATION.route || ''}`} component={FormValidation} />
+        <Route exact path={`/${PAGES.FORM_VALIDATION.LIST.route || ''}`} component={ListFormValidation} />
+        <Route
+            exact
+            path={`/${PAGES.FORM_VALIDATION.SECTIONED_FORM.route || ''}`}
+            component={SectionedFormValidation}
+        />
+        <Route
+            exact
+            path={`/${PAGES.FORM_VALIDATION.FIXED_LENGTH_PASSCODE.route || ''}`}
+            component={FixedLengthPasscodeValidation}
+        />
         <Route exact path={`/${PAGES.I18N.route || ''}`} component={I18N} />
 
         <Route exact path={`/${PAGES.LISTS.ACTION_LIST.route || ''}`} component={ActionList} />

@@ -11,7 +11,7 @@ export const PAGES: Routes = {
         },
     },
     APP_BAR: {
-        title: 'App Bar',
+        title: 'App Bars',
         COLLAPSIBLE: {
             title: 'Collapsible',
             route: 'collapsible',
@@ -26,8 +26,19 @@ export const PAGES: Routes = {
         },
     },
     FORM_VALIDATION: {
-        title: 'Form Validation',
-        route: 'form-validation',
+        title: 'Forms and Validation',
+        LIST: {
+            title: 'In a List',
+            route: 'in-a-list',
+        },
+        FIXED_LENGTH_PASSCODE: {
+            title: 'Fixed Length Passcode',
+            route: 'fixed-length-passcode',
+        },
+        SECTIONED_FORM: {
+            title: 'Sectioned Form',
+            route: 'in-a-sectioned-form',
+        },
     },
     I18N: {
         title: 'Internationalization',
@@ -134,7 +145,11 @@ export type Routes = {
         DROPDOWN_COLLAPSIBLE: RouteMetaData;
         SEARCH: RouteMetaData;
     };
-    FORM_VALIDATION: RouteMetaData;
+    FORM_VALIDATION: RouteMetaData & {
+        LIST: RouteMetaData;
+        SECTIONED_FORM: RouteMetaData;
+        FIXED_LENGTH_PASSCODE: RouteMetaData;
+    };
     I18N: RouteMetaData;
     LISTS: RouteMetaData & {
         ACTION_LIST: RouteMetaData;

@@ -14,7 +14,7 @@ describe('R2L', () => {
         cy.get('[data-cy=change-language]').click()
         cy.contains('Arabic').click()
         cy.get('[data-cy=toolbar-title]').should('contain', 'تدويل')
-        .invoke('prop', 'offsetLeft').should('be.greaterThan', 650)
+        .invoke('prop', 'offsetLeft').should('be.greaterThan', 629)
         cy.get('[data-cy=R2L-menu]')
         .invoke('prop', 'offsetLeft').should('be.lessThan', 5)
     });
@@ -30,7 +30,7 @@ describe('R2L', () => {
         cy.get('[data-cy=change-language]').click()
         cy.contains('Arabic').click()
         cy.get('[data-cy=change-language]')
-        .invoke('prop', 'offsetLeft').should('be.greaterThan', 520)
+        .invoke('prop', 'offsetLeft').should('be.greaterThan', 500)
     });
 
     it('should display item list RTL', () => {

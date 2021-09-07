@@ -92,6 +92,7 @@ export const VerifyOnSubmitValidation = (): JSX.Element => {
     }, [showAddDeviceScreen]);
 
     const onSerialNumberChange: OnChangeHandler = useCallback((event) => {
+        setErrorMsg('');
         setSerialNumber(event.target.value);
     }, []);
 

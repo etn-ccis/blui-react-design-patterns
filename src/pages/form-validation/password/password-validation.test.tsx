@@ -3,20 +3,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Enzyme from 'enzyme';
-// import Adapter from 'enzyme-adapter-react-16';
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
 import { createStore } from 'redux';
-import { Reducer } from '../../redux/reducers';
+import { Reducer } from '../../../redux/reducers';
 import { Provider } from 'react-redux';
-import {
-    FormValidation,
-    emailRegex,
-    phoneNumberRegex,
-    upperCharRegex,
-    lowerCharRegex,
-    numberRegex,
-    splCharRegex,
-} from '.';
+import { PasswordFormValidation, upperCharRegex, lowerCharRegex, numberRegex, splCharRegex } from '.';
 
 Enzyme.configure({ adapter: new Adapter() });
 const store = createStore(Reducer());
@@ -25,35 +16,11 @@ it('renders without crashing', () => {
     const div = document.createElement('div');
     ReactDOM.render(
         <Provider store={store}>
-            <FormValidation />
+            <PasswordFormValidation />
         </Provider>,
         div
     );
     ReactDOM.unmountComponentAtNode(div);
-});
-
-it('recognizes emails correctly', () => {
-    const correctEmails = ['a@a.co', 'A_a.vb@eaton.com.us', 'a+@123.com'];
-    const incorrectEmails = ['', '@', 'a@c', 'a@a.c', 'a@', '@bc.com', '"help@etn.com"'];
-    // .@eaton.com is getting recognized as a valid email address,
-    // to correct it might give you a "write-only" regex
-    correctEmails.forEach((val): void => {
-        expect(emailRegex.test(val)).toBeTruthy();
-    });
-    incorrectEmails.forEach((val): void => {
-        expect(emailRegex.test(val)).toBeFalsy();
-    });
-});
-
-it('recognizes phone numbers correctly', () => {
-    const correctPhoneNumbers = ['1111111111', '123-123-1234', '(123) 123 1234', '123 123 1234', '123.123.1234'];
-    const incorrectPhoneNumbers = ['', '1', '+', ' ', '          ', '   -   -    ', '123(123)1234', '111 111 11111'];
-    correctPhoneNumbers.forEach((val): void => {
-        expect(phoneNumberRegex.test(val)).toBeTruthy();
-    });
-    incorrectPhoneNumbers.forEach((val): void => {
-        expect(phoneNumberRegex.test(val)).toBeFalsy();
-    });
 });
 
 it('recognizes valid password correctly', () => {

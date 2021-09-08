@@ -60,9 +60,6 @@ const useStyles = makeStyles((theme: Theme) => ({
         display: 'flex',
         justifyContent: 'flex-end',
     },
-    searchIcon: {
-        fontSize: 16,
-    },
     deviceAdded: {
         display: 'flex',
         alignItems: 'center',
@@ -178,7 +175,7 @@ export const VerifyOnSubmitValidation = (): JSX.Element => {
                                     className={classes.submitButton}
                                     color={'primary'}
                                     variant={'contained'}
-                                    startIcon={<>{!loading && <Search className={classes.searchIcon} />}</>}
+                                    startIcon={<>{!loading && <Search />}</>}
                                     onClick={(): void => {
                                         onSubmit(serialNumber);
                                     }}

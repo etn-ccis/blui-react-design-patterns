@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         justifyContent: 'center',
         alignItems: 'start',
         flex: '1 1 0',
-        backgroundColor: 'white',
+        backgroundColor: theme.palette.background.paper,
         height: 'calc(100vh - 64px)',
     },
     container: {

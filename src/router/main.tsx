@@ -28,6 +28,7 @@ import { ListFormValidation } from '../pages/form-validation/list';
 import { FixedLengthPasscodeValidation } from '../pages/form-validation/fixed-length-passcode';
 import { SectionedFormValidation } from '../pages/form-validation/sectioned-form';
 import { VerifyOnSubmitValidation } from '../pages/form-validation/verify-on-submit';
+import { PhoneNumberFormatValidation } from '../pages/form-validation/phone-number-format';
 import { TableFormValidation } from '../pages/form-validation/table';
 /*
 The main page body, which contains the route definitions
@@ -41,6 +42,11 @@ export const Main = (): JSX.Element => (
 
         <Route exact path={`/${PAGES.FORM_VALIDATION.route || ''}`} component={FormValidation} />
         <Route exact path={`/${PAGES.FORM_VALIDATION.LIST.route || ''}`} component={ListFormValidation} />
+        <Route
+            exact
+            path={`/${PAGES.FORM_VALIDATION.PHONE_NUMBER_FORMAT.route || ''}`}
+            component={PhoneNumberFormatValidation}
+        />
         <Route
             exact
             path={`/${PAGES.FORM_VALIDATION.SECTIONED_FORM.route || ''}`}

@@ -39,6 +39,10 @@ export const PAGES: Routes = {
             title: 'Sectioned Form',
             route: 'in-a-sectioned-form',
         },
+        PHONE_NUMBER_FORMAT: {
+            title: 'Phone Number Format',
+            route: 'phone-number-format',
+        },
         VERIFY_ON_SUBMIT: {
             title: 'Verify on Submit',
             route: 'verify-on-submit',
@@ -153,6 +157,7 @@ export type Routes = {
         SECTIONED_FORM: RouteMetaData;
         FIXED_LENGTH_PASSCODE: RouteMetaData;
         VERIFY_ON_SUBMIT: RouteMetaData;
+        PHONE_NUMBER_FORMAT: RouteMetaData;
         TABLE: RouteMetaData;
     };
     I18N: RouteMetaData;

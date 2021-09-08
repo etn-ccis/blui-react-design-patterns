@@ -43,6 +43,10 @@ export const PAGES: Routes = {
             title: 'Phone Number Format',
             route: 'phone-number-format',
         },
+        VERIFY_ON_SUBMIT: {
+            title: 'Verify on Submit',
+            route: 'verify-on-submit',
+        },
     },
     I18N: {
         title: 'Internationalization',
@@ -152,6 +156,7 @@ export type Routes = {
         LIST: RouteMetaData;
         SECTIONED_FORM: RouteMetaData;
         FIXED_LENGTH_PASSCODE: RouteMetaData;
+        VERIFY_ON_SUBMIT: RouteMetaData;
         PHONE_NUMBER_FORMAT: RouteMetaData;
         TABLE: RouteMetaData;
     };

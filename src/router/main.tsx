@@ -27,6 +27,7 @@ import { InADrawer } from '../pages/account-menu/in-a-drawer';
 import { ListFormValidation } from '../pages/form-validation/list';
 import { FixedLengthPasscodeValidation } from '../pages/form-validation/fixed-length-passcode';
 import { SectionedFormValidation } from '../pages/form-validation/sectioned-form';
+import { VerifyOnSubmitValidation } from '../pages/form-validation/verify-on-submit';
 import { TableFormValidation } from '../pages/form-validation/table';
 /*
 The main page body, which contains the route definitions
@@ -50,6 +51,11 @@ export const Main = (): JSX.Element => (
             exact
             path={`/${PAGES.FORM_VALIDATION.FIXED_LENGTH_PASSCODE.route || ''}`}
             component={FixedLengthPasscodeValidation}
+        />
+        <Route
+            exact
+            path={`/${PAGES.FORM_VALIDATION.VERIFY_ON_SUBMIT.route || ''}`}
+            component={VerifyOnSubmitValidation}
         />
         <Route exact path={`/${PAGES.I18N.route || ''}`} component={I18N} />
 

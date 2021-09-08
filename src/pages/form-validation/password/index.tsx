@@ -33,14 +33,20 @@ const useStyles = makeStyles((theme: Theme) => ({
     container: {
         display: 'flex',
         flexDirection: 'column',
+        flex: '1 1 0px',
         alignItems: 'center',
-        backgroundColor: 'white',
+        backgroundColor: theme.palette.background.paper,
         paddingTop: theme.spacing(4),
         paddingLeft: theme.spacing(3),
         paddingRight: theme.spacing(3),
-        width: 450,
+        maxWidth: 450,
+        maxHeight: 740,
+        height: '100vh',
+        overflow: 'auto',
         [theme.breakpoints.down('xs')]: {
             width: '100%',
+            maxWidth: 600,
+            height: 'unset',
             minHeight: 'calc(100vh - 56px)',
             paddingTop: theme.spacing(2),
             paddingLeft: theme.spacing(2),
@@ -48,23 +54,20 @@ const useStyles = makeStyles((theme: Theme) => ({
         },
     },
     sectionHeader: {
+        width: '100%',
         marginBottom: 16,
         [theme.breakpoints.down('xs')]: {
             display: 'none',
         },
     },
     newPasswordInputField: {
-        marginTop: theme.spacing(5.5),
-        [theme.breakpoints.down('xs')]: {
-            marginTop: theme.spacing(3),
-        },
+        marginTop: theme.spacing(4),
     },
-    block: {
+    formOverflow: {
         display: 'flex',
-        flexDirection: 'column',
-        flex: 1,
-        maxWidth: 600,
-        paddingBottom: 0,
+        flex: '1 1 0',
+        height: '100%',
+        overflow: 'auto',
     },
     passwordCriteria: {
         paddingTop: 0,
@@ -77,10 +80,12 @@ const useStyles = makeStyles((theme: Theme) => ({
         padding: '0 16px',
     },
     divider: {
+        width: `calc(100% + ${theme.spacing(6)}px)`,
         marginTop: theme.spacing(6),
         marginLeft: -theme.spacing(3),
         marginRight: -theme.spacing(3),
         [theme.breakpoints.down('xs')]: {
+            width: `calc(100% + ${theme.spacing(4)}px)`,
             marginLeft: -theme.spacing(2),
             marginRight: -theme.spacing(2),
         },
@@ -99,6 +104,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         },
     },
     submitButtonContainer: {
+        width: '100%',
         paddingTop: theme.spacing(3),
         paddingBottom: theme.spacing(3),
         display: 'flex',
@@ -107,6 +113,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         },
     },
     mobileSubmitButtonContainer: {
+        width: '100%',
         paddingTop: theme.spacing(2),
         paddingBottom: theme.spacing(2),
         [theme.breakpoints.up('sm')]: {
@@ -132,7 +139,7 @@ export const PasswordFormValidation = (): JSX.Element => {
     const [newPasswordError, setNewPasswordError] = useState<FormError>();
     const [confirmPassword, setConfirmPassword] = useState('');
     const [confirmPasswordError, setConfirmPasswordError] = useState<FormError>();
-    const [showcurrentPassword, setShowcurrentPassword] = useState<boolean>(false);
+    const [showCurrentPassword, setshowCurrentPassword] = useState<boolean>(false);
     const [showNewPassword, setShowNewPassword] = useState<boolean>(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState<boolean>(false);
     const [passwordErrors, setPasswordErrors] = useState({
@@ -146,11 +153,12 @@ export const PasswordFormValidation = (): JSX.Element => {
     const theme = useTheme();
     const classes = useStyles(theme);
     const dispatch = useDispatch();
+    const PASSWORD_MISMATCH = 'Passwords do not match';
 
     const getPasswordCriteriaIcon = (error: boolean): JSX.Element => (
         <Done
             style={{
-                fontSize: 16,
+                fontSize: 18,
                 color: error ? theme.palette.primary.main : Colors.gray[200],
                 marginRight: theme.spacing(),
             }}
@@ -165,18 +173,6 @@ export const PasswordFormValidation = (): JSX.Element => {
         }
         setCurrentPasswordError(tempcurrentPasswordError);
     }, [currentPassword, setCurrentPasswordError]);
-
-    const onCurrentPasswordChange: OnChangeHandler = useCallback(
-        (event) => {
-            setCurrentPassword(event.target.value);
-            if (currentPasswordError) {
-                validateCurrentPassword();
-            } else {
-                setCurrentPasswordError(null);
-            }
-        },
-        [setCurrentPassword, currentPasswordError, validateCurrentPassword, setCurrentPasswordError]
-    );
 
     const validateNewPassword = useCallback((): void => {
         const tempNewPassword = newPassword;
@@ -195,6 +191,41 @@ export const PasswordFormValidation = (): JSX.Element => {
         }
     }, [newPasswordError, validateNewPassword, setNewPasswordError]);
 
+    const onCurrentPasswordChange: OnChangeHandler = useCallback(
+        (event) => {
+            setCurrentPassword(event.target.value);
+            if (currentPasswordError) {
+                validateCurrentPassword();
+            } else {
+                setCurrentPasswordError(null);
+            }
+        },
+        [currentPasswordError, validateCurrentPassword, confirmPassword]
+    );
+
+    const onNewPasswordChange: OnChangeHandler = useCallback(
+        (event) => {
+            setNewPassword(event.target.value);
+            setConfirmPasswordError('');
+            validatePasswordCriteria();
+            if (event.target.value !== confirmPassword && confirmPassword !== '') {
+                setConfirmPasswordError(PASSWORD_MISMATCH);
+            }
+        },
+        [setNewPassword, validatePasswordCriteria, confirmPassword]
+    );
+
+    const onConfirmPasswordChange: OnChangeHandler = useCallback(
+        (event) => {
+            setConfirmPasswordError('');
+            setConfirmPassword(event.target.value);
+            if (newPassword !== event.target.value) {
+                setConfirmPasswordError(PASSWORD_MISMATCH);
+            }
+        },
+        [newPassword]
+    );
+
     useEffect(() => {
         setPasswordErrors({
             minLengthRequired: newPassword.length >= 8,
@@ -204,14 +235,6 @@ export const PasswordFormValidation = (): JSX.Element => {
             atLeast1SplCharRequired: splCharRegex.test(newPassword),
         });
     }, [newPassword]);
-
-    const onNewPasswordChange: OnChangeHandler = useCallback(
-        (event) => {
-            setNewPassword(event.target.value);
-            validatePasswordCriteria();
-        },
-        [setNewPassword, validatePasswordCriteria]
-    );
 
     const meetsRequirements = useCallback(
         (): boolean =>
@@ -228,28 +251,13 @@ export const PasswordFormValidation = (): JSX.Element => {
         [meetsRequirements, newPassword, confirmPassword, currentPassword]
     );
 
-    const validateConfirmPassword = useCallback((): void => {
-        const tempConfirmPassword = confirmPassword;
-        let tempConfirmPasswordError = '';
-        if (!tempConfirmPassword.trim()) {
-            tempConfirmPasswordError = 'required';
-        } else if (newPassword !== confirmPassword) {
-            tempConfirmPasswordError = 'Passwords do not match';
-        }
-        setConfirmPasswordError(tempConfirmPasswordError);
-    }, [confirmPassword, newPassword, setConfirmPasswordError]);
+    const clearForms = (): void => {
+        setCurrentPassword('');
+        setConfirmPassword('');
+        setNewPassword('');
+    };
 
-    const onConfirmPasswordChange: OnChangeHandler = useCallback(
-        (event) => {
-            setConfirmPassword(event.target.value);
-            if (confirmPasswordError) {
-                validateConfirmPassword();
-            } else {
-                setConfirmPasswordError(null);
-            }
-        },
-        [setConfirmPassword, confirmPasswordError, validateConfirmPassword, setConfirmPasswordError]
-    );
+    const passwordHintText = (error: boolean): string => (error ? theme.palette.text.primary : Colors.gray[200]);
 
     return (
         <div
@@ -284,21 +292,22 @@ export const PasswordFormValidation = (): JSX.Element => {
 
             <div className={classes.containerWrapper}>
                 <Card className={classes.container} elevation={4}>
-                    <div className={classes.block}>
-                        <Typography variant={'h6'} className={classes.sectionHeader}>
-                            Change Password
-                        </Typography>
-                        <Typography variant={'body1'}>
-                            Password must be at least 8 characters long, contain at least one uppercase character, one
-                            lowercase character, one number, and one special character.
-                        </Typography>
+                    <Typography variant={'h6'} className={classes.sectionHeader}>
+                        Change Password
+                    </Typography>
+                    <Typography variant={'body1'}>
+                        Password must be at least 8 characters long, contain at least one uppercase character, one
+                        lowercase character, one number, and one special character.
+                    </Typography>
 
-                        <Divider className={clsx(classes.divider, classes.topDivider)} />
+                    <Divider className={clsx(classes.divider, classes.topDivider)} />
+
+                    <div className={classes.formOverflow}>
                         <form>
                             <TextField
                                 id={'currentPassword'}
                                 label={'Old Password'}
-                                type={showcurrentPassword ? 'text' : 'password'}
+                                type={showCurrentPassword ? 'text' : 'password'}
                                 onChange={onCurrentPasswordChange}
                                 value={currentPassword}
                                 error={Boolean(currentPasswordError)}
@@ -311,10 +320,10 @@ export const PasswordFormValidation = (): JSX.Element => {
                                         <InputAdornment position={'end'}>
                                             <IconButton
                                                 style={{ height: 36, width: 36 }}
-                                                onClick={(): void => setShowcurrentPassword(!showcurrentPassword)}
+                                                onClick={(): void => setshowCurrentPassword(!showCurrentPassword)}
                                             >
-                                                {showcurrentPassword && <Visibility />}
-                                                {!showcurrentPassword && <VisibilityOff />}
+                                                {showCurrentPassword && <Visibility />}
+                                                {!showCurrentPassword && <VisibilityOff />}
                                             </IconButton>
                                         </InputAdornment>
                                     ),
@@ -351,23 +360,46 @@ export const PasswordFormValidation = (): JSX.Element => {
                             <List disablePadding component={'ul'} style={{ marginTop: 8 }}>
                                 <ListItem disableGutters className={classes.passwordCriteria}>
                                     {getPasswordCriteriaIcon(passwordErrors.minLengthRequired)}
-                                    <Typography variant={'caption'}>At least 8 characters in length</Typography>
+                                    <Typography
+                                        variant={'caption'}
+                                        style={{ color: passwordHintText(passwordErrors.minLengthRequired) }}
+                                    >
+                                        At least 8 characters in length
+                                    </Typography>
                                 </ListItem>
                                 <ListItem disableGutters className={classes.passwordCriteria}>
                                     {getPasswordCriteriaIcon(passwordErrors.atLeast1NumberRequired)}
-                                    <Typography variant={'caption'}>At least 1 digit</Typography>
+                                    <Typography
+                                        variant={'caption'}
+                                        style={{ color: passwordHintText(passwordErrors.atLeast1NumberRequired) }}
+                                    >
+                                        At least 1 digit
+                                    </Typography>
                                 </ListItem>
                                 <ListItem disableGutters className={classes.passwordCriteria}>
                                     {getPasswordCriteriaIcon(passwordErrors.atLeast1UpperCharRequired)}
-                                    <Typography variant={'caption'}>At least 1 uppercase letter</Typography>
+                                    <Typography
+                                        variant={'caption'}
+                                        style={{ color: passwordHintText(passwordErrors.atLeast1UpperCharRequired) }}
+                                    >
+                                        At least 1 uppercase letter
+                                    </Typography>
                                 </ListItem>
                                 <ListItem disableGutters className={classes.passwordCriteria}>
                                     {getPasswordCriteriaIcon(passwordErrors.atLeast1LowerCharRequired)}
-                                    <Typography variant={'caption'}>At least 1 lowercase letter</Typography>
+                                    <Typography
+                                        variant={'caption'}
+                                        style={{ color: passwordHintText(passwordErrors.atLeast1LowerCharRequired) }}
+                                    >
+                                        At least 1 lowercase letter
+                                    </Typography>
                                 </ListItem>
                                 <ListItem disableGutters className={classes.passwordCriteria}>
                                     {getPasswordCriteriaIcon(passwordErrors.atLeast1SplCharRequired)}
-                                    <Typography variant={'caption'}>
+                                    <Typography
+                                        variant={'caption'}
+                                        style={{ color: passwordHintText(passwordErrors.atLeast1SplCharRequired) }}
+                                    >
                                         At least 1 special character: (valid: ! @ # $ ^ &)
                                     </Typography>
                                 </ListItem>
@@ -382,7 +414,6 @@ export const PasswordFormValidation = (): JSX.Element => {
                                 onChange={onConfirmPasswordChange}
                                 value={confirmPassword}
                                 error={Boolean(confirmPasswordError)}
-                                onBlur={validateConfirmPassword}
                                 required
                                 fullWidth
                                 variant={'filled'}
@@ -401,32 +432,38 @@ export const PasswordFormValidation = (): JSX.Element => {
                                 }}
                             />
                         </form>
+                    </div>
+                    <Divider className={clsx(classes.divider, classes.bottomDivider)} />
+                    <div className={classes.submitButtonContainer}>
+                        <Button
+                            color={'primary'}
+                            style={{ width: 100 }}
+                            variant="outlined"
+                            onClick={(): void => clearForms()}
+                        >
+                            Cancel
+                        </Button>
                         <Spacer />
-                        <Divider className={clsx(classes.divider, classes.bottomDivider)} />
-                        <div className={classes.submitButtonContainer}>
-                            <Button color={'primary'} style={{ width: 100 }} variant="outlined">
-                                Cancel
-                            </Button>
-                            <Spacer />
-                            <Button
-                                color={'primary'}
-                                style={{ width: 100 }}
-                                variant="contained"
-                                disabled={!submitEnabled()}
-                            >
-                                Submit
-                            </Button>
-                        </div>
-                        <div className={classes.mobileSubmitButtonContainer}>
-                            <Button
-                                color={'primary'}
-                                style={{ width: '100%' }}
-                                variant="contained"
-                                disabled={!submitEnabled()}
-                            >
-                                Submit
-                            </Button>
-                        </div>
+                        <Button
+                            color={'primary'}
+                            style={{ width: 100 }}
+                            variant="contained"
+                            disabled={!submitEnabled()}
+                            onClick={(): void => clearForms()}
+                        >
+                            Submit
+                        </Button>
+                    </div>
+                    <div className={classes.mobileSubmitButtonContainer}>
+                        <Button
+                            color={'primary'}
+                            variant="contained"
+                            style={{ width: '100%' }}
+                            disabled={!submitEnabled()}
+                            onClick={(): void => clearForms()}
+                        >
+                            Submit
+                        </Button>
                     </div>
                 </Card>
             </div>

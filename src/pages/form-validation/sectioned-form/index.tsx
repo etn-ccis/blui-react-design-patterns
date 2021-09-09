@@ -260,7 +260,7 @@ export const SectionedFormValidation = (): JSX.Element => {
                         </IconButton>
                     </Hidden>
                     <Typography variant={'h6'} color={'inherit'}>
-                        In a List
+                        Sectioned Form
                     </Typography>
                 </Toolbar>
             </AppBar>
@@ -291,7 +291,6 @@ export const SectionedFormValidation = (): JSX.Element => {
                             <Select
                                 fullWidth
                                 labelId="select-level"
-                                label={'help'}
                                 value={level}
                                 onChange={(e): void => setLevel(String(e.target.value))}
                                 inputProps={{

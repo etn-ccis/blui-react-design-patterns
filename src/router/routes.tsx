@@ -35,9 +35,21 @@ export const PAGES: Routes = {
             title: 'Fixed Length Passcode',
             route: 'fixed-length-passcode',
         },
+        TABLE: {
+            title: 'In a Table',
+            route: 'in-a-table',
+        },
         SECTIONED_FORM: {
             title: 'Sectioned Form',
             route: 'in-a-sectioned-form',
+        },
+        PHONE_NUMBER_FORMAT: {
+            title: 'Phone Number Format',
+            route: 'phone-number-format',
+        },
+        VERIFY_ON_SUBMIT: {
+            title: 'Verify on Submit',
+            route: 'verify-on-submit',
         },
     },
     I18N: {
@@ -149,6 +161,9 @@ export type Routes = {
         LIST: RouteMetaData;
         SECTIONED_FORM: RouteMetaData;
         FIXED_LENGTH_PASSCODE: RouteMetaData;
+        VERIFY_ON_SUBMIT: RouteMetaData;
+        PHONE_NUMBER_FORMAT: RouteMetaData;
+        TABLE: RouteMetaData;
     };
     I18N: RouteMetaData;
     LISTS: RouteMetaData & {

@@ -17,8 +17,8 @@ export const PAGES: Routes = {
             route: 'collapsible',
         },
         DROPDOWN_COLLAPSIBLE: {
-            title: 'Dropdown Collapsible',
-            route: 'dropdown-collapsible',
+            title: 'Dropdown Toolbar',
+            route: 'dropdown-toolbar',
         },
         SEARCH: {
             title: 'Search',

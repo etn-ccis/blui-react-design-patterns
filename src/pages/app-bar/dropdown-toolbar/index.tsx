@@ -106,9 +106,26 @@ export const PxbDropdownToolbar = (): JSX.Element => {
                             title={'Appbar Title'}
                             subtitle={'Dropdown Toolbar'}
                             /* eslint-disable-next-line no-console */
-                            onClick={(): void => {console.log('clicked'); setShowMenu(true)}}
-                            menu={
-                                <Drawer
+                            // onClick={(): void => {console.log('clicked'); setShowMenu(true)}}
+                            onOpen={(): void => {
+                                /* eslint-disable-next-line no-console */
+                                console.log('clicked');
+                                setShowMenu(true)
+                            }}
+                            onClose={(): void => {
+                                /* eslint-disable-next-line no-console */
+                                console.log('clicked false');
+                                setShowMenu(false)
+                            }}
+                            
+                        >
+                            
+                        </DropdownToolbar>
+                    </Hidden>
+                    <div />
+                </Toolbar>
+            </AppBar>
+            <Drawer
                                     data-cy="bottom-sheet"
                                     anchor={'bottom'}
                                     transitionDuration={250}
@@ -137,12 +154,6 @@ export const PxbDropdownToolbar = (): JSX.Element => {
                                         />
                                     </List>
                                 </Drawer>
-                            }
-                        ></DropdownToolbar>
-                    </Hidden>
-                    <div />
-                </Toolbar>
-            </AppBar>
         </div>
     );
 };

@@ -7,7 +7,8 @@ describe('Form validation', () => {
     });
 
     it('should display page title', () => {
-        cy.get('[data-cy=pxb-toolbar]').should('contain', 'Phone Number Format');
+        cy.get('[data-cy=pxb-toolbar]')
+        .should('contain', 'Phone Number Format');
     });
 
     it('should display error for each country', () => {
@@ -78,6 +79,7 @@ describe('Form validation', () => {
         cy.get('[data-cy=phone-input] > .MuiInputBase-root > .MuiInputBase-input').click()
         cy.get('body').click(top, {force: true})
         cy.get('.MuiFormHelperText-root')
-        .invoke('css', 'color').should('equal', 'rgb(202, 60, 61)')
+        .invoke('css', 'color')
+        .should('equal', 'rgb(202, 60, 61)')
     });
 });

@@ -9,4 +9,8 @@ describe('Form validation', () => {
     it('should display page title', () => {
         cy.get('[data-cy=pxb-toolbar]').should('contain', 'In a List');
     });
+
+    it('should display ip address left aligned', () => {
+        cy.get('[data-cy=ip-address]').invoke('css', 'text-align').should('equal', 'left')
+    });
 });

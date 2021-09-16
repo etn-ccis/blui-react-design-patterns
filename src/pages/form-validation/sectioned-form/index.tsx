@@ -485,6 +485,7 @@ export const SectionedFormValidation = (): JSX.Element => {
                             color={'primary'}
                             variant={'contained'}
                             onClick={onSubmit}
+                            data-cy={'submit'}
                         >
                             Submit
                         </Button>

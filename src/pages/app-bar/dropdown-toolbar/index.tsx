@@ -9,9 +9,9 @@ import { TOGGLE_DRAWER } from '../../../redux/actions';
 const menuGroups = [
     {
         items: [
-            { title: 'All Locations', onClick: (): void => { } },
-            { title: 'Gary Steel Works', onClick: (): void => { } },
-            { title: 'US Steel', onClick: (): void => { } },
+            { title: 'All Locations', onClick: (): void => {} },
+            { title: 'Gary Steel Works', onClick: (): void => {} },
+            { title: 'US Steel', onClick: (): void => {} },
         ],
     },
 ];
@@ -43,7 +43,7 @@ export const PxbDropdownToolbar = (): JSX.Element => {
                             color={'inherit'}
                             onClick={(): void => {
                                 dispatch({ type: TOGGLE_DRAWER, payload: true });
-                                setShowMenu(true)
+                                setShowMenu(true);
                             }}
                             edge={'start'}
                         >
@@ -63,53 +63,44 @@ export const PxbDropdownToolbar = (): JSX.Element => {
                             subtitle={'Dropdown Toolbar'}
                             menu={
                                 <React.Fragment key={'bottom'}>
-
-                                <Drawer
-                                    data-cy="bottom-sheet"
-                                    anchor={'bottom'}
-                                    transitionDuration={250}
-                                    open={showMenu}
-                                    onClose={(): void => setShowMenu(false)}
-                                    classes={{ paper: classes.paper }}
-                                >
-                                    <List disablePadding>
-                                        <InfoListItem
-                                            data-cy="list-1"
-                                            dense
-                                            onClick={(): void => setShowMenu(false)}
-                                            title={'All Locations'}
-                                        />
-                                        <InfoListItem
-                                            data-cy="list-2"
-                                            dense
-                                            onClick={(): void => setShowMenu(false)}
-                                            title={'Gary Steel Works'}
-                                        />
-                                        <InfoListItem
-                                            data-cy="list-3"
-                                            dense
-                                            onClick={(): void => setShowMenu(false)}
-                                            title={'US Steel'}
-                                        />
-                                    </List>
-                                </Drawer>
+                                    <Drawer
+                                        data-cy="bottom-sheet"
+                                        anchor={'bottom'}
+                                        transitionDuration={250}
+                                        open={showMenu}
+                                        onClose={(): void => setShowMenu(false)}
+                                        classes={{ paper: classes.paper }}
+                                    >
+                                        <List disablePadding>
+                                            <InfoListItem
+                                                data-cy="list-1"
+                                                dense
+                                                onClick={(): void => setShowMenu(false)}
+                                                title={'All Locations'}
+                                            />
+                                            <InfoListItem
+                                                data-cy="list-2"
+                                                dense
+                                                onClick={(): void => setShowMenu(false)}
+                                                title={'Gary Steel Works'}
+                                            />
+                                            <InfoListItem
+                                                data-cy="list-3"
+                                                dense
+                                                onClick={(): void => setShowMenu(false)}
+                                                title={'US Steel'}
+                                            />
+                                        </List>
+                                    </Drawer>
                                 </React.Fragment>
                             }
-                            /* eslint-disable-next-line no-console */
-                            // onClick={(): void => {console.log('clicked'); setShowMenu(true)}}
                             onOpen={(): void => {
-                                /* eslint-disable-next-line no-console */
-                                console.log('clicked');
                                 setShowMenu(true);
                             }}
                             onClose={(): void => {
-                                /* eslint-disable-next-line no-console */
-                                console.log('clicked false');
                                 setShowMenu(false);
                             }}
-
-                        >
-                        </DropdownToolbar>
+                        ></DropdownToolbar>
                     </Hidden>
                     <div />
                 </Toolbar>

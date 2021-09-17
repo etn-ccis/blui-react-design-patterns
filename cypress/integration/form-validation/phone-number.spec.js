@@ -73,13 +73,4 @@ describe('Form validation', () => {
         .invoke('prop','placeholder')
         .should('contain', '#### ### ###')
     });
-
-    it('should display error in correct color #ca3c3d', () => {
-        cy.get('[data-cy=country-selector]').should('contain', 'US')
-        cy.get('[data-cy=phone-input] > .MuiInputBase-root > .MuiInputBase-input').click()
-        cy.get('body').click(top, {force: true})
-        cy.get('.MuiFormHelperText-root')
-        .invoke('css', 'color')
-        .should('equal', 'rgb(202, 60, 61)')
-    });
 });

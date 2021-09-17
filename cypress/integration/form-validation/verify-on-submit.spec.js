@@ -35,13 +35,6 @@ describe('Form validation', () => {
         cy.get('#serialNumber-helper-text').should('contain', 'Device not found.')
     });
 
-    it('should display error in correct color #ca3c3d', () => {
-        cy.get('#serialNumber').type('111')
-        cy.get('[data-cy=search-button]').click()
-        cy.get('#serialNumber-helper-text')
-        .invoke('css', 'color').should('equal', 'rgb(202, 60, 61)')
-    });
-
     it('should display success on valid search', () => {
         cy.get('#serialNumber').type('123')
         cy.get('[data-cy=search-button]').click()

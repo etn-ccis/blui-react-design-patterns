@@ -10,29 +10,22 @@ describe('Form validation', () => {
         cy.get('[data-cy=pxb-toolbar]').should('contain', 'Sectioned Form');
     });
 
-    it('should display required for fields on submit color #ca3c3d', () => {
+    it('should display required for fields on submit', () => {
         cy.get('[data-cy=submit]').click()
         cy.get('#name-field-helper-text')
         .should('contain', 'Required')
-        .invoke('css', 'color').should('equal', 'rgb(202, 60, 61)')
         cy.get('#address-field-helper-text')
         .should('contain', 'Required')
-        .invoke('css', 'color').should('equal', 'rgb(202, 60, 61)')
         cy.get('#city-field-helper-text')
         .should('contain', 'Required')
-        .invoke('css', 'color').should('equal', 'rgb(202, 60, 61)')
         cy.get('.MuiFormControl-fullWidth > .MuiFormHelperText-root')
         .should('contain', 'Required')
-        .invoke('css', 'color').should('equal', 'rgb(202, 60, 61)')
         cy.get('#zip-field-helper-text')
         .should('contain', 'Required')
-        .invoke('css', 'color').should('equal', 'rgb(202, 60, 61)')
         cy.get('#first-name-field-helper-text')
         .should('contain', 'Required')
-        .invoke('css', 'color').should('equal', 'rgb(202, 60, 61)')
-        /cy.get('#email-field-helper-text')
+        cy.get('#email-field-helper-text')
         .should('contain', 'Required')
-        .invoke('css', 'color').should('equal', 'rgb(202, 60, 61)')
     });
 
     it('should display not required for fields after refresh', () => {

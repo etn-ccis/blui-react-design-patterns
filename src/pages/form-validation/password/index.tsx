@@ -76,6 +76,10 @@ const useStyles = makeStyles((theme: Theme) => ({
     appbarRoot: {
         padding: 0,
     },
+    visibilityToggle: {
+        height: 36,
+        width: 36
+    },
     toolbarGutters: {
         padding: '0 16px',
     },
@@ -172,7 +176,7 @@ export const PasswordFormValidation = (): JSX.Element => {
             tempcurrentPasswordError = 'required';
         }
         setCurrentPasswordError(tempcurrentPasswordError);
-    }, [currentPassword, setCurrentPasswordError]);
+    }, [currentPassword]);
 
     const validateNewPassword = useCallback((): void => {
         const tempNewPassword = newPassword;
@@ -181,7 +185,7 @@ export const PasswordFormValidation = (): JSX.Element => {
             tempNewPasswordError = 'required';
         }
         setNewPasswordError(tempNewPasswordError);
-    }, [newPassword, passwordErrors, setNewPasswordError]);
+    }, [newPassword, passwordErrors]);
 
     const validatePasswordCriteria = useCallback((): void => {
         if (newPasswordError) {
@@ -189,7 +193,7 @@ export const PasswordFormValidation = (): JSX.Element => {
         } else {
             setNewPasswordError(null);
         }
-    }, [newPasswordError, validateNewPassword, setNewPasswordError]);
+    }, [newPasswordError, validateNewPassword]);
 
     const onCurrentPasswordChange: OnChangeHandler = useCallback(
         (event) => {
@@ -212,7 +216,7 @@ export const PasswordFormValidation = (): JSX.Element => {
                 setConfirmPasswordError(PASSWORD_MISMATCH);
             }
         },
-        [setNewPassword, validatePasswordCriteria, confirmPassword]
+        [validatePasswordCriteria, confirmPassword]
     );
 
     const onConfirmPasswordChange: OnChangeHandler = useCallback(
@@ -262,7 +266,7 @@ export const PasswordFormValidation = (): JSX.Element => {
     return (
         <div
             style={{
-                backgroundColor: '#E5E5E5',
+                backgroundColor: theme.palette.background.default,
                 color: theme.palette.text.primary,
                 minHeight: '100vh',
                 display: 'flex',
@@ -319,7 +323,7 @@ export const PasswordFormValidation = (): JSX.Element => {
                                     endAdornment: (
                                         <InputAdornment position={'end'}>
                                             <IconButton
-                                                style={{ height: 36, width: 36 }}
+                                                className={classes.visibilityToggle}
                                                 onClick={(): void => setshowCurrentPassword(!showCurrentPassword)}
                                             >
                                                 {showCurrentPassword && <Visibility />}
@@ -346,7 +350,7 @@ export const PasswordFormValidation = (): JSX.Element => {
                                     endAdornment: (
                                         <InputAdornment position={'end'}>
                                             <IconButton
-                                                style={{ height: 36, width: 36 }}
+                                                className={classes.visibilityToggle}
                                                 onClick={(): void => setShowNewPassword(!showNewPassword)}
                                             >
                                                 {showNewPassword && <Visibility />}
@@ -421,7 +425,7 @@ export const PasswordFormValidation = (): JSX.Element => {
                                     endAdornment: (
                                         <InputAdornment position={'end'}>
                                             <IconButton
-                                                style={{ height: 36, width: 36 }}
+                                                className={classes.visibilityToggle}
                                                 onClick={(): void => setShowConfirmPassword(!showConfirmPassword)}
                                             >
                                                 {showConfirmPassword && <Visibility />}

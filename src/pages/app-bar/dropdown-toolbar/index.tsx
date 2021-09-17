@@ -49,14 +49,14 @@ export const PxbDropdownToolbar = (): JSX.Element => {
                             <MenuIcon />
                         </IconButton>
                     </Hidden>
-                    <Hidden smDown={true}>
+                    <Hidden xsDown={true}>
                         <DropdownToolbar
                             title={'Appbar Title'}
                             subtitle={'Dropdown Toolbar'}
                             menuGroups={menuGroups}
                         ></DropdownToolbar>
                     </Hidden>
-                    <Hidden mdUp={true}>
+                    <Hidden smUp={true}>
                         <DropdownToolbar
                             title={'Appbar Title'}
                             subtitle={'Dropdown Toolbar'}

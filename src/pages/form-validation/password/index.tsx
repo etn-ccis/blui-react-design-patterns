@@ -40,8 +40,8 @@ const useStyles = makeStyles((theme: Theme) => ({
         paddingLeft: theme.spacing(3),
         paddingRight: theme.spacing(3),
         maxWidth: 450,
-        maxHeight: 740,
-        height: '100vh',
+        height: '100%',
+        maxHeight: 'calc(100vh - 64px)',
         overflow: 'auto',
         [theme.breakpoints.down('xs')]: {
             width: '100%',
@@ -62,11 +62,11 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
     newPasswordInputField: {
         marginTop: theme.spacing(4),
+        marginBottom: theme.spacing(1),
     },
     formOverflow: {
         display: 'flex',
-        flex: '1 1 0',
-        height: '100%',
+        flex: '1',
         overflow: 'auto',
     },
     passwordCriteria: {
@@ -102,9 +102,9 @@ const useStyles = makeStyles((theme: Theme) => ({
         },
     },
     bottomDivider: {
-        marginTop: theme.spacing(6),
+        marginTop: theme.spacing(3),
         [theme.breakpoints.down('xs')]: {
-            marginTop: theme.spacing(2),
+            marginTop: theme.spacing(1),
         },
     },
     submitButtonContainer: {

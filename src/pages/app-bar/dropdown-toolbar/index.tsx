@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { AppBar, Drawer, Hidden, List, Toolbar, IconButton } from '@material-ui/core';
+import { AppBar, Drawer, Hidden, List, ListItem, ListItemText, Toolbar, IconButton } from '@material-ui/core';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import MenuIcon from '@material-ui/icons/Menu';
-import { DropdownToolbar, InfoListItem } from '@pxblue/react-components';
+import { DropdownToolbar } from '@pxblue/react-components';
 import { useDispatch } from 'react-redux';
 import { TOGGLE_DRAWER } from '../../../redux/actions';
 
@@ -43,7 +43,6 @@ export const PxbDropdownToolbar = (): JSX.Element => {
                             color={'inherit'}
                             onClick={(): void => {
                                 dispatch({ type: TOGGLE_DRAWER, payload: true });
-                                setShowMenu(true);
                             }}
                             edge={'start'}
                         >
@@ -51,11 +50,7 @@ export const PxbDropdownToolbar = (): JSX.Element => {
                         </IconButton>
                     </Hidden>
                     <Hidden smDown={true}>
-                        <DropdownToolbar
-                            title={'Appbar Title'}
-                            subtitle={'Dropdown Toolbar'}
-                            menuGroups={menuGroups}
-                        ></DropdownToolbar>
+                        <DropdownToolbar title={'Appbar Title'} menuGroups={menuGroups}></DropdownToolbar>
                     </Hidden>
                     <Hidden mdUp={true}>
                         <DropdownToolbar
@@ -71,25 +66,12 @@ export const PxbDropdownToolbar = (): JSX.Element => {
                                         onClose={(): void => setShowMenu(false)}
                                         classes={{ paper: classes.paper }}
                                     >
-                                        <List disablePadding>
-                                            <InfoListItem
-                                                data-cy="list-1"
-                                                dense
-                                                onClick={(): void => setShowMenu(false)}
-                                                title={'All Locations'}
-                                            />
-                                            <InfoListItem
-                                                data-cy="list-2"
-                                                dense
-                                                onClick={(): void => setShowMenu(false)}
-                                                title={'Gary Steel Works'}
-                                            />
-                                            <InfoListItem
-                                                data-cy="list-3"
-                                                dense
-                                                onClick={(): void => setShowMenu(false)}
-                                                title={'US Steel'}
-                                            />
+                                        <List>
+                                            {['All Locations', 'Gary Steel Works', 'US Steel'].map((text) => (
+                                                <ListItem button key={text} onClick={(): void => setShowMenu(false)}>
+                                                    <ListItemText primary={text} />
+                                                </ListItem>
+                                            ))}
                                         </List>
                                     </Drawer>
                                 </React.Fragment>

@@ -78,7 +78,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
     visibilityToggle: {
         height: 36,
-        width: 36
+        width: 36,
     },
     toolbarGutters: {
         padding: '0 16px',

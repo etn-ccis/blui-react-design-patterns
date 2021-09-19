@@ -26,6 +26,16 @@ const useStyles = makeStyles((theme: Theme) => ({
     paper: {
         marginTop: `${theme.spacing(1)}px`,
     },
+    arrowDown: {
+        '& svg': {
+            transform: 'none',
+        },
+    },
+    arrowUp: {
+        '& svg': {
+            transform: 'rotate(180deg)',
+        },
+    },
 }));
 
 export const PxbDropdownToolbar = (): JSX.Element => {
@@ -60,6 +70,9 @@ export const PxbDropdownToolbar = (): JSX.Element => {
                         <DropdownToolbar
                             title={'Appbar Title'}
                             subtitle={'Dropdown Toolbar'}
+                            classes={{
+                                subtitleContent: showMenu ? classes.arrowUp : classes.arrowDown,
+                            }}
                             menu={
                                 <React.Fragment key={'bottom'}>
                                     <Drawer

@@ -188,8 +188,13 @@ export const FixedLengthPasscodeValidation = (): JSX.Element => {
                         InputProps={{
                             endAdornment: (
                                 <InputAdornment position="end">
-                                    {loading && <CircularProgress style={{ height: 24, width: 24 }} />}
-                                    {success && <Done style={{ color: Colors.green[500] }} />}
+                                    {loading && (
+                                        <CircularProgress
+                                            data-cy={'loading-spinner'}
+                                            style={{ height: 24, width: 24 }}
+                                        />
+                                    )}
+                                    {success && <Done data-cy={'success'} style={{ color: Colors.green[500] }} />}
                                 </InputAdornment>
                             ),
                         }}
@@ -207,6 +212,7 @@ export const FixedLengthPasscodeValidation = (): JSX.Element => {
                         onClick={resetForm}
                         disabled={loading}
                         startIcon={<Refresh />}
+                        data-cy={'reset'}
                     >
                         Reset Form
                     </Button>

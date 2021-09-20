@@ -2,6 +2,7 @@ import React, { useCallback, useState } from 'react';
 import {
     Badge,
     Card,
+    Divider,
     Hidden,
     IconButton,
     InputProps,
@@ -19,7 +20,6 @@ import { AppBar, EmptyState, InfoListItem, Spacer } from '@pxblue/react-componen
 import { useDispatch } from 'react-redux';
 import { TOGGLE_DRAWER } from '../../../redux/actions';
 import { Close, Search } from '@material-ui/icons';
-// import clsx from 'clsx';
 
 type OnChangeHandler = InputProps['onChange'];
 
@@ -38,7 +38,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         flexDirection: 'row',
     },
     appBar: {
-        zIndex: 1000,
+        zIndex: 10000,
     },
     mobileAppbar: {
         height: theme.spacing(7),
@@ -63,23 +63,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
 }));
 
-const data = [
-    'Apple',
-    'Grape',
-    'Orange',
-    'Pineapple',
-    'Watermelon',
-    'Apple',
-    'Grape',
-    'Orange',
-    'Pineapple',
-    'Watermelon',
-    'Apple',
-    'Grape',
-    'Orange',
-    'Pineapple',
-    'Watermelon',
-];
+const data = ['Apple', 'Grape', 'Orange', 'Pineapple', 'Watermelon'];
 
 export const PageWideSearch = (): JSX.Element => {
     const dispatch = useDispatch();
@@ -142,34 +126,9 @@ export const PageWideSearch = (): JSX.Element => {
                         </IconButton>
                     </div>
                 </Toolbar>
-                {/* {isMobile && (
-                    <Toolbar className={classes.mobileSearchToolbar}>
-                        <TextField
-                            placeholder="Search"
-                            variant="standard"
-                            value={searchTerm}
-                            onChange={onSearchTermChange}
-                            InputProps={{
-                                disableUnderline: true,
-                                startAdornment: <Search style={{ marginRight: theme.spacing(4) }} />,
-                                endAdornment: (
-                                    <Close
-                                        onClick={(): void => {
-                                            setSearchTerm('');
-                                            search('');
-                                        }}
-                                        style={{ cursor: 'pointer' }}
-                                    />
-                                ),
-                            }}
-                            style={{ width: '100%' }}
-                        />
-                    </Toolbar>
-                )} */}
             </AppBar>
-            {/* <div style={{ position: 'sticky', top: 0 }}> */}
             {isMobile && (
-                <AppBar variant={'collapsed'} className={classes.mobileAppbar} position={'sticky'}>
+                <AppBar variant={'collapsed'} className={classes.mobileAppbar} position={'sticky'} elevation={0}>
                     <Toolbar className={classes.mobileSearchToolbar}>
                         <TextField
                             placeholder="Search"
@@ -194,7 +153,7 @@ export const PageWideSearch = (): JSX.Element => {
                     </Toolbar>
                 </AppBar>
             )}
-            {/* </div> */}
+            <Divider />
             <div className={classes.bodyContent}>
                 {!isMobile && (
                     <div className={classes.desktopSearchContainer}>

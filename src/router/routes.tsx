@@ -22,8 +22,8 @@ export const PAGES: Routes = {
         },
         PAGE_WIDE_SEARCH: {
             title: 'Page Wide Search',
-            route: 'page-wide-search'
-        }
+            route: 'page-wide-search',
+        },
     },
     FORM_VALIDATION: {
         title: 'Forms and Validation',

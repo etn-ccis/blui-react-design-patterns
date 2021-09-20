@@ -68,6 +68,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         display: 'flex',
         flex: '1',
         overflow: 'auto',
+        width: '100%',
     },
     passwordCriteria: {
         paddingTop: 0,
@@ -307,7 +308,7 @@ export const PasswordFormValidation = (): JSX.Element => {
                     <Divider className={clsx(classes.divider, classes.topDivider)} />
 
                     <div className={classes.formOverflow}>
-                        <form>
+                        <form style={{ width: '100%' }}>
                             <TextField
                                 id={'currentPassword'}
                                 label={'Old Password'}

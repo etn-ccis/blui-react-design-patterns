@@ -7,7 +7,7 @@ import {
     IconButton,
     InputProps,
     TextField,
-    Toolbar /*, useMediaQuery*/,
+    Toolbar,
     Typography,
     useMediaQuery,
 } from '@material-ui/core';

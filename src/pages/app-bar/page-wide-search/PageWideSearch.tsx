@@ -8,6 +8,7 @@ import {
     TextField,
     Toolbar /*, useMediaQuery*/,
     Typography,
+    useMediaQuery,
 } from '@material-ui/core';
 import { makeStyles, Theme, useTheme } from '@material-ui/core/styles';
 import HelpIcon from '@material-ui/icons/Help';
@@ -17,7 +18,8 @@ import NotificationsIcon from '@material-ui/icons/Notifications';
 import { AppBar, EmptyState, InfoListItem, Spacer } from '@pxblue/react-components';
 import { useDispatch } from 'react-redux';
 import { TOGGLE_DRAWER } from '../../../redux/actions';
-import { Search } from '@material-ui/icons';
+import { Close, Search } from '@material-ui/icons';
+// import clsx from 'clsx';
 
 type OnChangeHandler = InputProps['onChange'];
 
@@ -35,20 +37,55 @@ const useStyles = makeStyles((theme: Theme) => ({
         display: 'flex',
         flexDirection: 'row',
     },
+    appBar: {
+        zIndex: 1000,
+    },
+    mobileAppbar: {
+        height: theme.spacing(7),
+    },
+    mobileSearchToolbar: {
+        backgroundColor: theme.palette.background.paper,
+        height: theme.spacing(7),
+        overflowX: 'auto',
+    },
     desktopSearchContainer: {
         display: 'flex',
         marginTop: theme.spacing(4),
         marginBottom: theme.spacing(4),
+        marginRight: theme.spacing(4),
+    },
+    resultsCard: {
+        margin: `0 ${theme.spacing(4)}px`,
+        [theme.breakpoints.down('xs')]: {
+            margin: 0,
+            borderRadius: 0,
+        },
     },
 }));
 
-const data = ['Apple', 'Grape', 'Orange', 'Pineapple', 'Watermelon'];
+const data = [
+    'Apple',
+    'Grape',
+    'Orange',
+    'Pineapple',
+    'Watermelon',
+    'Apple',
+    'Grape',
+    'Orange',
+    'Pineapple',
+    'Watermelon',
+    'Apple',
+    'Grape',
+    'Orange',
+    'Pineapple',
+    'Watermelon',
+];
 
 export const PageWideSearch = (): JSX.Element => {
     const dispatch = useDispatch();
     const theme = useTheme();
     const classes = useStyles(theme);
-    // const isMobile = useMediaQuery(theme.breakpoints.down('xs'));
+    const isMobile = useMediaQuery(theme.breakpoints.down('xs'));
     const [searchTerm, setSearchTerm] = useState('');
     const [searchResults, setSearchResults] = useState(data);
 
@@ -72,7 +109,7 @@ export const PageWideSearch = (): JSX.Element => {
 
     return (
         <div style={{ minHeight: '100vh' }}>
-            <AppBar variant={'collapsed'}>
+            <AppBar className={classes.appBar} variant={'collapsed'} position={'sticky'}>
                 <Toolbar data-cy={'toolbar'} classes={{ gutters: classes.toolbarGutters }}>
                     <Hidden mdUp={true}>
                         <IconButton
@@ -82,6 +119,7 @@ export const PageWideSearch = (): JSX.Element => {
                             }}
                             color={'inherit'}
                             edge={'start'}
+                            style={{ marginRight: 20 }}
                         >
                             <MenuIcon />
                         </IconButton>
@@ -104,15 +142,69 @@ export const PageWideSearch = (): JSX.Element => {
                         </IconButton>
                     </div>
                 </Toolbar>
+                {/* {isMobile && (
+                    <Toolbar className={classes.mobileSearchToolbar}>
+                        <TextField
+                            placeholder="Search"
+                            variant="standard"
+                            value={searchTerm}
+                            onChange={onSearchTermChange}
+                            InputProps={{
+                                disableUnderline: true,
+                                startAdornment: <Search style={{ marginRight: theme.spacing(4) }} />,
+                                endAdornment: (
+                                    <Close
+                                        onClick={(): void => {
+                                            setSearchTerm('');
+                                            search('');
+                                        }}
+                                        style={{ cursor: 'pointer' }}
+                                    />
+                                ),
+                            }}
+                            style={{ width: '100%' }}
+                        />
+                    </Toolbar>
+                )} */}
             </AppBar>
+            {/* <div style={{ position: 'sticky', top: 0 }}> */}
+            {isMobile && (
+                <AppBar variant={'collapsed'} className={classes.mobileAppbar} position={'sticky'}>
+                    <Toolbar className={classes.mobileSearchToolbar}>
+                        <TextField
+                            placeholder="Search"
+                            variant="standard"
+                            value={searchTerm}
+                            onChange={onSearchTermChange}
+                            InputProps={{
+                                disableUnderline: true,
+                                startAdornment: <Search style={{ marginRight: theme.spacing(4) }} />,
+                                endAdornment: (
+                                    <Close
+                                        onClick={(): void => {
+                                            setSearchTerm('');
+                                            search('');
+                                        }}
+                                        style={{ cursor: 'pointer' }}
+                                    />
+                                ),
+                            }}
+                            style={{ width: '100%' }}
+                        />
+                    </Toolbar>
+                </AppBar>
+            )}
+            {/* </div> */}
             <div className={classes.bodyContent}>
-                <div className={classes.desktopSearchContainer}>
-                    <Spacer />
-                    <TextField label="Search" variant="standard" value={searchTerm} onChange={onSearchTermChange} />
-                </div>
+                {!isMobile && (
+                    <div className={classes.desktopSearchContainer}>
+                        <Spacer />
+                        <TextField label="Search" variant="standard" value={searchTerm} onChange={onSearchTermChange} />
+                    </div>
+                )}
 
                 {searchResults.length > 0 && (
-                    <Card>
+                    <Card className={classes.resultsCard}>
                         {searchResults.map((item, index) => (
                             <InfoListItem
                                 title={item}

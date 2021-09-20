@@ -1,7 +1,7 @@
 /// <reference types="cypress" />
 
 
-describe('Form validation', () => {
+describe('Form validation sectioned form', () => {
     beforeEach(() => {
         cy.visit('http://localhost:3000/in-a-sectioned-form');
     });
@@ -32,7 +32,6 @@ describe('Form validation', () => {
         cy.get('[data-cy=submit]').click()
         cy.get('#address-field-helper-text')
         .should('contain', 'Required')
-        .invoke('css', 'color').should('equal', 'rgb(202, 60, 61)')
         cy.reload()
         cy.get('#address-field-helper-text').should('not.exist')
     });

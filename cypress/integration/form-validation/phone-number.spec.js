@@ -1,7 +1,7 @@
 /// <reference types="cypress" />
 
 
-describe('Form validation', () => {
+describe('Form validation phone number', () => {
     beforeEach(() => {
         cy.visit('http://localhost:3000/phone-number-format');
     });

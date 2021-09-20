@@ -1,7 +1,7 @@
 /// <reference types="cypress" />
 
 
-describe('Form validation', () => {
+describe('Form validation fix length passcode', () => {
     beforeEach(() => {
         cy.visit('http://localhost:3000/fixed-length-passcode');
     });

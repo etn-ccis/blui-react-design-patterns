@@ -144,9 +144,10 @@ export const PasswordFormValidation = (): JSX.Element => {
     const [newPasswordError, setNewPasswordError] = useState<FormError>();
     const [confirmPassword, setConfirmPassword] = useState('');
     const [confirmPasswordError, setConfirmPasswordError] = useState<FormError>();
-    const [showCurrentPassword, setshowCurrentPassword] = useState<boolean>(false);
+    const [showCurrentPassword, setShowCurrentPassword] = useState<boolean>(false);
     const [showNewPassword, setShowNewPassword] = useState<boolean>(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState<boolean>(false);
+    const [blurredConfirmPassword, setBlurredConfirmPassword] = useState<boolean>(false);
     const [passwordErrors, setPasswordErrors] = useState({
         minLengthRequired: false,
         atLeast1UpperCharRequired: false,
@@ -171,21 +172,19 @@ export const PasswordFormValidation = (): JSX.Element => {
     );
 
     const validateCurrentPassword = useCallback((): void => {
-        const tempcurrentPassword = currentPassword;
-        let tempcurrentPasswordError = '';
-        if (!tempcurrentPassword.trim()) {
-            tempcurrentPasswordError = 'required';
+        let err = '';
+        if (!currentPassword.trim()) {
+            err = 'required';
         }
-        setCurrentPasswordError(tempcurrentPasswordError);
+        setCurrentPasswordError(err);
     }, [currentPassword]);
 
     const validateNewPassword = useCallback((): void => {
-        const tempNewPassword = newPassword;
-        let tempNewPasswordError = '';
-        if (!tempNewPassword.trim() || Object.values(passwordErrors).includes(false)) {
-            tempNewPasswordError = 'required';
+        let err = '';
+        if (!newPassword.trim() || Object.values(passwordErrors).includes(false)) {
+            err = 'required';
         }
-        setNewPasswordError(tempNewPasswordError);
+        setNewPasswordError(err);
     }, [newPassword, passwordErrors]);
 
     const validatePasswordCriteria = useCallback((): void => {
@@ -224,11 +223,11 @@ export const PasswordFormValidation = (): JSX.Element => {
         (event) => {
             setConfirmPasswordError('');
             setConfirmPassword(event.target.value);
-            if (newPassword !== event.target.value) {
+            if (newPassword !== event.target.value && blurredConfirmPassword) {
                 setConfirmPasswordError(PASSWORD_MISMATCH);
             }
         },
-        [newPassword]
+        [newPassword, blurredConfirmPassword]
     );
 
     useEffect(() => {
@@ -260,6 +259,10 @@ export const PasswordFormValidation = (): JSX.Element => {
         setCurrentPassword('');
         setConfirmPassword('');
         setNewPassword('');
+        setBlurredConfirmPassword(false);
+        setConfirmPasswordError('');
+        setCurrentPasswordError('');
+
     };
 
     const passwordHintText = (error: boolean): string => (error ? theme.palette.text.primary : Colors.gray[200]);
@@ -325,7 +328,7 @@ export const PasswordFormValidation = (): JSX.Element => {
                                         <InputAdornment position={'end'}>
                                             <IconButton
                                                 className={classes.visibilityToggle}
-                                                onClick={(): void => setshowCurrentPassword(!showCurrentPassword)}
+                                                onClick={(): void => setShowCurrentPassword(!showCurrentPassword)}
                                             >
                                                 {showCurrentPassword && <Visibility />}
                                                 {!showCurrentPassword && <VisibilityOff />}
@@ -417,8 +420,14 @@ export const PasswordFormValidation = (): JSX.Element => {
                                 type={showConfirmPassword ? 'text' : 'password'}
                                 helperText={confirmPasswordError}
                                 onChange={onConfirmPasswordChange}
+                                onBlur={(): void => {
+                                    setBlurredConfirmPassword(true);
+                                    if (newPassword !== confirmPassword) {
+                                        setConfirmPasswordError(PASSWORD_MISMATCH);
+                                    }
+                                }}
                                 value={confirmPassword}
-                                error={Boolean(confirmPasswordError)}
+                                error={Boolean(confirmPasswordError) && blurredConfirmPassword}
                                 required
                                 fullWidth
                                 variant={'filled'}

@@ -22,6 +22,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import { useDispatch } from 'react-redux';
 import { TOGGLE_DRAWER } from '../../../redux/actions';
 import * as colors from '@pxblue/colors';
+import clsx from 'clsx';
 
 const useStyles = makeStyles((theme: Theme) => ({
     tableBody: {
@@ -49,38 +50,28 @@ const useStyles = makeStyles((theme: Theme) => ({
         color: colors.gray[500],
         marginTop: `${theme.spacing(3)}px`,
     },
-    expanded: {
-        '& $liner': {
-            top: 80,
-        },
-    },
-    collapsed: {
-        '& $title': {
-            fontSize: '1.25rem',
-            fontWeight: 600,
-        },
-        '& $subtitle': {
-            fontSize: 0,
-        },
-        '& $info': {
-            fontSize: '1rem',
-            marginTop: '-0.25rem',
-            fontWeight: 400,
-        },
-    },
     toolbarGutters: {
         paddingLeft: 16,
         paddingRight: 4,
     },
-    bodyContent: {
-        maxWidth: '900px',
-        margin: '0 auto',
-        padding: `0 ${theme.spacing(2)}`,
+    checkboxCell: {
+        padding: `0 0 0 ${theme.spacing(2.5)}px`,
+        minWidth: '72px',
+        // left: 0,
+        // position: "sticky",
+        // zIndex: theme.zIndex.appBar + 1
     },
-    toolbarRightContent: {
-        display: 'flex',
-        flexDirection: 'row',
+    contextualTableRow: {
+        // '> .MuiTableRow-root': {
+            backgroundColor: 'white',
+        // }
     },
+    sticky: {
+        position: "sticky",
+        left: 0,
+        background: "white",
+        boxShadow: "5px 2px 5px grey"
+      }
 }));
 
 const createData = (name: string, ip: string): any => ({name, ip});
@@ -93,17 +84,18 @@ export const ContextualAction = (): JSX.Element => {
     const classes = useStyles();
 
     const getTable = (): JSX.Element => (
-        <TableContainer component={Paper} className={classes.tableContainer}>
+        <TableContainer component={Paper}>
             <Table>
                 <TableHead>
                     <TableRow>
-                        <TableCell>
+                        <TableCell className={clsx(classes.checkboxCell, classes.sticky)}>
                             <FormControlLabel
                                 control={
                                     <Checkbox
                                         checked={true}
-                                        name="eulaConformation"
+                                        name="checkbox-header-cell"
                                         color="primary"
+                                        size="small"
                                     />
                                 }
                                 label=""
@@ -115,14 +107,15 @@ export const ContextualAction = (): JSX.Element => {
                 </TableHead>
                 <TableBody>
                     {rows.map((row, index) => (
-                        <TableRow key={index} hover={false}>
-                            <TableCell component="th" scope="row">
+                        <TableRow key={index} hover={false} classes={{ root: classes.contextualTableRow }}>
+                            <TableCell component="th" scope="row" className={classes.checkboxCell}>
                                 <FormControlLabel
                                     control={
                                         <Checkbox
                                             checked={true}
-                                            name="eulaConformation1"
+                                            name="checkbox-cell"
                                             color="primary"
+                                            size="small"
                                         />
                                     }
                                     label=""
@@ -180,7 +173,8 @@ export const ContextualAction = (): JSX.Element => {
                             </Button>
                         </div>
                         <div>
-                            <Hidden xsDown>{getTable()}</Hidden>
+                            {/* <Hidden xsDown>{getTable()}</Hidden> */}
+                            {getTable()}
                         </div>
                         <div>
                             <Typography variant="body2" className={classes.noteText}>

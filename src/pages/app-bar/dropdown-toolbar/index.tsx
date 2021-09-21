@@ -1,20 +1,10 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { AppBar, Drawer, Hidden, List, ListItem, ListItemText, Toolbar, IconButton } from '@material-ui/core';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import MenuIcon from '@material-ui/icons/Menu';
 import { DropdownToolbar } from '@pxblue/react-components';
 import { useDispatch } from 'react-redux';
 import { TOGGLE_DRAWER } from '../../../redux/actions';
-
-const menuGroups = [
-    {
-        items: [
-            { title: 'All Locations', onClick: (): void => {} },
-            { title: 'Gary Steel Works', onClick: (): void => {} },
-            { title: 'US Steel', onClick: (): void => {} },
-        ],
-    },
-];
 
 const useStyles = makeStyles((theme: Theme) => ({
     toolbarGutters: {
@@ -42,6 +32,39 @@ export const PxbDropdownToolbar = (): JSX.Element => {
     const dispatch = useDispatch();
     const classes = useStyles();
     const [showMenu, setShowMenu] = useState<boolean>(false);
+    const [subtitle, setSubtitle] = useState<string>('Subtitle');
+
+    const updateToolbar = useCallback((subtitleText: string, hideBottomSheet?: boolean): void => {
+        if (hideBottomSheet) {
+            setShowMenu(false);
+        }
+        setSubtitle(subtitleText);
+    }, []);
+
+    const menuGroups = [
+        {
+            items: [
+                {
+                    title: 'All Locations',
+                    onClick: (): void => {
+                        updateToolbar('All Locations');
+                    },
+                },
+                {
+                    title: 'Gary Steel Works',
+                    onClick: (): void => {
+                        updateToolbar('Gary Steel Works');
+                    },
+                },
+                {
+                    title: 'US Steel',
+                    onClick: (): void => {
+                        updateToolbar('US Steel');
+                    },
+                },
+            ],
+        },
+    ];
 
     return (
         <div style={{ minHeight: '100vh' }}>
@@ -60,16 +83,12 @@ export const PxbDropdownToolbar = (): JSX.Element => {
                         </IconButton>
                     </Hidden>
                     <Hidden xsDown={true}>
-                        <DropdownToolbar
-                            title={'Appbar Title'}
-                            subtitle={'Dropdown Toolbar'}
-                            menuGroups={menuGroups}
-                        ></DropdownToolbar>
+                        <DropdownToolbar title={'Title'} subtitle={subtitle} menuGroups={menuGroups}></DropdownToolbar>
                     </Hidden>
                     <Hidden smUp={true}>
                         <DropdownToolbar
-                            title={'Appbar Title'}
-                            subtitle={'Dropdown Toolbar'}
+                            title={'Title'}
+                            subtitle={subtitle}
                             classes={{
                                 subtitleContent: showMenu ? classes.arrowUp : classes.arrowDown,
                             }}
@@ -84,9 +103,13 @@ export const PxbDropdownToolbar = (): JSX.Element => {
                                         classes={{ paper: classes.paper }}
                                     >
                                         <List>
-                                            {['All Locations', 'Gary Steel Works', 'US Steel'].map((text) => (
-                                                <ListItem button key={text} onClick={(): void => setShowMenu(false)}>
-                                                    <ListItemText primary={text} />
+                                            {menuGroups[0].items.map((text) => (
+                                                <ListItem
+                                                    button
+                                                    key={text.title}
+                                                    onClick={(): void => updateToolbar(text.title, true)}
+                                                >
+                                                    <ListItemText primary={text.title} />
                                                 </ListItem>
                                             ))}
                                         </List>

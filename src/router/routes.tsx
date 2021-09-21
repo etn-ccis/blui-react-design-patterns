@@ -16,6 +16,10 @@ export const PAGES: Routes = {
             title: 'Collapsible',
             route: 'collapsible',
         },
+        CONTEXTUAL_ACTION: {
+            title: 'Contextual Action',
+            route: 'contextual-action',
+        },
         SEARCH: {
             title: 'Search',
             route: 'search',
@@ -150,6 +154,7 @@ export type Routes = {
     };
     APP_BAR: RouteMetaData & {
         COLLAPSIBLE: RouteMetaData;
+        CONTEXTUAL_ACTION: RouteMetaData;
         SEARCH: RouteMetaData;
     };
     FORM_VALIDATION: RouteMetaData & {

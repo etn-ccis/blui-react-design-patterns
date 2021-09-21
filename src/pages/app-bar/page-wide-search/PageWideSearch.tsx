@@ -20,6 +20,7 @@ import { AppBar, EmptyState, InfoListItem, Spacer } from '@pxblue/react-componen
 import { useDispatch } from 'react-redux';
 import { TOGGLE_DRAWER } from '../../../redux/actions';
 import { Close, Search } from '@material-ui/icons';
+import * as PXBColors from '@pxblue/colors';
 
 type OnChangeHandler = InputProps['onChange'];
 
@@ -109,7 +110,7 @@ export const PageWideSearch = (): JSX.Element => {
                         </IconButton>
                     </Hidden>
                     <Typography variant={'h6'} color={'inherit'}>
-                        Page Wide Search
+                        Page Search
                     </Typography>
                     <Spacer />
                     <div className={classes.toolbarRightContent}>
@@ -137,14 +138,20 @@ export const PageWideSearch = (): JSX.Element => {
                             onChange={onSearchTermChange}
                             InputProps={{
                                 disableUnderline: true,
-                                startAdornment: <Search style={{ marginRight: theme.spacing(4) }} />,
-                                endAdornment: (
+                                startAdornment: (
+                                    <Search style={{ marginRight: theme.spacing(4), color: PXBColors.gray[500] }} />
+                                ),
+                                endAdornment: searchTerm.length > 0 && (
                                     <Close
                                         onClick={(): void => {
                                             setSearchTerm('');
                                             search('');
                                         }}
-                                        style={{ cursor: 'pointer' }}
+                                        style={{
+                                            cursor: 'pointer',
+                                            color: PXBColors.gray[500],
+                                            marginLeft: theme.spacing(1),
+                                        }}
                                     />
                                 ),
                             }}
@@ -158,7 +165,15 @@ export const PageWideSearch = (): JSX.Element => {
                 {!isMobile && (
                     <div className={classes.desktopSearchContainer}>
                         <Spacer />
-                        <TextField label="Search" variant="standard" value={searchTerm} onChange={onSearchTermChange} />
+                        <TextField
+                            label="Search"
+                            variant="standard"
+                            value={searchTerm}
+                            onChange={onSearchTermChange}
+                            InputProps={{
+                                startAdornment: <Search style={{ color: PXBColors.gray[500] }} />,
+                            }}
+                        />
                     </div>
                 )}
 

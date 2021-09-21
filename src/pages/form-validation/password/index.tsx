@@ -262,7 +262,6 @@ export const PasswordFormValidation = (): JSX.Element => {
         setBlurredConfirmPassword(false);
         setConfirmPasswordError('');
         setCurrentPasswordError('');
-
     };
 
     const passwordHintText = (error: boolean): string => (error ? theme.palette.text.primary : Colors.gray[200]);

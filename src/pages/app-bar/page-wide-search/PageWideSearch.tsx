@@ -110,7 +110,7 @@ export const PageWideSearch = (): JSX.Element => {
                         </IconButton>
                     </Hidden>
                     <Typography variant={'h6'} color={'inherit'}>
-                        Page Search
+                        {isMobile ? 'Page Search' : 'Page Wide Search'}
                     </Typography>
                     <Spacer />
                     <div className={classes.toolbarRightContent}>

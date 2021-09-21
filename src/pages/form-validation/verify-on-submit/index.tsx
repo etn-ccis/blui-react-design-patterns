@@ -180,6 +180,7 @@ export const VerifyOnSubmitValidation = (): JSX.Element => {
                                         onSubmit(serialNumber);
                                     }}
                                     disabled={!serialNumber}
+                                    data-cy={'search-button'}
                                 >
                                     {!loading && <>Search Device</>}
                                     {loading && (
@@ -213,6 +214,7 @@ export const VerifyOnSubmitValidation = (): JSX.Element => {
                                         color={'primary'}
                                         variant={'outlined'}
                                         startIcon={<Add />}
+                                        data-cy={'add-device'}
                                         onClick={(): void => {
                                             setShowDeviceAddedScreen(false);
                                             setSerialNumber('');

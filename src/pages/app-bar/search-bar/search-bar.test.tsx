@@ -8,7 +8,6 @@ import { createStore } from 'redux';
 import { Reducer } from '../../../redux/reducers';
 
 import { SearchBar, searchResults } from '.';
-import { listItems as presidents } from './list';
 
 Enzyme.configure({ adapter: new Adapter() });
 const store = createStore(Reducer());
@@ -26,16 +25,10 @@ it('renders without crashing', (): void => {
 
 it('returns the correct number of results when the query string matches', (): void => {
     const queries = [
-        { text: 'asdf', results: 0 },
-        { text: '!', results: 0 },
-        { text: '"', results: 0 },
-        { text: 'jamse', results: 0 },
-        { text: 'Democratic-Whig', results: 0 },
-        { text: 'Adams', results: 2 },
-        { text: '2017', results: 1 },
-        { text: 'Nix', results: 1 },
-        { text: 'Republican', results: 23 },
-        { text: '', results: presidents.length },
+        { text: 'e', results: 5 },
+        { text: 'apple', results: 2 },
+        { text: 'watermelon', results: 1 },
+        { text: 'pear', results: 0 },
     ];
     queries.forEach(({ text }, index): void => {
         expect(searchResults(text).length).toBe(

@@ -28,7 +28,7 @@ jobs:
             - run:
                 name: Set Max Memory
                 command: |
-                    NODE_OPTIONS=--max_old_space_size=5120
+                    NODE_OPTIONS=--max_old_space_size=6144
             - run:
                 name: Lint
                 command: |

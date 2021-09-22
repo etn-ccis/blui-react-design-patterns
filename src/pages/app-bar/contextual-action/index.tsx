@@ -1,9 +1,9 @@
-import React from 'react';
+import React, {useCallback, useState} from 'react';
 import {
     AppBar,
     Button,
     Checkbox,
-    FormControlLabel,
+    // FormControlLabel,
     Hidden,
     IconButton,
     Paper,
@@ -17,14 +17,26 @@ import {
     Typography
 } from '@material-ui/core';
 import { makeStyles, Theme, useTheme } from '@material-ui/core/styles';
+import CloseIcon from '@material-ui/icons/Close';
 import MenuIcon from '@material-ui/icons/Menu';
 import DeleteIcon from '@material-ui/icons/Delete';
+import { Spacer } from '@pxblue/react-components';
 import { useDispatch } from 'react-redux';
 import { TOGGLE_DRAWER } from '../../../redux/actions';
 import * as colors from '@pxblue/colors';
 import clsx from 'clsx';
 
+export type ListItemType = {
+    id: number;
+    name: string;
+    ip: string;
+    checked: boolean;
+};
+
 const useStyles = makeStyles((theme: Theme) => ({
+    appbar: {
+        transition: theme.transitions.create('all', { duration: theme.transitions.duration.short }),
+    },
     tableBody: {
         display: 'flex',
         justifyContent: 'center',
@@ -61,6 +73,9 @@ const useStyles = makeStyles((theme: Theme) => ({
     checkboxCell: {
         padding: `0 0 0 ${theme.spacing(2.5)}px`,
         minWidth: '72px',
+        [theme.breakpoints.down('sm')]: {
+            padding: `0 0 0 10px`,
+        },
     },
     dataCell: {
         minWidth: '150px',
@@ -72,34 +87,63 @@ const useStyles = makeStyles((theme: Theme) => ({
         position: "sticky",
         left: 0,
         background: colors.white[50],
+    },
+    secondaryToolbar: {
+        backgroundColor: colors.black[500],
+        position: 'absolute',
+        width: '100%',
     }
 }));
 
-const createData = (name: string, ip: string): any => ({ name, ip });
+const createItem = (index: number, name: string, ip: string): ListItemType => ({
+    id: index,
+    name: `Device 0${index}`,
+    ip: ip,
+    checked: false,
+});
 
-const rows = [createData('Device 01', '192.168.0.1'), createData('Device 02', '192.168.0.1'), createData('Device 03', '192.168.0.1'), createData('Device 04', '192.168.0.1')];
+const createData = (name: string, ip: string, checked: boolean): any => ({ name, ip, checked });
+
+const rows = [createData('Device 01', '192.168.0.1', false), createData('Device 02', '192.168.0.1', false), createData('Device 03', '192.168.0.1', false), createData('Device 04', '192.168.0.1', false)];
 
 export const ContextualAction = (): JSX.Element => {
     const dispatch = useDispatch();
     const theme = useTheme();
     const classes = useStyles();
+    // const [numSelected, setNumSelected] = useState(0);
+
+    // const onSelectAllClick = useCallback(() => {
+    //     // rows.map((row, index)=> {
+    //     //     row[index].checked=true;
+    //     // })
+    // }, []);
+
+    const selectAll = useCallback(
+        (): void => {
+            
+        },
+        []
+    );
 
     const getTable = (): JSX.Element => (
         <TableContainer component={Paper}>
             <Table>
                 <TableHead>
                     <TableRow>
-                        <TableCell className={clsx(classes.checkboxCell, classes.sticky)}>
-                            <FormControlLabel
-                                control={
-                                    <Checkbox
-                                        checked={true}
-                                        name="checkbox-header-cell"
-                                        color="primary"
-                                        size="small"
-                                    />
-                                }
-                                label=""
+                        <TableCell padding="checkbox" className={clsx(classes.checkboxCell, classes.sticky)}>
+                            {/* <Checkbox
+                            indeterminate={numSelected > 0 && numSelected < rowCount}
+                            checked={numSelected === rowCount}
+                            onChange={onSelectAllClick}
+                            /> */}
+                            <Checkbox
+                                checked={true}
+                                // indeterminate={numSelected > 0 &&}
+                                // onChange={selectAll}
+                                onChange={(): void => selectAll}
+                                name="checkbox-header-cell"
+                                color="primary"
+                                size="small"
                             />
                         </TableCell>
                         <TableCell className={classes.dataCell}>Name</TableCell>
@@ -110,16 +154,11 @@ export const ContextualAction = (): JSX.Element => {
                     {rows.map((row, index) => (
                         <TableRow key={index} hover={false} classes={{ root: classes.contextualTableRow }}>
                             <TableCell component="th" scope="row" className={clsx(classes.checkboxCell, classes.sticky)}>
-                                <FormControlLabel
-                                    control={
-                                        <Checkbox
-                                            checked={true}
-                                            name="checkbox-cell"
-                                            color="primary"
-                                            size="small"
-                                        />
-                                    }
-                                    label=""
+                                <Checkbox
+                                    checked={row.checked}
+                                    name="checkbox-col-cell"
+                                    color="primary"
+                                    size="small"
                                 />
                             </TableCell>
                             <TableCell className={classes.dataCell}>
@@ -155,6 +194,29 @@ export const ContextualAction = (): JSX.Element => {
                     <Typography variant={'h6'} color={'inherit'}>
                         Contextual App Bar
                     </Typography>
+                </Toolbar>
+                <Toolbar className={clsx(classes.appbar, classes.secondaryToolbar)}>
+                    <Hidden mdUp={true}>
+                        <IconButton
+                            data-cy="toolbar-close"
+                            color={'inherit'}
+                            edge={'start'}
+                            style={{ marginRight: 20 }}
+                        >
+                            <CloseIcon />
+                        </IconButton>
+                    </Hidden>
+                    <Typography variant={'h6'} color={'inherit'}>
+                        1 selected
+                    </Typography>
+                    <Spacer />
+                    <IconButton
+                        data-cy="toolbar-delete"
+                        color={'inherit'}
+                        edge={'end'}
+                    >
+                        <DeleteIcon />
+                    </IconButton>
                 </Toolbar>
             </AppBar>
             <div>

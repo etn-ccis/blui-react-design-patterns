@@ -16,7 +16,7 @@ import HelpIcon from '@material-ui/icons/Help';
 import MenuIcon from '@material-ui/icons/Menu';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import NotificationsIcon from '@material-ui/icons/Notifications';
-import { AppBar, EmptyState, InfoListItem, Spacer } from '@pxblue/react-components';
+import { AppBar, InfoListItem, Spacer } from '@pxblue/react-components';
 import { useDispatch } from 'react-redux';
 import { TOGGLE_DRAWER } from '../../../redux/actions';
 import { Close, Search } from '@material-ui/icons';
@@ -62,6 +62,12 @@ const useStyles = makeStyles((theme: Theme) => ({
             borderRadius: 0,
         },
     },
+    noResults: {
+        margin: `0 ${theme.spacing(4)}px`,
+        [theme.breakpoints.down('xs')]: {
+            marginTop: theme.spacing(4),
+        },
+    },
 }));
 
 const data = ['Apple', 'Grape', 'Orange', 'Pineapple', 'Watermelon'];
@@ -80,8 +86,16 @@ export const PageWideSearch = (): JSX.Element => {
             return;
         }
 
-        const tempSearchResults = data.filter((item) => item.toLowerCase().includes(term.toLowerCase()));
-        setSearchResults(tempSearchResults);
+        const q = term.toLowerCase().trim();
+        const filteredItems = [];
+        for (const item of data) {
+            if (!item.toLowerCase().trim().includes(q)) {
+                continue;
+            }
+            const re = new RegExp(q, 'gi');
+            filteredItems.push(item.replace(re, '<strong>$&</strong>'));
+        }
+        setSearchResults(filteredItems);
     };
 
     const onSearchTermChange: OnChangeHandler = useCallback(
@@ -129,7 +143,7 @@ export const PageWideSearch = (): JSX.Element => {
                 </Toolbar>
             </AppBar>
             {isMobile && (
-                <AppBar variant={'collapsed'} className={classes.mobileAppbar} position={'sticky'} elevation={0}>
+                <AppBar variant={'collapsed'} className={classes.mobileAppbar} elevation={0}>
                     <Toolbar className={classes.mobileSearchToolbar}>
                         <TextField
                             placeholder="Search"
@@ -166,12 +180,12 @@ export const PageWideSearch = (): JSX.Element => {
                     <div className={classes.desktopSearchContainer}>
                         <Spacer />
                         <TextField
-                            label="Search"
+                            placeholder="Search"
                             variant="standard"
                             value={searchTerm}
                             onChange={onSearchTermChange}
                             InputProps={{
-                                startAdornment: <Search style={{ color: PXBColors.gray[500] }} />,
+                                startAdornment: <Search style={{ color: PXBColors.gray[500], marginRight: 8 }} />,
                             }}
                         />
                     </div>
@@ -181,7 +195,10 @@ export const PageWideSearch = (): JSX.Element => {
                     <Card className={classes.resultsCard}>
                         {searchResults.map((item, index) => (
                             <InfoListItem
-                                title={item}
+                                title={
+                                    // eslint-disable-next-line @typescript-eslint/naming-convention
+                                    <div dangerouslySetInnerHTML={{ __html: item }} />
+                                }
                                 key={index}
                                 hidePadding
                                 divider={index !== searchResults.length - 1 ? 'full' : undefined}
@@ -191,16 +208,9 @@ export const PageWideSearch = (): JSX.Element => {
                 )}
 
                 {searchResults.length === 0 && (
-                    <div
-                        style={{
-                            display: 'flex',
-                            flexDirection: 'column',
-                            height: `calc(100vh - ${theme.spacing(8)}px)`,
-                            marginTop: `-${theme.spacing(16)}px`,
-                        }}
-                    >
-                        <EmptyState title={'No Results Found'} icon={<Search style={{ fontSize: '100px' }} />} />
-                    </div>
+                    <Typography className={classes.noResults} variant={'body1'}>
+                        No results.
+                    </Typography>
                 )}
             </div>
         </div>

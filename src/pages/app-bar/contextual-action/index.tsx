@@ -1,5 +1,5 @@
 import React from 'react';
-import { 
+import {
     AppBar,
     Button,
     Checkbox,
@@ -35,6 +35,10 @@ const useStyles = makeStyles((theme: Theme) => ({
         maxWidth: '800px',
         width: '100%',
         padding: `${theme.spacing(2)}px`,
+        [theme.breakpoints.down('sm')]: {
+            maxWidth: 'unset',
+            padding: 0,
+        },
     },
     deleteRow: {
         display: 'flex',
@@ -57,24 +61,21 @@ const useStyles = makeStyles((theme: Theme) => ({
     checkboxCell: {
         padding: `0 0 0 ${theme.spacing(2.5)}px`,
         minWidth: '72px',
-        // left: 0,
-        // position: "sticky",
-        // zIndex: theme.zIndex.appBar + 1
+    },
+    dataCell: {
+        minWidth: '150px',
     },
     contextualTableRow: {
-        // '> .MuiTableRow-root': {
-            backgroundColor: 'white',
-        // }
+        backgroundColor: colors.white[50],
     },
     sticky: {
         position: "sticky",
         left: 0,
-        background: "white",
-        boxShadow: "5px 2px 5px grey"
-      }
+        background: colors.white[50],
+    }
 }));
 
-const createData = (name: string, ip: string): any => ({name, ip});
+const createData = (name: string, ip: string): any => ({ name, ip });
 
 const rows = [createData('Device 01', '192.168.0.1'), createData('Device 02', '192.168.0.1'), createData('Device 03', '192.168.0.1'), createData('Device 04', '192.168.0.1')];
 
@@ -101,14 +102,14 @@ export const ContextualAction = (): JSX.Element => {
                                 label=""
                             />
                         </TableCell>
-                        <TableCell>Name</TableCell>
-                        <TableCell>IP Address</TableCell>
+                        <TableCell className={classes.dataCell}>Name</TableCell>
+                        <TableCell className={classes.dataCell}>IP Address</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
                     {rows.map((row, index) => (
                         <TableRow key={index} hover={false} classes={{ root: classes.contextualTableRow }}>
-                            <TableCell component="th" scope="row" className={classes.checkboxCell}>
+                            <TableCell component="th" scope="row" className={clsx(classes.checkboxCell, classes.sticky)}>
                                 <FormControlLabel
                                     control={
                                         <Checkbox
@@ -121,10 +122,10 @@ export const ContextualAction = (): JSX.Element => {
                                     label=""
                                 />
                             </TableCell>
-                            <TableCell>
+                            <TableCell className={classes.dataCell}>
                                 {row.name}
                             </TableCell>
-                            <TableCell>
+                            <TableCell className={classes.dataCell}>
                                 {row.ip}
                             </TableCell>
                         </TableRow>
@@ -159,28 +160,29 @@ export const ContextualAction = (): JSX.Element => {
             <div>
                 <div className={classes.tableBody}>
                     <div className={classes.tableContainer}>
-                        <div className={classes.deleteRow}>
-                            <Typography variant={'caption'} color={'inherit'}>
-                                0 selected item(s)
-                            </Typography>
-                            <Button
-                                data-cy={'delete-btn'}
-                                variant={'outlined'}
-                                className={classes.deleteBtn}
-                                startIcon={<DeleteIcon />}
-                            >
-                                Delete selected items
-                            </Button>
-                        </div>
+                        <Hidden smDown={true}>
+                            <div className={classes.deleteRow}>
+                                <Typography variant={'caption'} color={'inherit'}>
+                                    0 selected item(s)
+                                </Typography>
+                                <Button
+                                    data-cy={'delete-btn'}
+                                    variant={'outlined'}
+                                    className={classes.deleteBtn}
+                                    startIcon={<DeleteIcon />}
+                                >
+                                    Delete selected items
+                                </Button>
+                            </div>
+                        </Hidden>
                         <div>
-                            {/* <Hidden xsDown>{getTable()}</Hidden> */}
                             {getTable()}
                         </div>
-                        <div>
+                        <Hidden smDown={true}>
                             <Typography variant="body2" className={classes.noteText}>
                                 The contextual app bar is for mobile only.
                             </Typography>
-                        </div>
+                        </Hidden>
                     </div>
                 </div>
             </div>

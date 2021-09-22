@@ -16,6 +16,10 @@ export const PAGES: Routes = {
             title: 'Collapsible',
             route: 'collapsible',
         },
+        DROPDOWN_COLLAPSIBLE: {
+            title: 'Dropdown Toolbar',
+            route: 'dropdown-toolbar',
+        },
         SEARCH: {
             title: 'Search',
             route: 'search',
@@ -158,6 +162,7 @@ export type Routes = {
     };
     APP_BAR: RouteMetaData & {
         COLLAPSIBLE: RouteMetaData;
+        DROPDOWN_COLLAPSIBLE: RouteMetaData;
         SEARCH: RouteMetaData;
         PAGE_WIDE_SEARCH: RouteMetaData;
     };

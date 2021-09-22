@@ -124,7 +124,6 @@ export const PxbDropdownToolbar = (): JSX.Element => {
                             }}
                         ></DropdownToolbar>
                     </Hidden>
-                    <div />
                 </Toolbar>
             </AppBar>
         </div>

@@ -108,31 +108,13 @@ for (let i = 1; i < 5; i++) {
     generatedList.push(createItem(i, '192.168.0.1'));
 }
 
-// const createData = (name: string, ip: string, checked: boolean): any => ({ name, ip, checked });
-
-// const rows = [createData('Device 01', '192.168.0.1', false), createData('Device 02', '192.168.0.1', false), createData('Device 03', '192.168.0.1', false), createData('Device 04', '192.168.0.1', false)];
-
 export const ContextualAction = (): JSX.Element => {
     const dispatch = useDispatch();
     const theme = useTheme();
     const classes = useStyles();
-    // const [allSelected, setAllSelected] = useState(false);
     const [list, setList] = useState<ListItemType[]>(generatedList);
     const [selectedItems, setSelectedItems] = useState<ListItemType[]>([]);
 
-    // const onSelect = useCallback(
-    //     (item: ListItemType): void => {
-    //         // if (!selectedItems.includes(item)) {
-    //         //     setSelectedItems([...selectedItems, { ...item, checked: true }]);
-    //         //     // setSelectedItems((oldList) => oldList.map((item) => (item.id === id ? { ...item, checked: true } : item)));
-    //         // } else {
-    //         //     const index = selectedItems.indexOf(item);
-    //         //     setSelectedItems(selectedItems.filter((_: ListItemType, i: number) => i !== index));
-    //         // }
-    //         setSelectedItems((oldList) => [...oldList, { ...item, checked: true }]);
-    //     },
-    //     [list, selectedItems, setList, setSelectedItems]
-    // );
     const onSelect = useCallback(
         (item: ListItemType): void => {
             if (!selectedItems.includes(item)) {
@@ -175,21 +157,12 @@ export const ContextualAction = (): JSX.Element => {
                 <TableHead>
                     <TableRow>
                         <TableCell padding="checkbox" className={clsx(classes.checkboxCell, classes.sticky)}>
-                            {/* <Checkbox
-                            indeterminate={numSelected > 0 && numSelected < rowCount}
-                            checked={numSelected === rowCount}
-                            onChange={onSelectAllClick}
-                            /> */}
                             <Checkbox
-                                // checked={}
-                                // indeterminate={selectedItems.length > 0 && !allSelected}
-                                // onChange={selectAll}
-                                // value={'header-checkbox'}
                                 indeterminate={selectedItems.length > 0 && selectedItems.length < list.length}
                                 checked={list.length > 0 && selectedItems.length === list.length}
                                 onChange={selectAll}
                                 name="checkbox-header-cell"
-                                // color="primary"
+                                color="primary"
                                 size="small"
                             />
                         </TableCell>
@@ -205,12 +178,9 @@ export const ContextualAction = (): JSX.Element => {
                                     value={row.name}
                                     onChange={(): void => onSelect(row)}
                                     checked={isSelected(row)}
-                                    // checked={row.checked}
-                                    // checked={isSelected(row)}
                                     name="checkbox-col-cell"
                                     color="primary"
                                     size="small"
-                                    // onChange={(): void => onSelect(row)}
                                 />
                             </TableCell>
                             <TableCell className={classes.dataCell}>
@@ -249,16 +219,14 @@ export const ContextualAction = (): JSX.Element => {
                 </Toolbar>
                 <Hidden mdUp={true}>
                     <Toolbar className={clsx(classes.appbar, classes.secondaryToolbar)}>
-                        {/* <Hidden mdUp={true}> */}
-                            <IconButton
-                                data-cy="toolbar-close"
-                                color={'inherit'}
-                                edge={'start'}
-                                style={{ marginRight: 20 }}
-                            >
-                                <CloseIcon />
-                            </IconButton>
-                        {/* </Hidden> */}
+                        <IconButton
+                            data-cy="toolbar-close"
+                            color={'inherit'}
+                            edge={'start'}
+                            style={{ marginRight: 20 }}
+                        >
+                            <CloseIcon />
+                        </IconButton>
                         <Typography variant={'h6'} color={'inherit'}>
                             1 selected
                         </Typography>

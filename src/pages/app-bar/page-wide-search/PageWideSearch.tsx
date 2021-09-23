@@ -20,7 +20,6 @@ import { AppBar, InfoListItem, Spacer } from '@pxblue/react-components';
 import { useDispatch } from 'react-redux';
 import { TOGGLE_DRAWER } from '../../../redux/actions';
 import { Close, Search } from '@material-ui/icons';
-import * as PXBColors from '@pxblue/colors';
 
 type OnChangeHandler = InputProps['onChange'];
 
@@ -39,7 +38,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         flexDirection: 'row',
     },
     appBar: {
-        zIndex: 10000,
+        zIndex: theme.zIndex.appBar + 1,
     },
     mobileAppbar: {
         height: theme.spacing(7),
@@ -80,7 +79,7 @@ export const PageWideSearch = (): JSX.Element => {
     const [searchTerm, setSearchTerm] = useState('');
     const [searchResults, setSearchResults] = useState(data);
 
-    const search = (term: string): void => {
+    const search = useCallback((term: string): void => {
         if (term === '') {
             setSearchResults(data);
             return;
@@ -96,7 +95,7 @@ export const PageWideSearch = (): JSX.Element => {
             filteredItems.push(item.replace(re, '<strong>$&</strong>'));
         }
         setSearchResults(filteredItems);
-    };
+    }, []);
 
     const onSearchTermChange: OnChangeHandler = useCallback(
         (event) => {
@@ -153,7 +152,9 @@ export const PageWideSearch = (): JSX.Element => {
                             InputProps={{
                                 disableUnderline: true,
                                 startAdornment: (
-                                    <Search style={{ marginRight: theme.spacing(4), color: PXBColors.gray[500] }} />
+                                    <Search
+                                        style={{ marginRight: theme.spacing(4), color: theme.palette.text.secondary }}
+                                    />
                                 ),
                                 endAdornment: searchTerm.length > 0 && (
                                     <Close
@@ -163,7 +164,7 @@ export const PageWideSearch = (): JSX.Element => {
                                         }}
                                         style={{
                                             cursor: 'pointer',
-                                            color: PXBColors.gray[500],
+                                            color: theme.palette.text.secondary,
                                             marginLeft: theme.spacing(1),
                                         }}
                                     />
@@ -185,14 +186,18 @@ export const PageWideSearch = (): JSX.Element => {
                             value={searchTerm}
                             onChange={onSearchTermChange}
                             InputProps={{
-                                startAdornment: <Search style={{ color: PXBColors.gray[500], marginRight: 8 }} />,
+                                startAdornment: (
+                                    <Search
+                                        style={{ color: theme.palette.text.secondary, marginRight: theme.spacing(1) }}
+                                    />
+                                ),
                             }}
                         />
                     </div>
                 )}
 
                 {searchResults.length > 0 && (
-                    <Card className={classes.resultsCard}>
+                    <Card className={classes.resultsCard} elevation={isMobile ? 0 : undefined}>
                         {searchResults.map((item, index) => (
                             <InfoListItem
                                 title={
@@ -201,7 +206,7 @@ export const PageWideSearch = (): JSX.Element => {
                                 }
                                 key={index}
                                 hidePadding
-                                divider={index !== searchResults.length - 1 ? 'full' : undefined}
+                                divider={isMobile || index !== searchResults.length - 1 ? 'full' : undefined}
                             />
                         ))}
                     </Card>

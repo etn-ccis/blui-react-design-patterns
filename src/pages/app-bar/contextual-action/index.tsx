@@ -1,9 +1,8 @@
-import React, {useCallback, useState} from 'react';
+import React, { useCallback, useState } from 'react';
 import {
     AppBar,
     Button,
     Checkbox,
-    // FormControlLabel,
     Hidden,
     IconButton,
     Paper,
@@ -14,7 +13,8 @@ import {
     TableHead,
     TableRow,
     Toolbar,
-    Typography
+    Typography,
+    useMediaQuery,
 } from '@material-ui/core';
 import { makeStyles, Theme, useTheme } from '@material-ui/core/styles';
 import CloseIcon from '@material-ui/icons/Close';
@@ -37,6 +37,62 @@ const useStyles = makeStyles((theme: Theme) => ({
     appbar: {
         transition: theme.transitions.create('all', { duration: theme.transitions.duration.short }),
     },
+    checkboxCell: {
+        padding: `0 0 0 ${theme.spacing(2.5)}px`,
+        minWidth: '72px',
+        [theme.breakpoints.down('sm')]: {
+            padding: `0 0 0 10px`,
+        },
+        [theme.breakpoints.down('xs')]: {
+            minWidth: '58px',
+        },
+    },
+    checkboxIndeterminate: {
+        color: colors.blue[500],
+    },
+    contextualTableRow: {
+        backgroundColor: colors.white[50],
+    },
+    dataCell: {
+        minWidth: '150px',
+    },
+    deleteBtn: {
+        color: theme.palette.error.main,
+        border: `1px solid ${theme.palette.error.main}`,
+    },
+    deleteRow: {
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        marginBottom: `${theme.spacing(2)}px`,
+    },
+    noResult: {
+        padding: `${theme.spacing(2)}px`,
+        textAlign: 'center',
+        backgroundColor: theme.palette.background.paper,
+    },
+    noteText: {
+        color: colors.gray[500],
+        marginTop: `${theme.spacing(3)}px`,
+    },
+    resetTableLink: {
+        textDecoration: 'underline',
+        color: colors.blue[500],
+        cursor: 'pointer',
+    },
+    rowSelected: {
+        backgroundColor: `rgba(${colors.blue[500]}, 0.05)`,
+    },
+    sticky: {
+        position: 'sticky',
+        left: 0,
+    },
+    secondaryToolbar: {
+        backgroundColor: colors.black[500],
+        position: 'absolute',
+        width: '100%',
+        padding: `0 ${theme.spacing(2)}px`,
+    },
     tableBody: {
         display: 'flex',
         justifyContent: 'center',
@@ -52,47 +108,10 @@ const useStyles = makeStyles((theme: Theme) => ({
             padding: 0,
         },
     },
-    deleteRow: {
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        marginBottom: `${theme.spacing(2)}px`,
-    },
-    deleteBtn: {
-        color: theme.palette.error.main,
-        border: `1px solid ${theme.palette.error.main}`
-    },
-    noteText: {
-        color: colors.gray[500],
-        marginTop: `${theme.spacing(3)}px`,
-    },
     toolbarGutters: {
         paddingLeft: 16,
         paddingRight: 4,
     },
-    checkboxCell: {
-        padding: `0 0 0 ${theme.spacing(2.5)}px`,
-        minWidth: '72px',
-        [theme.breakpoints.down('sm')]: {
-            padding: `0 0 0 10px`,
-        },
-    },
-    dataCell: {
-        minWidth: '150px',
-    },
-    contextualTableRow: {
-        backgroundColor: colors.white[50],
-    },
-    sticky: {
-        position: "sticky",
-        left: 0,
-        background: colors.white[50],
-    },
-    secondaryToolbar: {
-        backgroundColor: colors.black[500],
-        position: 'absolute',
-        width: '100%',
-    }
 }));
 
 const createItem = (index: number, ip: string): ListItemType => ({
@@ -114,6 +133,7 @@ export const ContextualAction = (): JSX.Element => {
     const classes = useStyles();
     const [list, setList] = useState<ListItemType[]>(generatedList);
     const [selectedItems, setSelectedItems] = useState<ListItemType[]>([]);
+    const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
     const onSelect = useCallback(
         (item: ListItemType): void => {
@@ -140,7 +160,14 @@ export const ContextualAction = (): JSX.Element => {
         setList(updatedList);
         setSelectedItems([]);
     }, [list, selectedItems, setList, setSelectedItems]);
-    
+
+    const resetTable = useCallback((): void => {
+        setList(list);
+    }, []);
+
+    const onClose = useCallback((): void => {
+        setSelectedItems([]);
+    }, []);
 
     const selectAll = (event: React.ChangeEvent<HTMLInputElement>): void => {
         if (event.target.checked) {
@@ -148,7 +175,7 @@ export const ContextualAction = (): JSX.Element => {
             setSelectedItems(newSelectedItems);
             return;
         }
-          setSelectedItems([]);
+        setSelectedItems([]);
     };
 
     const getTable = (): JSX.Element => (
@@ -158,6 +185,7 @@ export const ContextualAction = (): JSX.Element => {
                     <TableRow>
                         <TableCell padding="checkbox" className={clsx(classes.checkboxCell, classes.sticky)}>
                             <Checkbox
+                                classes={{ indeterminate: classes.checkboxIndeterminate }}
                                 indeterminate={selectedItems.length > 0 && selectedItems.length < list.length}
                                 checked={list.length > 0 && selectedItems.length === list.length}
                                 onChange={selectAll}
@@ -172,8 +200,17 @@ export const ContextualAction = (): JSX.Element => {
                 </TableHead>
                 <TableBody>
                     {list.map((row, index) => (
-                        <TableRow key={index} hover={false} classes={{ root: classes.contextualTableRow }}>
-                            <TableCell component="th" scope="row" className={clsx(classes.checkboxCell, classes.sticky)}>
+                        <TableRow
+                            key={index}
+                            hover={false}
+                            classes={{ root: classes.contextualTableRow, selected: classes.rowSelected }}
+                            selected={isSelected(row)}
+                        >
+                            <TableCell
+                                component="th"
+                                scope="row"
+                                className={clsx(classes.checkboxCell, classes.sticky)}
+                            >
                                 <Checkbox
                                     value={row.name}
                                     onChange={(): void => onSelect(row)}
@@ -183,12 +220,8 @@ export const ContextualAction = (): JSX.Element => {
                                     size="small"
                                 />
                             </TableCell>
-                            <TableCell className={classes.dataCell}>
-                                {row.name}
-                            </TableCell>
-                            <TableCell className={classes.dataCell}>
-                                {row.ip}
-                            </TableCell>
+                            <TableCell className={classes.dataCell}>{row.name}</TableCell>
+                            <TableCell className={classes.dataCell}>{row.ip}</TableCell>
                         </TableRow>
                     ))}
                 </TableBody>
@@ -197,7 +230,7 @@ export const ContextualAction = (): JSX.Element => {
     );
 
     return (
-        <div style={{ backgroundColor: theme.palette.background.paper, minHeight: '100vh' }}>
+        <div style={{ backgroundColor: theme.palette.background.default, minHeight: '100vh' }}>
             <AppBar data-cy="pxb-toolbar" position={'sticky'}>
                 <Toolbar classes={{ gutters: classes.toolbarGutters }}>
                     <Hidden mdUp={true}>
@@ -217,30 +250,26 @@ export const ContextualAction = (): JSX.Element => {
                         Contextual App Bar
                     </Typography>
                 </Toolbar>
-                <Hidden mdUp={true}>
+                {selectedItems.length !== 0 && isMobile ? (
                     <Toolbar className={clsx(classes.appbar, classes.secondaryToolbar)}>
                         <IconButton
                             data-cy="toolbar-close"
                             color={'inherit'}
                             edge={'start'}
                             style={{ marginRight: 20 }}
+                            onClick={onClose}
                         >
                             <CloseIcon />
                         </IconButton>
                         <Typography variant={'h6'} color={'inherit'}>
-                            1 selected
+                            {selectedItems.length} selected
                         </Typography>
                         <Spacer />
-                        <IconButton
-                            data-cy="toolbar-delete"
-                            color={'inherit'}
-                            edge={'end'}
-                            onClick={onDelete}
-                        >
+                        <IconButton data-cy="toolbar-delete" color={'inherit'} edge={'end'} onClick={onDelete}>
                             <DeleteIcon />
                         </IconButton>
                     </Toolbar>
-                </Hidden>
+                ) : undefined}
             </AppBar>
             <div>
                 <div className={classes.tableBody}>
@@ -255,14 +284,23 @@ export const ContextualAction = (): JSX.Element => {
                                     variant={'outlined'}
                                     className={classes.deleteBtn}
                                     startIcon={<DeleteIcon />}
+                                    disabled={selectedItems.length === 0}
+                                    onClick={onDelete}
                                 >
                                     Delete selected items
                                 </Button>
                             </div>
                         </Hidden>
-                        <div>
-                            {getTable()}
-                        </div>
+                        <div>{getTable()}</div>
+                        {list.length === 0 ? (
+                            <Typography className={classes.noResult}>
+                                No items found.{' '}
+                                <span className={classes.resetTableLink} onClick={resetTable}>
+                                    Reset table
+                                </span>
+                            </Typography>
+                        ) : undefined}
+
                         <Hidden smDown={true}>
                             <Typography variant="body2" className={classes.noteText}>
                                 The contextual app bar is for mobile only.

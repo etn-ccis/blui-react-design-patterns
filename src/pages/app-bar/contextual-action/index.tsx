@@ -35,8 +35,23 @@ export type ListItemType = {
 
 const useStyles = makeStyles((theme: Theme) => ({
     appbar: {
-        transition: theme.transitions.create('all', { duration: theme.transitions.duration.short }),
+        transition: theme.transitions.create('opacity', { duration: theme.transitions.duration.standard }),
     },
+    appbarRoot: {
+        padding: 0,
+    },
+    contextualAppBar: {
+        backgroundColor: colors.black[500],
+        color: colors.white[50],
+        right: 0,
+        width: 0,
+        '&$contextualBarActive': {
+            [theme.breakpoints.down('sm')]: {
+                width: '100%',
+            },
+        },
+    },
+    contextualBarActive: {},
     checkboxCell: {
         padding: `0 0 0 ${theme.spacing(2.5)}px`,
         minWidth: '72px',
@@ -75,6 +90,12 @@ const useStyles = makeStyles((theme: Theme) => ({
         color: colors.gray[500],
         marginTop: `${theme.spacing(3)}px`,
     },
+    regularAppBar: {
+        opacity: 1,
+        '&$contextualBarActive': {
+            opacity: 0,
+        },
+    },
     resetTableLink: {
         textDecoration: 'underline',
         color: colors.blue[500],
@@ -88,9 +109,6 @@ const useStyles = makeStyles((theme: Theme) => ({
         left: 0,
     },
     secondaryToolbar: {
-        backgroundColor: colors.black[500],
-        position: 'absolute',
-        width: '100%',
         padding: `0 ${theme.spacing(2)}px`,
     },
     tableBody: {
@@ -231,7 +249,16 @@ export const ContextualAction = (): JSX.Element => {
 
     return (
         <div style={{ backgroundColor: theme.palette.background.default, minHeight: '100vh' }}>
-            <AppBar data-cy="pxb-toolbar" position={'sticky'}>
+            <AppBar
+                data-cy="primary-toolbar"
+                position={'sticky'}
+                classes={{ root: classes.appbarRoot }}
+                className={clsx(
+                    classes.appbar,
+                    classes.regularAppBar,
+                    selectedItems.length !== 0 && isMobile && classes.contextualBarActive
+                )}
+            >
                 <Toolbar classes={{ gutters: classes.toolbarGutters }}>
                     <Hidden mdUp={true}>
                         <IconButton
@@ -250,26 +277,35 @@ export const ContextualAction = (): JSX.Element => {
                         Contextual App Bar
                     </Typography>
                 </Toolbar>
-                {selectedItems.length !== 0 && isMobile ? (
-                    <Toolbar className={clsx(classes.appbar, classes.secondaryToolbar)}>
-                        <IconButton
-                            data-cy="toolbar-close"
-                            color={'inherit'}
-                            edge={'start'}
-                            style={{ marginRight: 20 }}
-                            onClick={onClose}
-                        >
-                            <CloseIcon />
-                        </IconButton>
-                        <Typography variant={'h6'} color={'inherit'}>
-                            {selectedItems.length} selected
-                        </Typography>
-                        <Spacer />
-                        <IconButton data-cy="toolbar-delete" color={'inherit'} edge={'end'} onClick={onDelete}>
-                            <DeleteIcon />
-                        </IconButton>
-                    </Toolbar>
-                ) : undefined}
+            </AppBar>
+            <AppBar
+                data-cy="contextual-bar"
+                className={clsx(
+                    classes.appbar,
+                    classes.contextualAppBar,
+                    selectedItems.length !== 0 && isMobile && classes.contextualBarActive
+                )}
+                position={'fixed'}
+                color={'default'}
+            >
+                <Toolbar classes={{ gutters: classes.secondaryToolbar }}>
+                    <IconButton
+                        data-cy="toolbar-close"
+                        color={'inherit'}
+                        edge={'start'}
+                        style={{ marginRight: 20 }}
+                        onClick={onClose}
+                    >
+                        <CloseIcon />
+                    </IconButton>
+                    <Typography variant={'h6'} color={'inherit'}>
+                        {selectedItems.length} selected
+                    </Typography>
+                    <Spacer />
+                    <IconButton data-cy="toolbar-delete" color={'inherit'} edge={'end'} onClick={onDelete}>
+                        <DeleteIcon />
+                    </IconButton>
+                </Toolbar>
             </AppBar>
             <div>
                 <div className={classes.tableBody}>

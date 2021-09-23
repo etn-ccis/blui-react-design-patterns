@@ -24,6 +24,10 @@ export const PAGES: Routes = {
             title: 'Search',
             route: 'search',
         },
+        PAGE_WIDE_SEARCH: {
+            title: 'Page Wide Search',
+            route: 'page-wide-search',
+        },
     },
     FORM_VALIDATION: {
         title: 'Forms and Validation',
@@ -160,6 +164,7 @@ export type Routes = {
         COLLAPSIBLE: RouteMetaData;
         DROPDOWN_COLLAPSIBLE: RouteMetaData;
         SEARCH: RouteMetaData;
+        PAGE_WIDE_SEARCH: RouteMetaData;
     };
     FORM_VALIDATION: RouteMetaData & {
         LIST: RouteMetaData;

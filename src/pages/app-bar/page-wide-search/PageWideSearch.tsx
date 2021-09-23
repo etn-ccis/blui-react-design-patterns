@@ -42,6 +42,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
     mobileAppbar: {
         height: theme.spacing(7),
+        backgroundColor: theme.palette.background.paper,
     },
     mobileSearchToolbar: {
         backgroundColor: theme.palette.background.paper,
@@ -142,7 +143,7 @@ export const PageWideSearch = (): JSX.Element => {
                 </Toolbar>
             </AppBar>
             {isMobile && (
-                <AppBar variant={'collapsed'} className={classes.mobileAppbar} elevation={0}>
+                <AppBar variant={'collapsed'} classes={{ root: classes.mobileAppbar }} elevation={0}>
                     <Toolbar className={classes.mobileSearchToolbar}>
                         <TextField
                             placeholder="Search"

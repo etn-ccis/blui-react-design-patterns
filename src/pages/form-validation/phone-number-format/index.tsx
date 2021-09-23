@@ -148,6 +148,7 @@ export const PhoneNumberFormatValidation = (): JSX.Element => {
                     <FormControl variant={'filled'} style={{ width: 200, marginRight: theme.spacing(2) }}>
                         <InputLabel htmlFor="country-code-label">Country Code</InputLabel>
                         <Select
+                            data-cy={'country-selector'}
                             fullWidth
                             value={countryCode}
                             labelId={'country-code-label'}
@@ -173,6 +174,7 @@ export const PhoneNumberFormatValidation = (): JSX.Element => {
                         placeholder={getPlaceholder()}
                         onChange={onPhoneNumberChange}
                         variant="filled"
+                        data-cy={'phone-input'}
                         inputProps={{
                             inputMode: 'numeric',
                             maxLength: getMaxLength(),

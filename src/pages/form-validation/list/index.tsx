@@ -95,6 +95,7 @@ export const ListFormValidation = (): JSX.Element => {
                             rightComponent={
                                 <TextField
                                     id="filled-basic"
+                                    data-cy={'ip-address'}
                                     classes={{
                                         root: classes.textFieldRoot,
                                     }}
@@ -115,7 +116,8 @@ export const ListFormValidation = (): JSX.Element => {
                             divider={'full'}
                             title={'Insight Report'}
                             subtitle={'Auto-report every 2 months'}
-                            rightComponent={<Switch name="demo-switch" />}
+                            rightComponent={<Switch name="demo-switch" data-cy="switch" />}
+                            data-cy={'switch'}
                         ></InfoListItem>
                     </List>
                 </Card>

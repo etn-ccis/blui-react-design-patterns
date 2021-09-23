@@ -20,6 +20,10 @@ export const PAGES: Routes = {
             title: 'Contextual Action',
             route: 'contextual-action',
         },
+        DROPDOWN_COLLAPSIBLE: {
+            title: 'Dropdown Toolbar',
+            route: 'dropdown-toolbar',
+        },
         SEARCH: {
             title: 'Search',
             route: 'search',
@@ -27,25 +31,29 @@ export const PAGES: Routes = {
     },
     FORM_VALIDATION: {
         title: 'Forms and Validation',
-        LIST: {
-            title: 'In a List',
-            route: 'in-a-list',
-        },
         FIXED_LENGTH_PASSCODE: {
             title: 'Fixed Length Passcode',
             route: 'fixed-length-passcode',
+        },
+        LIST: {
+            title: 'In a List',
+            route: 'in-a-list',
         },
         TABLE: {
             title: 'In a Table',
             route: 'in-a-table',
         },
-        SECTIONED_FORM: {
-            title: 'Sectioned Form',
-            route: 'in-a-sectioned-form',
+        PASSWORD: {
+            title: 'Password',
+            route: 'password',
         },
         PHONE_NUMBER_FORMAT: {
             title: 'Phone Number Format',
             route: 'phone-number-format',
+        },
+        SECTIONED_FORM: {
+            title: 'Sectioned Form',
+            route: 'in-a-sectioned-form',
         },
         VERIFY_ON_SUBMIT: {
             title: 'Verify on Submit',
@@ -155,6 +163,7 @@ export type Routes = {
     APP_BAR: RouteMetaData & {
         COLLAPSIBLE: RouteMetaData;
         CONTEXTUAL_ACTION: RouteMetaData;
+        DROPDOWN_COLLAPSIBLE: RouteMetaData;
         SEARCH: RouteMetaData;
     };
     FORM_VALIDATION: RouteMetaData & {
@@ -164,6 +173,7 @@ export type Routes = {
         VERIFY_ON_SUBMIT: RouteMetaData;
         PHONE_NUMBER_FORMAT: RouteMetaData;
         TABLE: RouteMetaData;
+        PASSWORD: RouteMetaData;
     };
     I18N: RouteMetaData;
     LISTS: RouteMetaData & {

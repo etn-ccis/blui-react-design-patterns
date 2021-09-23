@@ -55,17 +55,14 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
     contextualBarActive: {},
     checkboxCell: {
-        padding: `0 0 0 ${theme.spacing(2.5)}px`,
-        minWidth: '72px',
+        padding: `0 0 0 ${theme.spacing(1)}px`,
+        minWidth: '56px',
         [theme.breakpoints.down('sm')]: {
             padding: `0 0 0 ${theme.spacing(1)}px`,
         },
-        [theme.breakpoints.down('xs')]: {
-            minWidth: '58px',
-        },
     },
     checkboxIndeterminate: {
-        color: colors.blue[500],
+        color: theme.palette.primary.main,
     },
     contextualTableRow: {
         backgroundColor: colors.white[50],
@@ -89,16 +86,16 @@ const useStyles = makeStyles((theme: Theme) => ({
         backgroundColor: theme.palette.background.paper,
     },
     noteText: {
-        color: colors.gray[500],
+        color: theme.palette.text.secondary,
         marginTop: `${theme.spacing(3)}px`,
     },
     resetTableLink: {
         textDecoration: 'underline',
-        color: colors.blue[500],
+        color: theme.palette.primary.main,
         cursor: 'pointer',
     },
     rowSelected: {
-        backgroundColor: `rgba(${colors.blue[500]}, 0.05)`,
+        backgroundColor: `rgba(${theme.palette.primary.main}, 0.05)`,
     },
     sticky: {
         position: 'sticky',

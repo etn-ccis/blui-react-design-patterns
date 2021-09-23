@@ -35,7 +35,7 @@ export type ListItemType = {
 
 const useStyles = makeStyles((theme: Theme) => ({
     appbar: {
-        transition: theme.transitions.create('opacity', { duration: theme.transitions.duration.standard }),
+        transition: theme.transitions.create('opacity', { duration: theme.transitions.duration.shorter }),
     },
     appbarRoot: {
         padding: 0,
@@ -45,9 +45,11 @@ const useStyles = makeStyles((theme: Theme) => ({
         color: colors.white[50],
         right: 0,
         width: 0,
+        opacity: 0,
         '&$contextualBarActive': {
             [theme.breakpoints.down('sm')]: {
                 width: '100%',
+                opacity: 1,
             },
         },
     },
@@ -56,7 +58,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         padding: `0 0 0 ${theme.spacing(2.5)}px`,
         minWidth: '72px',
         [theme.breakpoints.down('sm')]: {
-            padding: `0 0 0 10px`,
+            padding: `0 0 0 ${theme.spacing(1)}px`,
         },
         [theme.breakpoints.down('xs')]: {
             minWidth: '58px',
@@ -89,12 +91,6 @@ const useStyles = makeStyles((theme: Theme) => ({
     noteText: {
         color: colors.gray[500],
         marginTop: `${theme.spacing(3)}px`,
-    },
-    regularAppBar: {
-        opacity: 1,
-        '&$contextualBarActive': {
-            opacity: 0,
-        },
     },
     resetTableLink: {
         textDecoration: 'underline',
@@ -162,7 +158,7 @@ export const ContextualAction = (): JSX.Element => {
                 setSelectedItems(selectedItems.filter((_: ListItemType, i: number) => i !== index));
             }
         },
-        [selectedItems, setSelectedItems]
+        [selectedItems]
     );
 
     const isSelected = useCallback((item: ListItemType): boolean => selectedItems.includes(item), [selectedItems]);
@@ -177,7 +173,7 @@ export const ContextualAction = (): JSX.Element => {
 
         setList(updatedList);
         setSelectedItems([]);
-    }, [list, selectedItems, setList, setSelectedItems]);
+    }, [list, selectedItems]);
 
     const resetTable = useCallback((): void => {
         setList(list);
@@ -209,7 +205,7 @@ export const ContextualAction = (): JSX.Element => {
                                 onChange={selectAll}
                                 name="checkbox-header-cell"
                                 color="primary"
-                                size="small"
+                                size="medium"
                             />
                         </TableCell>
                         <TableCell className={classes.dataCell}>Name</TableCell>
@@ -235,7 +231,7 @@ export const ContextualAction = (): JSX.Element => {
                                     checked={isSelected(row)}
                                     name="checkbox-col-cell"
                                     color="primary"
-                                    size="small"
+                                    size="medium"
                                 />
                             </TableCell>
                             <TableCell className={classes.dataCell}>{row.name}</TableCell>
@@ -255,7 +251,6 @@ export const ContextualAction = (): JSX.Element => {
                 classes={{ root: classes.appbarRoot }}
                 className={clsx(
                     classes.appbar,
-                    classes.regularAppBar,
                     selectedItems.length !== 0 && isMobile && classes.contextualBarActive
                 )}
             >

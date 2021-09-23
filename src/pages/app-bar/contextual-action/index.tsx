@@ -95,35 +95,79 @@ const useStyles = makeStyles((theme: Theme) => ({
     }
 }));
 
-const createItem = (index: number, name: string, ip: string): ListItemType => ({
+const createItem = (index: number, ip: string): ListItemType => ({
     id: index,
     name: `Device 0${index}`,
     ip: ip,
     checked: false,
 });
 
-const createData = (name: string, ip: string, checked: boolean): any => ({ name, ip, checked });
+const generatedList: ListItemType[] = [];
 
-const rows = [createData('Device 01', '192.168.0.1', false), createData('Device 02', '192.168.0.1', false), createData('Device 03', '192.168.0.1', false), createData('Device 04', '192.168.0.1', false)];
+for (let i = 1; i < 5; i++) {
+    generatedList.push(createItem(i, '192.168.0.1'));
+}
+
+// const createData = (name: string, ip: string, checked: boolean): any => ({ name, ip, checked });
+
+// const rows = [createData('Device 01', '192.168.0.1', false), createData('Device 02', '192.168.0.1', false), createData('Device 03', '192.168.0.1', false), createData('Device 04', '192.168.0.1', false)];
 
 export const ContextualAction = (): JSX.Element => {
     const dispatch = useDispatch();
     const theme = useTheme();
     const classes = useStyles();
-    // const [numSelected, setNumSelected] = useState(0);
+    // const [allSelected, setAllSelected] = useState(false);
+    const [list, setList] = useState<ListItemType[]>(generatedList);
+    const [selectedItems, setSelectedItems] = useState<ListItemType[]>([]);
 
-    // const onSelectAllClick = useCallback(() => {
-    //     // rows.map((row, index)=> {
-    //     //     row[index].checked=true;
-    //     // })
-    // }, []);
-
-    const selectAll = useCallback(
-        (): void => {
-            
+    // const onSelect = useCallback(
+    //     (item: ListItemType): void => {
+    //         // if (!selectedItems.includes(item)) {
+    //         //     setSelectedItems([...selectedItems, { ...item, checked: true }]);
+    //         //     // setSelectedItems((oldList) => oldList.map((item) => (item.id === id ? { ...item, checked: true } : item)));
+    //         // } else {
+    //         //     const index = selectedItems.indexOf(item);
+    //         //     setSelectedItems(selectedItems.filter((_: ListItemType, i: number) => i !== index));
+    //         // }
+    //         setSelectedItems((oldList) => [...oldList, { ...item, checked: true }]);
+    //     },
+    //     [list, selectedItems, setList, setSelectedItems]
+    // );
+    const onSelect = useCallback(
+        (item: ListItemType): void => {
+            if (!selectedItems.includes(item)) {
+                setSelectedItems([...selectedItems, item]);
+            } else {
+                const index = selectedItems.indexOf(item);
+                setSelectedItems(selectedItems.filter((_: ListItemType, i: number) => i !== index));
+            }
         },
-        []
+        [selectedItems, setSelectedItems]
     );
+
+    const isSelected = useCallback((item: ListItemType): boolean => selectedItems.includes(item), [selectedItems]);
+
+    const onDelete = useCallback((): void => {
+        const updatedList = [...list];
+
+        selectedItems.forEach((item: ListItemType) => {
+            const index = updatedList.indexOf(item);
+            updatedList.splice(index, 1);
+        });
+
+        setList(updatedList);
+        setSelectedItems([]);
+    }, [list, selectedItems, setList, setSelectedItems]);
+    
+
+    const selectAll = (event: React.ChangeEvent<HTMLInputElement>): void => {
+        if (event.target.checked) {
+            const newSelectedItems = list.map((item) => item);
+            setSelectedItems(newSelectedItems);
+            return;
+        }
+          setSelectedItems([]);
+    };
 
     const getTable = (): JSX.Element => (
         <TableContainer component={Paper}>
@@ -137,12 +181,15 @@ export const ContextualAction = (): JSX.Element => {
                             onChange={onSelectAllClick}
                             /> */}
                             <Checkbox
-                                checked={true}
-                                // indeterminate={numSelected > 0 &&}
+                                // checked={}
+                                // indeterminate={selectedItems.length > 0 && !allSelected}
                                 // onChange={selectAll}
-                                onChange={(): void => selectAll}
+                                // value={'header-checkbox'}
+                                indeterminate={selectedItems.length > 0 && selectedItems.length < list.length}
+                                checked={list.length > 0 && selectedItems.length === list.length}
+                                onChange={selectAll}
                                 name="checkbox-header-cell"
-                                color="primary"
+                                // color="primary"
                                 size="small"
                             />
                         </TableCell>
@@ -151,14 +198,19 @@ export const ContextualAction = (): JSX.Element => {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {rows.map((row, index) => (
+                    {list.map((row, index) => (
                         <TableRow key={index} hover={false} classes={{ root: classes.contextualTableRow }}>
                             <TableCell component="th" scope="row" className={clsx(classes.checkboxCell, classes.sticky)}>
                                 <Checkbox
-                                    checked={row.checked}
+                                    value={row.name}
+                                    onChange={(): void => onSelect(row)}
+                                    checked={isSelected(row)}
+                                    // checked={row.checked}
+                                    // checked={isSelected(row)}
                                     name="checkbox-col-cell"
                                     color="primary"
                                     size="small"
+                                    // onChange={(): void => onSelect(row)}
                                 />
                             </TableCell>
                             <TableCell className={classes.dataCell}>
@@ -195,29 +247,32 @@ export const ContextualAction = (): JSX.Element => {
                         Contextual App Bar
                     </Typography>
                 </Toolbar>
-                <Toolbar className={clsx(classes.appbar, classes.secondaryToolbar)}>
-                    <Hidden mdUp={true}>
+                <Hidden mdUp={true}>
+                    <Toolbar className={clsx(classes.appbar, classes.secondaryToolbar)}>
+                        {/* <Hidden mdUp={true}> */}
+                            <IconButton
+                                data-cy="toolbar-close"
+                                color={'inherit'}
+                                edge={'start'}
+                                style={{ marginRight: 20 }}
+                            >
+                                <CloseIcon />
+                            </IconButton>
+                        {/* </Hidden> */}
+                        <Typography variant={'h6'} color={'inherit'}>
+                            1 selected
+                        </Typography>
+                        <Spacer />
                         <IconButton
-                            data-cy="toolbar-close"
+                            data-cy="toolbar-delete"
                             color={'inherit'}
-                            edge={'start'}
-                            style={{ marginRight: 20 }}
+                            edge={'end'}
+                            onClick={onDelete}
                         >
-                            <CloseIcon />
+                            <DeleteIcon />
                         </IconButton>
-                    </Hidden>
-                    <Typography variant={'h6'} color={'inherit'}>
-                        1 selected
-                    </Typography>
-                    <Spacer />
-                    <IconButton
-                        data-cy="toolbar-delete"
-                        color={'inherit'}
-                        edge={'end'}
-                    >
-                        <DeleteIcon />
-                    </IconButton>
-                </Toolbar>
+                    </Toolbar>
+                </Hidden>
             </AppBar>
             <div>
                 <div className={classes.tableBody}>
@@ -225,7 +280,7 @@ export const ContextualAction = (): JSX.Element => {
                         <Hidden smDown={true}>
                             <div className={classes.deleteRow}>
                                 <Typography variant={'caption'} color={'inherit'}>
-                                    0 selected item(s)
+                                    {selectedItems.length} selected item(s)
                                 </Typography>
                                 <Button
                                     data-cy={'delete-btn'}

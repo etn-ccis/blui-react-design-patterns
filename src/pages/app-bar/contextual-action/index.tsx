@@ -249,10 +249,7 @@ export const ContextualAction = (): JSX.Element => {
                 data-cy="primary-toolbar"
                 position={'sticky'}
                 classes={{ root: classes.appbarRoot }}
-                className={clsx(
-                    classes.appbar,
-                    selectedItems.length !== 0 && isMobile && classes.contextualBarActive
-                )}
+                className={clsx(classes.appbar, selectedItems.length !== 0 && isMobile && classes.contextualBarActive)}
             >
                 <Toolbar classes={{ gutters: classes.toolbarGutters }}>
                     <Hidden mdUp={true}>

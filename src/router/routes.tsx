@@ -16,6 +16,10 @@ export const PAGES: Routes = {
             title: 'Collapsible',
             route: 'collapsible',
         },
+        CONTEXTUAL_ACTION: {
+            title: 'Contextual Action',
+            route: 'contextual-action',
+        },
         DROPDOWN_COLLAPSIBLE: {
             title: 'Dropdown Toolbar',
             route: 'dropdown-toolbar',
@@ -162,6 +166,7 @@ export type Routes = {
     };
     APP_BAR: RouteMetaData & {
         COLLAPSIBLE: RouteMetaData;
+        CONTEXTUAL_ACTION: RouteMetaData;
         DROPDOWN_COLLAPSIBLE: RouteMetaData;
         SEARCH: RouteMetaData;
         PAGE_WIDE_SEARCH: RouteMetaData;

@@ -67,13 +67,6 @@ export const FixedLengthPasscodeValidation = (): JSX.Element => {
     const maxLength = 6;
     const inputEl = useRef<HTMLInputElement>(null);
 
-    // useEffect(() => {
-    //     const input = document.getElementById(inputId);
-    //     if (input) {
-    //         input.focus();
-    //     }
-    // }, []);
-
     const onSubmit = (currPasscode: string): void => {
         setLoading(true);
         setBlurredDuringEntry(false);
@@ -86,10 +79,10 @@ export const FixedLengthPasscodeValidation = (): JSX.Element => {
             } else {
                 setBlurredDuringEntry(false);
                 setIncorrectPasscode(true);
-                // @ts-ignore
-                inputEl.current.focus();
-                // @ts-ignore
-                inputEl.current.select();
+                if (inputEl.current) {
+                    inputEl.current.focus();
+                    inputEl.current.select();
+                }
             }
         }, 2000);
     };
@@ -118,15 +111,16 @@ export const FixedLengthPasscodeValidation = (): JSX.Element => {
         }
     }, [blurredDuringEntry, success, passcode, incorrectPasscode]);
 
-    const resetForm = (): void => {
+    const resetForm = useCallback(() => {
         setBlurredDuringEntry(false);
         setLoading(false);
         setSuccess(false);
         setPasscode('');
         setIncorrectPasscode(false);
-        // @ts-ignore
-        inputEl.current.focus();
-    };
+        setTimeout(() => {
+            if (inputEl.current) inputEl.current.focus();
+        });
+    }, []);
 
     return (
         <>
@@ -170,9 +164,8 @@ export const FixedLengthPasscodeValidation = (): JSX.Element => {
                         }}
                     />
                     <TextField
-                        autoFocus
                         style={{ width: '100%', height: 72 }}
-                        ref={inputEl}
+                        inputRef={inputEl}
                         label={'Passcode'}
                         value={passcode}
                         onChange={onPasscodeChange}

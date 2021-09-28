@@ -124,11 +124,11 @@ export const FixedLengthPasscodeValidation = (): JSX.Element => {
 
     return (
         <>
-            <AppBar data-cy="pxb-toolbar" position={'sticky'} classes={{ root: classes.appbarRoot }}>
+            <AppBar data-cy={'pxb-toolbar'} position={'sticky'} classes={{ root: classes.appbarRoot }}>
                 <Toolbar classes={{ gutters: classes.toolbarGutters }}>
                     <Hidden mdUp>
                         <IconButton
-                            data-cy="toolbar-menu"
+                            data-cy={'toolbar-menu'}
                             color={'inherit'}
                             onClick={(): void => {
                                 dispatch({ type: TOGGLE_DRAWER, payload: true });
@@ -169,14 +169,14 @@ export const FixedLengthPasscodeValidation = (): JSX.Element => {
                         label={'Passcode'}
                         value={passcode}
                         onChange={onPasscodeChange}
-                        variant="filled"
+                        variant={'filled'}
                         inputProps={{
                             inputMode: 'numeric',
                             maxLength,
                         }}
                         InputProps={{
                             endAdornment: (
-                                <InputAdornment position="end">
+                                <InputAdornment position={'end'}>
                                     {loading && (
                                         <CircularProgress
                                             data-cy={'loading-spinner'}

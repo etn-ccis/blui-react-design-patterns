@@ -24,6 +24,13 @@ import { Spacer } from '@pxblue/react-components';
 import clsx from 'clsx';
 
 const useStyles = makeStyles((theme: Theme) => ({
+    root: {
+        backgroundColor: theme.palette.background.default,
+        color: theme.palette.text.primary,
+        minHeight: '100vh',
+        display: 'flex',
+        flexDirection: 'column',
+    },
     containerWrapper: {
         display: 'flex',
         justifyContent: 'center',
@@ -267,20 +274,12 @@ export const PasswordFormValidation = (): JSX.Element => {
     const passwordHintText = (error: boolean): string => (error ? theme.palette.text.primary : Colors.gray[200]);
 
     return (
-        <div
-            style={{
-                backgroundColor: theme.palette.background.default,
-                color: theme.palette.text.primary,
-                minHeight: '100vh',
-                display: 'flex',
-                flexDirection: 'column',
-            }}
-        >
-            <AppBar data-cy="pxb-toolbar" position={'sticky'} classes={{ root: classes.appbarRoot }}>
+        <div className={classes.root}>
+            <AppBar data-cy={'pxb-toolbar'} position={'sticky'} classes={{ root: classes.appbarRoot }}>
                 <Toolbar classes={{ gutters: classes.toolbarGutters }}>
                     <Hidden mdUp>
                         <IconButton
-                            data-cy="toolbar-menu"
+                            data-cy={'toolbar-menu'}
                             color={'inherit'}
                             onClick={(): void => {
                                 dispatch({ type: TOGGLE_DRAWER, payload: true });
@@ -451,7 +450,7 @@ export const PasswordFormValidation = (): JSX.Element => {
                         <Button
                             color={'primary'}
                             style={{ width: 100 }}
-                            variant="outlined"
+                            variant={'outlined'}
                             onClick={(): void => clearForms()}
                         >
                             Cancel
@@ -460,7 +459,7 @@ export const PasswordFormValidation = (): JSX.Element => {
                         <Button
                             color={'primary'}
                             style={{ width: 100 }}
-                            variant="contained"
+                            variant={'contained'}
                             disabled={!submitEnabled()}
                             onClick={(): void => clearForms()}
                         >
@@ -470,7 +469,7 @@ export const PasswordFormValidation = (): JSX.Element => {
                     <div className={classes.mobileSubmitButtonContainer}>
                         <Button
                             color={'primary'}
-                            variant="contained"
+                            variant={'contained'}
                             style={{ width: '100%' }}
                             disabled={!submitEnabled()}
                             onClick={(): void => clearForms()}

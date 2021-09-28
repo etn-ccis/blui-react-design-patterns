@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState, useRef } from 'react';
 import {
     AppBar,
     Button,
@@ -18,6 +18,7 @@ import { TOGGLE_DRAWER } from '../../../redux/actions';
 import { EmptyState } from '@pxblue/react-components';
 
 type OnChangeHandler = InputProps['onChange'];
+const slideAnimationDurationMs = 250;
 
 const useStyles = makeStyles((theme: Theme) => ({
     appbarRoot: {
@@ -78,13 +79,11 @@ export const VerifyOnSubmitValidation = (): JSX.Element => {
     const [showDeviceAddedScreen, setShowDeviceAddedScreen] = useState(false);
     const [showAddDeviceScreen, setShowAddDeviceScreen] = useState(true);
     const [loading, setLoading] = useState(false);
-    const inputId = 'serialNumber';
-    const slideAnimationDurationMs = 250;
+    const inputEl = useRef<HTMLInputElement>(null);
 
     useEffect(() => {
-        const input = document.getElementById(inputId);
-        if (input) {
-            input.focus();
+        if (showAddDeviceScreen && inputEl.current) {
+            inputEl.current.focus();
         }
     }, [showAddDeviceScreen]);
 
@@ -93,16 +92,15 @@ export const VerifyOnSubmitValidation = (): JSX.Element => {
         setSerialNumber(event.target.value);
     }, []);
 
-    const onSubmit = (serial: string): void => {
+    const onSubmit = useCallback((serial: string): void => {
         setErrorMsg('');
         setLoading(true);
         setTimeout(() => {
             setLoading(false);
             if (serial !== '123') {
                 setErrorMsg('Device not found.');
-                const input = document.getElementById(inputId);
-                if (input) {
-                    input.focus();
+                if (inputEl.current) {
+                    inputEl.current.focus();
                 }
             } else {
                 setDeviceAdded(true);
@@ -112,15 +110,15 @@ export const VerifyOnSubmitValidation = (): JSX.Element => {
                 }, slideAnimationDurationMs);
             }
         }, 2000);
-    };
+    }, []);
 
     return (
         <>
-            <AppBar data-cy="pxb-toolbar" position={'sticky'} classes={{ root: classes.appbarRoot }}>
+            <AppBar data-cy={'pxb-toolbar'} position={'sticky'} classes={{ root: classes.appbarRoot }}>
                 <Toolbar classes={{ gutters: classes.toolbarGutters }}>
                     <Hidden mdUp>
                         <IconButton
-                            data-cy="toolbar-menu"
+                            data-cy={'toolbar-menu'}
                             color={'inherit'}
                             onClick={(): void => {
                                 dispatch({ type: TOGGLE_DRAWER, payload: true });
@@ -140,7 +138,7 @@ export const VerifyOnSubmitValidation = (): JSX.Element => {
             <div className={classes.containerWrapper}>
                 <div className={classes.container}>
                     <Slide
-                        direction="right"
+                        direction={'right'}
                         in={showAddDeviceScreen}
                         mountOnEnter
                         unmountOnExit
@@ -156,18 +154,20 @@ export const VerifyOnSubmitValidation = (): JSX.Element => {
                             </Typography>
                             <TextField
                                 style={{ width: '100%', height: 72 }}
-                                id={inputId}
+                                inputRef={inputEl}
                                 label={'Serial Number'}
                                 value={serialNumber}
                                 onChange={onSerialNumberChange}
-                                variant="filled"
+                                variant={'filled'}
                                 error={Boolean(errorMsg)}
                                 helperText={errorMsg}
+                                type={'search'}
                                 onKeyUp={(event): void => {
                                     if (event.key === 'Enter') {
                                         onSubmit(serialNumber);
                                     }
                                 }}
+                                disabled={loading || showDeviceAddedScreen}
                             />
 
                             <div className={classes.buttonContainer}>
@@ -181,6 +181,7 @@ export const VerifyOnSubmitValidation = (): JSX.Element => {
                                     }}
                                     disabled={!serialNumber}
                                     data-cy={'search-button'}
+                                    disableElevation={loading}
                                 >
                                     {!loading && <>Search Device</>}
                                     {loading && (
@@ -198,7 +199,7 @@ export const VerifyOnSubmitValidation = (): JSX.Element => {
                     </Slide>
 
                     <Slide
-                        direction="left"
+                        direction={'left'}
                         in={showDeviceAddedScreen}
                         mountOnEnter
                         unmountOnExit

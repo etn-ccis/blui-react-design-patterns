@@ -1,23 +1,11 @@
-import React, { useCallback, useState } from 'react';
-import {
-    AppBar,
-    Card,
-    Hidden,
-    IconButton,
-    InputProps,
-    Switch,
-    TextField,
-    Toolbar,
-    Typography,
-} from '@material-ui/core';
+import React from 'react';
+import { AppBar, Card, Hidden, IconButton, Switch, TextField, Toolbar, Typography } from '@material-ui/core';
 import { Dns, Menu, Timeline } from '@material-ui/icons';
 import List from '@material-ui/core/List';
 import { makeStyles, Theme, useTheme } from '@material-ui/core/styles';
 import { useDispatch } from 'react-redux';
 import { TOGGLE_DRAWER } from '../../../redux/actions';
 import { InfoListItem } from '@pxblue/react-components';
-
-type OnChangeHandler = InputProps['onChange'];
 
 const useStyles = makeStyles((theme: Theme) => ({
     containerWrapper: {
@@ -55,20 +43,15 @@ const useStyles = makeStyles((theme: Theme) => ({
 export const ListFormValidation = (): JSX.Element => {
     const theme = useTheme();
     const classes = useStyles(theme);
-    const [ip, setIp] = useState('10.0.0.1');
     const dispatch = useDispatch();
-
-    const onIpChange: OnChangeHandler = useCallback((event) => {
-        setIp(event.target.value);
-    }, []);
 
     return (
         <>
-            <AppBar data-cy="pxb-toolbar" position={'sticky'} classes={{ root: classes.appbarRoot }}>
+            <AppBar data-cy={'pxb-toolbar'} position={'sticky'} classes={{ root: classes.appbarRoot }}>
                 <Toolbar classes={{ gutters: classes.toolbarGutters }}>
                     <Hidden mdUp>
                         <IconButton
-                            data-cy="toolbar-menu"
+                            data-cy={'toolbar-menu'}
                             color={'inherit'}
                             onClick={(): void => {
                                 dispatch({ type: TOGGLE_DRAWER, payload: true });
@@ -86,7 +69,7 @@ export const ListFormValidation = (): JSX.Element => {
             </AppBar>
 
             <div className={classes.containerWrapper}>
-                <Card className={classes.container} elevation={4}>
+                <Card className={classes.container}>
                     <List disablePadding style={{ width: '100%' }}>
                         <InfoListItem
                             icon={<Dns />}
@@ -94,19 +77,17 @@ export const ListFormValidation = (): JSX.Element => {
                             title={'IP Address'}
                             rightComponent={
                                 <TextField
-                                    id="filled-basic"
                                     data-cy={'ip-address'}
                                     classes={{
                                         root: classes.textFieldRoot,
                                     }}
-                                    value={ip}
+                                    defaultValue={'10.0.0.1'}
                                     InputProps={{
                                         classes: {
                                             input: classes.skinnyInput,
                                         },
                                     }}
-                                    onChange={onIpChange}
-                                    variant="filled"
+                                    variant={'filled'}
                                 />
                             }
                         ></InfoListItem>
@@ -116,7 +97,7 @@ export const ListFormValidation = (): JSX.Element => {
                             divider={'full'}
                             title={'Insight Report'}
                             subtitle={'Auto-report every 2 months'}
-                            rightComponent={<Switch name="demo-switch" data-cy="switch" />}
+                            rightComponent={<Switch name={'demo-switch'} data-cy={'switch'} />}
                             data-cy={'switch'}
                         ></InfoListItem>
                     </List>

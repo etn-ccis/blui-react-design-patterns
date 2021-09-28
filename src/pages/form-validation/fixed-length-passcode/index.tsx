@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useState, useRef } from 'react';
 import {
     AppBar,
     Button,
@@ -65,14 +65,14 @@ export const FixedLengthPasscodeValidation = (): JSX.Element => {
     const [blurredDuringEntry, setBlurredDuringEntry] = useState(false);
     const [incorrectPasscode, setIncorrectPasscode] = useState(false);
     const maxLength = 6;
-    const inputId = 'passcode-input';
+    const inputEl = useRef<HTMLInputElement>(null);
 
-    useEffect(() => {
-        const input = document.getElementById(inputId);
-        if (input) {
-            input.focus();
-        }
-    }, []);
+    // useEffect(() => {
+    //     const input = document.getElementById(inputId);
+    //     if (input) {
+    //         input.focus();
+    //     }
+    // }, []);
 
     const onSubmit = (currPasscode: string): void => {
         setLoading(true);
@@ -86,11 +86,10 @@ export const FixedLengthPasscodeValidation = (): JSX.Element => {
             } else {
                 setBlurredDuringEntry(false);
                 setIncorrectPasscode(true);
-                const input = document.getElementById(inputId) as HTMLInputElement;
-                if (input) {
-                    input.focus();
-                    input.select();
-                }
+                // @ts-ignore
+                inputEl.current.focus();
+                // @ts-ignore
+                inputEl.current.select();
             }
         }, 2000);
     };
@@ -125,12 +124,8 @@ export const FixedLengthPasscodeValidation = (): JSX.Element => {
         setSuccess(false);
         setPasscode('');
         setIncorrectPasscode(false);
-        setTimeout(() => {
-            const input = document.getElementById(inputId) as HTMLInputElement;
-            if (input) {
-                input.focus();
-            }
-        });
+        // @ts-ignore
+        inputEl.current.focus();
     };
 
     return (
@@ -175,8 +170,9 @@ export const FixedLengthPasscodeValidation = (): JSX.Element => {
                         }}
                     />
                     <TextField
+                        autoFocus
                         style={{ width: '100%', height: 72 }}
-                        id={inputId}
+                        ref={inputEl}
                         label={'Passcode'}
                         value={passcode}
                         onChange={onPasscodeChange}

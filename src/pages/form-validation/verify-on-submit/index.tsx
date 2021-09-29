@@ -168,6 +168,7 @@ export const VerifyOnSubmitValidation = (): JSX.Element => {
                                     }
                                 }}
                                 disabled={loading || showDeviceAddedScreen}
+                                id={'serial-number'}
                             />
 
                             <div className={classes.buttonContainer}>

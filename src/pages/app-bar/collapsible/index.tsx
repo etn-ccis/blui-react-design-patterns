@@ -124,7 +124,9 @@ export const Collapsible = (): JSX.Element => {
                     </div>
                 </Toolbar>
             </AppBar>
-            <div className={classes.bodyContent}>{getBodyFiller()}</div>
+            <div className={classes.bodyContent} id={'page-body'}>
+                {getBodyFiller()}
+            </div>
         </div>
     );
 };

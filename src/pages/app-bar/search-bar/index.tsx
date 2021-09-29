@@ -167,6 +167,7 @@ export const SearchBar = (): JSX.Element => {
                             onChange={(evt): void => setQuery(evt.target.value)}
                             InputProps={{ disableUnderline: true }}
                             autoFocus
+                            id={'#search-field'}
                         />
                     )}
                     {query && (

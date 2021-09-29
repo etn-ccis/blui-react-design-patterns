@@ -193,6 +193,7 @@ export const FixedLengthPasscodeValidation = (): JSX.Element => {
                         helperText={getErrorText()}
                         error={blurredDuringEntry || incorrectPasscode}
                         disabled={loading || success}
+                        id={'passcode-input'}
                     />
                     <Button
                         className={classes.submitButton}

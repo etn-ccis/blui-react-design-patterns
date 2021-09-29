@@ -192,7 +192,9 @@ export const SectionedFormValidation = (): JSX.Element => {
 
     const characterLimitsHelperText = (
         <>
-            <span>{!name && showRequiredError ? 'Required' : 'For example, Facility or Campus name'}</span>
+            <span className={'helper-text'}>
+                {!name && showRequiredError ? 'Required' : 'For example, Facility or Campus name'}
+            </span>
             <span
                 style={{ float: 'right', color: theme.palette.text.secondary }}
             >{`${name.length}/${MAX_CHARS_LIMIT}`}</span>
@@ -284,6 +286,7 @@ export const SectionedFormValidation = (): JSX.Element => {
                             error={showRequiredError && !name}
                             inputRef={nameRef}
                             InputLabelProps={{ required: false }}
+                            id={'name-field'}
                         />
                     </div>
 
@@ -361,6 +364,7 @@ export const SectionedFormValidation = (): JSX.Element => {
                             error={showRequiredError && !address}
                             helperText={getRequiredHelperText(address)}
                             InputLabelProps={{ required: false }}
+                            id={'address-field'}
                         />
                     </div>
                     <div className={classes.formLine}>
@@ -384,10 +388,17 @@ export const SectionedFormValidation = (): JSX.Element => {
                             helperText={getRequiredHelperText(city)}
                             InputLabelProps={{ required: false }}
                             onChange={(e): void => setCity(e.target.value)}
+                            id={'city-field'}
                         />
                     </div>
                     <div className={classes.formLine}>
-                        <FormControl variant={'filled'} required fullWidth className={classes.textField}>
+                        <FormControl
+                            variant={'filled'}
+                            required
+                            fullWidth
+                            className={classes.textField}
+                            id={'state-field'}
+                        >
                             <InputLabel id={'select-state'} required={false}>
                                 State
                             </InputLabel>
@@ -420,15 +431,16 @@ export const SectionedFormValidation = (): JSX.Element => {
                             InputLabelProps={{ required: false }}
                             error={showRequiredError && !zip}
                             helperText={getRequiredHelperText(zip)}
+                            id={'zip-field'}
                         />
 
                         <TextField
+                            disabled
                             style={{ minWidth: 170 }}
                             className={classes.textField}
                             value={'United States'}
                             label={'Country'}
                             variant={'filled'}
-                            disabled={true}
                         />
                     </div>
 
@@ -450,6 +462,7 @@ export const SectionedFormValidation = (): JSX.Element => {
                             error={showRequiredError && !firstName}
                             helperText={getRequiredHelperText(firstName)}
                             InputLabelProps={{ required: false }}
+                            id={'first-name-field'}
                         />
                         <TextField
                             className={clsx(classes.lastNameFormField, classes.textField)}
@@ -473,6 +486,7 @@ export const SectionedFormValidation = (): JSX.Element => {
                             helperText={getEmailHelperText(email)}
                             onChange={onEmailChange}
                             onBlur={onEmailBlur}
+                            id={'email-field'}
                         />
                     </div>
 
@@ -489,7 +503,7 @@ export const SectionedFormValidation = (): JSX.Element => {
                             color={'primary'}
                             variant={'contained'}
                             onClick={onSubmit}
-                            data-cy={'submit'}
+                            id={'submit-button'}
                         >
                             Submit
                         </Button>

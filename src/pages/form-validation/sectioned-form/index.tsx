@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useState, useRef } from 'react';
 import {
     AppBar,
     Button,
@@ -27,6 +27,10 @@ import clsx from 'clsx';
 
 const mobileInputMarginSpacing = 4;
 type OnChangeHandler = InputProps['onChange'];
+const MAX_CHARS_LIMIT = 50;
+const pxbProtection = 'PXB Protection';
+const pxbProtectionDescription = 'PXB Protection provides a three-year power expert warranty.';
+const emailRegex = new RegExp(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i);
 
 const useStyles = makeStyles((theme: Theme) => ({
     containerWrapper: {
@@ -147,11 +151,14 @@ export const SectionedFormValidation = (): JSX.Element => {
     const [zip, setZip] = useState('');
     const [emailError, setEmailError] = useState('');
     const [showRequiredError, setShowRequiredError] = useState(false);
-    const MAX_CHARS_LIMIT = 50;
-    const pxbProtection = 'PXB Protection';
-    const pxbProtectionDescription = 'PXB Protection provides a three-year power expert warranty.';
 
-    const emailRegex = new RegExp(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i);
+    const nameRef = useRef<HTMLInputElement>(null);
+    const addressRef = useRef<HTMLInputElement>(null);
+    const cityRef = useRef<HTMLInputElement>(null);
+    const stateRef = useRef<HTMLInputElement>(null);
+    const zipRef = useRef<HTMLInputElement>(null);
+    const firstNameRef = useRef<HTMLInputElement>(null);
+    const emailRef = useRef<HTMLInputElement>(null);
 
     const validateEmail = useCallback(
         (value: string): void => {
@@ -185,7 +192,9 @@ export const SectionedFormValidation = (): JSX.Element => {
 
     const characterLimitsHelperText = (
         <>
-            <span>{!name && showRequiredError ? 'Required' : 'For example, Facility or Campus name'}</span>
+            <span className={'helper-text'}>
+                {!name && showRequiredError ? 'Required' : 'For example, Facility or Campus name'}
+            </span>
             <span
                 style={{ float: 'right', color: theme.palette.text.secondary }}
             >{`${name.length}/${MAX_CHARS_LIMIT}`}</span>
@@ -208,22 +217,15 @@ export const SectionedFormValidation = (): JSX.Element => {
 
     const onSubmit = (): void => {
         setShowRequiredError(true);
-        let requiredEl;
-        if (!name) {
-            requiredEl = document.getElementById('name-field');
-        } else if (!address) {
-            requiredEl = document.getElementById('address-field');
-        } else if (!city) {
-            requiredEl = document.getElementById('city-field');
-        } else if (!state) {
-            requiredEl = document.getElementById('state-field');
-        } else if (!zip) {
-            requiredEl = document.getElementById('zip-field');
-        } else if (!firstName) {
-            requiredEl = document.getElementById('first-name-field');
-        } else if (!email || !emailRegex.test(email)) {
-            requiredEl = document.getElementById('email-field');
-        }
+        // get the first ref whose field is not empty
+        const requiredEl =
+            (!name && nameRef.current) ||
+            (!address && addressRef.current) ||
+            (!city && cityRef.current) ||
+            (!state && stateRef.current) ||
+            (!zip && zipRef.current) ||
+            (!firstName && firstNameRef.current) ||
+            (!email && emailRef.current);
         if (requiredEl) {
             requiredEl.scrollIntoView(true);
             window.scrollBy(0, -64);
@@ -244,11 +246,11 @@ export const SectionedFormValidation = (): JSX.Element => {
 
     return (
         <>
-            <AppBar data-cy="pxb-toolbar" position={'sticky'} classes={{ root: classes.appbarRoot }}>
+            <AppBar data-cy={'pxb-toolbar'} position={'sticky'} classes={{ root: classes.appbarRoot }}>
                 <Toolbar classes={{ gutters: classes.toolbarGutters }}>
                     <Hidden mdUp>
                         <IconButton
-                            data-cy="toolbar-menu"
+                            data-cy={'toolbar-menu'}
                             color={'inherit'}
                             onClick={(): void => {
                                 dispatch({ type: TOGGLE_DRAWER, payload: true });
@@ -273,24 +275,27 @@ export const SectionedFormValidation = (): JSX.Element => {
                     </div>
                     <div>
                         <TextField
-                            id={'name-field'}
+                            required
                             className={classes.textField}
                             value={name}
                             label={'Name'}
-                            variant="filled"
+                            variant={'filled'}
                             onChange={(e): void => setName(e.target.value)}
                             inputProps={{ maxLength: MAX_CHARS_LIMIT }}
                             helperText={characterLimitsHelperText}
                             error={showRequiredError && !name}
+                            inputRef={nameRef}
+                            InputLabelProps={{ required: false }}
+                            id={'name-field'}
                         />
                     </div>
 
                     <div className={classes.formLine}>
                         <FormControl className={classes.selectLevelForm} variant={'filled'}>
-                            <InputLabel htmlFor="select-level">Level</InputLabel>
+                            <InputLabel htmlFor={'select-level'}>Level</InputLabel>
                             <Select
                                 fullWidth
-                                labelId="select-level"
+                                labelId={'select-level'}
                                 value={level}
                                 onChange={(e): void => setLevel(String(e.target.value))}
                                 inputProps={{
@@ -304,8 +309,8 @@ export const SectionedFormValidation = (): JSX.Element => {
                             </Select>
                         </FormControl>
                         <Hidden xsDown>
-                            <FormControlLabel control={<Checkbox name="checkedC" />} label={pxbProtection} />
-                            <Tooltip title={pxbProtectionDescription} arrow placement={'top'}>
+                            <FormControlLabel control={<Checkbox name={'checkedC'} />} label={pxbProtection} />
+                            <Tooltip arrow title={pxbProtectionDescription} placement={'top'}>
                                 <HelpOutline style={{ color: theme.palette.text.disabled }} />
                             </Tooltip>
                         </Hidden>
@@ -319,7 +324,7 @@ export const SectionedFormValidation = (): JSX.Element => {
                                 }}
                             >
                                 <FormControlLabel
-                                    control={<Checkbox name="checkedC" />}
+                                    control={<Checkbox name={'checkedC'} />}
                                     label={''}
                                     style={{ marginTop: -6 }}
                                 />
@@ -349,16 +354,17 @@ export const SectionedFormValidation = (): JSX.Element => {
 
                     <div className={classes.formLine}>
                         <TextField
-                            id={'address-field'}
+                            required
+                            inputRef={addressRef}
                             className={classes.textField}
                             value={address}
                             label={'Address'}
-                            variant="filled"
+                            variant={'filled'}
                             onChange={(e): void => setAddress(e.target.value)}
-                            required={true}
                             error={showRequiredError && !address}
                             helperText={getRequiredHelperText(address)}
                             InputLabelProps={{ required: false }}
+                            id={'address-field'}
                         />
                     </div>
                     <div className={classes.formLine}>
@@ -366,65 +372,75 @@ export const SectionedFormValidation = (): JSX.Element => {
                             className={classes.textField}
                             value={addressLine2}
                             label={'Address Line 2 (Optional)'}
-                            variant="filled"
+                            variant={'filled'}
                             onChange={(e): void => setAddressLine2(e.target.value)}
                         />
                     </div>
                     <div className={classes.formLine}>
                         <TextField
-                            id={'city-field'}
+                            required
+                            inputRef={cityRef}
                             className={classes.textField}
                             value={city}
                             label={'City'}
-                            variant="filled"
-                            required={true}
+                            variant={'filled'}
                             error={showRequiredError && !city}
                             helperText={getRequiredHelperText(city)}
                             InputLabelProps={{ required: false }}
                             onChange={(e): void => setCity(e.target.value)}
+                            id={'city-field'}
                         />
                     </div>
                     <div className={classes.formLine}>
-                        <FormControl variant={'filled'} required={true} fullWidth className={classes.textField}>
-                            <InputLabel id="select-state">State</InputLabel>
+                        <FormControl
+                            variant={'filled'}
+                            required
+                            fullWidth
+                            className={classes.textField}
+                            id={'state-field'}
+                        >
+                            <InputLabel id={'select-state'} required={false}>
+                                State
+                            </InputLabel>
                             <Select
-                                id={'state-field'}
-                                labelId="select-state"
+                                inputRef={stateRef}
+                                labelId={'select-state'}
                                 value={state}
                                 error={showRequiredError && !state}
                                 onChange={(e): void => setState(String(e.target.value))}
                             >
-                                <MenuItem>CA</MenuItem>
-                                <MenuItem>MI</MenuItem>
-                                <MenuItem>GA</MenuItem>
+                                <MenuItem value={'CA'}>CA</MenuItem>
+                                <MenuItem value={'MI'}>MI</MenuItem>
+                                <MenuItem value={'GA'}>GA</MenuItem>
                             </Select>
                             {showRequiredError && !state && <FormHelperText error={true}>Required</FormHelperText>}
                         </FormControl>
 
                         <TextField
-                            id={'zip-field'}
+                            required
+                            inputRef={zipRef}
                             className={clsx(classes.zipInput, classes.textField)}
                             value={zip}
                             label={'Zip'}
-                            variant="filled"
+                            variant={'filled'}
                             onChange={(e): void => {
                                 if (!isNaN(Number(e.target.value))) {
                                     setZip(e.target.value);
                                 }
                             }}
                             InputLabelProps={{ required: false }}
-                            required={true}
                             error={showRequiredError && !zip}
                             helperText={getRequiredHelperText(zip)}
+                            id={'zip-field'}
                         />
 
                         <TextField
+                            disabled
                             style={{ minWidth: 170 }}
                             className={classes.textField}
                             value={'United States'}
                             label={'Country'}
-                            variant="filled"
-                            disabled={true}
+                            variant={'filled'}
                         />
                     </div>
 
@@ -437,38 +453,40 @@ export const SectionedFormValidation = (): JSX.Element => {
 
                     <div className={classes.formLine}>
                         <TextField
-                            id={'first-name-field'}
+                            inputRef={firstNameRef}
                             className={clsx(classes.firstNameFormField, classes.textField)}
                             value={firstName}
                             label={'First Name'}
-                            variant="filled"
+                            variant={'filled'}
                             onChange={(e): void => setFirstName(e.target.value)}
                             error={showRequiredError && !firstName}
                             helperText={getRequiredHelperText(firstName)}
                             InputLabelProps={{ required: false }}
+                            id={'first-name-field'}
                         />
                         <TextField
                             className={clsx(classes.lastNameFormField, classes.textField)}
                             value={lastName}
                             label={'Last Name (Optional)'}
-                            variant="filled"
+                            variant={'filled'}
                             onChange={(e): void => setLastName(e.target.value)}
                         />
                     </div>
 
                     <div className={classes.formLine}>
                         <TextField
-                            id={'email-field'}
+                            required
+                            inputRef={emailRef}
                             className={classes.textField}
                             value={email}
                             label={'Email'}
-                            variant="filled"
-                            required={true}
+                            variant={'filled'}
                             InputLabelProps={{ required: false }}
                             error={(showRequiredError && Boolean(emailError)) || (showRequiredError && !email)}
                             helperText={getEmailHelperText(email)}
                             onChange={onEmailChange}
                             onBlur={onEmailBlur}
+                            id={'email-field'}
                         />
                     </div>
 
@@ -485,7 +503,7 @@ export const SectionedFormValidation = (): JSX.Element => {
                             color={'primary'}
                             variant={'contained'}
                             onClick={onSubmit}
-                            data-cy={'submit'}
+                            id={'submit-button'}
                         >
                             Submit
                         </Button>

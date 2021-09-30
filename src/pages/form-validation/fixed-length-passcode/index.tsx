@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useState, useRef } from 'react';
 import {
     AppBar,
     Button,
@@ -65,14 +65,7 @@ export const FixedLengthPasscodeValidation = (): JSX.Element => {
     const [blurredDuringEntry, setBlurredDuringEntry] = useState(false);
     const [incorrectPasscode, setIncorrectPasscode] = useState(false);
     const maxLength = 6;
-    const inputId = 'passcode-input';
-
-    useEffect(() => {
-        const input = document.getElementById(inputId);
-        if (input) {
-            input.focus();
-        }
-    }, []);
+    const inputEl = useRef<HTMLInputElement>(null);
 
     const onSubmit = (currPasscode: string): void => {
         setLoading(true);
@@ -86,10 +79,9 @@ export const FixedLengthPasscodeValidation = (): JSX.Element => {
             } else {
                 setBlurredDuringEntry(false);
                 setIncorrectPasscode(true);
-                const input = document.getElementById(inputId) as HTMLInputElement;
-                if (input) {
-                    input.focus();
-                    input.select();
+                if (inputEl.current) {
+                    inputEl.current.focus();
+                    inputEl.current.select();
                 }
             }
         }, 2000);
@@ -119,27 +111,24 @@ export const FixedLengthPasscodeValidation = (): JSX.Element => {
         }
     }, [blurredDuringEntry, success, passcode, incorrectPasscode]);
 
-    const resetForm = (): void => {
+    const resetForm = useCallback(() => {
         setBlurredDuringEntry(false);
         setLoading(false);
         setSuccess(false);
         setPasscode('');
         setIncorrectPasscode(false);
         setTimeout(() => {
-            const input = document.getElementById(inputId) as HTMLInputElement;
-            if (input) {
-                input.focus();
-            }
+            if (inputEl.current) inputEl.current.focus();
         });
-    };
+    }, []);
 
     return (
         <>
-            <AppBar data-cy="pxb-toolbar" position={'sticky'} classes={{ root: classes.appbarRoot }}>
+            <AppBar data-cy={'pxb-toolbar'} position={'sticky'} classes={{ root: classes.appbarRoot }}>
                 <Toolbar classes={{ gutters: classes.toolbarGutters }}>
                     <Hidden mdUp>
                         <IconButton
-                            data-cy="toolbar-menu"
+                            data-cy={'toolbar-menu'}
                             color={'inherit'}
                             onClick={(): void => {
                                 dispatch({ type: TOGGLE_DRAWER, payload: true });
@@ -176,18 +165,18 @@ export const FixedLengthPasscodeValidation = (): JSX.Element => {
                     />
                     <TextField
                         style={{ width: '100%', height: 72 }}
-                        id={inputId}
+                        inputRef={inputEl}
                         label={'Passcode'}
                         value={passcode}
                         onChange={onPasscodeChange}
-                        variant="filled"
+                        variant={'filled'}
                         inputProps={{
                             inputMode: 'numeric',
                             maxLength,
                         }}
                         InputProps={{
                             endAdornment: (
-                                <InputAdornment position="end">
+                                <InputAdornment position={'end'}>
                                     {loading && (
                                         <CircularProgress
                                             data-cy={'loading-spinner'}
@@ -204,6 +193,7 @@ export const FixedLengthPasscodeValidation = (): JSX.Element => {
                         helperText={getErrorText()}
                         error={blurredDuringEntry || incorrectPasscode}
                         disabled={loading || success}
+                        id={'passcode-input'}
                     />
                     <Button
                         className={classes.submitButton}

@@ -64,23 +64,23 @@ export const TableFormValidation = (): JSX.Element => {
                 <TableHead>
                     <TableRow>
                         <TableCell>ID</TableCell>
-                        <TableCell align="left">Name</TableCell>
-                        <TableCell align="right">Min</TableCell>
-                        <TableCell align="right">Max</TableCell>
+                        <TableCell align={'left'}>Name</TableCell>
+                        <TableCell align={'right'}>Min</TableCell>
+                        <TableCell align={'right'}>Max</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
                     {rows.map((row, index) => (
                         <TableRow key={row.id} hover={false}>
-                            <TableCell component="th" scope="row" style={getLastRowStyles(index)}>
+                            <TableCell component={'th'} scope={'row'} style={getLastRowStyles(index)}>
                                 {row.id}
                             </TableCell>
-                            <TableCell align="left" style={getLastRowStyles(index)}>
+                            <TableCell align={'left'} style={getLastRowStyles(index)}>
                                 {row.name}
                             </TableCell>
-                            <TableCell align="right" style={getLastRowStyles(index)}>
+                            <TableCell align={'right'} style={getLastRowStyles(index)}>
                                 <TextField
-                                    variant="filled"
+                                    variant={'filled'}
                                     value={row.min}
                                     classes={{
                                         root: classes.textFieldRoot,
@@ -92,9 +92,9 @@ export const TableFormValidation = (): JSX.Element => {
                                     }}
                                 />
                             </TableCell>
-                            <TableCell align="right" style={getLastRowStyles(index)}>
+                            <TableCell align={'right'} style={getLastRowStyles(index)}>
                                 <TextField
-                                    variant="filled"
+                                    variant={'filled'}
                                     value={row.max}
                                     classes={{
                                         root: classes.textFieldRoot,
@@ -129,7 +129,7 @@ export const TableFormValidation = (): JSX.Element => {
                         title={'Min'}
                         rightComponent={
                             <TextField
-                                variant="filled"
+                                variant={'filled'}
                                 value={row.min}
                                 classes={{
                                     root: classes.textFieldRoot,
@@ -146,7 +146,7 @@ export const TableFormValidation = (): JSX.Element => {
                         title={'Max'}
                         rightComponent={
                             <TextField
-                                variant="filled"
+                                variant={'filled'}
                                 value={row.max}
                                 classes={{
                                     root: classes.textFieldRoot,
@@ -170,11 +170,11 @@ export const TableFormValidation = (): JSX.Element => {
 
     return (
         <>
-            <AppBar data-cy="pxb-toolbar" position={'sticky'} classes={{ root: classes.appbarRoot }}>
+            <AppBar data-cy={'pxb-toolbar'} position={'sticky'} classes={{ root: classes.appbarRoot }}>
                 <Toolbar classes={{ gutters: classes.toolbarGutters }}>
                     <Hidden mdUp>
                         <IconButton
-                            data-cy="toolbar-menu"
+                            data-cy={'toolbar-menu'}
                             color={'inherit'}
                             onClick={(): void => {
                                 dispatch({ type: TOGGLE_DRAWER, payload: true });

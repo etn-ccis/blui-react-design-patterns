@@ -55,6 +55,14 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
 }));
 
+const countries: CountryDetails[] = [
+    { code: 'US', name: '+1 (US)', placeholder: '### ### ####', maxLength: '12', errorCode: 'U.S.' },
+    { code: 'CA', name: '+1 (CA)', placeholder: '### ### ####', maxLength: '12', errorCode: 'Canadian' },
+    { code: 'RU', name: '+7 (RU)', placeholder: '### ### ## ##', maxLength: '13', errorCode: 'Russian' },
+    { code: 'EG', name: '+20 (EG)', placeholder: '# #######', maxLength: '9', errorCode: 'Egyptian' },
+    { code: 'IN', name: '+91 (IN)', placeholder: '#### ### ###', maxLength: '12', errorCode: 'Indian' },
+];
+
 export const PhoneNumberFormatValidation = (): JSX.Element => {
     const theme = useTheme();
     const classes = useStyles(theme);
@@ -62,13 +70,6 @@ export const PhoneNumberFormatValidation = (): JSX.Element => {
     const [phoneNumber, setPhoneNumber] = useState('');
     const [countryCode, setCountryCode] = useState('US');
     const [blurred, setBlurred] = useState(false);
-    const countries: CountryDetails[] = [
-        { code: 'US', name: '+1 (US)', placeholder: '### ### ####', maxLength: '12', errorCode: 'U.S.' },
-        { code: 'CA', name: '+1 (CA)', placeholder: '### ### ####', maxLength: '12', errorCode: 'Canadian' },
-        { code: 'RU', name: '+7 (RU)', placeholder: '### ### ## ##', maxLength: '13', errorCode: 'Russian' },
-        { code: 'EG', name: '+20 (EG)', placeholder: '# #######', maxLength: '9', errorCode: 'Egyptian' },
-        { code: 'IN', name: '+91 (IN)', placeholder: '#### ### ###', maxLength: '12', errorCode: 'Indian' },
-    ];
 
     const isValidPhoneNumber = useCallback((): boolean => checkPhoneNumber(phoneNumber, countryCode), [
         countryCode,
@@ -122,11 +123,11 @@ export const PhoneNumberFormatValidation = (): JSX.Element => {
 
     return (
         <>
-            <AppBar data-cy="pxb-toolbar" position={'sticky'} classes={{ root: classes.appbarRoot }}>
+            <AppBar data-cy={'pxb-toolbar'} position={'sticky'} classes={{ root: classes.appbarRoot }}>
                 <Toolbar classes={{ gutters: classes.toolbarGutters }}>
                     <Hidden mdUp>
                         <IconButton
-                            data-cy="toolbar-menu"
+                            data-cy={'toolbar-menu'}
                             color={'inherit'}
                             onClick={(): void => {
                                 dispatch({ type: TOGGLE_DRAWER, payload: true });
@@ -146,7 +147,7 @@ export const PhoneNumberFormatValidation = (): JSX.Element => {
             <div className={classes.containerWrapper}>
                 <div className={classes.container}>
                     <FormControl variant={'filled'} style={{ width: 200, marginRight: theme.spacing(2) }}>
-                        <InputLabel htmlFor="country-code-label">Country Code</InputLabel>
+                        <InputLabel htmlFor={'country-code-label'}>Country Code</InputLabel>
                         <Select
                             data-cy={'country-selector'}
                             fullWidth
@@ -173,7 +174,7 @@ export const PhoneNumberFormatValidation = (): JSX.Element => {
                         value={phoneNumber}
                         placeholder={getPlaceholder()}
                         onChange={onPhoneNumberChange}
-                        variant="filled"
+                        variant={'filled'}
                         data-cy={'phone-input'}
                         inputProps={{
                             inputMode: 'numeric',

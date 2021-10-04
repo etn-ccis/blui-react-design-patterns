@@ -87,9 +87,9 @@ jobs:
             - codecov/upload:
                 file: './coverage/clover.xml'
                 token: 74ebd8f2-0b51-4873-972a-82c2b3509b37
-            - codecov/upload:
-                file: './cypress-coverage/clover.xml'
-                token: 74ebd8f2-0b51-4873-972a-82c2b3509b37
+#             - codecov/upload:
+#                 file: './cypress-coverage/clover.xml'
+#                 token: 74ebd8f2-0b51-4873-972a-82c2b3509b37
 
 workflows:
     version: 2
@@ -107,7 +107,7 @@ workflows:
             - coverage_reports:
                    requires:
                         - build_project
-                        - cypress_tests
+#                         - cypress_tests
                    filters:
                         branches:
                             only:

@@ -96,14 +96,14 @@ workflows:
     react_design_patterns:
         jobs:
             - build_project
-            - cypress_tests:
-                    requires:
-                        - build_project
-                    filters:
-                        branches:
-                            only:
-                                - master
-                                - dev
+#             - cypress_tests:
+#                     requires:
+#                         - build_project
+#                     filters:
+#                         branches:
+#                             only:
+#                                 - master
+#                                 - dev
             - coverage_reports:
                    requires:
                         - build_project

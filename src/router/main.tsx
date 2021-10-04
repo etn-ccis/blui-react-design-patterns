@@ -5,10 +5,9 @@ import { Switch, Route } from 'react-router-dom';
 import { LandingPage } from '../pages/LandingPage';
 import { PAGES } from './routes';
 import { SearchBar } from '../pages/app-bar/search-bar';
-import { CollapsibleAppBar } from '../pages/app-bar/collapsible-app-bar';
-import { LoadingStates } from '../pages/loading-states';
+import { Collapsible } from '../pages/app-bar/collapsible';
+import { ContextualAction } from '../pages/app-bar/contextual-action';
 import { I18N } from '../pages/i18n';
-import { FormValidation } from '../pages/form-validation';
 import { ActionList } from '../pages/lists/action-list';
 import { DataList } from '../pages/lists/data-list';
 import { MultiselectList } from '../pages/lists/multiselect-list';
@@ -18,6 +17,22 @@ import { ResponsiveTable } from '../pages/lists/responsive-table';
 import { BasicBottomSheet } from '../pages/overlays/basic-bottom-sheet';
 import { ComplexBottomSheet } from '../pages/overlays/complex-bottom-sheet';
 import { DynamicStepper } from '../pages/dynamic-stepper';
+import { ProgressBarIndeterminate } from '../pages/loading-waiting-states/progress-bar-indeterminate';
+import { ProgressBar } from '../pages/loading-waiting-states/progress-bar';
+import { SpinnerOverlays } from '../pages/loading-waiting-states/spinner-overlays';
+import { ContextualSpinner } from '../pages/loading-waiting-states/contextual-spinner/ContextualSpinner';
+import { Skeletons } from '../pages/loading-waiting-states/skeletons/Skeletons';
+import { InAnAppBar } from '../pages/account-menu/in-an-app-bar';
+import { InADrawer } from '../pages/account-menu/in-a-drawer';
+import { PxbDropdownToolbar } from '../pages/app-bar/dropdown-toolbar';
+import { ListFormValidation } from '../pages/form-validation/list';
+import { FixedLengthPasscodeValidation } from '../pages/form-validation/fixed-length-passcode';
+import { SectionedFormValidation } from '../pages/form-validation/sectioned-form';
+import { VerifyOnSubmitValidation } from '../pages/form-validation/verify-on-submit';
+import { PhoneNumberFormatValidation } from '../pages/form-validation/phone-number-format';
+import { TableFormValidation } from '../pages/form-validation/table';
+import { PageWideSearch } from '../pages/app-bar/page-wide-search/PageWideSearch';
+import { PasswordFormValidation } from '../pages/form-validation/password';
 /*
 The main page body, which contains the route definitions
 */
@@ -26,10 +41,34 @@ export const Main = (): JSX.Element => (
         <Route exact path={'/'} component={LandingPage} />
 
         <Route exact path={`/${PAGES.APP_BAR.SEARCH.route || ''}`} component={SearchBar} />
-        <Route exact path={`/${PAGES.APP_BAR.COLLAPSIBLE.route || ''}`} component={CollapsibleAppBar} />
+        <Route exact path={`/${PAGES.APP_BAR.COLLAPSIBLE.route || ''}`} component={Collapsible} />
+        <Route exact path={`/${PAGES.APP_BAR.CONTEXTUAL_ACTION.route || ''}`} component={ContextualAction} />
+        <Route exact path={`/${PAGES.APP_BAR.PAGE_WIDE_SEARCH.route || ''}`} component={PageWideSearch} />
+        <Route exact path={`/${PAGES.APP_BAR.DROPDOWN_COLLAPSIBLE.route || ''}`} component={PxbDropdownToolbar} />
 
-        <Route exact path={`/${PAGES.LOADING.route || ''}`} component={LoadingStates} />
-        <Route exact path={`/${PAGES.FORM_VALIDATION.route || ''}`} component={FormValidation} />
+        <Route exact path={`/${PAGES.FORM_VALIDATION.LIST.route || ''}`} component={ListFormValidation} />
+        <Route exact path={`/${PAGES.FORM_VALIDATION.PASSWORD.route || ''}`} component={PasswordFormValidation} />
+        <Route
+            exact
+            path={`/${PAGES.FORM_VALIDATION.PHONE_NUMBER_FORMAT.route || ''}`}
+            component={PhoneNumberFormatValidation}
+        />
+        <Route
+            exact
+            path={`/${PAGES.FORM_VALIDATION.SECTIONED_FORM.route || ''}`}
+            component={SectionedFormValidation}
+        />
+        <Route exact path={`/${PAGES.FORM_VALIDATION.TABLE.route || ''}`} component={TableFormValidation} />
+        <Route
+            exact
+            path={`/${PAGES.FORM_VALIDATION.FIXED_LENGTH_PASSCODE.route || ''}`}
+            component={FixedLengthPasscodeValidation}
+        />
+        <Route
+            exact
+            path={`/${PAGES.FORM_VALIDATION.VERIFY_ON_SUBMIT.route || ''}`}
+            component={VerifyOnSubmitValidation}
+        />
         <Route exact path={`/${PAGES.I18N.route || ''}`} component={I18N} />
 
         <Route exact path={`/${PAGES.LISTS.ACTION_LIST.route || ''}`} component={ActionList} />
@@ -43,5 +82,25 @@ export const Main = (): JSX.Element => (
         <Route exact path={`/${PAGES.OVERLAYS.COMPLEX_BOTTOM_SHEET.route || ''}`} component={ComplexBottomSheet} />
 
         <Route exact path={`/${PAGES.DYNAMIC_STEPPER.route || ''}`} component={DynamicStepper} />
+        <Route exact path={`/${PAGES.DYNAMIC_STEPPER.route || ''}`} component={DynamicStepper} />
+        <Route exact path={`/${PAGES.LOADING_WAITING_STATES.PROGRESS_BAR.route || ''}`} component={ProgressBar} />
+        <Route
+            exact
+            path={`/${PAGES.LOADING_WAITING_STATES.PROGRESS_BAR_INDETERMINATE.route || ''}`}
+            component={ProgressBarIndeterminate}
+        />
+        <Route
+            exact
+            path={`/${PAGES.LOADING_WAITING_STATES.CONTEXTUAL_SPINNER.route || ''}`}
+            component={ContextualSpinner}
+        />
+        <Route exact path={`/${PAGES.LOADING_WAITING_STATES.SKELETONS.route || ''}`} component={Skeletons} />
+        <Route
+            exact
+            path={`/${PAGES.LOADING_WAITING_STATES.SPINNER_OVERLAYS.route || ''}`}
+            component={SpinnerOverlays}
+        />
+        <Route exact path={`/${PAGES.ACCOUNT_MENU.IN_AN_APP_BAR.route || ''}`} component={InAnAppBar} />
+        <Route exact path={`/${PAGES.ACCOUNT_MENU.IN_A_DRAWER.route || ''}`} component={InADrawer} />
     </Switch>
 );

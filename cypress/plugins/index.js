@@ -15,7 +15,16 @@
 /**
  * @type {Cypress.PluginConfig}
  */
-module.exports = (on, config) => {
-  // `on` is used to hook into various events Cypress emits
-  // `config` is the resolved Cypress config
+ module.exports = (on, config) => {
+  require('@cypress/code-coverage/task')(on, config)
+  if (config.testingType === 'component') {
+    require('@cypress/react/plugins/react-scripts')(on, config)
+  }
+  // cypress codecov and cypress component test
+  
+  // add other tasks to be registered here
+
+  // IMPORTANT to return the config object
+  // with the any changed environment variables
+  return config
 }

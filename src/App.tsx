@@ -1,4 +1,4 @@
-import { Divider, useMediaQuery, useTheme, Typography } from '@material-ui/core';
+import { Divider, IconButton, makeStyles, useMediaQuery, useTheme, Theme, Typography } from '@material-ui/core';
 import {
     Drawer,
     DrawerBody,
@@ -10,6 +10,7 @@ import {
     Spacer,
 } from '@pxblue/react-components';
 import { OpenInNew } from '@material-ui/icons';
+import CloseIcon from '@material-ui/icons/Close';
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router';
 import { Main } from './router/main';
@@ -20,7 +21,31 @@ import { AppState } from './redux/reducers';
 import { TOGGLE_DRAWER } from './redux/actions';
 import { DRAWER_WIDTH } from './assets/constants';
 
+const backgroundImage = require('./assets/topology_40.png').default;
+
+const useStyles = makeStyles((theme: Theme) => ({
+    header: {
+        display: 'flex',
+        justifyContent: 'space-between',
+        zIndex: 1,
+        padding: `0 ${theme.spacing(2)}px`,
+        alignItems: 'center',
+        width: '100%',
+        height: '100%',
+        [theme.breakpoints.down('sm')]: {
+            padding: `0 ${theme.spacing(2)}px 0 0`,
+        },
+    },
+    headerDetails: {
+        flex: 1,
+    },
+    subtitle: {
+        marginTop: `-${theme.spacing(1)}px`,
+    },
+}));
+
 export const App: React.FC = () => {
+    const classes = useStyles();
     const history = useHistory();
     const open = useSelector((state: AppState) => state.app.drawerOpen);
     const theme = useTheme();
@@ -43,18 +68,18 @@ export const App: React.FC = () => {
 
     const navItems: NavItem[] = [];
 
-    const createRoute = (page: RouteMetaData): NavItem => {
+    const createRoute = (page: RouteMetaData, itemKey: string): NavItem => {
         const subItems: NavItem[] = [];
         Object.keys(page).forEach((key: string): JSX.Element | null => {
             const subRoute = page[key as keyof RouteMetaData];
             if (typeof subRoute === 'object') {
-                subItems.push(createRoute(subRoute));
+                subItems.push(createRoute(subRoute, key));
             }
             return null;
         });
         return {
             title: page.title,
-            itemID: page.route || '',
+            itemID: page.route || itemKey,
             items: subItems.length > 0 ? subItems : undefined,
             onClick: page.route
                 ? (): void => {
@@ -65,27 +90,54 @@ export const App: React.FC = () => {
         };
     };
 
-    Object.keys(PAGES).forEach((key: string) => navItems.push(createRoute(PAGES[key as keyof Routes])));
+    Object.keys(PAGES).forEach((key: string) => navItems.push(createRoute(PAGES[key as keyof Routes], key)));
 
     const drawer = (
         <Drawer
             open={open}
             width={DRAWER_WIDTH}
             ModalProps={{
-                onBackdropClick: (): void => {
+                onClose: (): void => {
                     dispatch({ type: TOGGLE_DRAWER, payload: !open });
                 },
             }}
             variant={isMobile ? 'temporary' : 'permanent'}
             activeItem={selected}
+            activeItemBackgroundShape={'round'}
         >
             <DrawerHeader
-                title={'PX Blue'}
-                subtitle={'React Design Patterns'}
-                onClick={(): void => {
-                    navigate('/');
-                    dispatch({ type: TOGGLE_DRAWER, payload: false });
-                }}
+                backgroundImage={backgroundImage}
+                backgroundOpacity={0.5}
+                icon={
+                    isMobile ? (
+                        <IconButton
+                            data-cy="toolbar-menu"
+                            color={'inherit'}
+                            edge={'start'}
+                            onClick={(): void => {
+                                dispatch({ type: TOGGLE_DRAWER, payload: false });
+                            }}
+                        >
+                            <CloseIcon />
+                        </IconButton>
+                    ) : undefined
+                }
+                titleContent={
+                    <div className={classes.header}>
+                        <div
+                            className={classes.headerDetails}
+                            onClick={(): void => {
+                                navigate('/');
+                                dispatch({ type: TOGGLE_DRAWER, payload: false });
+                            }}
+                        >
+                            <Typography variant="h6">PX Blue</Typography>
+                            <Typography variant="body1" className={classes.subtitle}>
+                                React Design Patterns
+                            </Typography>
+                        </div>
+                    </div>
+                }
                 style={{ cursor: 'pointer' }}
             />
             <DrawerBody>

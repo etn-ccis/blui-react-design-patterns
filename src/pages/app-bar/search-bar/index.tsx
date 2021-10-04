@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import AppBar from '@material-ui/core/AppBar';
 import Hidden from '@material-ui/core/Hidden';
@@ -10,9 +10,7 @@ import Typography from '@material-ui/core/Typography';
 
 // Material Icons
 import Close from '@material-ui/icons/Close';
-import Error from '@material-ui/icons/Error';
 import MenuIcon from '@material-ui/icons/Menu';
-import Person from '@material-ui/icons/Person';
 import Search from '@material-ui/icons/Search';
 
 // Handles Drawer
@@ -20,13 +18,13 @@ import { TOGGLE_DRAWER } from '../../../redux/actions';
 import { useDispatch } from 'react-redux';
 
 // Other
-import { createStyles, Theme, makeStyles, useTheme } from '@material-ui/core/styles';
-import { listItems as presidents, President } from './list';
-import { EmptyState, InfoListItem, Spacer } from '@pxblue/react-components';
+import { createStyles, makeStyles, Theme, useTheme } from '@material-ui/core/styles';
+import { InfoListItem, Spacer } from '@pxblue/react-components';
 import { DRAWER_WIDTH } from '../../../assets/constants';
 import clsx from 'clsx';
+import { ArrowBack } from '@material-ui/icons';
 
-const reversedPresidentList = presidents.reverse();
+const list = ['Apple', 'Grape', 'Orange', 'Pineapple', 'Watermelon'];
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -61,26 +59,24 @@ const useStyles = makeStyles((theme: Theme) =>
             },
         },
         searchActive: {},
-        searchfield: {
+        searchField: {
             flex: 1,
+            marginLeft: theme.spacing(2),
         },
     })
 );
 
-export const searchResults = (searchString: string): President[] => {
+export const searchResults = (searchString: string): string[] => {
     const q = searchString.toLowerCase().trim();
-    return reversedPresidentList.filter((item: President): boolean => {
-        if (item.president.toLowerCase().trim().includes(q)) {
-            return true;
+    const filteredItems = [];
+    for (const item of list) {
+        if (!item.toLowerCase().trim().includes(q)) {
+            continue;
         }
-        if (item.party.toLowerCase().trim().includes(q)) {
-            return true;
-        }
-        if (item.tookOffice.toLowerCase().trim().includes(q)) {
-            return true;
-        }
-        return false;
-    });
+        const re = new RegExp(q, 'gi');
+        filteredItems.push(item.replace(re, '<strong>$&</strong>'));
+    }
+    return filteredItems;
 };
 
 export const SearchBar = (): JSX.Element => {
@@ -88,16 +84,16 @@ export const SearchBar = (): JSX.Element => {
     const classes = useStyles(theme);
     const dispatch = useDispatch();
 
-    const [list, setList] = useState(reversedPresidentList);
+    const [filteredList, setFilteredList] = useState(list);
     const [searchActive, setSearchActive] = useState(false);
     const [query, setQuery] = useState('');
 
     useEffect(() => {
         if (searchActive) {
             if (query === '') {
-                setList(reversedPresidentList);
+                setFilteredList(list);
             } else {
-                setList(searchResults(query));
+                setFilteredList(searchResults(query));
             }
         }
     }, [query, searchActive]);
@@ -105,12 +101,12 @@ export const SearchBar = (): JSX.Element => {
     useEffect(() => {
         if (!searchActive) {
             setQuery('');
-            setList(reversedPresidentList);
+            setFilteredList(list);
         }
     }, [searchActive]);
 
     return (
-        <div style={{ backgroundColor: theme.palette.background.paper, minHeight: '100vh' }}>
+        <div style={{ minHeight: '100vh' }}>
             {/* The Regular App Bar */}
             <AppBar
                 data-cy="pxb-toolbar"
@@ -149,65 +145,69 @@ export const SearchBar = (): JSX.Element => {
 
             {/* Search Bar */}
             <AppBar
-                data-cy="searchfield"
+                data-cy="searchField"
                 className={clsx(classes.appbar, classes.searchbar, searchActive && classes.searchActive)}
                 position={'fixed'}
                 color={'default'}
             >
                 <Toolbar classes={{ gutters: classes.toolbarGutters }}>
-                    <IconButton color={'inherit'} edge={'start'} disabled>
-                        <Search />
+                    <IconButton
+                        color={'inherit'}
+                        edge={'start'}
+                        style={{ color: theme.palette.text.secondary }}
+                        onClick={(): void => setSearchActive(false)}
+                    >
+                        <ArrowBack />
                     </IconButton>
                     {searchActive && ( // this is to enable auto focus on mounting
                         <TextField
-                            className={classes.searchfield}
+                            className={classes.searchField}
                             value={query}
                             placeholder={'Search'}
                             onChange={(evt): void => setQuery(evt.target.value)}
                             InputProps={{ disableUnderline: true }}
                             autoFocus
+                            id={'#search-field'}
                         />
                     )}
-                    <IconButton
-                        color={'inherit'}
-                        onClick={(): void => setSearchActive(false)}
-                        edge={'end'}
-                        data-cy="search-close-btn"
-                    >
-                        <Close />
-                    </IconButton>
+                    {query && (
+                        <IconButton
+                            color={'inherit'}
+                            onClick={(): void => setQuery('')}
+                            edge={'end'}
+                            data-cy="search-close-btn"
+                            style={{ color: theme.palette.text.secondary }}
+                        >
+                            <Close />
+                        </IconButton>
+                    )}
                 </Toolbar>
             </AppBar>
 
             {/* List */}
-            <List data-cy="list-view">
-                {list.map((item, index) => (
+            <List data-cy="list-view" style={{ backgroundColor: theme.palette.background.paper, padding: 0 }}>
+                {filteredList.map((item, index) => (
                     <InfoListItem
                         avatar
+                        hidePadding
                         key={index}
-                        icon={<Person />}
-                        title={item.president}
-                        subtitle={item.party}
-                        info={item.tookOffice}
+                        title={
+                            // eslint-disable-next-line @typescript-eslint/naming-convention
+                            <div dangerouslySetInnerHTML={{ __html: item }} />
+                        }
+                        divider={'full'}
                         statusColor={'transparent'}
                         iconColor={theme.palette.text.primary}
                     />
                 ))}
             </List>
-            {list.length < 1 && (
-                <div
-                    style={{
-                        display: 'flex',
-                        flexDirection: 'column',
-                        height: `calc(100vh - ${theme.spacing(8)}px)`,
-                    }}
+            {filteredList.length < 1 && (
+                <Typography
+                    variant={'body2'}
+                    style={{ marginLeft: theme.spacing(9), marginTop: theme.spacing(3), fontWeight: 600 }}
                 >
-                    <EmptyState
-                        icon={<Error fontSize={'inherit'} />}
-                        title={'0 results'}
-                        description={'No matching presidents'}
-                    />
-                </div>
+                    No Results.
+                </Typography>
             )}
         </div>
     );

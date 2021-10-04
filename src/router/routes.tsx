@@ -1,18 +1,68 @@
 export const PAGES: Routes = {
+    ACCOUNT_MENU: {
+        title: 'Account Menu',
+        IN_AN_APP_BAR: {
+            title: 'In an App Bar',
+            route: 'in-an-app-bar',
+        },
+        IN_A_DRAWER: {
+            title: 'In a Drawer',
+            route: 'in-a-drawer',
+        },
+    },
     APP_BAR: {
-        title: 'App Bar',
+        title: 'App Bars',
         COLLAPSIBLE: {
             title: 'Collapsible',
             route: 'collapsible',
+        },
+        CONTEXTUAL_ACTION: {
+            title: 'Contextual Action',
+            route: 'contextual-action',
+        },
+        DROPDOWN_COLLAPSIBLE: {
+            title: 'Dropdown Toolbar',
+            route: 'dropdown-toolbar',
         },
         SEARCH: {
             title: 'Search',
             route: 'search',
         },
+        PAGE_WIDE_SEARCH: {
+            title: 'Page Wide Search',
+            route: 'page-wide-search',
+        },
     },
     FORM_VALIDATION: {
-        title: 'Form Validation',
-        route: 'form-validation',
+        title: 'Forms and Validation',
+        FIXED_LENGTH_PASSCODE: {
+            title: 'Fixed Length Passcode',
+            route: 'fixed-length-passcode',
+        },
+        LIST: {
+            title: 'In a List',
+            route: 'in-a-list',
+        },
+        TABLE: {
+            title: 'In a Table',
+            route: 'in-a-table',
+        },
+        PASSWORD: {
+            title: 'Password',
+            route: 'password',
+        },
+        PHONE_NUMBER_FORMAT: {
+            title: 'Phone Number Format',
+            route: 'phone-number-format',
+        },
+        SECTIONED_FORM: {
+            title: 'Sectioned Form',
+            route: 'in-a-sectioned-form',
+        },
+        VERIFY_ON_SUBMIT: {
+            title: 'Verify on Submit',
+            route: 'verify-on-submit',
+        },
     },
     I18N: {
         title: 'Internationalization',
@@ -45,9 +95,28 @@ export const PAGES: Routes = {
             route: 'responsive-table',
         },
     },
-    LOADING: {
-        title: 'Loading States',
-        route: 'loading-states',
+    LOADING_WAITING_STATES: {
+        title: 'Loading & Waiting',
+        SPINNER_OVERLAYS: {
+            title: 'Spinner Overlays',
+            route: 'spinner-overlays',
+        },
+        CONTEXTUAL_SPINNER: {
+            title: 'Contextual Spinner',
+            route: 'contextual-spinner',
+        },
+        SKELETONS: {
+            title: 'Skeletons',
+            route: 'skeletons',
+        },
+        PROGRESS_BAR: {
+            title: 'Progress Bars',
+            route: 'progress-bar',
+        },
+        PROGRESS_BAR_INDETERMINATE: {
+            title: 'Progress Bars (Indet.)',
+            route: 'progress-bar-indeterminate',
+        },
     },
     OVERLAYS: {
         title: 'Overlays',
@@ -91,11 +160,26 @@ export type RouteMetaData = {
 };
 
 export type Routes = {
+    ACCOUNT_MENU: RouteMetaData & {
+        IN_AN_APP_BAR: RouteMetaData;
+        IN_A_DRAWER: RouteMetaData;
+    };
     APP_BAR: RouteMetaData & {
         COLLAPSIBLE: RouteMetaData;
+        CONTEXTUAL_ACTION: RouteMetaData;
+        DROPDOWN_COLLAPSIBLE: RouteMetaData;
         SEARCH: RouteMetaData;
+        PAGE_WIDE_SEARCH: RouteMetaData;
     };
-    FORM_VALIDATION: RouteMetaData;
+    FORM_VALIDATION: RouteMetaData & {
+        LIST: RouteMetaData;
+        SECTIONED_FORM: RouteMetaData;
+        FIXED_LENGTH_PASSCODE: RouteMetaData;
+        VERIFY_ON_SUBMIT: RouteMetaData;
+        PHONE_NUMBER_FORMAT: RouteMetaData;
+        TABLE: RouteMetaData;
+        PASSWORD: RouteMetaData;
+    };
     I18N: RouteMetaData;
     LISTS: RouteMetaData & {
         ACTION_LIST: RouteMetaData;
@@ -105,7 +189,13 @@ export type Routes = {
         STATUS_LIST: RouteMetaData;
         RESPONSIVE_TABLE: RouteMetaData;
     };
-    LOADING: RouteMetaData;
+    LOADING_WAITING_STATES: RouteMetaData & {
+        PROGRESS_BAR: RouteMetaData;
+        PROGRESS_BAR_INDETERMINATE: RouteMetaData;
+        CONTEXTUAL_SPINNER: RouteMetaData;
+        SKELETONS: RouteMetaData;
+        SPINNER_OVERLAYS: RouteMetaData;
+    };
     OVERLAYS: RouteMetaData & {
         // DIALOG: RouteMetaData;
         BASIC_BOTTOM_SHEET: RouteMetaData;

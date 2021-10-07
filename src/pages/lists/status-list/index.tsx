@@ -15,6 +15,7 @@ import {
 import HomeIcon from '@material-ui/icons/Home';
 import MenuIcon from '@material-ui/icons/Menu';
 import ExpandLess from '@material-ui/icons/ExpandLess';
+import Chevron from '@material-ui/icons/ChevronRight';
 import NotificationsActiveIcon from '@material-ui/icons/NotificationsActive';
 import NotificationIcon from '@material-ui/icons/Notifications';
 import { useDispatch } from 'react-redux';
@@ -30,7 +31,6 @@ const useStyles = makeStyles(() => ({
     toolbarGutters: {
         padding: '0 16px',
     },
-    leftComponent: {},
     timeStamp: {
         fontWeight: 700,
     },
@@ -38,49 +38,147 @@ const useStyles = makeStyles(() => ({
         fontWeight: 400,
         marginLeft: 4,
     },
+    listItem: {
+        '&:last-child': {
+            borderBottom: 0,
+        },
+    },
 }));
 
-const createInfoListItemConfig = (index: number, randomStatus: string, tag?: boolean): InfoListItemProps => {
+const createInfoListItemConfig = (
+    index: number,
+    randomStatus: string,
+    tag?: boolean,
+    isLastItem = false,
+    hasIcon = true
+): InfoListItemProps => {
     switch (randomStatus) {
         case 'alarm':
             return {
-                title: 'High Humidity',
-                subtitle: `Status: ${randomStatus}`,
-                icon: <NotificationIcon />,
-                iconColor: tag ? colors.white[50] : colors.red[500],
-                statusColor: tag ? colors.red[500] : 'transparent',
+                title: (
+                    <Typography
+                        variant={'subtitle1'}
+                        style={{ color: colors.black[500], fontWeight: 400, marginLeft: '33px' }}
+                    >
+                        <span>High Humidity: </span>
+                        <span>PX341 sensor level 9</span>
+                    </Typography>
+                ),
+                subtitle: [
+                    <div key="subtitle" style={{ display: 'flex', alignItems: 'center', marginLeft: '33px' }}>
+                        <Typography variant="body2">Cherrington Station </Typography>
+                        <Typography variant="caption"> {`<`} Moon Township</Typography>
+                    </div>,
+                ],
+                icon: hasIcon ? <NotificationIcon /> : undefined,
+                iconColor: hasIcon ? colors.gray[500] : undefined,
+                statusColor: 'transparent',
+                divider: isLastItem ? undefined : 'partial',
+                leftComponent: (
+                    <Typography>
+                        <div>
+                            <span style={{ fontWeight: 700 }}>8:21</span>
+                            <span style={{ fontWeight: 400, marginLeft: '4px' }}>AM</span>
+                        </div>
+                        <div>11/23/</div>
+                    </Typography>
+                ),
             };
         case 'alarm-active':
             return {
-                title: `Item ${index}`,
-                subtitle: `Status: ${randomStatus}`,
-                icon: <NotificationsActiveIcon />,
+                title: (
+                    <Typography
+                        variant={'subtitle1'}
+                        style={{ color: colors.black[500], fontWeight: 400, marginLeft: '33px' }}
+                    >
+                        <span>High Humidity: </span>
+                        <span>PX341 sensor level 9</span>
+                    </Typography>
+                ),
+                subtitle: [
+                    <div key="subtitle" style={{ display: 'flex', alignItems: 'center', marginLeft: '33px' }}>
+                        <Typography variant="body2">Cherrington Station </Typography>
+                        <Typography variant="caption"> {`<`} Moon Township</Typography>
+                    </div>,
+                ],
+                icon: hasIcon ? <NotificationsActiveIcon /> : undefined,
                 iconColor: tag ? colors.white[50] : colors.gray[500],
                 statusColor: tag ? colors.red[500] : 'transparent',
                 rightComponent: tag ? (
-                    <div>
+                    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                         <ListItemTag label={'assigned'} backgroundColor={colors.blue[500]} />
                         <ListItemTag
                             label={'active'}
                             backgroundColor={colors.red[500]}
-                            style={{ marginLeft: '16px' }}
+                            style={{ marginLeft: '16px', marginRight: '32px' }}
                         />
+                        <Chevron color={'inherit'} role={'button'} />
                     </div>
                 ) : undefined,
+                divider: isLastItem ? undefined : 'partial',
+                leftComponent: (
+                    <Typography>
+                        <div>
+                            <span style={{ fontWeight: 700 }}>8:21</span>
+                            <span style={{ fontWeight: 400, marginLeft: '4px' }}>AM</span>
+                        </div>
+                        <div>11/23/</div>
+                    </Typography>
+                ),
             };
         case 'setting-active':
             return {
-                title: `Item ${index}`,
-                subtitle: `Status: ${randomStatus}`,
+                title: (
+                    <Typography
+                        variant={'subtitle1'}
+                        style={{ color: colors.black[500], fontWeight: 400, marginLeft: '33px' }}
+                    >
+                        <span>Battery Service: </span>
+                        <span>Eaton GH142</span>
+                    </Typography>
+                ),
+                subtitle: [
+                    <div key="subtitle" style={{ display: 'flex', alignItems: 'center', marginLeft: '33px' }}>
+                        <Typography variant="body2">Cherrington Station </Typography>
+                        <Typography variant="caption"> {`<`} Moon Township</Typography>
+                    </div>,
+                ],
                 icon: <Maintenance />,
                 iconColor: colors.orange[500],
+                divider: isLastItem ? undefined : 'partial',
+                leftComponent: (
+                    <Typography>
+                        <div>
+                            <span style={{ fontWeight: 700 }}>8:21</span>
+                            <span style={{ fontWeight: 400, marginLeft: '4px' }}>AM</span>
+                        </div>
+                        <div>11/23/</div>
+                    </Typography>
+                ),
             };
         case 'setting':
             return {
-                title: `Item ${index}`,
-                subtitle: `Status: ${randomStatus}`,
+                title: (
+                    <Typography
+                        variant={'subtitle1'}
+                        style={{ color: colors.black[500], fontWeight: 400, marginLeft: '33px' }}
+                    >
+                        <span>Battery Service: </span>
+                        <span>Eaton GH142</span>
+                    </Typography>
+                ),
                 icon: <Maintenance />,
                 iconColor: colors.gray[500],
+                divider: isLastItem ? undefined : 'partial',
+                leftComponent: (
+                    <Typography>
+                        <div>
+                            <span style={{ fontWeight: 700 }}>8:21</span>
+                            <span style={{ fontWeight: 400, marginLeft: '4px' }}>AM</span>
+                        </div>
+                        <div>11/23/</div>
+                    </Typography>
+                ),
             };
         case 'normal':
         default:
@@ -88,6 +186,16 @@ const createInfoListItemConfig = (index: number, randomStatus: string, tag?: boo
                 title: `Item ${index}`,
                 subtitle: `Status: ${randomStatus}`,
                 icon: <HomeIcon />,
+                divider: isLastItem ? undefined : 'partial',
+                leftComponent: (
+                    <Typography>
+                        <div>
+                            <span style={{ fontWeight: 700 }}>8:21</span>
+                            <span style={{ fontWeight: 400, marginLeft: '4px' }}>AM</span>
+                        </div>
+                        <div>11/23/</div>
+                    </Typography>
+                ),
             };
     }
 };
@@ -128,13 +236,19 @@ export const StatusList = (): JSX.Element => {
                     <div />
                 </Toolbar>
             </AppBar>
-            <Accordion expanded={isExpanded}>
+            <Accordion
+                expanded={isExpanded}
+                style={{
+                    boxShadow:
+                        '0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px rgba(0, 0, 0, 0.14), 0px 1px 3px rgba(0, 0, 0, 0.12)',
+                }}
+            >
                 <AccordionSummary expandIcon={<ExpandLess />} onClick={(): void => setIsExpanded(!isExpanded)}>
-                    <Typography style={{ color: colors.blue[500], marginLeft: '16px', fontSize: '14px' }}>
+                    <Typography variant={'subtitle2'} style={{ color: colors.blue[500] }}>
                         With Time Stamps, with Title+SubTitle+Info
                     </Typography>
                 </AccordionSummary>
-                <AccordionDetails style={{ display: 'block' }}>
+                <AccordionDetails style={{ display: 'block', paddingRight: 0 }}>
                     <List className={'list'} disablePadding>
                         {list.map((item, i) => (
                             <InfoListItem
@@ -142,17 +256,7 @@ export const StatusList = (): JSX.Element => {
                                 statusColor={'transparent'}
                                 key={i}
                                 avatar
-                                divider={'partial'}
                                 chevron={true}
-                                leftComponent={
-                                    <div className={classes.leftComponent}>
-                                        <div>
-                                            <span className={classes.timeStamp}>10:43</span>
-                                            <span className={classes.abbreviation}>AM</span>
-                                        </div>
-                                        <div>01/24/21</div>
-                                    </div>
-                                }
                                 {...item}
                             />
                         ))}

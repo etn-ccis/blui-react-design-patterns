@@ -181,7 +181,8 @@ export const PageWideSearch = (): JSX.Element => {
                 {!isMobile && (
                     <div className={classes.desktopSearchContainer}>
                         <Spacer />
-                        <TextField data-cy={'search-field'}
+                        <TextField
+                            data-cy={'search-field'}
                             placeholder="Search"
                             variant="standard"
                             value={searchTerm}
@@ -200,7 +201,8 @@ export const PageWideSearch = (): JSX.Element => {
                 {searchResults.length > 0 && (
                     <Card className={classes.resultsCard} elevation={isMobile ? 0 : undefined}>
                         {searchResults.map((item, index) => (
-                            <InfoListItem data-cy={'list-items'}
+                            <InfoListItem
+                                data-cy={'list-items'}
                                 title={
                                     // eslint-disable-next-line @typescript-eslint/naming-convention
                                     <div dangerouslySetInnerHTML={{ __html: item }} />

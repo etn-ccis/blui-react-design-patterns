@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
     AppBar,
     Toolbar,
@@ -38,98 +38,73 @@ const useStyles = makeStyles(() => ({
         fontWeight: 400,
         marginLeft: 4,
     },
-    divider: {
-        '&:last-child': {
-            display: 'none',
-        },
-    },
-    statusStripe: {
-        color: colors.orange[500],
-    },
-    iconFlip: {
-        transform: 'scaleX(-1)',
-    },
-    avatar: {
-        display: 'none',
+    listItemTextWithoutIcon: {
+        marginLeft: '-56px',
     },
     listItemText: {
-        marginLeft: '-50px',
-    },
-    icon: { display: 'none' },
-    withoutIcon: {
-        marginLeft: '-146px',
+        marginLeft: '0px',
     },
 }));
 
 const getTitle = (deviceStatus: string, device: string, hasTimeStamp: boolean): any => (
-    <Typography
-        variant={'subtitle1'}
+    <div
         style={{
+            display: 'flex',
+            alignItems: 'center',
             color: colors.black[500],
             fontWeight: 400,
             marginLeft: hasTimeStamp ? '33px' : 'auto',
         }}
     >
-        <span>{deviceStatus}: </span>
-        <span>{device}</span>
-    </Typography>
+        <Typography variant={'subtitle1'} noWrap>
+            {deviceStatus}:
+        </Typography>
+        <span>&nbsp;</span>
+        <Typography variant={'body1'} noWrap>
+            {device}
+        </Typography>
+    </div>
 );
 
 const getSubtitle = (station: string, location: string, hasTimeStamp: boolean): any => [
     <div key="subtitle" style={{ display: 'flex', alignItems: 'center', marginLeft: hasTimeStamp ? '33px' : 'auto' }}>
         <Typography variant="body2">{station} </Typography>
-        <Typography variant="caption">
-            {`<`} {location}
-        </Typography>
+        <span>&nbsp; {`<`} &nbsp;</span>
+        <Typography variant="caption">{location}</Typography>
     </div>,
 ];
+
+const getLeftComponent = (time: string, timePeriod: 'AM' | 'PM', date: string, hasIcon: boolean): any => (
+    <div style={{ display: 'flex', flexDirection: 'column', marginLeft: hasIcon ? '' : '-56px', fontSize: '12px' }}>
+        <div style={{ display: 'flex', alignItems: 'center' }}>
+            <Typography style={{ fontWeight: 700, fontSize: '12px' }}>{time}</Typography>
+            <Typography variant={'caption'} style={{ fontWeight: 400, marginLeft: '4px' }}>
+                {timePeriod}
+            </Typography>
+        </div>
+        <Typography variant={'caption'}>{date}</Typography>
+    </div>
+);
 
 const createInfoListItemConfig = (randomStatus: string, hasIcon = true, hasTimeStamp = true): InfoListItemProps => {
     switch (randomStatus) {
         case 'alarm':
             return {
-                title: getTitle('High Humidity', 'PX341 sensor level 9', hasTimeStamp),
-                subtitle: getSubtitle('Cherrington Station', 'Moon Township', hasTimeStamp),
+                title: getTitle('Bypass Over Frequency', 'A2 Max Reval', hasTimeStamp),
+                subtitle: getSubtitle('Tuscarawas R.', 'Beaver', hasTimeStamp),
                 icon: hasIcon ? <NotificationIcon /> : undefined,
                 iconColor: hasIcon ? colors.gray[500] : undefined,
                 statusColor: 'transparent',
-                leftComponent: hasTimeStamp ? (
-                    <Typography style={{ marginLeft: hasIcon ? '' : '-56px' }}>
-                        <div>
-                            <span style={{ fontWeight: 700 }}>8:21</span>
-                            <span style={{ fontWeight: 400, marginLeft: '4px' }}>AM</span>
-                        </div>
-                        <div>11/23/</div>
-                    </Typography>
-                ) : undefined,
+                leftComponent: hasTimeStamp ? getLeftComponent('2:13', 'AM', '11/23/', hasIcon) : undefined,
             };
         case 'alarm-active':
             return {
-                title: (
-                    <Typography
-                        variant={'subtitle1'}
-                        style={{
-                            color: colors.black[500],
-                            fontWeight: 400,
-                            marginLeft: hasTimeStamp ? '33px' : 'auto',
-                        }}
-                    >
-                        <span>High Humidity: </span>
-                        <span>PX341 sensor level 9</span>
-                    </Typography>
-                ),
-                subtitle: [
-                    <div
-                        key="subtitle"
-                        style={{ display: 'flex', alignItems: 'center', marginLeft: hasTimeStamp ? '33px' : 'auto' }}
-                    >
-                        <Typography variant="body2">Cherrington Station </Typography>
-                        <Typography variant="caption"> {`<`} Moon Township</Typography>
-                    </div>,
-                ],
+                title: getTitle('High Humidity', 'PX341 sensor level 9', hasTimeStamp),
+                subtitle: getSubtitle('Cherrington Station', 'Moon Township', hasTimeStamp),
                 icon: hasIcon ? <NotificationsActiveIcon /> : undefined,
                 iconColor: colors.white[50],
                 statusColor: colors.red[500],
+                leftComponent: hasTimeStamp ? getLeftComponent('8:21', 'AM', '11/23/', hasIcon) : undefined,
                 rightComponent: (
                     <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                         <ListItemTag label={'assigned'} backgroundColor={colors.blue[500]} />
@@ -141,80 +116,23 @@ const createInfoListItemConfig = (randomStatus: string, hasIcon = true, hasTimeS
                         <Chevron color={'inherit'} role={'button'} />
                     </div>
                 ),
-                leftComponent: hasTimeStamp ? (
-                    <Typography style={{ marginLeft: hasIcon ? '' : '-56px' }}>
-                        <div>
-                            <span style={{ fontWeight: 700 }}>8:21</span>
-                            <span style={{ fontWeight: 400, marginLeft: '4px' }}>AM</span>
-                        </div>
-                        <div>11/23/</div>
-                    </Typography>
-                ) : undefined,
             };
         case 'setting-active':
             return {
-                title: (
-                    <Typography
-                        variant={'subtitle1'}
-                        style={{
-                            color: colors.black[500],
-                            fontWeight: 400,
-                            marginLeft: hasTimeStamp ? '33px' : 'auto',
-                        }}
-                    >
-                        <span>Battery Service: </span>
-                        <span>Eaton GH142</span>
-                    </Typography>
-                ),
-                subtitle: [
-                    <div
-                        key="subtitle"
-                        style={{ display: 'flex', alignItems: 'center', marginLeft: hasTimeStamp ? '33px' : 'auto' }}
-                    >
-                        <Typography variant="body2">Cherrington Station </Typography>
-                        <Typography variant="caption"> {`<`} Moon Township</Typography>
-                    </div>,
-                ],
+                title: getTitle('Battery Service', 'Eaton GH142', hasTimeStamp),
+                subtitle: getSubtitle('Cherrington Station', 'Moon Township', hasTimeStamp),
                 statusColor: colors.orange[500],
                 icon: hasIcon ? <Maintenance /> : undefined,
                 iconColor: colors.orange[500],
                 iconAlign: 'center',
-                leftComponent: hasTimeStamp ? (
-                    <Typography style={{ marginLeft: hasIcon ? '' : '-56px' }}>
-                        <div>
-                            <span style={{ fontWeight: 700 }}>8:21</span>
-                            <span style={{ fontWeight: 400, marginLeft: '4px' }}>AM</span>
-                        </div>
-                        <div>11/23/</div>
-                    </Typography>
-                ) : undefined,
+                leftComponent: hasTimeStamp ? getLeftComponent('7:48', 'AM', '11/23/', hasIcon) : undefined,
             };
         case 'setting':
             return {
-                title: (
-                    <Typography
-                        variant={'subtitle1'}
-                        style={{
-                            color: colors.black[500],
-                            fontWeight: 400,
-                            marginLeft: hasTimeStamp ? '33px' : 'auto',
-                        }}
-                    >
-                        <span>Battery Service: </span>
-                        <span>Eaton GH142</span>
-                    </Typography>
-                ),
+                title: getTitle('Battery Service', 'Eaton GH142', hasTimeStamp),
                 icon: hasIcon ? <Maintenance /> : undefined,
                 iconColor: colors.gray[500],
-                leftComponent: hasTimeStamp ? (
-                    <Typography style={{ marginLeft: hasIcon ? '' : '-56px' }}>
-                        <div>
-                            <span style={{ fontWeight: 700 }}>8:21</span>
-                            <span style={{ fontWeight: 400, marginLeft: '4px' }}>AM</span>
-                        </div>
-                        <div>11/23/</div>
-                    </Typography>
-                ) : undefined,
+                leftComponent: hasTimeStamp ? getLeftComponent('2:13', 'AM', '11/23/', hasIcon) : undefined,
             };
         case 'normal':
         default:
@@ -222,20 +140,12 @@ const createInfoListItemConfig = (randomStatus: string, hasIcon = true, hasTimeS
                 title: `Item ${randomStatus}`,
                 subtitle: `Status: ${randomStatus}`,
                 icon: <HomeIcon />,
-                leftComponent: hasTimeStamp ? (
-                    <Typography style={{ marginLeft: hasIcon ? '' : '-56px' }}>
-                        <div>
-                            <span style={{ fontWeight: 700 }}>8:21</span>
-                            <span style={{ fontWeight: 400, marginLeft: '4px' }}>AM</span>
-                        </div>
-                        <div>11/23/</div>
-                    </Typography>
-                ) : undefined,
+                leftComponent: hasTimeStamp ? getLeftComponent('8:21', 'AM', '11/23/', hasIcon) : undefined,
             };
     }
 };
 
-const renderList = [
+const list = [
     {
         variantIndices: ['alarm-active', 'setting-active', 'alarm'],
         headerText: 'With Time Stamps, with Title+SubTitle+Info',
@@ -260,7 +170,6 @@ export const StatusList = (): JSX.Element => {
     const dispatch = useDispatch();
     const theme = useTheme();
     const classes = useStyles();
-    const [isExpanded, setIsExpanded] = useState<boolean>(true);
 
     return (
         <div style={{ backgroundColor: theme.palette.background.paper, minHeight: '100vh' }}>
@@ -285,11 +194,12 @@ export const StatusList = (): JSX.Element => {
                     <div />
                 </Toolbar>
             </AppBar>
-            {renderList.map((listItem) => (
+            {list.map((listItem) => (
                 <Accordion
                     key={listItem.headerText}
                     defaultExpanded={true}
                     style={{
+                        width: '766px',
                         boxShadow:
                             '0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px rgba(0, 0, 0, 0.14), 0px 1px 3px rgba(0, 0, 0, 0.12)',
                         margin: '24px 174px',
@@ -298,9 +208,9 @@ export const StatusList = (): JSX.Element => {
                 >
                     <AccordionSummary
                         expandIcon={<ExpandLess />}
-                        onClick={(): void => setIsExpanded(!isExpanded)}
                         style={{
                             borderBottom: '1px solid rgba(66, 78, 84, 0.12)',
+                            minHeight: '48px',
                         }}
                     >
                         <Typography
@@ -320,27 +230,27 @@ export const StatusList = (): JSX.Element => {
                                     listItem.hasIcon,
                                     listItem.hasTimeStamp
                                 );
+                                const divider =
+                                    index === listItem.variantIndices.length - 1
+                                        ? undefined
+                                        : listItem.hasIcon
+                                        ? 'partial'
+                                        : 'full';
+
                                 return (
                                     <InfoListItem
                                         classes={{
                                             listItemText:
                                                 listItem.headerText === 'Without Icons, with Title'
-                                                    ? classes.listItemText
-                                                    : '',
-                                            divider: classes.divider,
+                                                    ? classes.listItemTextWithoutIcon
+                                                    : classes.listItemText,
                                         }}
                                         iconColor={theme.palette.text.primary}
                                         statusColor={'transparent'}
                                         key={item}
                                         avatar={item === 'setting-active' ? false : true}
                                         chevron={true}
-                                        divider={
-                                            index === listItem.variantIndices.length - 1
-                                                ? undefined
-                                                : listItem.hasIcon
-                                                ? 'partial'
-                                                : 'full'
-                                        }
+                                        divider={divider}
                                         {...listData}
                                     />
                                 );

@@ -12,7 +12,7 @@ const store = createStore(Reducer());
 
 describe('Password form validation', () => {
     afterEach(cleanup);
-    it('renders without crashing', () => {
+    xit('renders without crashing', () => {
         render(
             <Provider store={store}>
                 <PasswordFormValidation />
@@ -20,7 +20,7 @@ describe('Password form validation', () => {
         );
     });
 
-    it('recognizes valid password correctly', () => {
+    xit('recognizes valid password correctly', () => {
         // At least 1 uppercase letter
         let correctPasswords = ['A', 'Ab', 'AaaAAAAaaNjL', '&A!'];
         let incorrectPasswords = ['', 'a', '1', '.', 'null', 'undefined'];

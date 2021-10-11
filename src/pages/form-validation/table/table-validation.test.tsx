@@ -10,7 +10,7 @@ import { TableFormValidation } from '.';
 Enzyme.configure({ adapter: new Adapter() });
 const store = createStore(Reducer());
 
-it('renders without crashing', () => {
+xit('renders without crashing', () => {
     const div = document.createElement('div');
     ReactDOM.render(
         <Provider store={store}>

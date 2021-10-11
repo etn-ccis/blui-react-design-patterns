@@ -45,7 +45,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         marginLeft: '0px',
     },
     accordionRoot: {
-        width: '766px',
+        width: '768px',
         boxShadow:
             '0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px rgba(0, 0, 0, 0.14), 0px 1px 3px rgba(0, 0, 0, 0.12)',
         borderRadius: '4px',
@@ -104,7 +104,7 @@ const getSubtitle = (
         style={{
             display: 'flex',
             alignItems: 'center',
-            marginLeft: hasTimeStamp ? '33px' : 'auto',
+            marginLeft: hasTimeStamp ? '32px' : 'auto',
         }}
     >
         <Typography variant="body2" style={{ textOverflow: 'ellipsis', overflow: 'hidden' }}>
@@ -149,7 +149,7 @@ const getInfoComponent = (tag: boolean, isMobile: boolean): string | Array<strin
                 key="info"
                 style={{
                     display: 'flex',
-                    margin: '4px 0px 4px 33px',
+                    margin: '4px 0px 4px 32px',
                 }}
             >
                 <ListItemTag label={'assigned'} backgroundColor={colors.blue[500]} />
@@ -280,7 +280,7 @@ export const StatusList = (): JSX.Element => {
                     key={listItem.headerText}
                     defaultExpanded={true}
                     style={{
-                        margin: isMobile ? '0 0 24px 0' : '24px 174px',
+                        margin: isMobile ? '0 0 24px 0' : '24px 176px',
                     }}
                     classes={{ root: isMobile ? classes.accordionMobileRoot : classes.accordionRoot }}
                 >

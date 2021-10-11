@@ -25,10 +25,10 @@ jobs:
                 name: Prettier Check
                 command: |
                     yarn prettier:check
-            # - run:
-            #     name: Set Max Memory
-            #     command: |
-            #         NODE_OPTIONS=--max_old_space_size=5120
+            - run:
+                name: Set Max Memory
+                command: |
+                    NODE_OPTIONS=--max_old_space_size=5120
             - run:
                 name: Lint
                 command: |

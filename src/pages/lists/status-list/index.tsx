@@ -1,19 +1,17 @@
 import React, { ReactNode } from 'react';
-import {
-    AppBar,
-    Toolbar,
-    Typography,
-    List,
-    Hidden,
-    IconButton,
-    useTheme,
-    makeStyles,
-    Accordion,
-    AccordionSummary,
-    AccordionDetails,
-    useMediaQuery,
-    Theme,
-} from '@material-ui/core';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
+import List from '@material-ui/core/List';
+import Hidden from '@material-ui/core/Hidden';
+import IconButton from '@material-ui/core/IconButton';
+import { Theme } from '@material-ui/core/styles/createMuiTheme';
+import useTheme from '@material-ui/core/styles/useTheme';
+import makeStyles from '@material-ui/core/styles/makeStyles';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
+import Accordion from '@material-ui/core/Accordion';
+import AccordionSummary from '@material-ui/core/AccordionSummary';
+import AccordionDetails from '@material-ui/core/AccordionDetails';
 import HomeIcon from '@material-ui/icons/Home';
 import MenuIcon from '@material-ui/icons/Menu';
 import ExpandLess from '@material-ui/icons/ExpandLess';

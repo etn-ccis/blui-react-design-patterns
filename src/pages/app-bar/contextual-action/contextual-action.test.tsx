@@ -10,7 +10,7 @@ import { Reducer } from '../../../redux/reducers';
 Enzyme.configure({ adapter: new Adapter() });
 const store = createStore(Reducer());
 
-describe('Contextual action appbar', () => {
+xdescribe('Contextual action appbar', () => {
     afterEach(cleanup);
     it('renders without crashing', () => {
         render(

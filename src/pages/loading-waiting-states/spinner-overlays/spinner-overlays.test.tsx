@@ -10,7 +10,7 @@ import { Provider } from 'react-redux';
 Enzyme.configure({ adapter: new Adapter() });
 const store = createStore(Reducer());
 
-describe('Spinner overlays', () => {
+xdescribe('Spinner overlays', () => {
     afterEach(cleanup);
     it('renders without crashing', () => {
         render(

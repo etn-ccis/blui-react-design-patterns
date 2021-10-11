@@ -45,6 +45,10 @@ jobs:
                 root: .
                 paths:
                     - coverage
+            - run:
+                  name: Memory Usage
+                  command: cat /sys/fs/cgroup/memory/memory.max_usage_in_bytes
+                  when: always
 
     cypress_tests:
         working_directory: ~/react-design-patterns

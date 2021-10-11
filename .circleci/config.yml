@@ -72,7 +72,7 @@ jobs:
             - run:
                 name: Cypress E2E Tests
                 command: |
-                    yarn cytest --maxWorkers=2
+                    yarn cytest
             - store_artifacts:
                 path: cypress/screenshots
             - persist_to_workspace:

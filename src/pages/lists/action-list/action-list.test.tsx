@@ -11,7 +11,7 @@ import { InfoListItem } from '@pxblue/react-components';
 Enzyme.configure({ adapter: new Adapter() });
 const store = createStore(Reducer());
 
-describe('Action list', () => {
+xdescribe('Action list', () => {
     afterEach(cleanup);
     it('renders without crashing', () => {
         render(
@@ -21,7 +21,7 @@ describe('Action list', () => {
         );
     });
 
-    it('renders 10 items by default', () => {
+    xit('renders 10 items by default', () => {
         const actionList = mount(
             <Provider store={store}>
                 <ActionList />

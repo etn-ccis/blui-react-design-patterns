@@ -10,7 +10,7 @@ import { Provider } from 'react-redux';
 Enzyme.configure({ adapter: new Adapter() });
 const store = createStore(Reducer());
 
-describe('Contextual spinner', () => {
+xdescribe('Contextual spinner', () => {
     afterEach(cleanup);
     it('renders without crashing', () => {
         render(

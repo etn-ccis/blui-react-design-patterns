@@ -12,6 +12,7 @@ import {
     AccordionSummary,
     AccordionDetails,
     useMediaQuery,
+    Theme,
 } from '@material-ui/core';
 import HomeIcon from '@material-ui/icons/Home';
 import MenuIcon from '@material-ui/icons/Menu';
@@ -25,7 +26,7 @@ import { InfoListItem, ListItemTag, InfoListItemProps } from '@pxblue/react-comp
 import * as colors from '@pxblue/colors';
 import { Maintenance } from '@pxblue/icons-mui';
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme: Theme) => ({
     appbarRoot: {
         padding: 0,
     },
@@ -44,6 +45,13 @@ const useStyles = makeStyles(() => ({
     },
     listItemText: {
         marginLeft: '0px',
+    },
+    accordionRoot: {
+        '& .MuiAccordionSummary-root': {
+            borderBottom: `1px solid ${theme.palette.divider}`,
+            height: '48px',
+            minHeight: '48px',
+        },
     },
 }));
 
@@ -105,6 +113,18 @@ const getLeftComponent = (time: string, timePeriod: 'AM' | 'PM', date: string, h
     </div>
 );
 
+const getRightComponent = (): ReactNode => (
+    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+        <ListItemTag label={'assigned'} backgroundColor={colors.blue[500]} />
+        <ListItemTag
+            label={'active'}
+            backgroundColor={colors.red[500]}
+            style={{ marginLeft: '16px', marginRight: '32px' }}
+        />
+        <Chevron color={'inherit'} role={'button'} />
+    </div>
+);
+
 const getInfoComponent = (tag: boolean, isMobile: boolean): string | Array<string | JSX.Element> | undefined => {
     if (tag && isMobile) {
         return [
@@ -154,17 +174,7 @@ const createInfoListItemConfig = (
                 statusColor: colors.red[500],
                 leftComponent: hasTimeStamp ? getLeftComponent('8:21', 'AM', '11/23/', hasIcon) : undefined,
                 chevron: true,
-                rightComponent: tag && !isMobile && (
-                    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                        <ListItemTag label={'assigned'} backgroundColor={colors.blue[500]} />
-                        <ListItemTag
-                            label={'active'}
-                            backgroundColor={colors.red[500]}
-                            style={{ marginLeft: '16px', marginRight: '32px' }}
-                        />
-                        <Chevron color={'inherit'} role={'button'} />
-                    </div>
-                ),
+                rightComponent: tag && !isMobile && getRightComponent(),
             };
         case 'setting-active':
             return {
@@ -221,7 +231,7 @@ const list = [
 export const StatusList = (): JSX.Element => {
     const dispatch = useDispatch();
     const theme = useTheme();
-    const classes = useStyles();
+    const classes = useStyles(theme);
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
     return (
@@ -253,17 +263,19 @@ export const StatusList = (): JSX.Element => {
                     defaultExpanded={true}
                     style={{
                         width: isMobile ? '100%' : '766px',
-                        boxShadow:
-                            '0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px rgba(0, 0, 0, 0.14), 0px 1px 3px rgba(0, 0, 0, 0.12)',
+                        boxShadow: !isMobile
+                            ? '0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px rgba(0, 0, 0, 0.14), 0px 1px 3px rgba(0, 0, 0, 0.12)'
+                            : '',
                         margin: isMobile ? '0 0 24px 0' : '24px 174px',
-                        borderRadius: '4px',
+                        borderRadius: !isMobile ? '4px' : '',
                     }}
+                    classes={{ root: classes.accordionRoot }}
                 >
                     <AccordionSummary
                         expandIcon={<ExpandLess />}
                         style={{
                             borderBottom: '1px solid rgba(66, 78, 84, 0.12)',
-                            minHeight: '48px',
+                            height: '48px',
                         }}
                     >
                         <Typography

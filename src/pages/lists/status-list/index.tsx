@@ -47,11 +47,30 @@ const useStyles = makeStyles((theme: Theme) => ({
         marginLeft: '0px',
     },
     accordionRoot: {
+        width: '766px',
+        boxShadow:
+            '0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px rgba(0, 0, 0, 0.14), 0px 1px 3px rgba(0, 0, 0, 0.12)',
+        borderRadius: '4px',
         '& .MuiAccordionSummary-root': {
             borderBottom: `1px solid ${theme.palette.divider}`,
             height: '48px',
             minHeight: '48px',
         },
+    },
+    accordionMobileRoot: {
+        width: '100%',
+        '& .MuiAccordionSummary-root': {
+            borderBottom: `1px solid ${theme.palette.divider}`,
+            height: '48px',
+            minHeight: '48px',
+        },
+    },
+    accordionSummaryText: {
+        color: colors.blue[500],
+    },
+    accordionDetails: {
+        display: 'block',
+        padding: 0,
     },
 }));
 
@@ -231,11 +250,11 @@ const list = [
 export const StatusList = (): JSX.Element => {
     const dispatch = useDispatch();
     const theme = useTheme();
-    const classes = useStyles(theme);
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+    const classes = useStyles(theme);
 
     return (
-        <div style={{ backgroundColor: theme.palette.background.paper, minHeight: '100vh' }}>
+        <div style={{ backgroundColor: theme.palette.background.default, minHeight: '100vh' }}>
             <AppBar data-cy="pxb-toolbar" position={'sticky'} classes={{ root: classes.appbarRoot }}>
                 <Toolbar classes={{ gutters: classes.toolbarGutters }}>
                     <Hidden mdUp={true}>
@@ -259,35 +278,20 @@ export const StatusList = (): JSX.Element => {
             </AppBar>
             {list.map((listItem) => (
                 <Accordion
+                    elevation={0}
                     key={listItem.headerText}
                     defaultExpanded={true}
                     style={{
-                        width: isMobile ? '100%' : '766px',
-                        boxShadow: !isMobile
-                            ? '0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px rgba(0, 0, 0, 0.14), 0px 1px 3px rgba(0, 0, 0, 0.12)'
-                            : '',
                         margin: isMobile ? '0 0 24px 0' : '24px 174px',
-                        borderRadius: !isMobile ? '4px' : '',
                     }}
-                    classes={{ root: classes.accordionRoot }}
+                    classes={{ root: isMobile ? classes.accordionMobileRoot : classes.accordionRoot }}
                 >
-                    <AccordionSummary
-                        expandIcon={<ExpandLess />}
-                        style={{
-                            borderBottom: '1px solid rgba(66, 78, 84, 0.12)',
-                            height: '48px',
-                        }}
-                    >
-                        <Typography
-                            variant={'subtitle2'}
-                            style={{
-                                color: colors.blue[500],
-                            }}
-                        >
+                    <AccordionSummary expandIcon={<ExpandLess />}>
+                        <Typography variant={'subtitle2'} classes={{ root: classes.accordionSummaryText }}>
                             {listItem.headerText}
                         </Typography>
                     </AccordionSummary>
-                    <AccordionDetails style={{ display: 'block', padding: 0 }}>
+                    <AccordionDetails classes={{ root: classes.accordionDetails }}>
                         <List className={'list'} disablePadding>
                             {listItem.variantIndices.map((item, index) => {
                                 const listData = createInfoListItemConfig(
@@ -298,7 +302,9 @@ export const StatusList = (): JSX.Element => {
                                     isMobile
                                 );
                                 const divider =
-                                    index === listItem.variantIndices.length - 1
+                                    index === listItem.variantIndices.length - 1 && isMobile
+                                        ? 'full'
+                                        : index === listItem.variantIndices.length - 1
                                         ? undefined
                                         : listItem.hasIcon
                                         ? 'partial'

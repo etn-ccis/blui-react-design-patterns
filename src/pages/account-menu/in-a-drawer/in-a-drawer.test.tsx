@@ -12,7 +12,7 @@ const store = createStore(Reducer());
 
 describe('Menu in a drawer', () => {
     afterEach(cleanup);
-    xit('renders without crashing', () => {
+    it('renders without crashing', () => {
         render(
             <Provider store={store}>
                 <InADrawer />

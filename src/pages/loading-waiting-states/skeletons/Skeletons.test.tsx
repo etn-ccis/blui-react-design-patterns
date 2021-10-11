@@ -10,7 +10,7 @@ import { Provider } from 'react-redux';
 Enzyme.configure({ adapter: new Adapter() });
 const store = createStore(Reducer());
 
-xdescribe('Skeletons', () => {
+describe('Skeletons', () => {
     afterEach(cleanup);
     it('renders without crashing', () => {
         render(

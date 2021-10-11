@@ -10,7 +10,7 @@ import { Reducer } from '../../../redux/reducers';
 Enzyme.configure({ adapter: new Adapter() });
 const store = createStore(Reducer());
 
-xdescribe('Responsive table', () => {
+describe('Responsive table', () => {
     afterEach(cleanup);
     it('renders without crashing', () => {
         render(

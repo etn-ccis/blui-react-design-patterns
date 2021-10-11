@@ -11,7 +11,7 @@ import { InfoListItem } from '@pxblue/react-components';
 Enzyme.configure({ adapter: new Adapter() });
 const store = createStore(Reducer());
 
-xdescribe('Action list', () => {
+describe('Action list', () => {
     afterEach(cleanup);
     it('renders without crashing', () => {
         render(
@@ -21,7 +21,7 @@ xdescribe('Action list', () => {
         );
     });
 
-    xit('renders 10 items by default', () => {
+    it('renders 10 items by default', () => {
         const actionList = mount(
             <Provider store={store}>
                 <ActionList />
@@ -30,7 +30,7 @@ xdescribe('Action list', () => {
         expect(actionList.find('.list').hostNodes().children(InfoListItem)).toHaveLength(10);
     });
 
-    xit('adds an item correctly', () => {
+    it('adds an item correctly', () => {
         const actionList = mount(
             <Provider store={store}>
                 <ActionList />
@@ -61,7 +61,7 @@ xdescribe('Action list', () => {
     //   expect(list.filter((item) => item.id === todelete.id).length).toEqual(count -1);
     // });
 
-    xit('removes all and clears the list', () => {
+    it('removes all and clears the list', () => {
         const actionList = mount(
             <Provider store={store}>
                 <ActionList />

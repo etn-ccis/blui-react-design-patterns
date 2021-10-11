@@ -21,7 +21,7 @@ describe('Search bar', () => {
         );
     });
 
-    xit('returns the correct number of results when the query string matches', (): void => {
+    it('returns the correct number of results when the query string matches', (): void => {
         const queries = [
             { text: 'e', results: 5 },
             { text: 'apple', results: 2 },

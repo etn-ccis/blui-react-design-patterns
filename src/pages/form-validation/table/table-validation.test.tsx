@@ -10,7 +10,7 @@ import { TableFormValidation } from '.';
 Enzyme.configure({ adapter: new Adapter() });
 const store = createStore(Reducer());
 
-xdescribe('Table form validation', () => {
+describe('Table form validation', () => {
     afterEach(cleanup);
     it('renders without crashing', () => {
         render(

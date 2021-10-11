@@ -23,7 +23,7 @@ describe('I18N', () => {
         );
     });
 
-    xit('should cancel selected items', () => {
+    it('should cancel selected items', () => {
         const i18nPattern = mount(
             <Provider store={store}>
                 <I18N />

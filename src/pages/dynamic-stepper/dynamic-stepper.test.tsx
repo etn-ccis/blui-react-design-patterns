@@ -21,7 +21,7 @@ describe('Dynamic stepper', () => {
         );
     });
 
-    xit('removes all the steps when the remove all button is clicked', () => {
+    it('removes all the steps when the remove all button is clicked', () => {
         const dynamicStepper = mount(
             <Provider store={store}>
                 <DynamicStepper />

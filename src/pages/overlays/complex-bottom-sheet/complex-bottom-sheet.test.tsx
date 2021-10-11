@@ -22,7 +22,7 @@ describe('Complex bottom sheet', () => {
         );
     });
 
-    xit('sorts events correctly', () => {
+    it('sorts events correctly', () => {
         const data: Event[] = [
             { type: 'alarm', date: 0, active: false, location: '', device: '', details: '' },
             { type: 'alarm', date: 10, active: true, location: '', device: '', details: '' },
@@ -46,7 +46,7 @@ describe('Complex bottom sheet', () => {
         expect(sortedEvents(data, TYPES.TYPE)).toStrictEqual(sortedType);
     });
 
-    xit('filters events correctly', () => {
+    it('filters events correctly', () => {
         const data: Event[] = [
             { type: 'alarm', date: 0, active: false, location: '', device: '', details: '' },
             { type: 'alarm', date: 10, active: true, location: '', device: '', details: '' },

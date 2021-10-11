@@ -32,7 +32,7 @@ describe('Multi-select list', () => {
         expect(multiselectList.find('.list').hostNodes().children(InfoListItem)).toHaveLength(10);
     });
 
-    xit('should add an item', () => {
+    it('should add an item', () => {
         const multiselectList = mount(
             <Provider store={store}>
                 <MultiselectList />
@@ -43,7 +43,7 @@ describe('Multi-select list', () => {
         expect(multiselectList.find('.list').children(InfoListItem)).toHaveLength(11);
     });
 
-    xit('should remove item', () => {
+    it('should remove item', () => {
         const multiselectList = mount(
             <Provider store={store}>
                 <MultiselectList />
@@ -61,7 +61,7 @@ describe('Multi-select list', () => {
         expect(multiselectList.find('.list').children(InfoListItem)).toHaveLength(9);
     });
 
-    xit('should cancel selected items', () => {
+    it('should cancel selected items', () => {
         const multiselectList = mount(
             <Provider store={store}>
                 <MultiselectList />

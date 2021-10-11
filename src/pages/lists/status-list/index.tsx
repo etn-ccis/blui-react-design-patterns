@@ -12,12 +12,15 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 import Accordion from '@material-ui/core/Accordion';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
 import AccordionDetails from '@material-ui/core/AccordionDetails';
+import Badge from '@material-ui/core/Badge';
 import HomeIcon from '@material-ui/icons/Home';
 import MenuIcon from '@material-ui/icons/Menu';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import Chevron from '@material-ui/icons/ChevronRight';
 import NotificationsActiveIcon from '@material-ui/icons/NotificationsActive';
 import NotificationIcon from '@material-ui/icons/Notifications';
+import HelpIcon from '@material-ui/icons/Help';
+import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { useDispatch } from 'react-redux';
 import { TOGGLE_DRAWER } from '../../../redux/actions';
 import { InfoListItem, ListItemTag, InfoListItemProps } from '@pxblue/react-components';
@@ -30,6 +33,8 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
     toolbarGutters: {
         padding: '0 16px',
+        display: 'flex',
+        justifyContent: 'space-between',
     },
     timeStamp: {
         fontWeight: 700,
@@ -69,6 +74,10 @@ const useStyles = makeStyles((theme: Theme) => ({
     accordionDetails: {
         display: 'block',
         padding: 0,
+    },
+    toolbarRightContent: {
+        display: 'flex',
+        flexDirection: 'row',
     },
 }));
 
@@ -271,7 +280,19 @@ export const StatusList = (): JSX.Element => {
                     <Typography variant={'h6'} color={'inherit'}>
                         Status Lists
                     </Typography>
-                    <div />
+                    <div className={classes.toolbarRightContent}>
+                        <IconButton color={'inherit'}>
+                            <HelpIcon />
+                        </IconButton>
+                        <IconButton color={'inherit'}>
+                            <Badge color="error" badgeContent={88}>
+                                <NotificationIcon />
+                            </Badge>
+                        </IconButton>
+                        <IconButton color={'inherit'}>
+                            <MoreVertIcon />
+                        </IconButton>
+                    </div>
                 </Toolbar>
             </AppBar>
             {list.map((listItem) => (

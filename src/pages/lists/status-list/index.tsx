@@ -188,7 +188,7 @@ const createInfoListItemConfig = (
                 icon: hasIcon ? <NotificationIcon /> : undefined,
                 iconColor: hasIcon ? colors.gray[500] : undefined,
                 statusColor: 'transparent',
-                leftComponent: hasTimeStamp ? getLeftComponent('2:13', 'AM', '11/23/', hasIcon) : undefined,
+                leftComponent: hasTimeStamp ? getLeftComponent('2:13', 'AM', '11/23/2021', hasIcon) : undefined,
             };
         case 'alarm-active':
             return {
@@ -198,7 +198,7 @@ const createInfoListItemConfig = (
                 icon: hasIcon ? <NotificationsActiveIcon /> : undefined,
                 iconColor: colors.white[50],
                 statusColor: colors.red[500],
-                leftComponent: hasTimeStamp ? getLeftComponent('8:21', 'AM', '11/23/', hasIcon) : undefined,
+                leftComponent: hasTimeStamp ? getLeftComponent('8:21', 'AM', '11/23/2021', hasIcon) : undefined,
                 chevron: true,
                 rightComponent: tag && !isMobile && getRightComponent(),
             };
@@ -210,14 +210,14 @@ const createInfoListItemConfig = (
                 icon: hasIcon ? <Maintenance /> : undefined,
                 iconColor: colors.orange[500],
                 iconAlign: 'center',
-                leftComponent: hasTimeStamp ? getLeftComponent('7:48', 'AM', '11/23/', hasIcon) : undefined,
+                leftComponent: hasTimeStamp ? getLeftComponent('7:48', 'AM', '11/23/2021', hasIcon) : undefined,
             };
         case 'setting':
             return {
                 title: getTitle('Battery Service', 'Eaton GH142', hasTimeStamp, isMobile),
                 icon: hasIcon ? <Maintenance /> : undefined,
                 iconColor: colors.gray[500],
-                leftComponent: hasTimeStamp ? getLeftComponent('2:13', 'AM', '11/23/', hasIcon) : undefined,
+                leftComponent: hasTimeStamp ? getLeftComponent('2:13', 'AM', '11/23/2021', hasIcon) : undefined,
             };
         case 'normal':
         default:
@@ -225,7 +225,7 @@ const createInfoListItemConfig = (
                 title: `Item ${randomStatus}`,
                 subtitle: `Status: ${randomStatus}`,
                 icon: <HomeIcon />,
-                leftComponent: hasTimeStamp ? getLeftComponent('8:21', 'AM', '11/23/', hasIcon) : undefined,
+                leftComponent: hasTimeStamp ? getLeftComponent('8:21', 'AM', '11/23/2021', hasIcon) : undefined,
             };
     }
 };
@@ -301,7 +301,7 @@ export const StatusList = (): JSX.Element => {
                     key={listItem.headerText}
                     defaultExpanded={true}
                     style={{
-                        margin: isMobile ? '0 0 24px 0' : '24px 176px',
+                        margin: isMobile ? '0 0 24px 0' : '24px auto',
                     }}
                     classes={{ root: isMobile ? classes.accordionMobileRoot : classes.accordionRoot }}
                 >

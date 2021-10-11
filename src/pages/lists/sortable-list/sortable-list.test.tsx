@@ -11,7 +11,7 @@ import { Provider } from 'react-redux';
 Enzyme.configure({ adapter: new Adapter() });
 const store = createStore(Reducer());
 
-xit('renders without crashing', () => {
+it('renders without crashing', () => {
     const div = document.createElement('div');
     ReactDOM.render(
         <Provider store={store}>

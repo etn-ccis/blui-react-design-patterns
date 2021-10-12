@@ -162,6 +162,7 @@ export const PxbDrawer = (props: DrawerProps): JSX.Element => {
                         classes={{ background: classes.backgroundGradient }}
                         backgroundOpacity={0.5}
                         titleContent={<DrawerHeaderContent />}
+                        data-cy={'drawer-header'}
                     />
                     <DrawerBody>
                         <DrawerNavGroup items={navGroupItems1} />

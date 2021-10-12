@@ -145,7 +145,6 @@ export const SearchBar = (): JSX.Element => {
 
             {/* Search Bar */}
             <AppBar
-                data-cy="searchField"
                 className={clsx(classes.appbar, classes.searchbar, searchActive && classes.searchActive)}
                 position={'fixed'}
                 color={'default'}
@@ -168,6 +167,7 @@ export const SearchBar = (): JSX.Element => {
                             InputProps={{ disableUnderline: true }}
                             autoFocus
                             id={'#search-field'}
+                            data-cy={'search-field'}
                         />
                     )}
                     {query && (
@@ -175,7 +175,7 @@ export const SearchBar = (): JSX.Element => {
                             color={'inherit'}
                             onClick={(): void => setQuery('')}
                             edge={'end'}
-                            data-cy="search-close-btn"
+                            data-cy="clear-search-field"
                             style={{ color: theme.palette.text.secondary }}
                         >
                             <Close />

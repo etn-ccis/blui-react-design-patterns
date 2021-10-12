@@ -68,8 +68,8 @@ export const PxbDropdownToolbar = (): JSX.Element => {
 
     return (
         <div style={{ minHeight: '100vh' }}>
-            <AppBar data-cy="pxb-toolbar" position={'sticky'}>
-                <Toolbar classes={{ gutters: classes.toolbarGutters }}>
+            <AppBar position={'sticky'}>
+                <Toolbar classes={{ gutters: classes.toolbarGutters }} data-cy={'toolbar'}>
                     <Hidden mdUp={true}>
                         <IconButton
                             data-cy="toolbar-menu"

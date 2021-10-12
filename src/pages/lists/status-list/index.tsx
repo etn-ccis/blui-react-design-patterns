@@ -360,6 +360,7 @@ export const StatusList = (): JSX.Element => {
                 <Accordion
                     elevation={0}
                     key={listItem.headerText}
+                    data-testid="statusListAccordion"
                     defaultExpanded={true}
                     style={{
                         margin: isMobile ? '0 0 24px 0' : '24px auto',
@@ -399,6 +400,7 @@ export const StatusList = (): JSX.Element => {
                                                     ? classes.listItemTextWithoutIcon
                                                     : classes.listItemText,
                                         }}
+                                        data-testid="statusListInfoListItem"
                                         iconColor={theme.palette.text.primary}
                                         statusColor={'transparent'}
                                         key={item}

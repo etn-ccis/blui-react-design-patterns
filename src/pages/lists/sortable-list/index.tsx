@@ -19,6 +19,9 @@ import { ChannelValue, InfoListItem, Spacer } from '@pxblue/react-components';
 import { TOGGLE_DRAWER } from '../../../redux/actions';
 import { useDispatch } from 'react-redux';
 import MenuIcon from '@material-ui/icons/Menu';
+import SortIcon from '@material-ui/icons/Sort';
+import CheckIcon from '@material-ui/icons/Check';
+
 import { OnSortEndProps, President, SortableListEditProps, SortableListItemProps } from './types';
 import * as Colors from '@pxblue/colors';
 
@@ -64,7 +67,6 @@ const useStyles = makeStyles((theme: Theme) =>
     })
 );
 
-// Sortable Components Definitions
 const DragHandle = SortableHandle(() => <DragHandleIcon style={{ cursor: 'pointer' }} />);
 
 const SortableListItem = SortableElement(({ president, ...other }: SortableListItemProps) => (
@@ -82,9 +84,23 @@ const SortableListItem = SortableElement(({ president, ...other }: SortableListI
 ));
 
 export const SortableListEdit = SortableContainer(({ presidents }: SortableListEditProps) => (
-    <List disablePadding component={'nav'}>
+    <List
+        disablePadding
+        component={'nav'}
+        style={{
+            marginTop: '24px',
+            boxShadow:
+                '0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px rgba(0, 0, 0, 0.14), 0px 1px 3px rgba(0, 0, 0, 0.12)',
+        }}
+    >
         {presidents.map((president: President, i: number) => (
-            <SortableListItem key={`item-${i}`} data-cy={`sortable-row-${i}`} index={i} president={president} />
+            <SortableListItem
+                key={`item-${i}`}
+                data-cy={`sortable-row-${i}`}
+                index={i}
+                president={president}
+                divider={'full'}
+            />
         ))}
     </List>
 ));
@@ -124,36 +140,60 @@ export const SortableList = (): JSX.Element => {
                         Sortable List
                     </Typography>
                     <Spacer />
-                    <Button
-                        data-cy="edit-save"
-                        style={{ color: 'white', borderColor: 'white' }}
-                        onClick={(): void => setSortable(!sortable)}
-                        variant={'outlined'}
-                    >
-                        {sortable ? 'Save' : 'Edit'}
-                    </Button>
                 </Toolbar>
             </AppBar>
-            {sortable && (
-                <SortableListEdit
-                    presidents={list}
-                    onSortEnd={onSortEnd}
-                    useDragHandle={true}
-                    helperClass={classes.dragging}
-                />
-            )}
-            {!sortable && (
-                <List className={'list'} disablePadding component={'nav'}>
-                    {list.map((president: President, i: number) => (
-                        <InfoListItem
-                            hidePadding
-                            key={`president-${i}`}
-                            title={`${president.firstName} ${president.lastName}`}
-                            rightComponent={<ChannelValue value={president.year} />}
-                        />
-                    ))}
-                </List>
-            )}
+            <div
+                style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    width: '766px',
+                    margin: '24px auto',
+                }}
+            >
+                <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+                    <Button
+                        variant={'contained'}
+                        color={'primary'}
+                        style={{ marginTop: theme.spacing(3) }}
+                        onClick={(): void => setSortable(!sortable)}
+                        startIcon={sortable ? <CheckIcon /> : <SortIcon />}
+                    >
+                        <Typography noWrap color={'inherit'}>
+                            {sortable ? 'Done' : 'Sort'}
+                        </Typography>
+                    </Button>
+                </div>
+                {sortable && (
+                    <SortableListEdit
+                        presidents={list}
+                        onSortEnd={onSortEnd}
+                        useDragHandle={true}
+                        helperClass={classes.dragging}
+                    />
+                )}
+                {!sortable && (
+                    <List
+                        className={'list'}
+                        disablePadding
+                        component={'nav'}
+                        style={{
+                            marginTop: '24px',
+                            boxShadow:
+                                '0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px rgba(0, 0, 0, 0.14), 0px 1px 3px rgba(0, 0, 0, 0.12)',
+                        }}
+                    >
+                        {list.map((president: President, i: number) => (
+                            <InfoListItem
+                                hidePadding
+                                key={`president-${i}`}
+                                title={`${president.firstName} ${president.lastName}`}
+                                rightComponent={<ChannelValue value={president.year} />}
+                                divider={'full'}
+                            />
+                        ))}
+                    </List>
+                )}
+            </div>
         </div>
     );
 };

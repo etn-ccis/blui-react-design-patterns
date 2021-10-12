@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { cleanup, render } from '@testing-library/react';
 import Enzyme from 'enzyme';
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
 import { InAnAppBar } from '.';
@@ -10,13 +10,13 @@ import { Provider } from 'react-redux';
 Enzyme.configure({ adapter: new Adapter() });
 const store = createStore(Reducer());
 
-it('renders without crashing', () => {
-    const div = document.createElement('div');
-    ReactDOM.render(
-        <Provider store={store}>
-            <InAnAppBar />
-        </Provider>,
-        div
-    );
-    ReactDOM.unmountComponentAtNode(div);
+describe('Menu in an AppBar', () => {
+    afterEach(cleanup);
+    it('renders without crashing', () => {
+        render(
+            <Provider store={store}>
+                <InAnAppBar />
+            </Provider>
+        );
+    });
 });

@@ -32,16 +32,9 @@ const useStyles = makeStyles((theme: Theme) => ({
         padding: 0,
     },
     toolbarGutters: {
-        padding: '0 16px',
+        padding: `0 ${theme.spacing(2)}px`,
         display: 'flex',
         justifyContent: 'space-between',
-    },
-    timeStamp: {
-        fontWeight: 700,
-    },
-    abbreviation: {
-        fontWeight: 400,
-        marginLeft: 4,
     },
     listItemTextWithoutIcon: {
         marginLeft: '-56px',
@@ -68,9 +61,6 @@ const useStyles = makeStyles((theme: Theme) => ({
             minHeight: '48px',
         },
     },
-    accordionSummaryText: {
-        color: colors.blue[500],
-    },
     accordionDetails: {
         display: 'block',
         padding: 0,
@@ -79,16 +69,65 @@ const useStyles = makeStyles((theme: Theme) => ({
         display: 'flex',
         flexDirection: 'row',
     },
+    listItemTitle: {
+        display: 'flex',
+        alignItems: 'center',
+        color: colors.black[500],
+        fontWeight: 400,
+    },
+    listItemSubTitle: {
+        display: 'flex',
+        alignItems: 'center',
+    },
+    station: {
+        textOverflow: 'ellipsis',
+        overflow: 'hidden',
+    },
+    leftComponentRoot: {
+        display: 'flex',
+        flexDirection: 'column',
+        fontSize: '12px',
+    },
+    timeStamp: {
+        display: 'flex',
+        alignItems: 'center',
+    },
+    time: {
+        fontWeight: 700,
+        fontSize: '12px',
+    },
+    timePeriod: {
+        marginLeft: '4px',
+    },
+    rightComponentRoot: {
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    listItemTag: {
+        marginLeft: `${theme.spacing(2)}px`,
+        marginRight: `${theme.spacing(4)}px`,
+    },
+    rightComponentChevron: {
+        color: colors.gray[500],
+    },
+    infoComponent: {
+        display: 'flex',
+        margin: `4px 0px 4px ${theme.spacing(4)}px`,
+    },
 }));
 
-const getTitle = (deviceStatus: string, device: string, hasTimeStamp: boolean, isMobile = false): ReactNode => (
+const getTitle = (
+    deviceStatus: string,
+    device: string,
+    hasTimeStamp: boolean,
+    isMobile = false,
+    classes: Record<string, any>
+): ReactNode => (
     <div
+        className={classes.listItemTitle}
         style={{
-            display: 'flex',
-            alignItems: 'center',
-            color: colors.black[500],
-            fontWeight: 400,
-            marginLeft: hasTimeStamp ? '33px' : 'auto',
+            marginLeft: hasTimeStamp ? '32px' : 'auto',
         }}
     >
         <Typography variant={'subtitle1'} noWrap>
@@ -106,17 +145,17 @@ const getSubtitle = (
     station: string,
     location: string,
     hasTimeStamp: boolean,
-    isMobile = false
+    isMobile = false,
+    classes: Record<string, any>
 ): string | Array<string | JSX.Element> | undefined => [
     <div
         key="subtitle"
+        className={classes.listItemSubTitle}
         style={{
-            display: 'flex',
-            alignItems: 'center',
             marginLeft: hasTimeStamp ? '32px' : 'auto',
         }}
     >
-        <Typography variant="body2" style={{ textOverflow: 'ellipsis', overflow: 'hidden' }}>
+        <Typography variant="body2" classes={{ root: classes.station }}>
             {station}{' '}
         </Typography>
         {!isMobile && (
@@ -127,11 +166,17 @@ const getSubtitle = (
     </div>,
 ];
 
-const getLeftComponent = (time: string, timePeriod: 'AM' | 'PM', date: string, hasIcon: boolean): ReactNode => (
-    <div style={{ display: 'flex', flexDirection: 'column', marginLeft: hasIcon ? '' : '-56px', fontSize: '12px' }}>
-        <div style={{ display: 'flex', alignItems: 'center' }}>
-            <Typography style={{ fontWeight: 700, fontSize: '12px' }}>{time}</Typography>
-            <Typography variant={'caption'} style={{ fontWeight: 400, marginLeft: '4px' }}>
+const getLeftComponent = (
+    time: string,
+    timePeriod: 'AM' | 'PM',
+    date: string,
+    hasIcon: boolean,
+    classes: Record<string, any>
+): ReactNode => (
+    <div className={classes.leftComponentRoot} style={{ marginLeft: hasIcon ? '' : '-56px' }}>
+        <div className={classes.timeStamp}>
+            <Typography classes={{ root: classes.time }}>{time}</Typography>
+            <Typography variant={'caption'} classes={{ root: classes.timePeriod }}>
                 {timePeriod}
             </Typography>
         </div>
@@ -139,33 +184,35 @@ const getLeftComponent = (time: string, timePeriod: 'AM' | 'PM', date: string, h
     </div>
 );
 
-const getRightComponent = (): ReactNode => (
-    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-        <ListItemTag label={'assigned'} backgroundColor={colors.blue[500]} />
-        <ListItemTag
-            label={'active'}
-            backgroundColor={colors.red[500]}
-            style={{ marginLeft: '16px', marginRight: '32px' }}
-        />
-        <Chevron color={'inherit'} role={'button'} />
-    </div>
-);
-
-const getInfoComponent = (tag: boolean, isMobile: boolean): string | Array<string | JSX.Element> | undefined => {
-    if (tag && isMobile) {
-        return [
-            <div
-                key="info"
-                style={{
-                    display: 'flex',
-                    margin: '4px 0px 4px 32px',
-                }}
-            >
+const getRightComponent = (isMobile: boolean, tag: boolean, classes: Record<string, any>): ReactNode => (
+    <div className={classes.rightComponentRoot}>
+        {tag && !isMobile && (
+            <>
                 <ListItemTag label={'assigned'} backgroundColor={colors.blue[500]} />
                 <ListItemTag
                     label={'active'}
                     backgroundColor={colors.red[500]}
-                    style={{ marginLeft: '16px', marginRight: '32px' }}
+                    classes={{ root: classes.listItemTag }}
+                />
+            </>
+        )}
+        <Chevron classes={{ root: classes.rightComponentChevron }} role={'button'} />
+    </div>
+);
+
+const getInfoComponent = (
+    tag: boolean,
+    isMobile: boolean,
+    classes: Record<string, any>
+): string | Array<string | JSX.Element> | undefined => {
+    if (tag && isMobile) {
+        return [
+            <div key="info" className={classes.infoComponent}>
+                <ListItemTag label={'assigned'} backgroundColor={colors.blue[500]} />
+                <ListItemTag
+                    label={'active'}
+                    backgroundColor={colors.red[500]}
+                    classes={{ root: classes.listItemTag }}
                 />
             </div>,
         ];
@@ -178,46 +225,58 @@ const createInfoListItemConfig = (
     hasIcon = true,
     hasTimeStamp = true,
     tag = false,
-    isMobile = false
+    isMobile = false,
+    classes: Record<string, any>
 ): InfoListItemProps => {
     switch (randomStatus) {
         case 'alarm':
             return {
-                title: getTitle('Bypass Over Frequency', 'A2 Max Reval', hasTimeStamp, isMobile),
-                subtitle: getSubtitle('Tuscarawas R.', 'Beaver', hasTimeStamp, isMobile),
+                title: getTitle('Bypass Over Frequency', 'A2 Max Reval', hasTimeStamp, isMobile, classes),
+                subtitle: getSubtitle('Tuscarawas R.', 'Beaver', hasTimeStamp, isMobile, classes),
                 icon: hasIcon ? <NotificationIcon /> : undefined,
                 iconColor: hasIcon ? colors.gray[500] : undefined,
                 statusColor: 'transparent',
-                leftComponent: hasTimeStamp ? getLeftComponent('2:13', 'AM', '11/23/2021', hasIcon) : undefined,
+                leftComponent: hasTimeStamp
+                    ? getLeftComponent('2:13', 'AM', '11/23/2021', hasIcon, classes)
+                    : undefined,
+                rightComponent: getRightComponent(isMobile, false, classes),
             };
         case 'alarm-active':
             return {
-                title: getTitle('High Humidity', 'PX341 sensor level 9', hasTimeStamp, isMobile),
-                subtitle: getSubtitle('Cherrington Station', 'Moon Township', hasTimeStamp, isMobile),
-                info: getInfoComponent(tag, isMobile),
+                title: getTitle('High Humidity', 'PX341 sensor level 9', hasTimeStamp, isMobile, classes),
+                subtitle: getSubtitle('Cherrington Station', 'Moon Township', hasTimeStamp, isMobile, classes),
+                info: getInfoComponent(tag, isMobile, classes),
                 icon: hasIcon ? <NotificationsActiveIcon /> : undefined,
                 iconColor: colors.white[50],
                 statusColor: colors.red[500],
-                leftComponent: hasTimeStamp ? getLeftComponent('8:21', 'AM', '11/23/2021', hasIcon) : undefined,
+                leftComponent: hasTimeStamp
+                    ? getLeftComponent('8:21', 'AM', '11/23/2021', hasIcon, classes)
+                    : undefined,
                 chevron: true,
-                rightComponent: tag && !isMobile && getRightComponent(),
+                rightComponent: getRightComponent(isMobile, tag, classes),
             };
         case 'setting-active':
             return {
-                title: getTitle('Battery Service', 'Eaton GH142', hasTimeStamp, isMobile),
-                subtitle: getSubtitle('Cherrington Station', 'Moon Township', hasTimeStamp, isMobile),
+                title: getTitle('Battery Service', 'Eaton GH142', hasTimeStamp, isMobile, classes),
+                subtitle: getSubtitle('Cherrington Station', 'Moon Township', hasTimeStamp, isMobile, classes),
                 statusColor: colors.orange[500],
                 icon: hasIcon ? <Maintenance /> : undefined,
                 iconColor: colors.orange[500],
                 iconAlign: 'center',
-                leftComponent: hasTimeStamp ? getLeftComponent('7:48', 'AM', '11/23/2021', hasIcon) : undefined,
+                leftComponent: hasTimeStamp
+                    ? getLeftComponent('7:48', 'AM', '11/23/2021', hasIcon, classes)
+                    : undefined,
+                rightComponent: getRightComponent(isMobile, false, classes),
             };
         case 'setting':
             return {
-                title: getTitle('Battery Service', 'Eaton GH142', hasTimeStamp, isMobile),
+                title: getTitle('Battery Service', 'Eaton GH142', hasTimeStamp, isMobile, classes),
                 icon: hasIcon ? <Maintenance /> : undefined,
                 iconColor: colors.gray[500],
-                leftComponent: hasTimeStamp ? getLeftComponent('2:13', 'AM', '11/23/2021', hasIcon) : undefined,
+                leftComponent: hasTimeStamp
+                    ? getLeftComponent('2:13', 'AM', '11/23/2021', hasIcon, classes)
+                    : undefined,
+                rightComponent: getRightComponent(isMobile, false, classes),
             };
         case 'normal':
         default:
@@ -225,7 +284,9 @@ const createInfoListItemConfig = (
                 title: `Item ${randomStatus}`,
                 subtitle: `Status: ${randomStatus}`,
                 icon: <HomeIcon />,
-                leftComponent: hasTimeStamp ? getLeftComponent('8:21', 'AM', '11/23/2021', hasIcon) : undefined,
+                leftComponent: hasTimeStamp
+                    ? getLeftComponent('8:21', 'AM', '11/23/2021', hasIcon, classes)
+                    : undefined,
             };
     }
 };
@@ -306,7 +367,7 @@ export const StatusList = (): JSX.Element => {
                     classes={{ root: isMobile ? classes.accordionMobileRoot : classes.accordionRoot }}
                 >
                     <AccordionSummary expandIcon={<ExpandLess />}>
-                        <Typography variant={'subtitle2'} classes={{ root: classes.accordionSummaryText }}>
+                        <Typography variant={'subtitle2'} color={'primary'}>
                             {listItem.headerText}
                         </Typography>
                     </AccordionSummary>
@@ -318,7 +379,8 @@ export const StatusList = (): JSX.Element => {
                                     listItem.hasIcon,
                                     listItem.hasTimeStamp,
                                     listItem.tag,
-                                    isMobile
+                                    isMobile,
+                                    classes
                                 );
                                 const divider =
                                     index === listItem.variantIndices.length - 1 && isMobile
@@ -341,7 +403,6 @@ export const StatusList = (): JSX.Element => {
                                         statusColor={'transparent'}
                                         key={item}
                                         avatar={item === 'setting-active' ? false : true}
-                                        chevron={true}
                                         divider={divider}
                                         {...listData}
                                     />

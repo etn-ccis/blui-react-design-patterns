@@ -23,7 +23,7 @@ import HelpIcon from '@material-ui/icons/Help';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { useDispatch } from 'react-redux';
 import { TOGGLE_DRAWER } from '../../../redux/actions';
-import { InfoListItem, ListItemTag, InfoListItemProps } from '@pxblue/react-components';
+import { InfoListItem, ListItemTag, InfoListItemProps, Spacer } from '@pxblue/react-components';
 import * as colors from '@pxblue/colors';
 import { Maintenance } from '@pxblue/icons-mui';
 
@@ -226,46 +226,50 @@ const createInfoListItemConfig = (
     hasTimeStamp = true,
     tag = false,
     isMobile = false,
-    classes: Record<string, any>
+    classes: Record<string, any>,
+    hideSubTitle: boolean
 ): InfoListItemProps => {
     switch (randomStatus) {
         case 'alarm':
             return {
                 title: getTitle('Bypass Over Frequency', 'A2 Max Reval', hasTimeStamp, isMobile, classes),
-                subtitle: getSubtitle('Tuscarawas R.', 'Beaver', hasTimeStamp, isMobile, classes),
+                subtitle:
+                    isMobile && hideSubTitle
+                        ? undefined
+                        : getSubtitle('Tuscarawas R.', 'Beaver', hasTimeStamp, isMobile, classes),
                 icon: hasIcon ? <NotificationIcon /> : undefined,
                 iconColor: hasIcon ? colors.gray[500] : undefined,
                 statusColor: 'transparent',
-                leftComponent: hasTimeStamp
-                    ? getLeftComponent('2:13', 'AM', '11/23/2021', hasIcon, classes)
-                    : undefined,
+                leftComponent: hasTimeStamp ? getLeftComponent('2:13', 'AM', '11/23/21', hasIcon, classes) : undefined,
                 rightComponent: getRightComponent(isMobile, false, classes),
             };
         case 'alarm-active':
             return {
                 title: getTitle('High Humidity', 'PX341 sensor level 9', hasTimeStamp, isMobile, classes),
-                subtitle: getSubtitle('Cherrington Station', 'Moon Township', hasTimeStamp, isMobile, classes),
+                subtitle:
+                    isMobile && hideSubTitle
+                        ? undefined
+                        : getSubtitle('Cherrington Station', 'Moon Township', hasTimeStamp, isMobile, classes),
                 info: getInfoComponent(tag, isMobile, classes),
                 icon: hasIcon ? <NotificationsActiveIcon /> : undefined,
                 iconColor: colors.white[50],
                 statusColor: colors.red[500],
-                leftComponent: hasTimeStamp
-                    ? getLeftComponent('8:21', 'AM', '11/23/2021', hasIcon, classes)
-                    : undefined,
+                leftComponent: hasTimeStamp ? getLeftComponent('8:21', 'AM', '11/23/21', hasIcon, classes) : undefined,
                 chevron: true,
                 rightComponent: getRightComponent(isMobile, tag, classes),
             };
         case 'setting-active':
             return {
                 title: getTitle('Battery Service', 'Eaton GH142', hasTimeStamp, isMobile, classes),
-                subtitle: getSubtitle('Cherrington Station', 'Moon Township', hasTimeStamp, isMobile, classes),
+                subtitle:
+                    isMobile && hideSubTitle
+                        ? undefined
+                        : getSubtitle('Cherrington Station', 'Moon Township', hasTimeStamp, isMobile, classes),
                 statusColor: colors.orange[500],
                 icon: hasIcon ? <Maintenance /> : undefined,
                 iconColor: colors.orange[500],
                 iconAlign: 'center',
-                leftComponent: hasTimeStamp
-                    ? getLeftComponent('7:48', 'AM', '11/23/2021', hasIcon, classes)
-                    : undefined,
+                leftComponent: hasTimeStamp ? getLeftComponent('7:48', 'AM', '11/23/21', hasIcon, classes) : undefined,
                 rightComponent: getRightComponent(isMobile, false, classes),
             };
         case 'setting':
@@ -273,20 +277,16 @@ const createInfoListItemConfig = (
                 title: getTitle('Battery Service', 'Eaton GH142', hasTimeStamp, isMobile, classes),
                 icon: hasIcon ? <Maintenance /> : undefined,
                 iconColor: colors.gray[500],
-                leftComponent: hasTimeStamp
-                    ? getLeftComponent('2:13', 'AM', '11/23/2021', hasIcon, classes)
-                    : undefined,
+                leftComponent: hasTimeStamp ? getLeftComponent('2:13', 'AM', '11/23/21', hasIcon, classes) : undefined,
                 rightComponent: getRightComponent(isMobile, false, classes),
             };
         case 'normal':
         default:
             return {
                 title: `Item ${randomStatus}`,
-                subtitle: `Status: ${randomStatus}`,
+                subtitle: isMobile && hideSubTitle ? undefined : `Status: ${randomStatus}`,
                 icon: <HomeIcon />,
-                leftComponent: hasTimeStamp
-                    ? getLeftComponent('8:21', 'AM', '11/23/2021', hasIcon, classes)
-                    : undefined,
+                leftComponent: hasTimeStamp ? getLeftComponent('8:21', 'AM', '11/23/21', hasIcon, classes) : undefined,
             };
     }
 };
@@ -298,6 +298,7 @@ const list = [
         hasIcon: true,
         hasTimeStamp: true,
         tag: true,
+        hideSubTitle: false,
     },
     {
         variantIndices: ['alarm-active', 'setting'],
@@ -305,6 +306,7 @@ const list = [
         hasIcon: false,
         hasTimeStamp: false,
         tag: false,
+        hideSubTitle: true,
     },
     {
         variantIndices: ['alarm-active', 'setting'],
@@ -312,6 +314,7 @@ const list = [
         hasIcon: true,
         hasTimeStamp: false,
         tag: false,
+        hideSubTitle: true,
     },
 ];
 
@@ -319,6 +322,8 @@ export const StatusList = (): JSX.Element => {
     const dispatch = useDispatch();
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+    // const isMediumDevice = useMediaQuery(theme.breakpoints.between('sm', 'lg'));
+    // const isDesktop = useMediaQuery(theme.breakpoints.up('lg'));
     const classes = useStyles(theme);
 
     return (
@@ -341,6 +346,7 @@ export const StatusList = (): JSX.Element => {
                     <Typography variant={'h6'} color={'inherit'}>
                         Status Lists
                     </Typography>
+                    <Spacer />
                     <div className={classes.toolbarRightContent}>
                         <IconButton color={'inherit'}>
                             <HelpIcon />
@@ -381,7 +387,8 @@ export const StatusList = (): JSX.Element => {
                                     listItem.hasTimeStamp,
                                     listItem.tag,
                                     isMobile,
-                                    classes
+                                    classes,
+                                    listItem.hideSubTitle
                                 );
                                 const divider =
                                     index === listItem.variantIndices.length - 1 && isMobile

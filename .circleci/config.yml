@@ -28,7 +28,7 @@ jobs:
             - run:
                 name: Set Max Memory
                 command: |
-                    NODE_OPTIONS=--max_old_space_size=6144
+                    NODE_OPTIONS=--max_old_space_size=5120
             - run:
                 name: Lint
                 command: |
@@ -36,7 +36,7 @@ jobs:
             - run:
                 name: Unit Tests
                 command: |
-                    yarn test --coverage --watchAll=false
+                    yarn test --maxWorkers=2 --coverage --watchAll=false
             - run:
                 name: Build Project
                 command: |
@@ -45,9 +45,14 @@ jobs:
                 root: .
                 paths:
                     - coverage
+            - run:
+                  name: Memory Usage
+                  command: cat /sys/fs/cgroup/memory/memory.max_usage_in_bytes
+                  when: always
 
     cypress_tests:
         working_directory: ~/react-design-patterns
+        parallelism: 2
         docker:
             - image: circleci/node:12.6-browsers
         steps:
@@ -87,27 +92,27 @@ jobs:
             - codecov/upload:
                 file: './coverage/clover.xml'
                 token: 74ebd8f2-0b51-4873-972a-82c2b3509b37
-#             - codecov/upload:
-#                 file: './cypress-coverage/clover.xml'
-#                 token: 74ebd8f2-0b51-4873-972a-82c2b3509b37
+            - codecov/upload:
+                file: './cypress-coverage/clover.xml'
+                token: 74ebd8f2-0b51-4873-972a-82c2b3509b37
 
 workflows:
     version: 2
     react_design_patterns:
         jobs:
             - build_project
-#             - cypress_tests:
-#                     requires:
-#                         - build_project
-#                     filters:
-#                         branches:
-#                             only:
-#                                 - master
-#                                 - dev
+            - cypress_tests:
+                    requires:
+                        - build_project
+                    filters:
+                        branches:
+                            only:
+                                - master
+                                - dev
             - coverage_reports:
                    requires:
                         - build_project
-#                         - cypress_tests
+                        - cypress_tests
                    filters:
                         branches:
                             only:

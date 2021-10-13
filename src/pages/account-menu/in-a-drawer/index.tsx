@@ -53,7 +53,7 @@ export const InADrawer = (): JSX.Element => {
 
     return (
         <div style={{ backgroundColor: theme.palette.background.paper, minHeight: '100vh' }}>
-            <AppBar data-cy="pxb-toolbar" position={'sticky'}>
+            <AppBar data-cy="toolbar" position={'sticky'}>
                 <PxbDrawer
                     open={drawerOpen}
                     toggleDrawer={(): void => {
@@ -87,6 +87,7 @@ export const InADrawer = (): JSX.Element => {
                     startIcon={<MenuOpenIcon />}
                     className={classes.centerButton}
                     onClick={(): void => setDrawerOpen(!drawerOpen)}
+                    data-cy={'toggle-drawer'}
                 >
                     <Typography noWrap color={'inherit'}>
                         Open Drawer

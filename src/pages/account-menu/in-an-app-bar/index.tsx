@@ -88,7 +88,7 @@ export const InAnAppBar = (): JSX.Element => {
 
     return (
         <div style={{ minHeight: '100vh' }}>
-            <AppBar data-cy="pxb-toolbar" position={'sticky'}>
+            <AppBar data-cy="toolbar" position={'sticky'}>
                 <Toolbar classes={{ gutters: classes.toolbarGutters }}>
                     <Hidden mdUp={true}>
                         <IconButton
@@ -134,6 +134,7 @@ export const InAnAppBar = (): JSX.Element => {
                             <Spacer />
                             <UserMenu
                                 avatar={<Avatar />}
+                                data-cy={'generic-avatar-menu'}
                                 menuGroups={[
                                     {
                                         items: [

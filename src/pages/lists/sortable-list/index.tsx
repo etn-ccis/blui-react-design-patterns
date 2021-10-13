@@ -15,43 +15,17 @@ import {
     Typography,
     useTheme,
 } from '@material-ui/core';
-import { ChannelValue, InfoListItem, Spacer } from '@pxblue/react-components';
+import { InfoListItem, Spacer } from '@pxblue/react-components';
 import { TOGGLE_DRAWER } from '../../../redux/actions';
 import { useDispatch } from 'react-redux';
 import MenuIcon from '@material-ui/icons/Menu';
 import SortIcon from '@material-ui/icons/Sort';
 import CheckIcon from '@material-ui/icons/Check';
 
-import { OnSortEndProps, President, SortableListEditProps, SortableListItemProps } from './types';
+import { OnSortEndProps, SortableListEditProps, SortableListItemProps } from './types';
 import * as Colors from '@pxblue/colors';
 
-const presidentsList: President[] = [
-    {
-        firstName: 'George',
-        lastName: 'Washington',
-        year: 1789,
-    },
-    {
-        firstName: 'John',
-        lastName: 'Adams',
-        year: 1796,
-    },
-    {
-        firstName: 'Thomas',
-        lastName: 'Jefferson',
-        year: 1800,
-    },
-    {
-        firstName: 'James',
-        lastName: 'Madison',
-        year: 1808,
-    },
-    {
-        firstName: 'James',
-        lastName: 'Monroe',
-        year: 1812,
-    },
-];
+const itemsList: string[] = ['Item 0', 'Item 1', 'Item 2'];
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -69,7 +43,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const DragHandle = SortableHandle(() => <DragHandleIcon style={{ cursor: 'pointer' }} />);
 
-const SortableListItem = SortableElement(({ president, ...other }: SortableListItemProps) => (
+const SortableListItem = SortableElement(({ listItem, ...other }: SortableListItemProps) => (
     <InfoListItem
         backgroundColor={Colors.white[50]}
         {...other}
@@ -78,12 +52,11 @@ const SortableListItem = SortableElement(({ president, ...other }: SortableListI
                 <DragHandle />
             </IconButton>
         }
-        title={`${president.firstName} ${president.lastName}`}
-        rightComponent={<ChannelValue value={president.year} />}
+        title={listItem}
     />
 ));
 
-export const SortableListEdit = SortableContainer(({ presidents }: SortableListEditProps) => (
+export const SortableListEdit = SortableContainer(({ list }: SortableListEditProps) => (
     <List
         disablePadding
         component={'nav'}
@@ -91,14 +64,16 @@ export const SortableListEdit = SortableContainer(({ presidents }: SortableListE
             marginTop: '24px',
             boxShadow:
                 '0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px rgba(0, 0, 0, 0.14), 0px 1px 3px rgba(0, 0, 0, 0.12)',
+            borderRadius: '4px',
+            cursor: 'grabbing',
         }}
     >
-        {presidents.map((president: President, i: number) => (
+        {list.map((listItem: string, i: number) => (
             <SortableListItem
                 key={`item-${i}`}
                 data-cy={`sortable-row-${i}`}
                 index={i}
-                president={president}
+                listItem={listItem}
                 divider={'full'}
             />
         ))}
@@ -109,7 +84,7 @@ export const SortableList = (): JSX.Element => {
     const dispatch = useDispatch();
     const theme = useTheme();
     const classes = useStyles(theme);
-    const [list, setList] = useState<President[]>(presidentsList);
+    const [list, setList] = useState<string[]>(itemsList);
     const [sortable, setSortable] = useState<boolean>(false);
 
     const onSortEnd = useCallback(
@@ -165,7 +140,7 @@ export const SortableList = (): JSX.Element => {
                 </div>
                 {sortable && (
                     <SortableListEdit
-                        presidents={list}
+                        list={list}
                         onSortEnd={onSortEnd}
                         useDragHandle={true}
                         helperClass={classes.dragging}
@@ -182,14 +157,8 @@ export const SortableList = (): JSX.Element => {
                                 '0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px rgba(0, 0, 0, 0.14), 0px 1px 3px rgba(0, 0, 0, 0.12)',
                         }}
                     >
-                        {list.map((president: President, i: number) => (
-                            <InfoListItem
-                                hidePadding
-                                key={`president-${i}`}
-                                title={`${president.firstName} ${president.lastName}`}
-                                rightComponent={<ChannelValue value={president.year} />}
-                                divider={'full'}
-                            />
+                        {list.map((listItem: string, i: number) => (
+                            <InfoListItem hidePadding key={`item-${i}`} title={listItem} divider={'full'} />
                         ))}
                     </List>
                 )}

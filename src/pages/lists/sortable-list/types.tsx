@@ -7,11 +7,11 @@ export type President = {
 };
 
 export type SortableListItemProps = Partial<InfoListItemProps> & {
-    president: President;
+    listItem: string;
 };
 
 export type SortableListEditProps = {
-    presidents: President[];
+    list: string[];
 };
 
 export type OnSortEndProps = {

@@ -15,7 +15,7 @@ import AccordionDetails from '@material-ui/core/AccordionDetails';
 import Badge from '@material-ui/core/Badge';
 import HomeIcon from '@material-ui/icons/Home';
 import MenuIcon from '@material-ui/icons/Menu';
-import ExpandLess from '@material-ui/icons/ExpandLess';
+import ExpandMore from '@material-ui/icons/ExpandMore';
 import Chevron from '@material-ui/icons/ChevronRight';
 import NotificationsActiveIcon from '@material-ui/icons/NotificationsActive';
 import NotificationIcon from '@material-ui/icons/Notifications';
@@ -373,7 +373,7 @@ export const StatusList = (): JSX.Element => {
                     }}
                     classes={{ root: isMobile ? classes.accordionMobileRoot : classes.accordionRoot }}
                 >
-                    <AccordionSummary expandIcon={<ExpandLess />}>
+                    <AccordionSummary expandIcon={<ExpandMore />}>
                         <Typography variant={'subtitle2'} color={'primary'}>
                             {listItem.headerText}
                         </Typography>

@@ -37,9 +37,6 @@ const useStyles = makeStyles((theme: Theme) => ({
         display: 'flex',
         justifyContent: 'space-between',
     },
-    listItemTextWithoutIcon: {
-        marginLeft: -theme.spacing(7),
-    },
     listItemText: {
         marginLeft: '0px',
     },
@@ -96,7 +93,6 @@ const useStyles = makeStyles((theme: Theme) => ({
         alignItems: 'center',
         color: colors.black[500],
         fontWeight: 400,
-        marginLeft: theme.spacing(4),
     },
     listItemTitleWithoutTimeStamp: {
         marginLeft: 'auto',
@@ -104,7 +100,6 @@ const useStyles = makeStyles((theme: Theme) => ({
     station: {
         fontSize: 14,
         fontWeight: 400,
-        marginLeft: theme.spacing(4),
         textOverflow: 'ellipsis',
         overflow: 'hidden',
     },
@@ -119,9 +114,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         display: 'flex',
         flexDirection: 'column',
         fontSize: '12px',
-    },
-    leftComponentRootWithoutIcon: {
-        marginLeft: -theme.spacing(7),
+        marginRight: theme.spacing(4),
     },
     timeStamp: {
         display: 'flex',
@@ -140,11 +133,9 @@ const useStyles = makeStyles((theme: Theme) => ({
         alignItems: 'center',
     },
     assignedTag: {
-        marginLeft: theme.spacing(4),
         marginTop: 4,
     },
     activeTag: {
-        marginLeft: 0,
         marginTop: 4,
     },
     listItemTag: {
@@ -167,7 +158,7 @@ const getTitle = (
     isMobile = false,
     classes: Record<string, any>
 ): ReactNode => (
-    <div className={clsx(classes.listItemTitle, !hasTimeStamp ? classes.listItemTitleWithoutTimeStamp : '')}>
+    <div className={clsx(classes.listItemTitle)}>
         <Typography variant={'subtitle1'} noWrap>
             {deviceStatus}
         </Typography>
@@ -205,7 +196,7 @@ const getLeftComponent = (
     hasIcon: boolean,
     classes: Record<string, any>
 ): ReactNode => (
-    <div className={clsx(classes.leftComponentRoot, !hasIcon ? classes.leftComponentRootWithoutIcon : '')}>
+    <div className={clsx(classes.leftComponentRoot)}>
         <div className={classes.timeStamp}>
             <Typography classes={{ root: classes.time }}>{time}</Typography>
             <Typography variant={'caption'} classes={{ root: classes.timePeriod }}>
@@ -437,11 +428,11 @@ export const StatusList = (): JSX.Element => {
                                     return (
                                         <InfoListItem
                                             classes={{
-                                                listItemText:
-                                                    listItem.headerText === 'Without Icons, with Title'
-                                                        ? classes.listItemTextWithoutIcon
-                                                        : classes.listItemText,
+                                                listItemText: classes.listItemText,
                                             }}
+                                            hidePadding={
+                                                listItem.headerText === 'Without Icons, with Title' || !listItem.hasIcon
+                                            }
                                             data-testid="statusListInfoListItem"
                                             iconColor={theme.palette.text.primary}
                                             statusColor={'transparent'}

@@ -47,18 +47,28 @@ const useStyles = makeStyles((theme: Theme) => ({
         boxShadow:
             '0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px rgba(0, 0, 0, 0.14), 0px 1px 3px rgba(0, 0, 0, 0.12)',
         borderRadius: '4px',
-        '& .MuiAccordionSummary-root': {
-            borderBottom: `1px solid ${theme.palette.divider}`,
-            height: '48px',
-            minHeight: '48px',
+        '&:before': {
+            display: 'none',
         },
-    },
-    accordionMobileRoot: {
-        width: '100%',
         '& .MuiAccordionSummary-root': {
-            borderBottom: `1px solid ${theme.palette.divider}`,
             height: '48px',
             minHeight: '48px',
+            '&.Mui-expanded': {
+                borderBottom: `1px solid ${theme.palette.divider}`,
+            },
+        },
+        [theme.breakpoints.down('sm')]: {
+            width: '100%',
+            '&:before': {
+                display: 'none',
+            },
+            '& .MuiAccordionSummary-root': {
+                height: '48px',
+                minHeight: '48px',
+                '&.Mui-expanded': {
+                    borderBottom: `1px solid ${theme.palette.divider}`,
+                },
+            },
         },
     },
     accordionDetails: {
@@ -371,7 +381,7 @@ export const StatusList = (): JSX.Element => {
                     style={{
                         margin: isMobile ? '0 0 24px 0' : '24px auto',
                     }}
-                    classes={{ root: isMobile ? classes.accordionMobileRoot : classes.accordionRoot }}
+                    classes={{ root: classes.accordionRoot }}
                 >
                     <AccordionSummary expandIcon={<ExpandMore />}>
                         <Typography variant={'subtitle2'} color={'primary'}>

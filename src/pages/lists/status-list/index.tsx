@@ -55,8 +55,6 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
     accordionRoot: {
         marginBottom: theme.spacing(2),
-        boxShadow:
-            '0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px rgba(0, 0, 0, 0.14), 0px 1px 3px rgba(0, 0, 0, 0.12)',
         borderRadius: '4px',
         '&:before': {
             display: 'none',
@@ -405,7 +403,6 @@ export const StatusList = (): JSX.Element => {
             <div className={classes.accordionContainer}>
                 {list.map((listItem) => (
                     <Accordion
-                        elevation={0}
                         key={listItem.headerText}
                         data-testid="statusListAccordion"
                         defaultExpanded={true}

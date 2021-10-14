@@ -116,13 +116,14 @@ const useStyles = makeStyles((theme: Theme) => ({
     location: {
         fontSize: 12,
         fontWeight: 400,
-        fontFamily: 'Open Sans',
-        lineHeight: 1.67,
     },
     leftComponentRoot: {
         display: 'flex',
         flexDirection: 'column',
         fontSize: '12px',
+    },
+    leftComponentRootWithoutIcon: {
+        marginLeft: -theme.spacing(7),
     },
     timeStamp: {
         display: 'flex',
@@ -206,7 +207,7 @@ const getLeftComponent = (
     hasIcon: boolean,
     classes: Record<string, any>
 ): ReactNode => (
-    <div className={classes.leftComponentRoot} style={{ marginLeft: hasIcon ? '' : '-56px' }}>
+    <div className={clsx(classes.leftComponentRoot, !hasIcon ? classes.leftComponentRootWithoutIcon : '')}>
         <div className={classes.timeStamp}>
             <Typography classes={{ root: classes.time }}>{time}</Typography>
             <Typography variant={'caption'} classes={{ root: classes.timePeriod }}>

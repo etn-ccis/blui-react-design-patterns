@@ -26,6 +26,7 @@ import { TOGGLE_DRAWER } from '../../../redux/actions';
 import { InfoListItem, ListItemTag, InfoListItemProps, Spacer } from '@pxblue/react-components';
 import * as colors from '@pxblue/colors';
 import { Maintenance } from '@pxblue/icons-mui';
+import clsx from 'clsx';
 
 const useStyles = makeStyles((theme: Theme) => ({
     appbarRoot: {
@@ -37,13 +38,23 @@ const useStyles = makeStyles((theme: Theme) => ({
         justifyContent: 'space-between',
     },
     listItemTextWithoutIcon: {
-        marginLeft: '-56px',
+        marginLeft: -theme.spacing(7),
     },
     listItemText: {
         marginLeft: '0px',
     },
+    accordionContainer: {
+        maxWidth: 768,
+        paddingTop: theme.spacing(3),
+        margin: '0 auto',
+
+        [theme.breakpoints.down('sm')]: {
+            margin: `0 0 ${theme.spacing(3)}px 0`,
+            paddingTop: 0,
+        },
+    },
     accordionRoot: {
-        width: '768px',
+        marginBottom: theme.spacing(2),
         boxShadow:
             '0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px rgba(0, 0, 0, 0.14), 0px 1px 3px rgba(0, 0, 0, 0.12)',
         borderRadius: '4px',
@@ -58,7 +69,9 @@ const useStyles = makeStyles((theme: Theme) => ({
             },
         },
         [theme.breakpoints.down('sm')]: {
-            width: '100%',
+            maxWidth: '100%',
+            boxShadow: 'none',
+            borderRadius: 0,
             '&:before': {
                 display: 'none',
             },
@@ -67,6 +80,7 @@ const useStyles = makeStyles((theme: Theme) => ({
                 minHeight: '48px',
                 '&.Mui-expanded': {
                     borderBottom: `1px solid ${theme.palette.divider}`,
+                    margin: 0,
                 },
             },
         },
@@ -84,14 +98,26 @@ const useStyles = makeStyles((theme: Theme) => ({
         alignItems: 'center',
         color: colors.black[500],
         fontWeight: 400,
+        marginLeft: theme.spacing(4),
     },
-    listItemSubTitle: {
-        display: 'flex',
-        alignItems: 'center',
+    listItemTitleWithoutTimeStamp: {
+        marginLeft: 'auto',
     },
     station: {
+        fontSize: 14,
+        fontWeight: 400,
+        marginLeft: theme.spacing(4),
         textOverflow: 'ellipsis',
         overflow: 'hidden',
+    },
+    stationWithoutTimeStamp: {
+        marginLeft: 0,
+    },
+    location: {
+        fontSize: 12,
+        fontWeight: 400,
+        fontFamily: 'Open Sans',
+        lineHeight: 1.67,
     },
     leftComponentRoot: {
         display: 'flex',
@@ -114,9 +140,17 @@ const useStyles = makeStyles((theme: Theme) => ({
         justifyContent: 'center',
         alignItems: 'center',
     },
+    assignedTag: {
+        marginLeft: theme.spacing(4),
+        marginTop: 4,
+    },
+    activeTag: {
+        marginLeft: 0,
+        marginTop: 4,
+    },
     listItemTag: {
-        marginLeft: `${theme.spacing(2)}px`,
-        marginRight: `${theme.spacing(4)}px`,
+        marginLeft: theme.spacing(2),
+        marginRight: theme.spacing(4),
     },
     rightComponentChevron: {
         color: colors.gray[500],
@@ -134,12 +168,7 @@ const getTitle = (
     isMobile = false,
     classes: Record<string, any>
 ): ReactNode => (
-    <div
-        className={classes.listItemTitle}
-        style={{
-            marginLeft: hasTimeStamp ? '32px' : 'auto',
-        }}
-    >
+    <div className={clsx(classes.listItemTitle, !hasTimeStamp ? classes.listItemTitleWithoutTimeStamp : '')}>
         <Typography variant={'subtitle1'} noWrap>
             {deviceStatus}
         </Typography>
@@ -158,22 +187,16 @@ const getSubtitle = (
     isMobile = false,
     classes: Record<string, any>
 ): string | Array<string | JSX.Element> | undefined => [
-    <div
-        key="subtitle"
-        className={classes.listItemSubTitle}
-        style={{
-            marginLeft: hasTimeStamp ? '32px' : 'auto',
-        }}
-    >
-        <Typography variant="body2" classes={{ root: classes.station }}>
-            {station}{' '}
-        </Typography>
-        {!isMobile && (
-            <Typography variant="caption">
-                &nbsp; {`<`} &nbsp; {location}
-            </Typography>
-        )}
-    </div>,
+    <span key="station" className={clsx(classes.station, !hasTimeStamp ? classes.stationWithoutTimeStamp : '')}>
+        {station}
+    </span>,
+    !isMobile ? (
+        <span key="location" className={classes.location}>
+            {`<`} &nbsp; {location}
+        </span>
+    ) : (
+        ''
+    ),
 ];
 
 const getLeftComponent = (
@@ -217,14 +240,18 @@ const getInfoComponent = (
 ): string | Array<string | JSX.Element> | undefined => {
     if (tag && isMobile) {
         return [
-            <div key="info" className={classes.infoComponent}>
-                <ListItemTag label={'assigned'} backgroundColor={colors.blue[500]} />
-                <ListItemTag
-                    label={'active'}
-                    backgroundColor={colors.red[500]}
-                    classes={{ root: classes.listItemTag }}
-                />
-            </div>,
+            <ListItemTag
+                key="assigned"
+                label={'assigned'}
+                classes={{ root: classes.assignedTag }}
+                backgroundColor={colors.blue[500]}
+            />,
+            <ListItemTag
+                key="active"
+                label={'active'}
+                backgroundColor={colors.red[500]}
+                classes={{ root: classes.activeTag }}
+            />,
         ];
     }
     return undefined;
@@ -247,6 +274,7 @@ const createInfoListItemConfig = (
                     isMobile && hideSubTitle
                         ? undefined
                         : getSubtitle('Tuscarawas R.', 'Beaver', hasTimeStamp, isMobile, classes),
+                subtitleSeparator: ' ',
                 icon: hasIcon ? <NotificationIcon /> : undefined,
                 iconColor: hasIcon ? colors.gray[500] : undefined,
                 statusColor: 'transparent',
@@ -260,6 +288,7 @@ const createInfoListItemConfig = (
                     isMobile && hideSubTitle
                         ? undefined
                         : getSubtitle('Cherrington Station', 'Moon Township', hasTimeStamp, isMobile, classes),
+                subtitleSeparator: ' ',
                 info: getInfoComponent(tag, isMobile, classes),
                 icon: hasIcon ? <NotificationsActiveIcon /> : undefined,
                 iconColor: colors.white[50],
@@ -275,6 +304,7 @@ const createInfoListItemConfig = (
                     isMobile && hideSubTitle
                         ? undefined
                         : getSubtitle('Cherrington Station', 'Moon Township', hasTimeStamp, isMobile, classes),
+                subtitleSeparator: ' ',
                 statusColor: colors.orange[500],
                 icon: hasIcon ? <Maintenance /> : undefined,
                 iconColor: colors.orange[500],
@@ -295,6 +325,7 @@ const createInfoListItemConfig = (
             return {
                 title: `Item ${randomStatus}`,
                 subtitle: isMobile && hideSubTitle ? undefined : `Status: ${randomStatus}`,
+                subtitleSeparator: ' ',
                 icon: <HomeIcon />,
                 leftComponent: hasTimeStamp ? getLeftComponent('8:21', 'AM', '11/23/21', hasIcon, classes) : undefined,
             };
@@ -303,7 +334,7 @@ const createInfoListItemConfig = (
 
 const list = [
     {
-        variantIndices: ['alarm-active', 'setting-active', 'alarm'],
+        itemVariants: ['alarm-active', 'setting-active', 'alarm'],
         headerText: 'With Time Stamps, with Title+SubTitle+Info',
         hasIcon: true,
         hasTimeStamp: true,
@@ -311,7 +342,7 @@ const list = [
         hideSubTitle: false,
     },
     {
-        variantIndices: ['alarm-active', 'setting'],
+        itemVariants: ['alarm-active', 'setting'],
         headerText: 'Without Icons, with Title',
         hasIcon: false,
         hasTimeStamp: false,
@@ -319,7 +350,7 @@ const list = [
         hideSubTitle: true,
     },
     {
-        variantIndices: ['alarm-active', 'setting'],
+        itemVariants: ['alarm-active', 'setting'],
         headerText: 'With Icons, with Title',
         hasIcon: true,
         hasTimeStamp: false,
@@ -332,8 +363,6 @@ export const StatusList = (): JSX.Element => {
     const dispatch = useDispatch();
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
-    // const isMediumDevice = useMediaQuery(theme.breakpoints.between('sm', 'lg'));
-    // const isDesktop = useMediaQuery(theme.breakpoints.up('lg'));
     const classes = useStyles(theme);
 
     return (
@@ -372,65 +401,64 @@ export const StatusList = (): JSX.Element => {
                     </div>
                 </Toolbar>
             </AppBar>
-            {list.map((listItem) => (
-                <Accordion
-                    elevation={0}
-                    key={listItem.headerText}
-                    data-testid="statusListAccordion"
-                    defaultExpanded={true}
-                    style={{
-                        margin: isMobile ? '0 0 24px 0' : '24px auto',
-                    }}
-                    classes={{ root: classes.accordionRoot }}
-                >
-                    <AccordionSummary expandIcon={<ExpandMore />}>
-                        <Typography variant={'subtitle2'} color={'primary'}>
-                            {listItem.headerText}
-                        </Typography>
-                    </AccordionSummary>
-                    <AccordionDetails classes={{ root: classes.accordionDetails }}>
-                        <List className={'list'} disablePadding>
-                            {listItem.variantIndices.map((item, index) => {
-                                const listData = createInfoListItemConfig(
-                                    item,
-                                    listItem.hasIcon,
-                                    listItem.hasTimeStamp,
-                                    listItem.tag,
-                                    isMobile,
-                                    classes,
-                                    listItem.hideSubTitle
-                                );
-                                const divider =
-                                    index === listItem.variantIndices.length - 1 && isMobile
-                                        ? 'full'
-                                        : index === listItem.variantIndices.length - 1
-                                        ? undefined
-                                        : listItem.hasIcon
-                                        ? 'partial'
-                                        : 'full';
+            <div className={classes.accordionContainer}>
+                {list.map((listItem) => (
+                    <Accordion
+                        elevation={0}
+                        key={listItem.headerText}
+                        data-testid="statusListAccordion"
+                        defaultExpanded={true}
+                        classes={{ root: classes.accordionRoot }}
+                    >
+                        <AccordionSummary expandIcon={<ExpandMore />}>
+                            <Typography variant={'subtitle2'} color={'primary'}>
+                                {listItem.headerText}
+                            </Typography>
+                        </AccordionSummary>
+                        <AccordionDetails classes={{ root: classes.accordionDetails }}>
+                            <List className={'list'} disablePadding>
+                                {listItem.itemVariants.map((item, index) => {
+                                    const listData = createInfoListItemConfig(
+                                        item,
+                                        listItem.hasIcon,
+                                        listItem.hasTimeStamp,
+                                        listItem.tag,
+                                        isMobile,
+                                        classes,
+                                        listItem.hideSubTitle
+                                    );
+                                    const divider =
+                                        index === listItem.itemVariants.length - 1 && isMobile
+                                            ? 'full'
+                                            : index === listItem.itemVariants.length - 1
+                                            ? undefined
+                                            : listItem.hasIcon
+                                            ? 'partial'
+                                            : 'full';
 
-                                return (
-                                    <InfoListItem
-                                        classes={{
-                                            listItemText:
-                                                listItem.headerText === 'Without Icons, with Title'
-                                                    ? classes.listItemTextWithoutIcon
-                                                    : classes.listItemText,
-                                        }}
-                                        data-testid="statusListInfoListItem"
-                                        iconColor={theme.palette.text.primary}
-                                        statusColor={'transparent'}
-                                        key={item}
-                                        avatar={item === 'setting-active' ? false : true}
-                                        divider={divider}
-                                        {...listData}
-                                    />
-                                );
-                            })}
-                        </List>
-                    </AccordionDetails>
-                </Accordion>
-            ))}
+                                    return (
+                                        <InfoListItem
+                                            classes={{
+                                                listItemText:
+                                                    listItem.headerText === 'Without Icons, with Title'
+                                                        ? classes.listItemTextWithoutIcon
+                                                        : classes.listItemText,
+                                            }}
+                                            data-testid="statusListInfoListItem"
+                                            iconColor={theme.palette.text.primary}
+                                            statusColor={'transparent'}
+                                            key={item}
+                                            avatar={item === 'setting-active' ? false : true}
+                                            divider={divider}
+                                            {...listData}
+                                        />
+                                    );
+                                })}
+                            </List>
+                        </AccordionDetails>
+                    </Accordion>
+                ))}
+            </div>
         </div>
     );
 };

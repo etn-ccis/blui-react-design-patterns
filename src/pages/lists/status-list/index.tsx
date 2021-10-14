@@ -26,7 +26,6 @@ import { TOGGLE_DRAWER } from '../../../redux/actions';
 import { InfoListItem, ListItemTag, InfoListItemProps, Spacer } from '@pxblue/react-components';
 import * as colors from '@pxblue/colors';
 import { Maintenance } from '@pxblue/icons-mui';
-import clsx from 'clsx';
 
 const useStyles = makeStyles((theme: Theme) => ({
     appbarRoot: {
@@ -94,17 +93,11 @@ const useStyles = makeStyles((theme: Theme) => ({
         color: colors.black[500],
         fontWeight: 400,
     },
-    listItemTitleWithoutTimeStamp: {
-        marginLeft: 'auto',
-    },
     station: {
         fontSize: 14,
         fontWeight: 400,
         textOverflow: 'ellipsis',
         overflow: 'hidden',
-    },
-    stationWithoutTimeStamp: {
-        marginLeft: 0,
     },
     location: {
         fontSize: 12,
@@ -151,14 +144,8 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
 }));
 
-const getTitle = (
-    deviceStatus: string,
-    device: string,
-    hasTimeStamp: boolean,
-    isMobile = false,
-    classes: Record<string, any>
-): ReactNode => (
-    <div className={clsx(classes.listItemTitle)}>
+const getTitle = (deviceStatus: string, device: string, isMobile = false, classes: Record<string, any>): ReactNode => (
+    <div className={classes.listItemTitle}>
         <Typography variant={'subtitle1'} noWrap>
             {deviceStatus}
         </Typography>
@@ -173,11 +160,10 @@ const getTitle = (
 const getSubtitle = (
     station: string,
     location: string,
-    hasTimeStamp: boolean,
     isMobile = false,
     classes: Record<string, any>
 ): string | Array<string | JSX.Element> | undefined => [
-    <span key="station" className={clsx(classes.station, !hasTimeStamp ? classes.stationWithoutTimeStamp : '')}>
+    <span key="station" className={classes.station}>
         {station}
     </span>,
     !isMobile ? (
@@ -193,10 +179,9 @@ const getLeftComponent = (
     time: string,
     timePeriod: 'AM' | 'PM',
     date: string,
-    hasIcon: boolean,
     classes: Record<string, any>
 ): ReactNode => (
-    <div className={clsx(classes.leftComponentRoot)}>
+    <div className={classes.leftComponentRoot}>
         <div className={classes.timeStamp}>
             <Typography classes={{ root: classes.time }}>{time}</Typography>
             <Typography variant={'caption'} classes={{ root: classes.timePeriod }}>
@@ -259,55 +244,53 @@ const createInfoListItemConfig = (
     switch (randomStatus) {
         case 'alarm':
             return {
-                title: getTitle('Bypass Over Frequency', 'A2 Max Reval', hasTimeStamp, isMobile, classes),
+                title: getTitle('Bypass Over Frequency', 'A2 Max Reval', isMobile, classes),
                 subtitle:
-                    isMobile && hideSubTitle
-                        ? undefined
-                        : getSubtitle('Tuscarawas R.', 'Beaver', hasTimeStamp, isMobile, classes),
+                    isMobile && hideSubTitle ? undefined : getSubtitle('Tuscarawas R.', 'Beaver', isMobile, classes),
                 subtitleSeparator: ' ',
                 icon: hasIcon ? <NotificationIcon /> : undefined,
                 iconColor: hasIcon ? colors.gray[500] : undefined,
                 statusColor: 'transparent',
-                leftComponent: hasTimeStamp ? getLeftComponent('2:13', 'AM', '11/23/21', hasIcon, classes) : undefined,
+                leftComponent: hasTimeStamp ? getLeftComponent('2:13', 'AM', '11/23/21', classes) : undefined,
                 rightComponent: getRightComponent(isMobile, false, classes),
             };
         case 'alarm-active':
             return {
-                title: getTitle('High Humidity', 'PX341 sensor level 9', hasTimeStamp, isMobile, classes),
+                title: getTitle('High Humidity', 'PX341 sensor level 9', isMobile, classes),
                 subtitle:
                     isMobile && hideSubTitle
                         ? undefined
-                        : getSubtitle('Cherrington Station', 'Moon Township', hasTimeStamp, isMobile, classes),
+                        : getSubtitle('Cherrington Station', 'Moon Township', isMobile, classes),
                 subtitleSeparator: ' ',
                 info: getInfoComponent(tag, isMobile, classes),
                 icon: hasIcon ? <NotificationsActiveIcon /> : undefined,
                 iconColor: colors.white[50],
                 statusColor: colors.red[500],
-                leftComponent: hasTimeStamp ? getLeftComponent('8:21', 'AM', '11/23/21', hasIcon, classes) : undefined,
+                leftComponent: hasTimeStamp ? getLeftComponent('8:21', 'AM', '11/23/21', classes) : undefined,
                 chevron: true,
                 rightComponent: getRightComponent(isMobile, tag, classes),
             };
         case 'setting-active':
             return {
-                title: getTitle('Battery Service', 'Eaton GH142', hasTimeStamp, isMobile, classes),
+                title: getTitle('Battery Service', 'Eaton GH142', isMobile, classes),
                 subtitle:
                     isMobile && hideSubTitle
                         ? undefined
-                        : getSubtitle('Cherrington Station', 'Moon Township', hasTimeStamp, isMobile, classes),
+                        : getSubtitle('Cherrington Station', 'Moon Township', isMobile, classes),
                 subtitleSeparator: ' ',
                 statusColor: colors.orange[500],
                 icon: hasIcon ? <Maintenance /> : undefined,
                 iconColor: colors.orange[500],
                 iconAlign: 'center',
-                leftComponent: hasTimeStamp ? getLeftComponent('7:48', 'AM', '11/23/21', hasIcon, classes) : undefined,
+                leftComponent: hasTimeStamp ? getLeftComponent('7:48', 'AM', '11/23/21', classes) : undefined,
                 rightComponent: getRightComponent(isMobile, false, classes),
             };
         case 'setting':
             return {
-                title: getTitle('Battery Service', 'Eaton GH142', hasTimeStamp, isMobile, classes),
+                title: getTitle('Battery Service', 'Eaton GH142', isMobile, classes),
                 icon: hasIcon ? <Maintenance /> : undefined,
                 iconColor: colors.gray[500],
-                leftComponent: hasTimeStamp ? getLeftComponent('2:13', 'AM', '11/23/21', hasIcon, classes) : undefined,
+                leftComponent: hasTimeStamp ? getLeftComponent('2:13', 'AM', '11/23/21', classes) : undefined,
                 rightComponent: getRightComponent(isMobile, false, classes),
             };
         case 'normal':
@@ -317,7 +300,7 @@ const createInfoListItemConfig = (
                 subtitle: isMobile && hideSubTitle ? undefined : `Status: ${randomStatus}`,
                 subtitleSeparator: ' ',
                 icon: <HomeIcon />,
-                leftComponent: hasTimeStamp ? getLeftComponent('8:21', 'AM', '11/23/21', hasIcon, classes) : undefined,
+                leftComponent: hasTimeStamp ? getLeftComponent('8:21', 'AM', '11/23/21', classes) : undefined,
             };
     }
 };
@@ -352,7 +335,7 @@ const list = [
 export const StatusList = (): JSX.Element => {
     const dispatch = useDispatch();
     const theme = useTheme();
-    const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+    const isMobile = useMediaQuery(theme.breakpoints.down('xs'));
     const classes = useStyles(theme);
 
     return (

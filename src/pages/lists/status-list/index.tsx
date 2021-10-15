@@ -42,10 +42,10 @@ const useStyles = makeStyles((theme: Theme) => ({
         maxWidth: 768,
         paddingTop: theme.spacing(3),
         margin: '0 auto',
-
+        padding: theme.spacing(2),
         [theme.breakpoints.down('sm')]: {
             margin: `0 0 ${theme.spacing(3)}px 0`,
-            paddingTop: 0,
+            padding: 0,
         },
     },
     accordionRoot: {

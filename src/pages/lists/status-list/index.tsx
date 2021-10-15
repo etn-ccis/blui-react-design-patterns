@@ -13,7 +13,6 @@ import Accordion from '@material-ui/core/Accordion';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
 import AccordionDetails from '@material-ui/core/AccordionDetails';
 import Badge from '@material-ui/core/Badge';
-import HomeIcon from '@material-ui/icons/Home';
 import MenuIcon from '@material-ui/icons/Menu';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import Chevron from '@material-ui/icons/ChevronRight';
@@ -23,7 +22,7 @@ import HelpIcon from '@material-ui/icons/Help';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { useDispatch } from 'react-redux';
 import { TOGGLE_DRAWER } from '../../../redux/actions';
-import { InfoListItem, ListItemTag, InfoListItemProps, Spacer } from '@pxblue/react-components';
+import { InfoListItem, ListItemTag, Spacer } from '@pxblue/react-components';
 import * as colors from '@pxblue/colors';
 import { Maintenance } from '@pxblue/icons-mui';
 
@@ -37,7 +36,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         justifyContent: 'space-between',
     },
     listItemText: {
-        marginLeft: '0px',
+        marginLeft: 0,
     },
     accordionContainer: {
         maxWidth: 768,
@@ -50,14 +49,17 @@ const useStyles = makeStyles((theme: Theme) => ({
         },
     },
     accordionRoot: {
-        marginBottom: theme.spacing(2),
-        borderRadius: '4px',
+        marginBottom: theme.spacing(3),
+        borderRadius: 4,
         '&:before': {
             display: 'none',
         },
+        '&.Mui-expanded': {
+            marginBottom: theme.spacing(3),
+        },
         '& .MuiAccordionSummary-root': {
-            height: '48px',
-            minHeight: '48px',
+            height: theme.spacing(6),
+            minHeight: theme.spacing(6),
             '&.Mui-expanded': {
                 borderBottom: `1px solid ${theme.palette.divider}`,
             },
@@ -70,8 +72,8 @@ const useStyles = makeStyles((theme: Theme) => ({
                 display: 'none',
             },
             '& .MuiAccordionSummary-root': {
-                height: '48px',
-                minHeight: '48px',
+                height: theme.spacing(6),
+                minHeight: theme.spacing(6),
                 '&.Mui-expanded': {
                     borderBottom: `1px solid ${theme.palette.divider}`,
                     margin: 0,
@@ -83,25 +85,17 @@ const useStyles = makeStyles((theme: Theme) => ({
         display: 'block',
         padding: 0,
     },
-    toolbarRightContent: {
-        display: 'flex',
-        flexDirection: 'row',
-    },
     listItemTitle: {
         display: 'flex',
         alignItems: 'center',
-        color: colors.black[500],
-        fontWeight: 400,
     },
     station: {
         fontSize: 14,
-        fontWeight: 400,
         textOverflow: 'ellipsis',
         overflow: 'hidden',
     },
     location: {
         fontSize: 12,
-        fontWeight: 400,
     },
     leftComponentRoot: {
         display: 'flex',
@@ -115,15 +109,18 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
     time: {
         fontWeight: 700,
-        fontSize: '12px',
+        fontSize: 12,
     },
     timePeriod: {
-        marginLeft: '4px',
+        marginLeft: 4,
     },
     rightComponentRoot: {
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
+    },
+    headerIcon: {
+        marginLeft: theme.spacing(4),
     },
     assignedTag: {
         marginTop: 4,
@@ -144,7 +141,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
 }));
 
-const getTitle = (deviceStatus: string, device: string, isMobile = false, classes: Record<string, any>): ReactNode => (
+const getTitle = (deviceStatus: string, device: string, isMobile: boolean, classes: Record<string, any>): ReactNode => (
     <div className={classes.listItemTitle}>
         <Typography variant={'subtitle1'} noWrap>
             {deviceStatus}
@@ -160,19 +157,14 @@ const getTitle = (deviceStatus: string, device: string, isMobile = false, classe
 const getSubtitle = (
     station: string,
     location: string,
-    isMobile = false,
     classes: Record<string, any>
 ): string | Array<string | JSX.Element> | undefined => [
     <span key="station" className={classes.station}>
         {station}
     </span>,
-    !isMobile ? (
-        <span key="location" className={classes.location}>
-            {`<`} &nbsp; {location}
-        </span>
-    ) : (
-        ''
-    ),
+    <span key="location" className={classes.location}>
+        {`<`} &nbsp; {location}
+    </span>,
 ];
 
 const getLeftComponent = (
@@ -192,7 +184,7 @@ const getLeftComponent = (
     </div>
 );
 
-const getRightComponent = (isMobile: boolean, tag: boolean, classes: Record<string, any>): ReactNode => (
+const getRightComponent = (isMobile: boolean, classes: Record<string, any>, tag = false): ReactNode => (
     <div className={classes.rightComponentRoot}>
         {tag && !isMobile && (
             <>
@@ -209,9 +201,9 @@ const getRightComponent = (isMobile: boolean, tag: boolean, classes: Record<stri
 );
 
 const getInfoComponent = (
-    tag: boolean,
     isMobile: boolean,
-    classes: Record<string, any>
+    classes: Record<string, any>,
+    tag = false
 ): string | Array<string | JSX.Element> | undefined => {
     if (tag && isMobile) {
         return [
@@ -231,106 +223,6 @@ const getInfoComponent = (
     }
     return undefined;
 };
-
-const createInfoListItemConfig = (
-    randomStatus: string,
-    hasIcon = true,
-    hasTimeStamp = true,
-    tag = false,
-    isMobile = false,
-    classes: Record<string, any>,
-    hideSubTitle: boolean
-): InfoListItemProps => {
-    switch (randomStatus) {
-        case 'alarm':
-            return {
-                title: getTitle('Bypass Over Frequency', 'A2 Max Reval', isMobile, classes),
-                subtitle:
-                    isMobile && hideSubTitle ? undefined : getSubtitle('Tuscarawas R.', 'Beaver', isMobile, classes),
-                subtitleSeparator: ' ',
-                icon: hasIcon ? <NotificationIcon /> : undefined,
-                iconColor: hasIcon ? colors.gray[500] : undefined,
-                statusColor: 'transparent',
-                leftComponent: hasTimeStamp ? getLeftComponent('2:13', 'AM', '11/23/21', classes) : undefined,
-                rightComponent: getRightComponent(isMobile, false, classes),
-            };
-        case 'alarm-active':
-            return {
-                title: getTitle('High Humidity', 'PX341 sensor level 9', isMobile, classes),
-                subtitle:
-                    isMobile && hideSubTitle
-                        ? undefined
-                        : getSubtitle('Cherrington Station', 'Moon Township', isMobile, classes),
-                subtitleSeparator: ' ',
-                info: getInfoComponent(tag, isMobile, classes),
-                icon: hasIcon ? <NotificationsActiveIcon /> : undefined,
-                iconColor: colors.white[50],
-                statusColor: colors.red[500],
-                leftComponent: hasTimeStamp ? getLeftComponent('8:21', 'AM', '11/23/21', classes) : undefined,
-                chevron: true,
-                rightComponent: getRightComponent(isMobile, tag, classes),
-            };
-        case 'setting-active':
-            return {
-                title: getTitle('Battery Service', 'Eaton GH142', isMobile, classes),
-                subtitle:
-                    isMobile && hideSubTitle
-                        ? undefined
-                        : getSubtitle('Cherrington Station', 'Moon Township', isMobile, classes),
-                subtitleSeparator: ' ',
-                statusColor: colors.orange[500],
-                icon: hasIcon ? <Maintenance /> : undefined,
-                iconColor: colors.orange[500],
-                iconAlign: 'center',
-                leftComponent: hasTimeStamp ? getLeftComponent('7:48', 'AM', '11/23/21', classes) : undefined,
-                rightComponent: getRightComponent(isMobile, false, classes),
-            };
-        case 'setting':
-            return {
-                title: getTitle('Battery Service', 'Eaton GH142', isMobile, classes),
-                icon: hasIcon ? <Maintenance /> : undefined,
-                iconColor: colors.gray[500],
-                leftComponent: hasTimeStamp ? getLeftComponent('2:13', 'AM', '11/23/21', classes) : undefined,
-                rightComponent: getRightComponent(isMobile, false, classes),
-            };
-        case 'normal':
-        default:
-            return {
-                title: `Item ${randomStatus}`,
-                subtitle: isMobile && hideSubTitle ? undefined : `Status: ${randomStatus}`,
-                subtitleSeparator: ' ',
-                icon: <HomeIcon />,
-                leftComponent: hasTimeStamp ? getLeftComponent('8:21', 'AM', '11/23/21', classes) : undefined,
-            };
-    }
-};
-
-const list = [
-    {
-        itemVariants: ['alarm-active', 'setting-active', 'alarm'],
-        headerText: 'With Time Stamps, with Title+SubTitle+Info',
-        hasIcon: true,
-        hasTimeStamp: true,
-        tag: true,
-        hideSubTitle: false,
-    },
-    {
-        itemVariants: ['alarm-active', 'setting'],
-        headerText: 'Without Icons, with Title',
-        hasIcon: false,
-        hasTimeStamp: false,
-        tag: false,
-        hideSubTitle: true,
-    },
-    {
-        itemVariants: ['alarm-active', 'setting'],
-        headerText: 'With Icons, with Title',
-        hasIcon: true,
-        hasTimeStamp: false,
-        tag: false,
-        hideSubTitle: true,
-    },
-];
 
 export const StatusList = (): JSX.Element => {
     const dispatch = useDispatch();
@@ -359,77 +251,175 @@ export const StatusList = (): JSX.Element => {
                         Status Lists
                     </Typography>
                     <Spacer />
-                    <div className={classes.toolbarRightContent}>
-                        <IconButton color={'inherit'}>
-                            <HelpIcon />
-                        </IconButton>
-                        <IconButton color={'inherit'}>
-                            <Badge color="error" badgeContent={88}>
-                                <NotificationIcon />
-                            </Badge>
-                        </IconButton>
-                        <IconButton color={'inherit'}>
-                            <MoreVertIcon />
-                        </IconButton>
-                    </div>
+                    <IconButton color={'inherit'} edge={'end'}>
+                        <HelpIcon />
+                        <Badge classes={{ root: classes.headerIcon }} color="error" badgeContent={88}>
+                            <NotificationIcon />
+                        </Badge>
+                        <MoreVertIcon classes={{ root: classes.headerIcon }} />
+                    </IconButton>
                 </Toolbar>
             </AppBar>
             <div className={classes.accordionContainer}>
-                {list.map((listItem) => (
-                    <Accordion
-                        key={listItem.headerText}
-                        data-testid="statusListAccordion"
-                        defaultExpanded={true}
-                        classes={{ root: classes.accordionRoot }}
-                    >
-                        <AccordionSummary expandIcon={<ExpandMore />}>
-                            <Typography variant={'subtitle2'} color={'primary'}>
-                                {listItem.headerText}
-                            </Typography>
-                        </AccordionSummary>
-                        <AccordionDetails classes={{ root: classes.accordionDetails }}>
-                            <List className={'list'} disablePadding>
-                                {listItem.itemVariants.map((item, index) => {
-                                    const listData = createInfoListItemConfig(
-                                        item,
-                                        listItem.hasIcon,
-                                        listItem.hasTimeStamp,
-                                        listItem.tag,
-                                        isMobile,
-                                        classes,
-                                        listItem.hideSubTitle
-                                    );
-                                    const divider =
-                                        index === listItem.itemVariants.length - 1 && isMobile
-                                            ? 'full'
-                                            : index === listItem.itemVariants.length - 1
-                                            ? undefined
-                                            : listItem.hasIcon
-                                            ? 'partial'
-                                            : 'full';
+                <Accordion
+                    key={'With Time Stamps, with Title+SubTitle+Info'}
+                    data-testid="statusListAccordion"
+                    defaultExpanded={true}
+                    classes={{ root: classes.accordionRoot }}
+                >
+                    <AccordionSummary expandIcon={<ExpandMore />}>
+                        <Typography variant={'subtitle2'} color={'primary'}>
+                            With Time Stamps, with Title+SubTitle+Info
+                        </Typography>
+                    </AccordionSummary>
+                    <AccordionDetails classes={{ root: classes.accordionDetails }}>
+                        <List className={'list'} disablePadding>
+                            <InfoListItem
+                                classes={{
+                                    listItemText: classes.listItemText,
+                                }}
+                                title={getTitle('High Humidity', 'PX341 sensor level 9', isMobile, classes)}
+                                data-testid="statusListInfoListItem"
+                                subtitle={getSubtitle('Cherrington Station', 'Moon Township', classes)}
+                                subtitleSeparator={' '}
+                                info={getInfoComponent(isMobile, classes, true)}
+                                icon={<NotificationsActiveIcon />}
+                                iconColor={theme.palette.common.white[50]}
+                                statusColor={colors.red[500]}
+                                leftComponent={getLeftComponent('8:21', 'AM', '11/23/21', classes)}
+                                rightComponent={getRightComponent(isMobile, classes, true)}
+                                divider={'partial'}
+                                avatar
+                                chevron
+                            />
+                            <InfoListItem
+                                classes={{
+                                    listItemText: classes.listItemText,
+                                    rightComponent: classes.rightComponentChevron,
+                                }}
+                                data-testid="statusListInfoListItem"
+                                title={getTitle('Battery Service', 'Eaton GH142', isMobile, classes)}
+                                subtitle={getSubtitle('Cherrington Station', 'Moon Township', classes)}
+                                subtitleSeparator={' '}
+                                info={getInfoComponent(isMobile, classes)}
+                                icon={<Maintenance />}
+                                iconColor={colors.orange[500]}
+                                statusColor={colors.orange[500]}
+                                leftComponent={getLeftComponent('7:48', 'AM', '11/23/21', classes)}
+                                divider={'partial'}
+                                avatar={false}
+                                chevron
+                            />
+                            <InfoListItem
+                                classes={{
+                                    listItemText: classes.listItemText,
+                                    rightComponent: classes.rightComponentChevron,
+                                }}
+                                data-testid="statusListInfoListItem"
+                                title={getTitle('Bypass Over Frequency', 'A2 Max Reval', isMobile, classes)}
+                                subtitle={getSubtitle('Tuscarawas R.', 'Beaver', classes)}
+                                subtitleSeparator={' '}
+                                info={getInfoComponent(isMobile, classes)}
+                                icon={<NotificationIcon />}
+                                iconColor={colors.gray[500]}
+                                statusColor={'transparent'}
+                                leftComponent={getLeftComponent('2:13', 'AM', '11/23/21', classes)}
+                                avatar={false}
+                                chevron
+                            />
+                        </List>
+                    </AccordionDetails>
+                </Accordion>
 
-                                    return (
-                                        <InfoListItem
-                                            classes={{
-                                                listItemText: classes.listItemText,
-                                            }}
-                                            hidePadding={
-                                                listItem.headerText === 'Without Icons, with Title' || !listItem.hasIcon
-                                            }
-                                            data-testid="statusListInfoListItem"
-                                            iconColor={theme.palette.text.primary}
-                                            statusColor={'transparent'}
-                                            key={item}
-                                            avatar={item === 'setting-active' ? false : true}
-                                            divider={divider}
-                                            {...listData}
-                                        />
-                                    );
-                                })}
-                            </List>
-                        </AccordionDetails>
-                    </Accordion>
-                ))}
+                <Accordion
+                    key={'Without Icons, with Title'}
+                    data-testid="statusListAccordion"
+                    defaultExpanded={true}
+                    classes={{ root: classes.accordionRoot }}
+                >
+                    <AccordionSummary expandIcon={<ExpandMore />}>
+                        <Typography variant={'subtitle2'} color={'primary'}>
+                            Without Icons, with Title
+                        </Typography>
+                    </AccordionSummary>
+                    <AccordionDetails classes={{ root: classes.accordionDetails }}>
+                        <List className={'list'} disablePadding>
+                            <InfoListItem
+                                classes={{
+                                    listItemText: classes.listItemText,
+                                    rightComponent: classes.rightComponentChevron,
+                                }}
+                                title={getTitle('High Humidity', 'PX341 sensor level 9', isMobile, classes)}
+                                data-testid="statusListInfoListItem"
+                                subtitle={
+                                    !isMobile ? getSubtitle('Cherrington Station', 'Moon Township', classes) : undefined
+                                }
+                                subtitleSeparator={' '}
+                                statusColor={colors.red[500]}
+                                hidePadding
+                                divider={'full'}
+                                chevron
+                            />
+                            <InfoListItem
+                                classes={{
+                                    listItemText: classes.listItemText,
+                                    rightComponent: classes.rightComponentChevron,
+                                }}
+                                data-testid="statusListInfoListItem"
+                                title={getTitle('Battery Service', 'Eaton GH142', isMobile, classes)}
+                                hidePadding
+                                chevron
+                            />
+                        </List>
+                    </AccordionDetails>
+                </Accordion>
+
+                <Accordion
+                    key={'With Icons, with Title'}
+                    data-testid="statusListAccordion"
+                    defaultExpanded={true}
+                    classes={{ root: classes.accordionRoot }}
+                >
+                    <AccordionSummary expandIcon={<ExpandMore />}>
+                        <Typography variant={'subtitle2'} color={'primary'}>
+                            With Icons, with Title
+                        </Typography>
+                    </AccordionSummary>
+                    <AccordionDetails classes={{ root: classes.accordionDetails }}>
+                        <List className={'list'} disablePadding>
+                            <InfoListItem
+                                classes={{
+                                    listItemText: classes.listItemText,
+                                    rightComponent: classes.rightComponentChevron,
+                                }}
+                                title={getTitle('High Humidity', 'PX341 sensor level 9', isMobile, classes)}
+                                data-testid="statusListInfoListItem"
+                                subtitle={
+                                    !isMobile ? getSubtitle('Cherrington Station', 'Moon Township', classes) : undefined
+                                }
+                                subtitleSeparator={' '}
+                                icon={<NotificationsActiveIcon />}
+                                iconColor={theme.palette.common.white[50]}
+                                statusColor={colors.red[500]}
+                                divider={'partial'}
+                                avatar
+                                chevron
+                            />
+                            <InfoListItem
+                                classes={{
+                                    listItemText: classes.listItemText,
+                                    rightComponent: classes.rightComponentChevron,
+                                }}
+                                data-testid="statusListInfoListItem"
+                                title={getTitle('Battery Service', 'Eaton GH142', isMobile, classes)}
+                                icon={<Maintenance />}
+                                iconColor={colors.gray[500]}
+                                avatar={false}
+                                chevron
+                            />
+                        </List>
+                    </AccordionDetails>
+                </Accordion>
             </div>
         </div>
     );

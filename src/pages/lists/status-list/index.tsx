@@ -40,11 +40,10 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
     accordionContainer: {
         maxWidth: 768,
-        paddingTop: theme.spacing(3),
         margin: '0 auto',
-        padding: theme.spacing(2),
+        padding: `${theme.spacing(3)}px ${theme.spacing(2)}px`,
         [theme.breakpoints.down('sm')]: {
-            margin: `0 0 ${theme.spacing(3)}px 0`,
+            margin: `0 auto ${theme.spacing(3)}px auto`,
             padding: 0,
         },
     },
@@ -330,7 +329,6 @@ export const StatusList = (): JSX.Element => {
                         </List>
                     </AccordionDetails>
                 </Accordion>
-
                 <Accordion
                     key={'Without Icons, with Title'}
                     data-testid="statusListAccordion"
@@ -373,7 +371,6 @@ export const StatusList = (): JSX.Element => {
                         </List>
                     </AccordionDetails>
                 </Accordion>
-
                 <Accordion
                     key={'With Icons, with Title'}
                     data-testid="statusListAccordion"

@@ -13,6 +13,7 @@ import {
     Theme,
     Toolbar,
     Typography,
+    useMediaQuery,
     useTheme,
 } from '@material-ui/core';
 import { InfoListItem, Spacer } from '@pxblue/react-components';
@@ -23,12 +24,15 @@ import SortIcon from '@material-ui/icons/Sort';
 import CheckIcon from '@material-ui/icons/Check';
 
 import { OnSortEndProps, SortableListEditProps, SortableListItemProps } from './types';
-import * as Colors from '@pxblue/colors';
 
-const itemsList: string[] = ['Item 0', 'Item 1', 'Item 2'];
+const itemsList: string[] = ['Item 01', 'Item 02', 'Item 03'];
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
+        sortableList: {
+            backgroundColor: theme.palette.background.paper,
+            minHeight: '100vh',
+        },
         dragging: {
             boxShadow: theme.shadows[4],
         },
@@ -36,42 +40,76 @@ const useStyles = makeStyles((theme: Theme) =>
             padding: 0,
         },
         toolbarGutters: {
-            padding: '0 16px',
+            padding: `0 ${theme.spacing(2)}px`,
+        },
+        container: {
+            maxWidth: 768,
+            padding: `0 ${theme.spacing(2)}px`,
+            margin: `${theme.spacing(3)}px auto`,
+            [theme.breakpoints.down('xs')]: {
+                maxWidth: '100%',
+                padding: 0,
+                margin: 0,
+            },
+        },
+        list: {
+            marginTop: theme.spacing(3),
+            boxShadow: theme.shadows[1],
+            borderRadius: 4,
+            cursor: 'grabbing',
+            [theme.breakpoints.down('xs')]: {
+                marginTop: 0,
+                boxShadow: 'none',
+                borderRadius: 0,
+            },
+        },
+        sortButtonMobile: {
+            color: theme.palette.common.white,
+        },
+        sortButtonContainer: {
+            display: 'flex',
+            justifyContent: 'flex-end',
+        },
+        dragHandleIconButton: {
+            backgroundColor: 'transparent',
+            cursor: 'grabbing',
+        },
+        dragHandle: {
+            cursor: 'pointer',
+        },
+        sortableListEdit: {
+            cursor: 'grabbing',
+        },
+        infoListItem: {
+            backgroundColor: theme.palette.common.white[50],
         },
     })
 );
 
-const DragHandle = SortableHandle(() => <DragHandleIcon style={{ cursor: 'pointer' }} />);
+const DragHandle = SortableHandle((classes: Record<string, any>) => (
+    <DragHandleIcon classes={{ root: classes.dragHandle }} />
+));
 
-const SortableListItem = SortableElement(({ listItem, ...other }: SortableListItemProps) => (
+const SortableListItem = SortableElement(({ listItem, classes, ...other }: SortableListItemProps) => (
     <InfoListItem
-        backgroundColor={Colors.white[50]}
         {...other}
+        classes={{ root: classes.infoListItem }}
         icon={
-            <IconButton disableRipple style={{ backgroundColor: 'transparent' }}>
-                <DragHandle />
+            <IconButton disableRipple classes={{ root: classes.dragHandleIconButton }}>
+                <DragHandle classes={classes} />
             </IconButton>
         }
         title={listItem}
     />
 ));
 
-export const SortableListEdit = SortableContainer(({ list }: SortableListEditProps) => (
-    <List
-        disablePadding
-        component={'nav'}
-        style={{
-            marginTop: '24px',
-            boxShadow:
-                '0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px rgba(0, 0, 0, 0.14), 0px 1px 3px rgba(0, 0, 0, 0.12)',
-            borderRadius: '4px',
-            cursor: 'grabbing',
-        }}
-    >
+export const SortableListEdit = SortableContainer(({ list, classes }: SortableListEditProps) => (
+    <List dense disablePadding component={'nav'} classes={{ root: classes.list || classes.sortableListEdit }}>
         {list.map((listItem: string, i: number) => (
             <SortableListItem
                 key={`item-${i}`}
                 data-cy={`sortable-row-${i}`}
+                classes={classes}
                 index={i}
                 listItem={listItem}
                 divider={'full'}
@@ -84,6 +122,7 @@ export const SortableList = (): JSX.Element => {
     const dispatch = useDispatch();
     const theme = useTheme();
     const classes = useStyles(theme);
+    const isMobile = useMediaQuery(theme.breakpoints.down('xs'));
     const [list, setList] = useState<string[]>(itemsList);
     const [sortable, setSortable] = useState<boolean>(false);
 
@@ -95,7 +134,7 @@ export const SortableList = (): JSX.Element => {
     );
 
     return (
-        <div style={{ backgroundColor: theme.palette.background.paper, minHeight: '100vh' }}>
+        <div className={classes.sortableList}>
             <AppBar data-cy="pxb-toolbar" position={'sticky'} classes={{ root: classes.appbarRoot }}>
                 <Toolbar classes={{ gutters: classes.toolbarGutters }}>
                     <Hidden mdUp={true}>
@@ -115,48 +154,44 @@ export const SortableList = (): JSX.Element => {
                         Sortable List
                     </Typography>
                     <Spacer />
+                    {isMobile && (
+                        <IconButton
+                            data-cy="sort-done"
+                            classes={{ root: classes.sortButtonMobile }}
+                            onClick={(): void => setSortable(!sortable)}
+                        >
+                            {sortable ? <CheckIcon /> : <SortIcon />}
+                        </IconButton>
+                    )}
                 </Toolbar>
             </AppBar>
-            <div
-                style={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    width: '766px',
-                    margin: '24px auto',
-                }}
-            >
-                <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-                    <Button
-                        variant={'contained'}
-                        color={'primary'}
-                        style={{ marginTop: theme.spacing(3) }}
-                        onClick={(): void => setSortable(!sortable)}
-                        startIcon={sortable ? <CheckIcon /> : <SortIcon />}
-                    >
-                        <Typography noWrap color={'inherit'}>
-                            {sortable ? 'Done' : 'Sort'}
-                        </Typography>
-                    </Button>
-                </div>
+            <div className={classes.container}>
+                {!isMobile && (
+                    <div className={classes.sortButtonContainer}>
+                        <Button
+                            variant={'contained'}
+                            color={'primary'}
+                            endIcon
+                            onClick={(): void => setSortable(!sortable)}
+                            startIcon={sortable ? <CheckIcon /> : <SortIcon />}
+                        >
+                            <Typography noWrap color={'inherit'}>
+                                {sortable ? 'Done' : 'Sort'}
+                            </Typography>
+                        </Button>
+                    </div>
+                )}
                 {sortable && (
                     <SortableListEdit
                         list={list}
                         onSortEnd={onSortEnd}
                         useDragHandle={true}
                         helperClass={classes.dragging}
+                        classes={classes}
                     />
                 )}
                 {!sortable && (
-                    <List
-                        className={'list'}
-                        disablePadding
-                        component={'nav'}
-                        style={{
-                            marginTop: '24px',
-                            boxShadow:
-                                '0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px rgba(0, 0, 0, 0.14), 0px 1px 3px rgba(0, 0, 0, 0.12)',
-                        }}
-                    >
+                    <List dense className={'list'} disablePadding component={'nav'} classes={{ root: classes.list }}>
                         {list.map((listItem: string, i: number) => (
                             <InfoListItem hidePadding key={`item-${i}`} title={listItem} divider={'full'} />
                         ))}

@@ -56,7 +56,7 @@ const useStyles = makeStyles((theme: Theme) =>
             marginTop: theme.spacing(3),
             boxShadow: theme.shadows[1],
             borderRadius: 4,
-            cursor: 'grabbing',
+            // cursor: 'grabbing',
             [theme.breakpoints.down('xs')]: {
                 marginTop: 0,
                 boxShadow: 'none',
@@ -72,13 +72,6 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         dragHandleIconButton: {
             backgroundColor: 'transparent',
-            cursor: 'grabbing',
-        },
-        dragHandle: {
-            cursor: 'pointer',
-        },
-        sortableListEdit: {
-            cursor: 'grabbing',
         },
         infoListItem: {
             backgroundColor: theme.palette.common.white[50],
@@ -86,9 +79,7 @@ const useStyles = makeStyles((theme: Theme) =>
     })
 );
 
-const DragHandle = SortableHandle((classes: Record<string, any>) => (
-    <DragHandleIcon classes={{ root: classes.dragHandle }} />
-));
+const DragHandle = SortableHandle(() => <DragHandleIcon />);
 
 const SortableListItem = SortableElement(({ listItem, classes, ...other }: SortableListItemProps) => (
     <InfoListItem
@@ -96,15 +87,21 @@ const SortableListItem = SortableElement(({ listItem, classes, ...other }: Sorta
         classes={{ root: classes.infoListItem }}
         icon={
             <IconButton disableRipple classes={{ root: classes.dragHandleIconButton }}>
-                <DragHandle classes={classes} />
+                <DragHandle />
             </IconButton>
         }
         title={listItem}
     />
 ));
 
-export const SortableListEdit = SortableContainer(({ list, classes }: SortableListEditProps) => (
-    <List dense disablePadding component={'nav'} classes={{ root: classes.list || classes.sortableListEdit }}>
+export const SortableListEdit = SortableContainer(({ list, isSorting, classes }: SortableListEditProps) => (
+    <List
+        dense
+        disablePadding
+        component={'nav'}
+        classes={{ root: classes.list }}
+        style={{ cursor: isSorting ? 'grabbing' : 'default' }}
+    >
         {list.map((listItem: string, i: number) => (
             <SortableListItem
                 key={`item-${i}`}
@@ -125,10 +122,12 @@ export const SortableList = (): JSX.Element => {
     const isMobile = useMediaQuery(theme.breakpoints.down('xs'));
     const [list, setList] = useState<string[]>(itemsList);
     const [sortable, setSortable] = useState<boolean>(false);
+    const [isSorting, setIsSorting] = useState<boolean>(false);
 
     const onSortEnd = useCallback(
         ({ oldIndex, newIndex }: OnSortEndProps): void => {
             setList(arrayMove(list, oldIndex, newIndex));
+            setIsSorting(false);
         },
         [list, setList]
     );
@@ -186,6 +185,8 @@ export const SortableList = (): JSX.Element => {
                         list={list}
                         onSortEnd={onSortEnd}
                         useDragHandle={true}
+                        isSorting={isSorting}
+                        onSortStart={(): void => setIsSorting(true)}
                         helperClass={classes.dragging}
                         classes={classes}
                     />

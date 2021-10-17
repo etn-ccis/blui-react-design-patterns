@@ -7,6 +7,7 @@ export type SortableListItemProps = Partial<InfoListItemProps> & {
 
 export type SortableListEditProps = {
     list: string[];
+    isSorting: boolean;
     classes: Record<string, any>;
 };
 

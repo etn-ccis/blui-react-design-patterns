@@ -1,33 +1,54 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import Enzyme from 'enzyme';
-// import Adapter from 'enzyme-adapter-react-16';
-import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
+import { cleanup, fireEvent, render, screen } from '@testing-library/react';
+import '@testing-library/jest-dom/extend-expect';
 import { SortableList } from '.';
 import { createStore } from 'redux';
 import { Reducer } from '../../../redux/reducers';
 import { Provider } from 'react-redux';
 
-Enzyme.configure({ adapter: new Adapter() });
 const store = createStore(Reducer());
-
-it('renders without crashing', () => {
-    const div = document.createElement('div');
-    ReactDOM.render(
+const createRenderer = (): any =>
+    render(
         <Provider store={store}>
             <SortableList />
-        </Provider>,
-        div
+        </Provider>
     );
-    ReactDOM.unmountComponentAtNode(div);
+
+describe('Sortable List', () => {
+    afterEach(cleanup);
+    it('should render', () => {
+        createRenderer();
+        expect(screen.getByText('Sortable List')).toBeInTheDocument();
+    });
+
+    it('should render all the list items', () => {
+        createRenderer();
+        expect(screen.getByTestId('list')).toBeInTheDocument();
+        expect(screen.getAllByTestId('infoListItem').length).toBe(3);
+    });
+
+    it('should display Sort button, when not sorting', () => {
+        createRenderer();
+        expect(screen.getByText('Sort')).toBeInTheDocument();
+        expect(screen.queryByText('Done')).not.toBeInTheDocument();
+    });
+
+    it('should enable edit mode, when Sort button is clicked', () => {
+        createRenderer();
+        expect(screen.queryByTestId('sortableListEdit')).not.toBeInTheDocument();
+
+        fireEvent.click(screen.getByText('Sort'));
+        expect(screen.getByTestId('sortableListEdit')).toBeInTheDocument();
+        expect(screen.getByText('Done')).toBeInTheDocument();
+    });
+
+    it('should disable edit mode, when Done button is clicked', () => {
+        createRenderer();
+        expect(screen.queryByText('Done')).not.toBeInTheDocument();
+
+        fireEvent.click(screen.getByText('Sort'));
+        fireEvent.click(screen.getByText('Done'));
+        expect(screen.getByTestId('list')).toBeInTheDocument();
+        expect(screen.queryByTestId('sortableListEdit')).not.toBeInTheDocument();
+    });
 });
-
-//  @TODO: write tests for the following test cases
-
-// it('reorders the list correctly', () => {
-
-// });
-
-// it('toggles edit mode correctly', () => {
-
-// });

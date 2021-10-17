@@ -100,6 +100,7 @@ export const SortableListEdit = SortableContainer(({ list, isSorting, classes }:
         disablePadding
         component={'nav'}
         classes={{ root: classes.list }}
+        data-testid="sortableListEdit"
         style={{ cursor: isSorting ? 'grabbing' : 'default' }}
     >
         {list.map((listItem: string, i: number) => (
@@ -170,7 +171,6 @@ export const SortableList = (): JSX.Element => {
                         <Button
                             variant={'contained'}
                             color={'primary'}
-                            endIcon
                             onClick={(): void => setSortable(!sortable)}
                             startIcon={sortable ? <CheckIcon /> : <SortIcon />}
                         >
@@ -192,9 +192,22 @@ export const SortableList = (): JSX.Element => {
                     />
                 )}
                 {!sortable && (
-                    <List dense className={'list'} disablePadding component={'nav'} classes={{ root: classes.list }}>
+                    <List
+                        dense
+                        className={'list'}
+                        data-testid="list"
+                        disablePadding
+                        component={'nav'}
+                        classes={{ root: classes.list }}
+                    >
                         {list.map((listItem: string, i: number) => (
-                            <InfoListItem hidePadding key={`item-${i}`} title={listItem} divider={'full'} />
+                            <InfoListItem
+                                data-testid="infoListItem"
+                                hidePadding
+                                key={`item-${i}`}
+                                title={listItem}
+                                divider={'full'}
+                            />
                         ))}
                     </List>
                 )}

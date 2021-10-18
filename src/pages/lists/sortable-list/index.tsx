@@ -56,7 +56,6 @@ const useStyles = makeStyles((theme: Theme) =>
             marginTop: theme.spacing(3),
             boxShadow: theme.shadows[1],
             borderRadius: 4,
-            // cursor: 'grabbing',
             [theme.breakpoints.down('xs')]: {
                 marginTop: 0,
                 boxShadow: 'none',
@@ -72,9 +71,18 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         dragHandleIconButton: {
             backgroundColor: 'transparent',
+            [theme.breakpoints.down('xs')]: {
+                marginLeft: 4,
+            },
         },
         infoListItem: {
             backgroundColor: theme.palette.common.white[50],
+        },
+        sortableInfoListItem: {
+            paddingLeft: 0,
+        },
+        listItemText: {
+            marginLeft: theme.spacing(2),
         },
     })
 );
@@ -84,7 +92,7 @@ const DragHandle = SortableHandle(() => <DragHandleIcon />);
 const SortableListItem = SortableElement(({ listItem, classes, ...other }: SortableListItemProps) => (
     <InfoListItem
         {...other}
-        classes={{ root: classes.infoListItem }}
+        classes={{ root: classes.sortableInfoListItem, listItemText: classes.listItemText }}
         icon={
             <IconButton disableRipple classes={{ root: classes.dragHandleIconButton }}>
                 <DragHandle />

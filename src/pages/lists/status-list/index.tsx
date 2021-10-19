@@ -43,6 +43,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         margin: '0 auto',
         padding: `${theme.spacing(3)}px ${theme.spacing(2)}px`,
         [theme.breakpoints.down('sm')]: {
+            maxWidth: '100%',
             margin: `0 auto ${theme.spacing(3)}px auto`,
             padding: 0,
         },
@@ -290,6 +291,7 @@ export const StatusList = (): JSX.Element => {
                                 divider={'partial'}
                                 avatar
                                 chevron
+                                iconAlign="center"
                             />
                             <InfoListItem
                                 classes={{
@@ -308,6 +310,7 @@ export const StatusList = (): JSX.Element => {
                                 divider={'partial'}
                                 avatar={false}
                                 chevron
+                                iconAlign="center"
                             />
                             <InfoListItem
                                 classes={{
@@ -325,6 +328,7 @@ export const StatusList = (): JSX.Element => {
                                 leftComponent={getLeftComponent('2:13', 'AM', '11/23/21', classes)}
                                 avatar={false}
                                 chevron
+                                iconAlign="center"
                             />
                         </List>
                     </AccordionDetails>
@@ -357,6 +361,7 @@ export const StatusList = (): JSX.Element => {
                                 hidePadding
                                 divider={'full'}
                                 chevron
+                                iconAlign="center"
                             />
                             <InfoListItem
                                 classes={{
@@ -367,6 +372,7 @@ export const StatusList = (): JSX.Element => {
                                 title={getTitle('Battery Service', 'Eaton GH142', isMobile, classes)}
                                 hidePadding
                                 chevron
+                                iconAlign="center"
                             />
                         </List>
                     </AccordionDetails>
@@ -401,6 +407,7 @@ export const StatusList = (): JSX.Element => {
                                 divider={'partial'}
                                 avatar
                                 chevron
+                                iconAlign="center"
                             />
                             <InfoListItem
                                 classes={{
@@ -413,6 +420,7 @@ export const StatusList = (): JSX.Element => {
                                 iconColor={colors.gray[500]}
                                 avatar={false}
                                 chevron
+                                iconAlign="center"
                             />
                         </List>
                     </AccordionDetails>

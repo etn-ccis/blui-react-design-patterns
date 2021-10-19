@@ -1,25 +1,23 @@
 import React, { useCallback, useState } from 'react';
 import { SortableContainer, SortableElement, SortableHandle } from 'react-sortable-hoc';
 import arrayMove from 'array-move';
-import { DragHandle as DragHandleIcon } from '@material-ui/icons';
-import {
-    AppBar,
-    Button,
-    createStyles,
-    Hidden,
-    IconButton,
-    List,
-    makeStyles,
-    Theme,
-    Toolbar,
-    Typography,
-    useMediaQuery,
-    useTheme,
-} from '@material-ui/core';
+import AppBar from '@material-ui/core/AppBar';
+import Button from '@material-ui/core/Button';
+import Hidden from '@material-ui/core/Hidden';
+import IconButton from '@material-ui/core/IconButton';
+import List from '@material-ui/core/List';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
+import { Theme } from '@material-ui/core/styles/createMuiTheme';
+import useTheme from '@material-ui/core/styles/useTheme';
+import makeStyles from '@material-ui/core/styles/makeStyles';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
+import createStyles from '@material-ui/core/styles/createStyles';
 import { InfoListItem, Spacer } from '@pxblue/react-components';
 import { TOGGLE_DRAWER } from '../../../redux/actions';
 import { useDispatch } from 'react-redux';
 import MenuIcon from '@material-ui/icons/Menu';
+import DragHandleIcon from '@material-ui/icons/DragHandle';
 import SortIcon from '@material-ui/icons/Sort';
 import CheckIcon from '@material-ui/icons/Check';
 

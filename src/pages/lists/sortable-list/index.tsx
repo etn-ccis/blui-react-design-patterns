@@ -7,6 +7,7 @@ import Hidden from '@material-ui/core/Hidden';
 import IconButton from '@material-ui/core/IconButton';
 import List from '@material-ui/core/List';
 import Toolbar from '@material-ui/core/Toolbar';
+import Card from '@material-ui/core/Card';
 import Typography from '@material-ui/core/Typography';
 import { Theme } from '@material-ui/core/styles/createMuiTheme';
 import useTheme from '@material-ui/core/styles/useTheme';
@@ -50,7 +51,7 @@ const useStyles = makeStyles((theme: Theme) =>
                 margin: 0,
             },
         },
-        list: {
+        card: {
             marginTop: theme.spacing(3),
             boxShadow: theme.shadows[1],
             borderRadius: 4,
@@ -102,12 +103,11 @@ const SortableListItem = SortableElement(({ listItem, classes, ...other }: Sorta
     />
 ));
 
-export const SortableListEdit = SortableContainer(({ list, isSorting, classes }: SortableListEditProps) => (
+export const SortableListEdit = SortableContainer(({ list, isSorting, classes, isMobile }: SortableListEditProps) => (
     <List
         dense
         disablePadding
         component={'nav'}
-        classes={{ root: classes.list }}
         data-testid="sortableListEdit"
         style={{ cursor: isSorting ? 'grabbing' : 'default' }}
     >
@@ -118,7 +118,7 @@ export const SortableListEdit = SortableContainer(({ list, isSorting, classes }:
                 classes={classes}
                 index={i}
                 listItem={listItem}
-                divider={'full'}
+                divider={list.length - 1 !== i || isMobile ? 'full' : undefined}
             />
         ))}
     </List>
@@ -190,39 +190,35 @@ export const SortableList = (): JSX.Element => {
                         </Button>
                     </div>
                 )}
-                {sortable && (
-                    <SortableListEdit
-                        list={list}
-                        onSortEnd={onSortEnd}
-                        useDragHandle={true}
-                        isSorting={isSorting}
-                        onSortStart={(): void => setIsSorting(true)}
-                        helperClass={classes.dragging}
-                        classes={classes}
-                    />
-                )}
-                {!sortable && (
-                    <List
-                        dense
-                        className={'list'}
-                        data-testid="list"
-                        disablePadding
-                        component={'nav'}
-                        classes={{ root: classes.list }}
-                    >
-                        {list.map((listItem: string, i: number) => (
-                            <InfoListItem
-                                data-testid="infoListItem"
-                                classes={{ root: classes.infoListItem }}
-                                hidePadding
-                                key={`item-${i}`}
-                                title={listItem}
-                                divider={list.length - 1 !== i ? 'full' : undefined}
-                                iconAlign={'center'}
-                            />
-                        ))}
-                    </List>
-                )}
+                <Card classes={{ root: classes.card }}>
+                    {sortable && (
+                        <SortableListEdit
+                            list={list}
+                            onSortEnd={onSortEnd}
+                            useDragHandle={true}
+                            isSorting={isSorting}
+                            onSortStart={(): void => setIsSorting(true)}
+                            helperClass={classes.dragging}
+                            classes={classes}
+                            isMobile={isMobile}
+                        />
+                    )}
+                    {!sortable && (
+                        <List dense className={'list'} data-testid="list" disablePadding component={'nav'}>
+                            {list.map((listItem: string, i: number) => (
+                                <InfoListItem
+                                    data-testid="infoListItem"
+                                    classes={{ root: classes.infoListItem }}
+                                    hidePadding
+                                    key={`item-${i}`}
+                                    title={listItem}
+                                    divider={list.length - 1 !== i || isMobile ? 'full' : undefined}
+                                    iconAlign={'center'}
+                                />
+                            ))}
+                        </List>
+                    )}
+                </Card>
             </div>
         </div>
     );

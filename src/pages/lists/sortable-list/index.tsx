@@ -30,7 +30,7 @@ const itemsList: string[] = ['Item 01', 'Item 02', 'Item 03'];
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         sortableList: {
-            backgroundColor: theme.palette.background.paper,
+            backgroundColor: theme.palette.background.default,
             minHeight: '100vh',
         },
         dragging: {
@@ -76,7 +76,7 @@ const useStyles = makeStyles((theme: Theme) =>
             },
         },
         infoListItem: {
-            backgroundColor: theme.palette.common.white[50],
+            backgroundColor: theme.palette.common.white,
         },
         sortableInfoListItem: {
             paddingLeft: 0,
@@ -180,7 +180,9 @@ export const SortableList = (): JSX.Element => {
                             variant={'contained'}
                             color={'primary'}
                             onClick={(): void => setSortable(!sortable)}
-                            startIcon={sortable ? <CheckIcon /> : <SortIcon />}
+                            startIcon={
+                                sortable ? <CheckIcon data-cy="sort-done-btn" /> : <SortIcon data-cy="sort-btn" />
+                            }
                         >
                             <Typography noWrap color={'inherit'}>
                                 {sortable ? 'Done' : 'Sort'}
@@ -211,6 +213,7 @@ export const SortableList = (): JSX.Element => {
                         {list.map((listItem: string, i: number) => (
                             <InfoListItem
                                 data-testid="infoListItem"
+                                classes={{ root: classes.infoListItem }}
                                 hidePadding
                                 key={`item-${i}`}
                                 title={listItem}

@@ -227,7 +227,7 @@ const getInfoComponent = (
 export const StatusList = (): JSX.Element => {
     const dispatch = useDispatch();
     const theme = useTheme();
-    const isMobile = useMediaQuery(theme.breakpoints.down('xs'));
+    const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
     const classes = useStyles(theme);
 
     return (

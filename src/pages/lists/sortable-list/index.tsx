@@ -41,10 +41,10 @@ const useStyles = makeStyles((theme: Theme) =>
             padding: `0 ${theme.spacing(2)}px`,
         },
         container: {
-            maxWidth: 768,
-            padding: `0 ${theme.spacing(2)}px`,
-            margin: `${theme.spacing(3)}px auto`,
-            [theme.breakpoints.down('xs')]: {
+            maxWidth: 818,
+            padding: theme.spacing(3),
+            margin: '0 auto',
+            [theme.breakpoints.down('sm')]: {
                 maxWidth: '100%',
                 padding: 0,
                 margin: 0,
@@ -54,7 +54,7 @@ const useStyles = makeStyles((theme: Theme) =>
             marginTop: theme.spacing(3),
             boxShadow: theme.shadows[1],
             borderRadius: 4,
-            [theme.breakpoints.down('xs')]: {
+            [theme.breakpoints.down('sm')]: {
                 marginTop: 0,
                 boxShadow: 'none',
                 borderRadius: 0,
@@ -62,6 +62,7 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         sortButtonMobile: {
             color: theme.palette.common.white,
+            paddingRight: 0,
         },
         sortButtonContainer: {
             display: 'flex',
@@ -69,7 +70,7 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         dragHandleIconButton: {
             backgroundColor: 'transparent',
-            [theme.breakpoints.down('xs')]: {
+            [theme.breakpoints.down('sm')]: {
                 marginLeft: 4,
             },
         },
@@ -78,6 +79,7 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         sortableInfoListItem: {
             paddingLeft: 0,
+            backgroundColor: theme.palette.common.white,
         },
         listItemText: {
             marginLeft: theme.spacing(2),
@@ -126,7 +128,7 @@ export const SortableList = (): JSX.Element => {
     const dispatch = useDispatch();
     const theme = useTheme();
     const classes = useStyles(theme);
-    const isMobile = useMediaQuery(theme.breakpoints.down('xs'));
+    const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
     const [list, setList] = useState<string[]>(itemsList);
     const [sortable, setSortable] = useState<boolean>(false);
     const [isSorting, setIsSorting] = useState<boolean>(false);
@@ -215,7 +217,8 @@ export const SortableList = (): JSX.Element => {
                                 hidePadding
                                 key={`item-${i}`}
                                 title={listItem}
-                                divider={'full'}
+                                divider={list.length - 1 !== i ? 'full' : undefined}
+                                iconAlign={'center'}
                             />
                         ))}
                     </List>

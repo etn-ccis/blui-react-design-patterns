@@ -39,9 +39,9 @@ const useStyles = makeStyles((theme: Theme) => ({
         marginLeft: 0,
     },
     accordionContainer: {
-        maxWidth: 768,
+        maxWidth: 818,
         margin: '0 auto',
-        padding: `${theme.spacing(3)}px ${theme.spacing(2)}px`,
+        padding: theme.spacing(3),
         [theme.breakpoints.down('sm')]: {
             maxWidth: '100%',
             margin: `0 auto ${theme.spacing(3)}px auto`,

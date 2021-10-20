@@ -63,7 +63,7 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         sortButtonMobile: {
             color: theme.palette.common.white,
-            paddingRight: 0,
+            marginRight: -theme.spacing(1),
         },
         sortButtonContainer: {
             display: 'flex',

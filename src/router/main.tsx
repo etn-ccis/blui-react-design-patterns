@@ -71,7 +71,7 @@ export const Main = (): JSX.Element => (
         />
         <Route exact path={`/${PAGES.I18N.route || ''}`} component={I18N} />
 
-        <Route exact path={`/${PAGES.LISTS.ACTION_LIST.route || ''}`} component={ActionList} />
+        <Route exact path={`/${PAGES.LISTS.ACTION_LIST.IN_PANEL_HEADER.route || ''}`} component={ActionList} />
         <Route exact path={`/${PAGES.LISTS.DATA_LIST.route || ''}`} component={DataList} />
         <Route exact path={`/${PAGES.LISTS.MULTISELECT_LIST.route || ''}`} component={MultiselectList} />
         <Route exact path={`/${PAGES.LISTS.STATUS_LIST.route || ''}`} component={StatusList} />

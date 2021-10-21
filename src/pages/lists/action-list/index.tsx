@@ -1,101 +1,147 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState } from 'react';
 import IconButton from '@material-ui/core/IconButton';
-import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import AddIcon from '@material-ui/icons/Add';
-import DeleteIcon from '@material-ui/icons/Delete';
+import Hidden from '@material-ui/core/Hidden';
 import List from '@material-ui/core/List';
+import Card from '@material-ui/core/Card';
+import CardHeader from '@material-ui/core/CardHeader';
+import FormControl from '@material-ui/core/FormControl';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
+import Select from '@material-ui/core/Select';
+import MenuIcon from '@material-ui/icons/Menu';
+import useTheme from '@material-ui/core/styles/useTheme';
+import { Theme } from '@material-ui/core/styles/createMuiTheme';
+import makeStyles from '@material-ui/core/styles/makeStyles';
 import { Spacer, InfoListItem } from '@pxblue/react-components';
 import { useDispatch } from 'react-redux';
 import { TOGGLE_DRAWER } from '../../../redux/actions';
-import { Menu as MenuIcon } from '@material-ui/icons';
-import { Hidden, useTheme, Tooltip } from '@material-ui/core';
-import { EmptyState } from './EmptyState';
-import { makeStyles } from '@material-ui/core/styles';
 
-type Option = 'Delete' | 'View Details';
 type Item = {
     id: number;
     name: string;
+    registeredBeforeDays: number;
     details: string;
 };
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme: Theme) => ({
+    actionList: {
+        backgroundColor: theme.palette.background.default,
+        minHeight: '100vh',
+    },
     appbarRoot: {
         padding: 0,
     },
     toolbarGutters: {
         padding: '0 16px',
     },
+    container: {
+        maxWidth: 818,
+        padding: theme.spacing(3),
+        margin: '0 auto',
+        [theme.breakpoints.down('sm')]: {
+            maxWidth: '100%',
+            padding: 0,
+            margin: 0,
+        },
+    },
+    card: {
+        marginTop: theme.spacing(3),
+        boxShadow: theme.shadows[1],
+        borderRadius: 4,
+        [theme.breakpoints.down('sm')]: {
+            marginTop: 0,
+            boxShadow: 'none',
+            borderRadius: 0,
+        },
+    },
+    cardHeader: {
+        borderBottom: `1px solid ${theme.palette.divider}`,
+    },
+    infoListItem: {
+        backgroundColor: theme.palette.common.white,
+    },
+    categoryName: {
+        color: theme.palette.primary.main,
+    },
+    select: {
+        '&:focus': {
+            backgroundColor: 'white',
+        },
+    },
 }));
 
-const createItem = (index: number): Item => ({
-    id: index,
-    name: `Item ${index}`,
-    details: `Item ${index} details`,
-});
+const itemList: Item[] = [
+    {
+        id: 1,
+        name: 'Item 01',
+        registeredBeforeDays: 8,
+        details: 'Registered 8 days ago',
+    },
+    {
+        id: 2,
+        name: 'Item 02',
+        registeredBeforeDays: 15,
+        details: 'Registered 15 days ago',
+    },
+    {
+        id: 3,
+        name: 'Item 03',
+        registeredBeforeDays: 30,
+        details: 'Registered 28 days ago',
+    },
+];
 
-const createRandomItem = (): Item => {
-    const int = parseInt(`${Math.random() * 100}`, 10);
-    return createItem(int);
-};
-
-const generatedList: Item[] = [];
-
-for (let i = 0; i < 10; i++) {
-    generatedList.push(createRandomItem());
-}
-
-const options: Option[] = ['Delete', 'View Details'];
+const countries: number[] = [30, 15, 7];
 
 export const ActionList = (): JSX.Element => {
     const dispatch = useDispatch();
     const theme = useTheme();
-    const classes = useStyles();
+    const classes = useStyles(theme);
+    const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
-    const [list, setList] = useState<Item[]>(generatedList);
-    const [menuPosition, setMenuPosition] = useState<null | HTMLElement>(null);
-    const [activeIndex, setActiveIndex] = useState<number>(-1);
+    const [countryCode, setCountryCode] = useState<string>(String(countries[0]));
+    const [list, setList] = useState(itemList);
 
-    const onAddItem = useCallback((): void => {
-        setList([...list, createRandomItem()]);
-    }, [list, setList]);
+    const handleOnChange = (selectedRange: number): void => {
+        const tempList = itemList.filter((item) => item.registeredBeforeDays <= selectedRange);
+        setList(tempList);
+    };
 
-    const onMenuClick = useCallback(
-        (event: React.MouseEvent<HTMLButtonElement, MouseEvent>, i: number): void => {
-            setMenuPosition(event.currentTarget);
-            setActiveIndex(i);
-        },
-        [setMenuPosition, setActiveIndex]
+    const getCardHeaderTitle = (): JSX.Element => (
+        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+            <Typography classes={{ root: classes.categoryName }} variant="subtitle2">
+                Category Name
+            </Typography>
+            <FormControl variant={'filled'} style={{ width: 200, marginRight: theme.spacing(2) }}>
+                <Select
+                    classes={{ root: classes.select }}
+                    style={{ backgroundColor: 'white' }}
+                    data-cy={'country-selector'}
+                    fullWidth
+                    disableUnderline
+                    value={countryCode}
+                    defaultValue={countryCode}
+                    labelId={'country-code-label'}
+                    onChange={(event): void => {
+                        setCountryCode(String(event.target.value));
+                        handleOnChange(Number(event.target.value));
+                    }}
+                >
+                    {countries.map((country) => (
+                        <MenuItem key={country} value={country} style={{ backgroundColor: 'white' }}>
+                            {`${country} Days`}
+                        </MenuItem>
+                    ))}
+                </Select>
+            </FormControl>
+        </div>
     );
-
-    const onMenuClose = useCallback((): void => {
-        setMenuPosition(null);
-        setActiveIndex(-1);
-    }, [setMenuPosition, setActiveIndex]);
-
-    const onMenuItemClick = useCallback(
-        (option: Option, i: number): void => {
-            if (option === 'Delete') {
-                const tempList = list;
-                tempList.splice(i, 1);
-                setList(tempList);
-            }
-            onMenuClose();
-        },
-        [list, onMenuClose]
-    );
-
-    const onRemoveAll = useCallback((): void => {
-        setList([]);
-    }, [setList]);
 
     return (
-        <div style={{ backgroundColor: theme.palette.background.paper, minHeight: '100vh' }}>
+        <div className={classes.actionList}>
             <AppBar position={'sticky'} classes={{ root: classes.appbarRoot }}>
                 <Toolbar data-cy={'pxb-toolbar'} classes={{ gutters: classes.toolbarGutters }}>
                     <Hidden mdUp={true}>
@@ -115,74 +161,29 @@ export const ActionList = (): JSX.Element => {
                         Action List
                     </Typography>
                     <Spacer />
-                    <Tooltip title={'Remove all items'}>
-                        <IconButton
-                            id={'remove-all-button'}
-                            data-cy={'toolbar-delete'}
-                            color={'inherit'}
-                            aria-label={'Delete'}
-                            onClick={onRemoveAll}
-                        >
-                            <DeleteIcon />
-                        </IconButton>
-                    </Tooltip>
-                    <Tooltip title={'Add a new item'}>
-                        <IconButton
-                            id={'add-item-button'}
-                            data-cy={'toolbar-add'}
-                            color={'inherit'}
-                            aria-label={'add'}
-                            edge={'end'}
-                            onClick={onAddItem}
-                        >
-                            <AddIcon />
-                        </IconButton>
-                    </Tooltip>
                 </Toolbar>
             </AppBar>
-            {list.length < 1 && <EmptyState onAddItem={onAddItem} />}
-            <List data-cy={'list-content'} disablePadding component="nav" className={'list'}>
-                {list.map(
-                    (item, i): JSX.Element => (
-                        <InfoListItem
-                            key={i}
-                            hidePadding
-                            ripple
-                            title={item.name}
-                            subtitle={item.details}
-                            onClick={(): void => {
-                                /* handle item onClick */
-                            }}
-                            rightComponent={
-                                <IconButton
-                                    data-cy={'action-menu'}
-                                    onClick={(evt): void => onMenuClick(evt, i)}
-                                    edge={'end'}
-                                >
-                                    <MoreVertIcon />
-                                </IconButton>
-                            }
-                        />
-                    )
-                )}
-            </List>
-            <Menu
-                id={'long-menu'}
-                anchorEl={menuPosition}
-                open={Boolean(menuPosition)}
-                onClose={onMenuClose}
-                PaperProps={{
-                    style: {
-                        width: 200,
-                    },
-                }}
-            >
-                {options.map((option) => (
-                    <MenuItem key={option} onClick={(): void => onMenuItemClick(option, activeIndex)}>
-                        {option}
-                    </MenuItem>
-                ))}
-            </Menu>
+            <div className={classes.container}>
+                <Card classes={{ root: classes.card }}>
+                    <CardHeader classes={{ root: classes.cardHeader }} title={getCardHeaderTitle()} />
+                    <List data-cy={'list-content'} disablePadding component="nav" className={'list'}>
+                        {list.map(
+                            (item, i): JSX.Element => (
+                                <InfoListItem
+                                    key={i}
+                                    classes={{ root: classes.infoListItem }}
+                                    hidePadding
+                                    ripple
+                                    title={item.name}
+                                    subtitle={item.details}
+                                    divider={list.length - 1 !== i || isMobile ? 'full' : undefined}
+                                    chevron
+                                />
+                            )
+                        )}
+                    </List>
+                </Card>
+            </div>
         </div>
     );
 };

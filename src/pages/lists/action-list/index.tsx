@@ -18,6 +18,7 @@ import makeStyles from '@material-ui/core/styles/makeStyles';
 import { Spacer, InfoListItem } from '@pxblue/react-components';
 import { useDispatch } from 'react-redux';
 import { TOGGLE_DRAWER } from '../../../redux/actions';
+import * as colors from '@pxblue/colors';
 
 type Item = {
     id: number;
@@ -60,6 +61,10 @@ const useStyles = makeStyles((theme: Theme) => ({
     cardHeader: {
         borderBottom: `1px solid ${theme.palette.divider}`,
     },
+    cardHeaderTitle: {
+        display: 'flex',
+        justifyContent: 'space-between',
+    },
     infoListItem: {
         backgroundColor: theme.palette.common.white,
     },
@@ -67,9 +72,26 @@ const useStyles = makeStyles((theme: Theme) => ({
         color: theme.palette.primary.main,
     },
     select: {
+        backgroundColor: theme.palette.common.white,
         '&:focus': {
-            backgroundColor: 'white',
+            backgroundColor: theme.palette.common.white,
         },
+        '&.MuiFilledInput-input': {
+            padding: 0,
+        },
+    },
+    selectMenu: {
+        backgroundColor: theme.palette.common.white,
+    },
+    dropDownIcon: {
+        right: 0,
+        color: colors.black[500],
+    },
+    dropDownControl: {
+        minWidth: 84,
+    },
+    rightComponentChevron: {
+        color: colors.gray[500],
     },
 }));
 
@@ -111,14 +133,13 @@ export const ActionList = (): JSX.Element => {
     };
 
     const getCardHeaderTitle = (): JSX.Element => (
-        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+        <div className={classes.cardHeaderTitle}>
             <Typography classes={{ root: classes.categoryName }} variant="subtitle2">
                 Category Name
             </Typography>
-            <FormControl variant={'filled'} style={{ width: 200, marginRight: theme.spacing(2) }}>
+            <FormControl classes={{ root: classes.dropDownControl }} variant={'filled'}>
                 <Select
-                    classes={{ root: classes.select }}
-                    style={{ backgroundColor: 'white' }}
+                    classes={{ root: classes.select, icon: classes.dropDownIcon }}
                     data-cy={'country-selector'}
                     fullWidth
                     disableUnderline
@@ -131,8 +152,8 @@ export const ActionList = (): JSX.Element => {
                     }}
                 >
                     {countries.map((country) => (
-                        <MenuItem key={country} value={country} style={{ backgroundColor: 'white' }}>
-                            {`${country} Days`}
+                        <MenuItem key={country} value={country} classes={{ root: classes.selectMenu }}>
+                            <Typography variant="subtitle2">{`${country} Days`}</Typography>
                         </MenuItem>
                     ))}
                 </Select>
@@ -171,7 +192,10 @@ export const ActionList = (): JSX.Element => {
                             (item, i): JSX.Element => (
                                 <InfoListItem
                                     key={i}
-                                    classes={{ root: classes.infoListItem }}
+                                    classes={{
+                                        root: classes.infoListItem,
+                                        rightComponent: classes.rightComponentChevron,
+                                    }}
                                     hidePadding
                                     ripple
                                     title={item.name}

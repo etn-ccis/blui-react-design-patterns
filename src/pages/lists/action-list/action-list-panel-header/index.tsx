@@ -17,7 +17,7 @@ import { Theme } from '@material-ui/core/styles/createMuiTheme';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import { InfoListItem } from '@pxblue/react-components';
 import { useDispatch } from 'react-redux';
-import { TOGGLE_DRAWER } from '../../../redux/actions';
+import { TOGGLE_DRAWER } from '../../../../redux/actions';
 import * as colors from '@pxblue/colors';
 
 type Item = {
@@ -125,7 +125,7 @@ const itemList: Item[] = [
 
 const ranges: number[] = [30, 15, 7];
 
-export const ActionList = (): JSX.Element => {
+export const ActionListPanelHeader = (): JSX.Element => {
     const dispatch = useDispatch();
     const theme = useTheme();
     const classes = useStyles(theme);
@@ -217,6 +217,7 @@ export const ActionList = (): JSX.Element => {
                             (item, i): JSX.Element => (
                                 <InfoListItem
                                     key={i}
+                                    data-testid="infoListItem"
                                     classes={{
                                         root: classes.infoListItem,
                                         rightComponent: classes.rightComponentChevron,

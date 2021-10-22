@@ -15,7 +15,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import useTheme from '@material-ui/core/styles/useTheme';
 import { Theme } from '@material-ui/core/styles/createMuiTheme';
 import makeStyles from '@material-ui/core/styles/makeStyles';
-import { Spacer, InfoListItem } from '@pxblue/react-components';
+import { InfoListItem } from '@pxblue/react-components';
 import { useDispatch } from 'react-redux';
 import { TOGGLE_DRAWER } from '../../../redux/actions';
 import * as colors from '@pxblue/colors';
@@ -36,7 +36,14 @@ const useStyles = makeStyles((theme: Theme) => ({
         padding: 0,
     },
     toolbarGutters: {
-        padding: '0 16px',
+        padding: `0 ${theme.spacing(2)}px`,
+    },
+    toolbarTextContainer: {
+        display: 'flex',
+        flexDirection: 'column',
+    },
+    toolBarSubtitle: {
+        marginTop: -theme.spacing(1),
     },
     container: {
         maxWidth: 818,
@@ -88,7 +95,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         color: colors.black[500],
     },
     dropDownControl: {
-        minWidth: 84,
+        minWidth: theme.spacing(11),
     },
     rightComponentChevron: {
         color: colors.gray[500],
@@ -116,7 +123,7 @@ const itemList: Item[] = [
     },
 ];
 
-const countries: number[] = [30, 15, 7];
+const ranges: number[] = [30, 15, 7];
 
 export const ActionList = (): JSX.Element => {
     const dispatch = useDispatch();
@@ -124,7 +131,7 @@ export const ActionList = (): JSX.Element => {
     const classes = useStyles(theme);
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
-    const [countryCode, setCountryCode] = useState<string>(String(countries[0]));
+    const [range, setRange] = useState<string>(String(ranges[0]));
     const [list, setList] = useState(itemList);
 
     const handleOnChange = (selectedRange: number): void => {
@@ -140,20 +147,31 @@ export const ActionList = (): JSX.Element => {
             <FormControl classes={{ root: classes.dropDownControl }} variant={'filled'}>
                 <Select
                     classes={{ root: classes.select, icon: classes.dropDownIcon }}
-                    data-cy={'country-selector'}
+                    data-cy={'range-selector'}
                     fullWidth
                     disableUnderline
-                    value={countryCode}
-                    defaultValue={countryCode}
-                    labelId={'country-code-label'}
+                    value={range}
+                    defaultValue={range}
+                    labelId={'range-label'}
                     onChange={(event): void => {
-                        setCountryCode(String(event.target.value));
+                        setRange(String(event.target.value));
                         handleOnChange(Number(event.target.value));
                     }}
+                    MenuProps={{
+                        anchorOrigin: {
+                            vertical: 'top',
+                            horizontal: 'left',
+                        },
+                        transformOrigin: {
+                            vertical: 'top',
+                            horizontal: 'left',
+                        },
+                        getContentAnchorEl: null,
+                    }}
                 >
-                    {countries.map((country) => (
-                        <MenuItem key={country} value={country} classes={{ root: classes.selectMenu }}>
-                            <Typography variant="subtitle2">{`${country} Days`}</Typography>
+                    {ranges.map((rangeItem) => (
+                        <MenuItem key={rangeItem} value={rangeItem} classes={{ root: classes.selectMenu }}>
+                            <Typography variant="subtitle2">{`${rangeItem} Days`}</Typography>
                         </MenuItem>
                     ))}
                 </Select>
@@ -178,15 +196,22 @@ export const ActionList = (): JSX.Element => {
                             <MenuIcon />
                         </IconButton>
                     </Hidden>
-                    <Typography variant={'h6'} color={'inherit'}>
-                        Action List
-                    </Typography>
-                    <Spacer />
+                    <div className={classes.toolbarTextContainer}>
+                        <Typography variant={'h6'} color={'inherit'}>
+                            Global Action Lists
+                        </Typography>
+                        <Typography classes={{ root: classes.toolBarSubtitle }} variant={'body1'} color={'inherit'}>
+                            On Panel Header
+                        </Typography>
+                    </div>
                 </Toolbar>
             </AppBar>
             <div className={classes.container}>
                 <Card classes={{ root: classes.card }}>
-                    <CardHeader classes={{ root: classes.cardHeader }} title={getCardHeaderTitle()} />
+                    <CardHeader
+                        classes={{ root: list.length !== 0 ? classes.cardHeader : '' }}
+                        title={getCardHeaderTitle()}
+                    />
                     <List data-cy={'list-content'} disablePadding component="nav" className={'list'}>
                         {list.map(
                             (item, i): JSX.Element => (

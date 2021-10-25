@@ -89,6 +89,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
     selectMenu: {
         backgroundColor: theme.palette.common.white,
+        minHeight: theme.spacing(6),
     },
     dropDownIcon: {
         right: 0,
@@ -99,6 +100,10 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
     rightComponentChevron: {
         color: colors.gray[500],
+    },
+    menuProps: {
+        width: 154,
+        marginTop: theme.spacing(2),
     },
 }));
 
@@ -159,14 +164,15 @@ export const ActionListPanelHeader = (): JSX.Element => {
                     }}
                     MenuProps={{
                         anchorOrigin: {
-                            vertical: 'top',
-                            horizontal: 'left',
+                            vertical: 'bottom',
+                            horizontal: 'right',
                         },
                         transformOrigin: {
                             vertical: 'top',
-                            horizontal: 'left',
+                            horizontal: 'right',
                         },
                         getContentAnchorEl: null,
+                        classes: { paper: classes.menuProps },
                     }}
                 >
                     {ranges.map((rangeItem) => (

@@ -5,10 +5,10 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Hidden from '@material-ui/core/Hidden';
-import List from '@material-ui/core/List';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import FormControl from '@material-ui/core/FormControl';
+import CardContent from '@material-ui/core/CardContent';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import Select from '@material-ui/core/Select';
 import MenuIcon from '@material-ui/icons/Menu';
@@ -72,6 +72,12 @@ const useStyles = makeStyles((theme: Theme) => ({
         display: 'flex',
         justifyContent: 'space-between',
     },
+    cardContent: {
+        padding: 0,
+        '&:last-child': {
+            paddingBottom: 0,
+        },
+    },
     infoListItem: {
         backgroundColor: theme.palette.common.white,
     },
@@ -87,9 +93,12 @@ const useStyles = makeStyles((theme: Theme) => ({
             padding: 0,
         },
     },
-    selectMenu: {
+    selectMenuItem: {
         backgroundColor: theme.palette.common.white,
         minHeight: theme.spacing(6),
+        '&.Mui-selected': {
+            backgroundColor: 'rgba(66, 78, 84, 0.05)',
+        },
     },
     dropDownIcon: {
         right: 0,
@@ -176,7 +185,7 @@ export const ActionListPanelHeader = (): JSX.Element => {
                     }}
                 >
                     {ranges.map((rangeItem) => (
-                        <MenuItem key={rangeItem} value={rangeItem} classes={{ root: classes.selectMenu }}>
+                        <MenuItem key={rangeItem} value={rangeItem} classes={{ root: classes.selectMenuItem }}>
                             <Typography variant="subtitle2">{`${rangeItem} Days`}</Typography>
                         </MenuItem>
                     ))}
@@ -218,7 +227,7 @@ export const ActionListPanelHeader = (): JSX.Element => {
                         classes={{ root: list.length !== 0 ? classes.cardHeader : '' }}
                         title={getCardHeaderTitle()}
                     />
-                    <List data-cy={'list-content'} disablePadding component="nav" className={'list'}>
+                    <CardContent classes={{ root: classes.cardContent }}>
                         {list.map(
                             (item, i): JSX.Element => (
                                 <InfoListItem
@@ -237,7 +246,7 @@ export const ActionListPanelHeader = (): JSX.Element => {
                                 />
                             )
                         )}
-                    </List>
+                    </CardContent>
                 </Card>
             </div>
         </div>

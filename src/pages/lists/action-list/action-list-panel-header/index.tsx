@@ -261,6 +261,7 @@ export const ActionListPanelHeader = (): JSX.Element => {
                                         No items found.
                                     </Typography>
                                 }
+                                divider={isMobile ? 'full' : undefined}
                             />
                         )}
                     </CardContent>

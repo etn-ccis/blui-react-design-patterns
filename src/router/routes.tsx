@@ -72,6 +72,7 @@ export const PAGES: Routes = {
         title: 'Lists',
         ACTION_LIST: {
             title: 'Action List',
+            route: 'action-list',
             IN_PANEL_HEADER: {
                 title: 'In Panel Header',
                 route: 'in-panel-header',

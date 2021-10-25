@@ -1,10 +1,10 @@
 import React from 'react';
 import { cleanup, fireEvent, render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
-import { ActionListPanelHeader } from './action-list-panel-header';
+import { ActionListPanelHeader } from '.';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
-import { Reducer } from '../../../redux/reducers';
+import { Reducer } from '../../../../redux/reducers';
 
 const store = createStore(Reducer());
 

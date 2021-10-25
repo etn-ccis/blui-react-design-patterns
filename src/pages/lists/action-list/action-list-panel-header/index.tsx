@@ -81,6 +81,10 @@ const useStyles = makeStyles((theme: Theme) => ({
     infoListItem: {
         backgroundColor: theme.palette.common.white,
     },
+    noListItem: {
+        height: 54,
+        padding: 0,
+    },
     categoryName: {
         color: theme.palette.primary.main,
     },
@@ -223,28 +227,41 @@ export const ActionListPanelHeader = (): JSX.Element => {
             </AppBar>
             <div className={classes.container}>
                 <Card classes={{ root: classes.card }}>
-                    <CardHeader
-                        classes={{ root: list.length !== 0 ? classes.cardHeader : '' }}
-                        title={getCardHeaderTitle()}
-                    />
+                    <CardHeader classes={{ root: classes.cardHeader }} title={getCardHeaderTitle()} />
                     <CardContent classes={{ root: classes.cardContent }}>
-                        {list.map(
-                            (item, i): JSX.Element => (
-                                <InfoListItem
-                                    key={i}
-                                    data-testid="infoListItem"
-                                    classes={{
-                                        root: classes.infoListItem,
-                                        rightComponent: classes.rightComponentChevron,
-                                    }}
-                                    hidePadding
-                                    ripple
-                                    title={item.name}
-                                    subtitle={item.details}
-                                    divider={list.length - 1 !== i || isMobile ? 'full' : undefined}
-                                    chevron
-                                />
+                        {list.length ? (
+                            list.map(
+                                (item, i): JSX.Element => (
+                                    <InfoListItem
+                                        key={i}
+                                        data-testid="infoListItem"
+                                        classes={{
+                                            root: classes.infoListItem,
+                                            rightComponent: classes.rightComponentChevron,
+                                        }}
+                                        hidePadding
+                                        ripple
+                                        title={item.name}
+                                        subtitle={item.details}
+                                        divider={list.length - 1 !== i || isMobile ? 'full' : undefined}
+                                        chevron
+                                    />
+                                )
                             )
+                        ) : (
+                            <InfoListItem
+                                data-testid="infoListItem"
+                                classes={{
+                                    root: classes.noListItem,
+                                }}
+                                hidePadding
+                                ripple
+                                title={
+                                    <Typography variant="body2" align="center">
+                                        No items found.
+                                    </Typography>
+                                }
+                            />
                         )}
                     </CardContent>
                 </Card>

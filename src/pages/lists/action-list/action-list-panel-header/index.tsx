@@ -18,7 +18,6 @@ import makeStyles from '@material-ui/core/styles/makeStyles';
 import { InfoListItem } from '@pxblue/react-components';
 import { useDispatch } from 'react-redux';
 import { TOGGLE_DRAWER } from '../../../../redux/actions';
-import * as colors from '@pxblue/colors';
 
 type Item = {
     id: number;

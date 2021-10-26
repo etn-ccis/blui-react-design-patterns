@@ -106,13 +106,13 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
     dropDownIcon: {
         right: 0,
-        color: colors.black[500],
+        color: theme.palette.text.primary,
     },
     dropDownControl: {
         minWidth: theme.spacing(11),
     },
     rightComponentChevron: {
-        color: colors.gray[500],
+        color: theme.palette.text.secondary,
     },
     menuProps: {
         width: 154,

@@ -19,8 +19,8 @@ describe('Action list with panel header', () => {
     afterEach(cleanup);
     it('should render', () => {
         createRenderer();
-        expect(screen.getByText('Global Action Lists')).toBeInTheDocument();
-        expect(screen.getByText('On Panel Header')).toBeInTheDocument();
+        expect(screen.getByText('Global Action List')).toBeInTheDocument();
+        expect(screen.getByText('In Panel Header')).toBeInTheDocument();
     });
 
     it('should render 3 items by default', () => {

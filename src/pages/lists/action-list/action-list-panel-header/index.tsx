@@ -215,10 +215,10 @@ export const ActionListPanelHeader = (): JSX.Element => {
                     </Hidden>
                     <div className={classes.toolbarTextContainer}>
                         <Typography variant={'h6'} color={'inherit'}>
-                            Global Action Lists
+                            Global Action List
                         </Typography>
                         <Typography classes={{ root: classes.toolBarSubtitle }} variant={'body1'} color={'inherit'}>
-                            On Panel Header
+                            In Panel Header
                         </Typography>
                     </div>
                 </Toolbar>

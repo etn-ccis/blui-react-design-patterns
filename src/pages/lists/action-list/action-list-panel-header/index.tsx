@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import IconButton from '@material-ui/core/IconButton';
 import MenuItem from '@material-ui/core/MenuItem';
 import AppBar from '@material-ui/core/AppBar';
@@ -56,7 +56,6 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
     card: {
         marginTop: theme.spacing(3),
-        boxShadow: theme.shadows[1],
         borderRadius: 4,
         [theme.breakpoints.down('sm')]: {
             marginTop: 0,
@@ -81,26 +80,26 @@ const useStyles = makeStyles((theme: Theme) => ({
         backgroundColor: theme.palette.common.white,
     },
     noListItem: {
-        height: 54,
+        height: 56,
         padding: 0,
     },
     categoryName: {
         color: theme.palette.primary.main,
     },
     select: {
-        backgroundColor: theme.palette.common.white,
+        backgroundColor: theme.palette.background.paper,
         '&:focus': {
-            backgroundColor: theme.palette.common.white,
+            backgroundColor: theme.palette.background.paper,
         },
         '&.MuiFilledInput-input': {
             padding: 0,
         },
     },
-    selectMenuItem: {
+    selectedMenuItem: {
         backgroundColor: theme.palette.common.white,
         minHeight: theme.spacing(6),
         '&.Mui-selected': {
-            backgroundColor: 'rgba(66, 78, 84, 0.05)',
+            backgroundColor: theme.palette.action.hover,
         },
     },
     dropDownIcon: {
@@ -151,10 +150,10 @@ export const ActionListPanelHeader = (): JSX.Element => {
     const [range, setRange] = useState<string>(String(ranges[0]));
     const [list, setList] = useState(itemList);
 
-    const handleOnChange = (selectedRange: number): void => {
+    const handleOnChange = useCallback((selectedRange: number): void => {
         const tempList = itemList.filter((item) => item.registeredBeforeDays <= selectedRange);
         setList(tempList);
-    };
+    }, []);
 
     const getCardHeaderTitle = (): JSX.Element => (
         <div className={classes.cardHeaderTitle}>
@@ -188,7 +187,7 @@ export const ActionListPanelHeader = (): JSX.Element => {
                     }}
                 >
                     {ranges.map((rangeItem) => (
-                        <MenuItem key={rangeItem} value={rangeItem} classes={{ root: classes.selectMenuItem }}>
+                        <MenuItem key={rangeItem} value={rangeItem} classes={{ root: classes.selectedMenuItem }}>
                             <Typography variant="subtitle2">{`${rangeItem} Days`}</Typography>
                         </MenuItem>
                     ))}

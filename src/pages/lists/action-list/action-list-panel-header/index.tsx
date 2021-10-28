@@ -28,7 +28,6 @@ type Item = {
 
 const useStyles = makeStyles((theme: Theme) => ({
     actionList: {
-        backgroundColor: theme.palette.background.default,
         minHeight: '100vh',
     },
     appbarRoot: {
@@ -76,9 +75,6 @@ const useStyles = makeStyles((theme: Theme) => ({
             paddingBottom: 0,
         },
     },
-    infoListItem: {
-        backgroundColor: theme.palette.common.white,
-    },
     noListItem: {
         height: 56,
         padding: 0,
@@ -96,7 +92,6 @@ const useStyles = makeStyles((theme: Theme) => ({
         },
     },
     selectedMenuItem: {
-        backgroundColor: theme.palette.common.white,
         minHeight: theme.spacing(6),
         '&.Mui-selected': {
             backgroundColor: theme.palette.action.hover,
@@ -234,7 +229,6 @@ export const ActionListPanelHeader = (): JSX.Element => {
                                         key={i}
                                         data-testid="infoListItem"
                                         classes={{
-                                            root: classes.infoListItem,
                                             rightComponent: classes.rightComponentChevron,
                                         }}
                                         hidePadding

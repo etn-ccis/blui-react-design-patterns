@@ -193,8 +193,8 @@ export const ActionListPanelHeader = (): JSX.Element => {
 
     return (
         <div className={classes.actionList}>
-            <AppBar position={'sticky'} classes={{ root: classes.appbarRoot }}>
-                <Toolbar data-cy={'pxb-toolbar'} classes={{ gutters: classes.toolbarGutters }}>
+            <AppBar data-cy={'pxb-toolbar'} position={'sticky'} classes={{ root: classes.appbarRoot }}>
+                <Toolbar classes={{ gutters: classes.toolbarGutters }}>
                     <Hidden mdUp={true}>
                         <IconButton
                             data-cy="toolbar-menu"

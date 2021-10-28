@@ -7,6 +7,6 @@ describe('Action list with panel header', () => {
     });
 
     it('should display page title', () => {
-        cy.get('[data-cy=pxb-toolbar]').should('contain', 'Global Action Lists');
+        cy.get('[data-cy=pxb-toolbar] > .MuiToolbar-root').should('contain', 'Global Action List');
     });
 });

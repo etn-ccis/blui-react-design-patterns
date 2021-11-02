@@ -234,7 +234,7 @@ export const ContextualAction = (): JSX.Element => {
                                 />
                             </TableCell>
                             <TableCell className={classes.dataCell}>{row.name}</TableCell>
-                            <TableCell className={classes.dataCell}>{row.ip}</TableCell>
+                            <TableCell className={classes.dataCell}>{row.ip}-{row.checked.toString()}</TableCell>
                         </TableRow>
                     ))}
                 </TableBody>

@@ -19,7 +19,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import MenuIcon from '@material-ui/icons/Menu';
 import { TOGGLE_DRAWER } from '../../../redux/actions';
 import { useDispatch } from 'react-redux';
-import { InfoListItem } from '@pxblue/react-components';
+import { InfoListItem, Spacer } from '@pxblue/react-components';
 
 import * as colors from '@pxblue/colors';
 
@@ -171,6 +171,16 @@ export const MultiselectList = (): JSX.Element => {
                     <Typography variant={'h6'} data-cy={'pxb-toolbar'} color={'inherit'}>
                         Multiselect List
                     </Typography>
+                    <Spacer />
+                    <Hidden mdUp={true}>
+                        {list.length !== 0 ? (
+                            <IconButton data-cy="delete-icon" color={'inherit'} onClick={onDelete} edge={'end'}>
+                                <DeleteIcon />
+                            </IconButton>
+                        ) : (
+                            ''
+                        )}
+                    </Hidden>
                 </Toolbar>
             </AppBar>
             <div className={classes.exampleContainer}>
@@ -194,19 +204,25 @@ export const MultiselectList = (): JSX.Element => {
                         <div className="panel-header">
                             <InfoListItem
                                 key={`list-header`}
-                                classes={{ root: list.length !== 0 ? classes.panelHeaderRoot1 : classes.panelHeaderRoot2, title: classes.panelHeaderTitle }}
+                                classes={{
+                                    root: list.length !== 0 ? classes.panelHeaderRoot1 : classes.panelHeaderRoot2,
+                                    title: classes.panelHeaderTitle,
+                                }}
                                 icon={
-                                    list.length !== 0 ?
-                                    <Checkbox
-                                        classes={{ indeterminate: classes.checkboxIndeterminate }}
-                                        indeterminate={selectedItems.length > 0 && selectedItems.length < list.length}
-                                        checked={list.length > 0 && selectedItems.length === list.length}
-                                        onChange={selectAll}
-                                        name="checkbox-header-cell"
-                                        color="primary"
-                                        size="medium"
-                                        data-cy={'table-header-checkbox'}
-                                    /> : undefined
+                                    list.length !== 0 ? (
+                                        <Checkbox
+                                            classes={{ indeterminate: classes.checkboxIndeterminate }}
+                                            indeterminate={
+                                                selectedItems.length > 0 && selectedItems.length < list.length
+                                            }
+                                            checked={list.length > 0 && selectedItems.length === list.length}
+                                            onChange={selectAll}
+                                            name="checkbox-header-cell"
+                                            color="primary"
+                                            size="medium"
+                                            data-cy={'table-header-checkbox'}
+                                        />
+                                    ) : undefined
                                 }
                                 title={
                                     selectedItems.length > 0 ? (
@@ -238,17 +254,17 @@ export const MultiselectList = (): JSX.Element => {
                                         size="medium"
                                     />
                                 }
-                                classes={{ icon: classes.listItemIcon, root: isSelected(item) ? classes.listItemRoot : '' }}
+                                classes={{
+                                    icon: classes.listItemIcon,
+                                    root: isSelected(item) ? classes.listItemRoot : '',
+                                }}
                                 hidePadding
                                 title={item.name}
                                 divider={list.length - 1 !== index || isMobile ? 'full' : undefined}
                             />
                         ))}
                         {list.length === 0 ? (
-                            <InfoListItem
-                                hidePadding
-                                title={'No Results.'}
-                            />
+                            <InfoListItem hidePadding divider={isMobile ? 'full' : undefined} title={'No Results.'} />
                         ) : undefined}
                     </CardContent>
                 </Card>

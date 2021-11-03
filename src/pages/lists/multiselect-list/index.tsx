@@ -22,7 +22,6 @@ import { useDispatch } from 'react-redux';
 import { InfoListItem } from '@pxblue/react-components';
 
 import * as colors from '@pxblue/colors';
-import clsx from 'clsx';
 
 export type ListItemType = {
     id: number;
@@ -30,7 +29,7 @@ export type ListItemType = {
     checked: boolean;
 };
 
-const category = ['High Humidity', 'Battery Service', 'Bypass Over Frequency']
+const category = ['High Humidity', 'Battery Service', 'Bypass Over Frequency'];
 
 const createItem = (index: number, name: string): ListItemType => ({
     id: index,
@@ -49,8 +48,14 @@ const useStyles = makeStyles((theme: Theme) =>
         appbarRoot: {
             padding: 0,
         },
-        activeListItem: {
-            backgroundColor: `rgba(${theme.palette.primary.main}, 0.05)`,
+        listItemRoot: {
+            backgroundColor: 'rgba(0, 123, 193, 0.05)',
+        },
+        card: {
+            [theme.breakpoints.down('sm')]: {
+                boxShadow: 'none',
+                borderRadius: 0,
+            },
         },
         cardContent: {
             padding: 0,
@@ -75,15 +80,30 @@ const useStyles = makeStyles((theme: Theme) =>
             padding: `${theme.spacing(3)}px`,
             margin: '0 auto',
             maxWidth: '816px',
+            [theme.breakpoints.down('sm')]: {
+                padding: 0,
+                boxShadow: 'none',
+                borderRadius: 0,
+                maxWidth: 'unset',
+            },
         },
-        listItemRoot: {
-            padding: `0 ${theme.spacing(1)}px`,
+        listItemIcon: {
+            marginLeft: `-${theme.spacing(1)}px`,
+        },
+        noResultListItem: {
+            marginLeft: `${theme.spacing(0.5)}px`,
+        },
+        panelHeaderRoot1: {
+            paddingLeft: `${theme.spacing(1)}px`,
+        },
+        panelHeaderRoot2: {
+            paddingLeft: `${theme.spacing(2)}px`,
         },
         panelHeaderTitle: {
             color: colors.blue[500],
         },
         toolbarGutters: {
-            padding: '0 16px',
+            padding: `0 ${theme.spacing(2)}px`,
         },
     })
 );
@@ -169,13 +189,14 @@ export const MultiselectList = (): JSX.Element => {
                         </Button>
                     </div>
                 </Hidden>
-                <Card>
+                <Card classes={{ root: classes.card }}>
                     <CardContent classes={{ root: classes.cardContent }}>
                         <div className="panel-header">
                             <InfoListItem
                                 key={`list-header`}
-                                classes={{ root: classes.listItemRoot, title: classes.panelHeaderTitle }}
+                                classes={{ root: list.length !== 0 ? classes.panelHeaderRoot1 : classes.panelHeaderRoot2, title: classes.panelHeaderTitle }}
                                 icon={
+                                    list.length !== 0 ?
                                     <Checkbox
                                         classes={{ indeterminate: classes.checkboxIndeterminate }}
                                         indeterminate={selectedItems.length > 0 && selectedItems.length < list.length}
@@ -185,27 +206,28 @@ export const MultiselectList = (): JSX.Element => {
                                         color="primary"
                                         size="medium"
                                         data-cy={'table-header-checkbox'}
-                                    />
+                                    /> : undefined
                                 }
                                 title={
-                                    selectedItems.length > 0 ?
-                                        <Typography color={'primary'} variant={'subtitle2'}>Today ({selectedItems.length > 0 ? selectedItems.length : ''})</Typography> :
-                                        <Typography color={'primary'} variant={'subtitle2'}>Today</Typography>
-
+                                    selectedItems.length > 0 ? (
+                                        <Typography color={'primary'} variant={'subtitle2'}>
+                                            Today ({selectedItems.length > 0 ? selectedItems.length : ''})
+                                        </Typography>
+                                    ) : (
+                                        <Typography color={'primary'} variant={'subtitle2'}>
+                                            Today
+                                        </Typography>
+                                    )
                                 }
                                 divider={'full'}
                                 dense
-                            >
-                                {/* {' '} */}
-                            </InfoListItem>
+                                hidePadding
+                            />
                         </div>
                         {list.map((item, index) => (
                             <InfoListItem
-                                key={`listItem_${index}`}
-                                // classes={{ root: classes.listItemRoot }}
-                                className={clsx(item.checked && classes.activeListItem)}
-                                hidePadding
-                                divider={list.length - 1 !== index || isMobile ? 'full' : undefined}
+                                key={index}
+                                data-testid="infoListItem"
                                 icon={
                                     <Checkbox
                                         value={item.name}
@@ -216,12 +238,18 @@ export const MultiselectList = (): JSX.Element => {
                                         size="medium"
                                     />
                                 }
+                                classes={{ icon: classes.listItemIcon, root: isSelected(item) ? classes.listItemRoot : '' }}
+                                hidePadding
                                 title={item.name}
-                                subtitle={item.checked.toString()}
-                            >
-                                {/* {' '} */}
-                            </InfoListItem>
+                                divider={list.length - 1 !== index || isMobile ? 'full' : undefined}
+                            />
                         ))}
+                        {list.length === 0 ? (
+                            <InfoListItem
+                                hidePadding
+                                title={'No Results.'}
+                            />
+                        ) : undefined}
                     </CardContent>
                 </Card>
             </div>

@@ -118,13 +118,13 @@ export const ActionListButtonPanel = (): JSX.Element => {
     const [list, setList] = useState(itemList);
     const [open, setOpen] = React.useState(false);
 
-    const handleClickOpen = (): void => {
-        setOpen(true);
-    };
-
     const removeAll = useCallback((): void => {
         setList([]);
     }, [setList]);
+
+    const handleClickOpen = (): void => {
+        setOpen(true);
+    };
 
     const handleClose = (shouldRemoveAll?: boolean): void => {
         setOpen(false);
@@ -201,6 +201,7 @@ export const ActionListButtonPanel = (): JSX.Element => {
                         <div className={classes.buttonRow}>
                             <Button
                                 data-cy="desktop-add"
+                                data-testid="addItemButton"
                                 variant={'contained'}
                                 color={'primary'}
                                 style={{ margin: theme.spacing(), marginLeft: 0 }}
@@ -212,6 +213,7 @@ export const ActionListButtonPanel = (): JSX.Element => {
                             <Spacer />
                             <Button
                                 data-cy="desktop-delete"
+                                data-testid="deleteButton"
                                 variant={'outlined'}
                                 style={{
                                     margin: theme.spacing(),
@@ -275,7 +277,11 @@ export const ActionListButtonPanel = (): JSX.Element => {
                     <DialogContentText>This cannot be undone.</DialogContentText>
                 </DialogContent>
                 <DialogActions style={{ flexDirection: 'column', alignItems: 'flex-end' }}>
-                    <Button onClick={(): void => handleClose(true)} style={{ color: theme.palette.error.main }}>
+                    <Button
+                        data-testid="dialogDeleteButton"
+                        onClick={(): void => handleClose(true)}
+                        style={{ color: theme.palette.error.main }}
+                    >
                         Delete & Erase All Data
                     </Button>
                     <Button onClick={(): void => handleClose()} color="primary" autoFocus>

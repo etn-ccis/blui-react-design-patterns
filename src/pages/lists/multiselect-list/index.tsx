@@ -128,6 +128,8 @@ export const MultiselectList = (): JSX.Element => {
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
     const [list, setList] = useState<ListItemType[]>(generatedList);
+    // const [result, setResut]
+    // const [filteredResult, setFilteredResult] = useState(result);
     const [selectedItems, setSelectedItems] = useState<ListItemType[]>([]);
     const [selectedItems2, setSelectedItems2] = useState<ListItemType[]>([]);
 
@@ -173,7 +175,26 @@ export const MultiselectList = (): JSX.Element => {
         [selectedItems, selectedItems2]
     );
 
-    // const isSelected = useCallback((item: ListItemType): boolean => selectedItems.includes(item), [selectedItems]);
+    // const isToday = useCallback(
+    //     (day: string): boolean => {
+    //         return day === 'Today'
+    //     },
+    //     []
+    // );
+
+    const isToday = useCallback((day: string): boolean => day === 'Today', []);
+
+    // const onDelete = useCallback((): void => {
+    //     const updatedList = [...list];
+
+    //     selectedItems.forEach((item: ListItemType) => {
+    //         const index = updatedList.indexOf(item);
+    //         updatedList.splice(index, 1);
+    //     });
+
+    //     setList(updatedList);
+    //     setSelectedItems([]);
+    // }, [list, selectedItems]);
 
     const onDelete = useCallback((): void => {
         const updatedList = [...list];
@@ -183,17 +204,32 @@ export const MultiselectList = (): JSX.Element => {
             updatedList.splice(index, 1);
         });
 
+        selectedItems2.forEach((item: ListItemType) => {
+            const index = updatedList.indexOf(item);
+            updatedList.splice(index, 1);
+        });
+
         setList(updatedList);
         setSelectedItems([]);
-    }, [list, selectedItems]);
+        setSelectedItems2([]);
+    }, [list, selectedItems, selectedItems2]);
 
     const selectAll = (event: React.ChangeEvent<HTMLInputElement>): void => {
+        const day = event.target.value;
         if (event.target.checked) {
-            const newSelectedItems = list.map((item) => item);
-            setSelectedItems(newSelectedItems);
+            const newSelectedItems = list.filter((item: ListItemType) => item.day === day);
+            if (isToday(day)) {
+                setSelectedItems(newSelectedItems);
+            } else {
+                setSelectedItems2(newSelectedItems);
+            }
             return;
         }
-        setSelectedItems([]);
+        if (isToday(day)) {
+            setSelectedItems([]);
+        } else {
+            setSelectedItems2([]);
+        }
     };
 
     const getCardContent = (day: string): JSX.Element => (
@@ -209,30 +245,31 @@ export const MultiselectList = (): JSX.Element => {
                                             key={`list-header`}
                                             classes={{
                                                 root:
-                                                    list.length !== 0
+                                                    result[day].length !== 0
                                                         ? classes.panelHeaderRoot1
                                                         : classes.panelHeaderRoot2,
                                                 title: classes.panelHeaderTitle,
                                             }}
                                             icon={
-                                                list.length !== 0 ? (
+                                                result[day].length !== 0 ? (
                                                     <Checkbox
                                                         classes={{ indeterminate: classes.checkboxIndeterminate }}
                                                         indeterminate={
                                                             day === 'Today'
                                                                 ? selectedItems.length > 0 &&
-                                                                  selectedItems.length < list.length
+                                                                  selectedItems.length < result[day].length
                                                                 : selectedItems2.length > 0 &&
-                                                                  selectedItems2.length < list.length
+                                                                  selectedItems2.length < result[day].length
                                                         }
                                                         checked={
                                                             day === 'Today'
-                                                                ? list.length > 0 &&
-                                                                  selectedItems.length === list.length
-                                                                : list.length > 0 &&
-                                                                  selectedItems2.length === list.length
+                                                                ? result[day].length > 0 &&
+                                                                  selectedItems.length === result[day].length
+                                                                : result[day].length > 0 &&
+                                                                  selectedItems2.length === result[day].length
                                                         }
                                                         onChange={selectAll}
+                                                        value={day}
                                                         name="checkbox-header-cell"
                                                         color="primary"
                                                         size="medium"

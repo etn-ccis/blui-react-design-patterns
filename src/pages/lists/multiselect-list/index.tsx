@@ -49,12 +49,12 @@ for (let i = 0; i < 5; i++) {
         generatedList.push(createItem(i, category[i - 3], 'Yesterday'));
     }
 }
-
-const result = generatedList.reduce((r, a) => {
-    r[a.day] = r[a.day] || [];
-    r[a.day].push(a);
-    return r;
-}, Object.create(null));
+const categorizeList = (list: ListItemType[]): any =>
+    list.reduce((r, a) => {
+        r[a.day] = r[a.day] || [];
+        r[a.day].push(a);
+        return r;
+    }, Object.create(null));
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -128,8 +128,8 @@ export const MultiselectList = (): JSX.Element => {
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
     const [list, setList] = useState<ListItemType[]>(generatedList);
-    // const [result, setResut]
-    // const [filteredResult, setFilteredResult] = useState(result);
+    const result = categorizeList(list);
+    const [filteredResult, setFilteredResult] = useState(result);
     const [selectedItems, setSelectedItems] = useState<ListItemType[]>([]);
     const [selectedItems2, setSelectedItems2] = useState<ListItemType[]>([]);
 
@@ -175,26 +175,7 @@ export const MultiselectList = (): JSX.Element => {
         [selectedItems, selectedItems2]
     );
 
-    // const isToday = useCallback(
-    //     (day: string): boolean => {
-    //         return day === 'Today'
-    //     },
-    //     []
-    // );
-
     const isToday = useCallback((day: string): boolean => day === 'Today', []);
-
-    // const onDelete = useCallback((): void => {
-    //     const updatedList = [...list];
-
-    //     selectedItems.forEach((item: ListItemType) => {
-    //         const index = updatedList.indexOf(item);
-    //         updatedList.splice(index, 1);
-    //     });
-
-    //     setList(updatedList);
-    //     setSelectedItems([]);
-    // }, [list, selectedItems]);
 
     const onDelete = useCallback((): void => {
         const updatedList = [...list];
@@ -208,8 +189,9 @@ export const MultiselectList = (): JSX.Element => {
             const index = updatedList.indexOf(item);
             updatedList.splice(index, 1);
         });
-
+        const result1 = categorizeList(updatedList);
         setList(updatedList);
+        setFilteredResult(result1);
         setSelectedItems([]);
         setSelectedItems2([]);
     }, [list, selectedItems, selectedItems2]);
@@ -236,7 +218,7 @@ export const MultiselectList = (): JSX.Element => {
         <div>
             <Card classes={{ root: classes.card }}>
                 <CardContent classes={{ root: classes.cardContent }}>
-                    {result[day].map((resultItem: ListItemType, index: number) => (
+                    {filteredResult[day].map((resultItem: ListItemType, index: number) => (
                         <div key={`result-item-${index}`}>
                             <div>
                                 {index === 0 ? (
@@ -245,28 +227,28 @@ export const MultiselectList = (): JSX.Element => {
                                             key={`list-header`}
                                             classes={{
                                                 root:
-                                                    result[day].length !== 0
+                                                    filteredResult[day].length !== 0
                                                         ? classes.panelHeaderRoot1
                                                         : classes.panelHeaderRoot2,
                                                 title: classes.panelHeaderTitle,
                                             }}
                                             icon={
-                                                result[day].length !== 0 ? (
+                                                filteredResult[day].length !== 0 ? (
                                                     <Checkbox
                                                         classes={{ indeterminate: classes.checkboxIndeterminate }}
                                                         indeterminate={
-                                                            day === 'Today'
+                                                            isToday(day)
                                                                 ? selectedItems.length > 0 &&
-                                                                  selectedItems.length < result[day].length
+                                                                  selectedItems.length < filteredResult[day].length
                                                                 : selectedItems2.length > 0 &&
-                                                                  selectedItems2.length < result[day].length
+                                                                  selectedItems2.length < filteredResult[day].length
                                                         }
                                                         checked={
-                                                            day === 'Today'
-                                                                ? result[day].length > 0 &&
-                                                                  selectedItems.length === result[day].length
-                                                                : result[day].length > 0 &&
-                                                                  selectedItems2.length === result[day].length
+                                                            isToday(day)
+                                                                ? filteredResult[day].length > 0 &&
+                                                                  selectedItems.length === filteredResult[day].length
+                                                                : filteredResult[day].length > 0 &&
+                                                                  selectedItems2.length === filteredResult[day].length
                                                         }
                                                         onChange={selectAll}
                                                         value={day}
@@ -278,7 +260,7 @@ export const MultiselectList = (): JSX.Element => {
                                                 ) : undefined
                                             }
                                             title={
-                                                day === 'Today' ? (
+                                                isToday(day) ? (
                                                     selectedItems.length > 0 ? (
                                                         <Typography color={'primary'} variant={'subtitle2'}>
                                                             {day} (
@@ -319,17 +301,18 @@ export const MultiselectList = (): JSX.Element => {
                                         size="medium"
                                     />
                                 }
+                                className="list"
                                 classes={{
                                     icon: classes.listItemIcon,
                                     root: isSelected(resultItem) ? classes.listItemRoot : '',
                                 }}
                                 hidePadding
                                 title={resultItem.name}
-                                divider={result[day].length - 1 !== index || isMobile ? 'full' : undefined}
+                                divider={filteredResult[day].length - 1 !== index || isMobile ? 'full' : undefined}
                             />
                         </div>
                     ))}
-                    {result[day].length === 0 ? (
+                    {filteredResult[day].length === 0 ? (
                         <InfoListItem hidePadding divider={isMobile ? 'full' : undefined} title={'No Results.'} />
                     ) : undefined}
                 </CardContent>

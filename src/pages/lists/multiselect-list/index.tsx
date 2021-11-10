@@ -325,6 +325,7 @@ export const MultiselectList = (): JSX.Element => {
                                                             color="primary"
                                                             size="medium"
                                                             data-cy={'table-header-checkbox'}
+                                                            data-testId={'checkboxHeader'}
                                                         />
                                                     ) : undefined
                                                 }
@@ -361,7 +362,7 @@ export const MultiselectList = (): JSX.Element => {
                                 </div>
                                 <InfoListItem
                                     key={index}
-                                    data-cy="infoListItem"
+                                    data-testid="infoListItem"
                                     icon={
                                         <Checkbox
                                             value={resultItem.name}
@@ -372,7 +373,7 @@ export const MultiselectList = (): JSX.Element => {
                                             size="medium"
                                         />
                                     }
-                                    className="list"
+                                    className={'list'}
                                     classes={{
                                         icon: classes.listItemIcon,
                                         root: isSelected(resultItem) ? classes.listItemRoot : '',
@@ -427,7 +428,7 @@ export const MultiselectList = (): JSX.Element => {
                 <Hidden smDown={true}>
                     <div className={classes.deleteRow}>
                         <Button
-                            data-cy={'delete-btn'}
+                            data-testid="deleteButton"
                             variant={'contained'}
                             color={'inherit'}
                             className={classes.deleteBtn}

@@ -125,11 +125,6 @@ const useStyles = makeStyles((theme: Theme) =>
             color: theme.palette.primary.main,
             cursor: 'pointer',
         },
-        noResult: {
-            padding: `${theme.spacing(2)}px`,
-            textAlign: 'center',
-            backgroundColor: theme.palette.background.paper,
-        },
         toolbarGutters: {
             padding: `0 ${theme.spacing(2)}px`,
         },
@@ -263,7 +258,7 @@ export const MultiselectList = (): JSX.Element => {
                             hidePadding
                             divider={isMobile ? 'full' : undefined}
                             title={
-                                <Typography className={classes.noResult} data-cy={'empty-table'}>
+                                <Typography data-cy={'empty-table'}>
                                     No results.{' '}
                                     <span
                                         className={classes.resetDataLink}

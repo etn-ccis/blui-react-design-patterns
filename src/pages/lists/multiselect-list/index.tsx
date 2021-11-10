@@ -120,6 +120,16 @@ const useStyles = makeStyles((theme: Theme) =>
         panelHeaderTitle: {
             color: colors.blue[500],
         },
+        resetDataLink: {
+            textDecoration: 'underline',
+            color: theme.palette.primary.main,
+            cursor: 'pointer',
+        },
+        noResult: {
+            padding: `${theme.spacing(2)}px`,
+            textAlign: 'center',
+            backgroundColor: theme.palette.background.paper,
+        },
         toolbarGutters: {
             padding: `0 ${theme.spacing(2)}px`,
         },
@@ -181,6 +191,18 @@ export const MultiselectList = (): JSX.Element => {
 
     const isToday = useCallback((day: string): boolean => day === 'Today', []);
 
+    const resetData = useCallback((day: string): void => {
+        const resetDayDetails = categorizeList(generatedList)[day];
+        filteredResult[day] = resetDayDetails;
+        setList(generatedList);
+        setFilteredResult(filteredResult);
+        if (isToday(day)) {
+            setSelectedItems1([]);
+        } else {
+            setSelectedItems2([]);
+        }
+    }, []);
+
     const onDelete = useCallback((): void => {
         const updatedList = [...list];
 
@@ -236,7 +258,24 @@ export const MultiselectList = (): JSX.Element => {
                             hidePadding
                         />
                     </div>
-                    <InfoListItem hidePadding divider={isMobile ? 'full' : undefined} title={'No Results.'} />
+                    <div>
+                        <InfoListItem
+                            hidePadding
+                            divider={isMobile ? 'full' : undefined}
+                            title={
+                                <Typography className={classes.noResult} data-cy={'empty-table'}>
+                                    No results.{' '}
+                                    <span
+                                        className={classes.resetDataLink}
+                                        onClick={(): void => resetData(day)}
+                                        data-cy={'reset'}
+                                    >
+                                        Reset data.
+                                    </span>
+                                </Typography>
+                            }
+                        />
+                    </div>
                 </CardContent>
             </Card>
         </div>

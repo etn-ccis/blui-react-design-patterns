@@ -69,6 +69,7 @@ const useStyles = makeStyles((theme: Theme) =>
             [theme.breakpoints.down('sm')]: {
                 boxShadow: 'none',
                 borderRadius: 0,
+                marginBottom: `${theme.spacing(2)}px`,
             },
         },
         cardContent: {
@@ -124,6 +125,9 @@ const useStyles = makeStyles((theme: Theme) =>
             textDecoration: 'underline',
             color: theme.palette.primary.main,
             cursor: 'pointer',
+        },
+        resetListItem: {
+            paddingLeft: `${theme.spacing(2.5)}px`,
         },
         toolbarGutters: {
             padding: `0 ${theme.spacing(2)}px`,
@@ -247,6 +251,7 @@ export const MultiselectList = (): JSX.Element => {
                         <InfoListItem
                             classes={{
                                 title: classes.panelHeaderTitle,
+                                root: isMobile ? classes.resetListItem : '',
                             }}
                             title={
                                 <Typography color={'primary'} variant={'subtitle2'}>
@@ -262,6 +267,9 @@ export const MultiselectList = (): JSX.Element => {
                         <InfoListItem
                             hidePadding
                             divider={isMobile ? 'full' : undefined}
+                            classes={{
+                                root: isMobile ? classes.resetListItem : '',
+                            }}
                             title={
                                 <Typography data-cy={'empty-table'}>
                                     No results.{' '}
@@ -393,7 +401,7 @@ export const MultiselectList = (): JSX.Element => {
     );
 
     return (
-        <div style={{ backgroundColor: theme.palette.background.paper, minHeight: '100vh' }}>
+        <div>
             <AppBar position={'sticky'} classes={{ root: classes.appbarRoot }}>
                 <Toolbar classes={{ gutters: classes.toolbarGutters }}>
                     <Hidden mdUp={true}>

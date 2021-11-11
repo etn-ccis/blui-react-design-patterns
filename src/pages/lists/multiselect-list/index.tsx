@@ -186,17 +186,20 @@ export const MultiselectList = (): JSX.Element => {
 
     const isToday = useCallback((day: string): boolean => day === 'Today', []);
 
-    const resetData = useCallback((day: string): void => {
-        const resetDayDetails = categorizeList(generatedList)[day];
-        filteredResult[day] = resetDayDetails;
-        setList(generatedList);
-        setFilteredResult(filteredResult);
-        if (isToday(day)) {
-            setSelectedItems1([]);
-        } else {
-            setSelectedItems2([]);
-        }
-    }, []);
+    const resetData = useCallback(
+        (day: string): void => {
+            const resetDayDetails = categorizeList(generatedList)[day];
+            filteredResult[day] = resetDayDetails;
+            setList(generatedList);
+            setFilteredResult(filteredResult);
+            if (isToday(day)) {
+                setSelectedItems1([]);
+            } else {
+                setSelectedItems2([]);
+            }
+        },
+        [filteredResult, selectedItems1, selectedItems2]
+    );
 
     const onDelete = useCallback((): void => {
         const updatedList = [...list];
@@ -210,17 +213,19 @@ export const MultiselectList = (): JSX.Element => {
             const index = updatedList.indexOf(item);
             updatedList.splice(index, 1);
         });
+
         const result1 = categorizeList(updatedList);
+
         setList(updatedList);
         setFilteredResult(result1);
         setSelectedItems1([]);
         setSelectedItems2([]);
-    }, [list, selectedItems1, selectedItems2]);
+    }, [list, filteredResult, selectedItems1, selectedItems2]);
 
     const selectAll = (event: React.ChangeEvent<HTMLInputElement>): void => {
         const day = event.target.value;
         if (event.target.checked) {
-            const newSelectedItems = list.filter((item: ListItemType) => item.day === day);
+            const newSelectedItems = filteredResult[day].filter((item: ListItemType) => item.day === day);
             if (isToday(day)) {
                 setSelectedItems1(newSelectedItems);
             } else {
@@ -320,7 +325,7 @@ export const MultiselectList = (): JSX.Element => {
                                                             color="primary"
                                                             size="medium"
                                                             data-cy={'table-header-checkbox'}
-                                                            data-testId={'checkboxHeader'}
+                                                            data-testid={'checkboxHeader'}
                                                         />
                                                     ) : undefined
                                                 }
@@ -409,7 +414,7 @@ export const MultiselectList = (): JSX.Element => {
                     </Typography>
                     <Spacer />
                     <Hidden mdUp={true}>
-                        {list.length !== 0 ? (
+                        {selectedItems1.length !== 0 || selectedItems2.length !== 0 ? (
                             <IconButton data-cy="delete-icon" color={'inherit'} onClick={onDelete} edge={'end'}>
                                 <DeleteIcon />
                             </IconButton>

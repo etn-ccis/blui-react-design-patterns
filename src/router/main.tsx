@@ -9,6 +9,7 @@ import { Collapsible } from '../pages/app-bar/collapsible';
 import { ContextualAction } from '../pages/app-bar/contextual-action';
 import { I18N } from '../pages/i18n';
 import { ActionList } from '../pages/lists/action-list';
+import { ActionListButtonPanel } from '../pages/lists/action-list/action-list-button-panel';
 import { ActionListPanelHeader } from '../pages/lists/action-list/action-list-panel-header';
 import { DataList } from '../pages/lists/data-list';
 import { MultiselectList } from '../pages/lists/multiselect-list';
@@ -80,6 +81,11 @@ export const Main = (): JSX.Element => (
             component={ActionListPanelHeader}
         />
         <Route exact path={`/${PAGES.LISTS.ACTION_LIST.INLINE.route || ''}`} component={ActionListInline} />
+        <Route
+            exact
+            path={`/${PAGES.LISTS.ACTION_LIST.IN_BUTTON_PANEL.route || ''}`}
+            component={ActionListButtonPanel}
+        />
         <Route exact path={`/${PAGES.LISTS.DATA_LIST.route || ''}`} component={DataList} />
         <Route exact path={`/${PAGES.LISTS.MULTISELECT_LIST.route || ''}`} component={MultiselectList} />
         <Route exact path={`/${PAGES.LISTS.STATUS_LIST.route || ''}`} component={StatusList} />

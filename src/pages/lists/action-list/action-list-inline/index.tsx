@@ -194,6 +194,7 @@ export const ActionListInline = (): JSX.Element => {
                                                             classes={{
                                                                 root: classes.iconButton,
                                                             }}
+                                                            data-testid="deleteIcon"
                                                             onClick={(): void => onDeleteItem('Delete', i)}
                                                         >
                                                             <DeleteIcon />
@@ -204,6 +205,7 @@ export const ActionListInline = (): JSX.Element => {
                                                             classes={{
                                                                 root: classes.iconButton,
                                                             }}
+                                                            data-testid="saveIcon"
                                                         >
                                                             <BookmarkIcon />
                                                         </IconButton>
@@ -213,6 +215,7 @@ export const ActionListInline = (): JSX.Element => {
                                                             classes={{
                                                                 root: classes.iconButton,
                                                             }}
+                                                            data-testid="archiveIcon"
                                                         >
                                                             <ArchiveIcon />
                                                         </IconButton>

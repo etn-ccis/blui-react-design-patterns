@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import IconButton from '@material-ui/core/IconButton';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -7,6 +7,8 @@ import Hidden from '@material-ui/core/Hidden';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Tooltip from '@material-ui/core/Tooltip';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import MenuIcon from '@material-ui/icons/Menu';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -41,9 +43,6 @@ const useStyles = makeStyles((theme: Theme) => ({
         display: 'flex',
         flexDirection: 'column',
     },
-    toolBarSubtitle: {
-        marginTop: -theme.spacing(1),
-    },
     hoveredInfoListItem: {
         backgroundColor: theme.palette.background.default,
     },
@@ -65,50 +64,14 @@ const useStyles = makeStyles((theme: Theme) => ({
             borderRadius: 0,
         },
     },
-    cardHeader: {
-        borderBottom: `1px solid ${theme.palette.divider}`,
-    },
-    cardHeaderTitle: {
-        display: 'flex',
-        justifyContent: 'space-between',
-    },
     cardContent: {
         padding: 0,
         '&:last-child': {
             paddingBottom: 0,
         },
     },
-    categoryName: {
-        color: theme.palette.primary.main,
-    },
-    select: {
-        backgroundColor: theme.palette.background.paper,
-        '&:focus': {
-            backgroundColor: theme.palette.background.paper,
-        },
-        '&.MuiFilledInput-input': {
-            padding: 0,
-        },
-    },
-    selectedMenuItem: {
-        minHeight: theme.spacing(6),
-        '&.Mui-selected': {
-            backgroundColor: theme.palette.action.hover,
-        },
-    },
-    dropDownIcon: {
-        right: 0,
-        color: theme.palette.text.primary,
-    },
-    dropDownControl: {
-        minWidth: theme.spacing(11),
-    },
     rightComponentChevron: {
         color: theme.palette.text.secondary,
-    },
-    menuProps: {
-        width: 154,
-        marginTop: theme.spacing(2),
     },
     iconButton: {
         '&:hover': {
@@ -140,9 +103,36 @@ export const ActionListInline = (): JSX.Element => {
     const theme = useTheme();
     const classes = useStyles(theme);
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+    const [list, setList] = useState(itemList);
     const [hoveredItem, setHoveredItem] = useState(0);
-    // const [isOpen, setIsOpen] = useState(false);
-    // const options: string[] = ['Delete', 'View Details'];
+    const [menuPosition, setMenuPosition] = useState<null | HTMLElement>(null);
+    const [activeIndex, setActiveIndex] = useState<number>(-1);
+    const options: string[] = ['Delete', 'Save', 'Archive'];
+
+    const onMenuClick = useCallback(
+        (event: React.MouseEvent<HTMLButtonElement, MouseEvent>, i: number): void => {
+            setMenuPosition(event.currentTarget);
+            setActiveIndex(i);
+        },
+        [setMenuPosition, setActiveIndex]
+    );
+
+    const onMenuClose = useCallback((): void => {
+        setMenuPosition(null);
+        setActiveIndex(-1);
+    }, [setMenuPosition, setActiveIndex]);
+
+    const onDeleteItem = useCallback(
+        (option: string, i: number): void => {
+            if (option === 'Delete') {
+                const tempList = list;
+                tempList.splice(i, 1);
+                setList(tempList);
+            }
+            onMenuClose();
+        },
+        [list, onMenuClose]
+    );
 
     return (
         <div className={classes.actionList}>
@@ -171,35 +161,59 @@ export const ActionListInline = (): JSX.Element => {
             <div className={classes.container}>
                 <Card classes={{ root: classes.card }}>
                     <CardContent classes={{ root: classes.cardContent }}>
-                        {itemList.map(
+                        {list.map(
                             (item, i): JSX.Element => (
                                 <InfoListItem
                                     key={i}
                                     data-testid="infoListItem"
                                     classes={{
-                                        root: hoveredItem === item.id ? classes.hoveredInfoListItem : '',
+                                        root: hoveredItem === item.id && !isMobile ? classes.hoveredInfoListItem : '',
                                         rightComponent: classes.rightComponentChevron,
                                     }}
                                     hidePadding
                                     ripple
                                     title={getTitle(item.title)}
                                     divider={itemList.length - 1 !== i || isMobile ? 'full' : undefined}
+                                    info={
+                                        item.hasTag && isMobile
+                                            ? [
+                                                  <ListItemTag
+                                                      key="active"
+                                                      label={'active'}
+                                                      backgroundColor={colors.red[500]}
+                                                  />,
+                                              ]
+                                            : undefined
+                                    }
                                     rightComponent={
                                         !isMobile ? (
                                             hoveredItem === item.id ? (
                                                 <div>
                                                     <Tooltip title={'Delete'}>
-                                                        <IconButton classes={{ root: classes.iconButton }}>
+                                                        <IconButton
+                                                            classes={{
+                                                                root: classes.iconButton,
+                                                            }}
+                                                            onClick={(): void => onDeleteItem('Delete', i)}
+                                                        >
                                                             <DeleteIcon />
                                                         </IconButton>
                                                     </Tooltip>
                                                     <Tooltip title={'Save'}>
-                                                        <IconButton classes={{ root: classes.iconButton }}>
+                                                        <IconButton
+                                                            classes={{
+                                                                root: classes.iconButton,
+                                                            }}
+                                                        >
                                                             <BookmarkIcon />
                                                         </IconButton>
                                                     </Tooltip>
                                                     <Tooltip title={'Archive'}>
-                                                        <IconButton classes={{ root: classes.iconButton }}>
+                                                        <IconButton
+                                                            classes={{
+                                                                root: classes.iconButton,
+                                                            }}
+                                                        >
                                                             <ArchiveIcon />
                                                         </IconButton>
                                                     </Tooltip>
@@ -208,7 +222,35 @@ export const ActionListInline = (): JSX.Element => {
                                                 <ListItemTag label={'active'} backgroundColor={colors.red[500]} />
                                             ) : undefined
                                         ) : (
-                                            <MoreVertIcon />
+                                            <>
+                                                <IconButton
+                                                    data-cy={'action-menu'}
+                                                    onClick={(evt): void => onMenuClick(evt, i)}
+                                                    edge={'end'}
+                                                >
+                                                    <MoreVertIcon />
+                                                </IconButton>
+                                                <Menu
+                                                    id={'long-menu'}
+                                                    anchorEl={menuPosition}
+                                                    onClose={onMenuClose}
+                                                    open={Boolean(menuPosition)}
+                                                    PaperProps={{
+                                                        style: {
+                                                            width: 154,
+                                                        },
+                                                    }}
+                                                >
+                                                    {options.map((option) => (
+                                                        <MenuItem
+                                                            key={option}
+                                                            onClick={(): void => onDeleteItem(option, activeIndex)}
+                                                        >
+                                                            {option}
+                                                        </MenuItem>
+                                                    ))}
+                                                </Menu>
+                                            </>
                                         )
                                     }
                                     onMouseEnter={(): void => setHoveredItem(item.id)}

@@ -34,6 +34,7 @@ import { PhoneNumberFormatValidation } from '../pages/form-validation/phone-numb
 import { TableFormValidation } from '../pages/form-validation/table';
 import { PageWideSearch } from '../pages/app-bar/page-wide-search/PageWideSearch';
 import { PasswordFormValidation } from '../pages/form-validation/password';
+import { ActionListInline } from '../pages/lists/action-list/action-list-inline';
 /*
 The main page body, which contains the route definitions
 */
@@ -78,6 +79,7 @@ export const Main = (): JSX.Element => (
             path={`/${PAGES.LISTS.ACTION_LIST.IN_PANEL_HEADER.route || ''}`}
             component={ActionListPanelHeader}
         />
+        <Route exact path={`/${PAGES.LISTS.ACTION_LIST.INLINE.route || ''}`} component={ActionListInline} />
         <Route exact path={`/${PAGES.LISTS.DATA_LIST.route || ''}`} component={DataList} />
         <Route exact path={`/${PAGES.LISTS.MULTISELECT_LIST.route || ''}`} component={MultiselectList} />
         <Route exact path={`/${PAGES.LISTS.STATUS_LIST.route || ''}`} component={StatusList} />

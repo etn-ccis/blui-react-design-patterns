@@ -381,7 +381,6 @@ export const MultiselectList = (): JSX.Element => {
                                             size="medium"
                                         />
                                     }
-                                    className={'list'}
                                     classes={{
                                         icon: classes.listItemIcon,
                                         root: isSelected(resultItem) ? classes.listItemRoot : '',

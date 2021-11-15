@@ -243,6 +243,15 @@ export const ActionListInline = (): JSX.Element => {
                                                             width: 154,
                                                         },
                                                     }}
+                                                    anchorOrigin={{
+                                                        vertical: 'bottom',
+                                                        horizontal: 'right',
+                                                    }}
+                                                    transformOrigin={{
+                                                        vertical: 'top',
+                                                        horizontal: 'right',
+                                                    }}
+                                                    getContentAnchorEl={null}
                                                 >
                                                     {options.map((option) => (
                                                         <MenuItem

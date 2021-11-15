@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import React, { ReactNode, useState } from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
@@ -13,9 +13,11 @@ import Accordion from '@material-ui/core/Accordion';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
 import AccordionDetails from '@material-ui/core/AccordionDetails';
 import MenuIcon from '@material-ui/icons/Menu';
+// import MoreVert from '@material-ui/icons/MoreVert';
+import Switch from '@material-ui/core/Switch';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import Chevron from '@material-ui/icons/ChevronRight';
-import { Language, Email, Sms } from '@material-ui/icons';
+import { Language, Email, Sms, MoreVert, Edit } from '@material-ui/icons';
 import { useDispatch } from 'react-redux';
 import { TOGGLE_DRAWER } from '../../../../redux/actions';
 import { InfoListItem, Spacer } from '@pxblue/react-components';
@@ -84,14 +86,6 @@ const useStyles = makeStyles((theme: Theme) => ({
         display: 'flex',
         alignItems: 'center',
     },
-    station: {
-        fontSize: 14,
-        textOverflow: 'ellipsis',
-        overflow: 'hidden',
-    },
-    location: {
-        fontSize: 12,
-    },
     leftComponentRoot: {
         display: 'flex',
         flexDirection: 'column',
@@ -105,6 +99,11 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
     headerIcon: {
         marginLeft: theme.spacing(4),
+    },
+    iconButton: {
+        '&:hover': {
+            color: theme.palette.primary.main,
+        },
     },
     listItemTag: {
         marginLeft: theme.spacing(2),
@@ -132,19 +131,6 @@ const getTitle = (deviceStatus: string, device: string, isMobile: boolean, class
     </div>
 );
 
-const getSubtitle = (
-    station: string,
-    location: string,
-    classes: Record<string, any>
-): string | Array<string | JSX.Element> | undefined => [
-    <span key="station" className={classes.station}>
-        {station}
-    </span>,
-    <span key="location" className={classes.location}>
-        {`<`} &nbsp; {location}
-    </span>,
-];
-
 const getRightComponent = (isMobile: boolean, classes: Record<string, any>, tag = false): ReactNode => (
     <div className={classes.rightComponentRoot}>
         {tag && !isMobile && <></>} <Chevron classes={{ root: classes.rightComponentChevron }} role={'button'} />
@@ -156,6 +142,8 @@ export const ActionListLocalActions = (): JSX.Element => {
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
     const classes = useStyles(theme);
+    const [isEmailNotificationsEnabled, setIsEmailNotificationsEnabled] = useState(true);
+    const [isSmsNotificationsEnabled, setIsSmsNotificationsEnabled] = useState(true);
 
     return (
         <div style={{ backgroundColor: theme.palette.background.default, minHeight: '100vh' }}>
@@ -175,7 +163,7 @@ export const ActionListLocalActions = (): JSX.Element => {
                         </IconButton>
                     </Hidden>
                     <Typography variant={'h6'} color={'inherit'}>
-                        Status Lists
+                        Local Item Actions
                     </Typography>
                     <Spacer />
                 </Toolbar>
@@ -198,10 +186,10 @@ export const ActionListLocalActions = (): JSX.Element => {
                                 classes={{
                                     listItemText: classes.listItemText,
                                 }}
-                                title={getTitle('Battery Service', '', isMobile, classes)}
+                                title={getTitle('Battery Service', 'Eaton GH142', isMobile, classes)}
                                 data-testid="listInfoListItem"
                                 rightComponent={getRightComponent(isMobile, classes, true)}
-                                divider={'full'}
+                                divider={'partial'}
                                 hidePadding
                                 chevron
                             />
@@ -210,18 +198,24 @@ export const ActionListLocalActions = (): JSX.Element => {
                                     listItemText: classes.listItemText,
                                 }}
                                 data-testid="listInfoListItem"
-                                title={getTitle('Bypass Over Frequency', '', isMobile, classes)}
-                                divider={'full'}
+                                title={getTitle('Bypass Over Frequency', 'A2 Max Reveal', isMobile, classes)}
+                                divider={'partial'}
                                 hidePadding
+                                rightComponent={
+                                    <MoreVert />
+                                }
                             />
                             <InfoListItem
                                 classes={{
                                     listItemText: classes.listItemText,
                                 }}
                                 data-testid="ListInfoListItem"
-                                title={getTitle('Device', 'A2 Max Reval', isMobile, classes)}
+                                title={getTitle('Device', 'A2 Max Reveal', isMobile, classes)}
                                 subtitleSeparator={' '}
                                 hidePadding
+                                rightComponent={
+                                    <Edit />
+                                }
                             />
                         </List>
                     </AccordionDetails>
@@ -232,7 +226,7 @@ export const ActionListLocalActions = (): JSX.Element => {
                     defaultExpanded={true}
                     classes={{ root: classes.accordionRoot }}
                 >
-                    <AccordionSummary expandIcon={<ExpandMore />}>
+                    <AccordionSummary>
                         <Typography variant={'subtitle2'} color={'primary'}>
                             Notifications
                         </Typography>
@@ -242,30 +236,32 @@ export const ActionListLocalActions = (): JSX.Element => {
                             <InfoListItem
                                 classes={{
                                     listItemText: classes.listItemText,
-                                    rightComponent: classes.rightComponentChevron,
                                 }}
-                                title={getTitle('Email Notifications', '', isMobile, classes)}
+                                title={'Email Notifications'}
                                 data-testid="ListInfoListItem"
-                                subtitle={getSubtitle('Placeholder for switch status', '', classes)}
-                                subtitleSeparator={' '}
-                                hidePadding
-                                divider={'full'}
+                                subtitle={isEmailNotificationsEnabled ? 'Enabled' : 'Disabled'}
+                                rightComponent={
+                                    <Switch checked={isEmailNotificationsEnabled} onChange={(): void => {
+                                        setIsEmailNotificationsEnabled(!isEmailNotificationsEnabled)
+                                    }} />
+                                }
+                                divider={'partial'}
                                 icon={<Email />}
-                                chevron
                                 iconAlign="center"
                             />
                             <InfoListItem
                                 classes={{
                                     listItemText: classes.listItemText,
-                                    rightComponent: classes.rightComponentChevron,
                                 }}
                                 data-testid="ListInfoListItem"
-                                title={getTitle('SMS Notifications', '', isMobile, classes)}
-                                subtitle={getSubtitle('Placeholder for switch status', '', classes)}
-                                subtitleSeparator={' '}
-                                hidePadding
+                                title={'SMS Notifications'}
+                                subtitle={isSmsNotificationsEnabled ? 'Enabled' : 'Disabled'}
+                                rightComponent={
+                                    <Switch checked={isSmsNotificationsEnabled} onChange={(): void => {
+                                        setIsSmsNotificationsEnabled(!isSmsNotificationsEnabled)
+                                    }} />
+                                }
                                 icon={<Sms />}
-                                chevron
                                 iconAlign="center"
                             />
                         </List>

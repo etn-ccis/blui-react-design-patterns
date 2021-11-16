@@ -202,7 +202,9 @@ export const ActionListLocalActions = (): JSX.Element => {
                                 divider={'partial'}
                                 hidePadding
                                 rightComponent={
+                                    <IconButton edge={'end'}>
                                     <MoreVert />
+                                    </IconButton>
                                 }
                             />
                             <InfoListItem

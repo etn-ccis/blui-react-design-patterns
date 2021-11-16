@@ -20,6 +20,7 @@ describe('Action list with panel header', () => {
     it('should render', () => {
         createRenderer();
         expect(screen.getByText('Local Item Actions')).toBeInTheDocument();
+        expect(screen.getByText('Inline Actions')).toBeInTheDocument();
     });
 
     it('should render 3 items by default', () => {

@@ -79,10 +79,11 @@ const useStyles = makeStyles((theme: Theme) => ({
     iconButton: {
         '&:hover': {
             color: theme.palette.primary.main,
+            backgroundColor: theme.palette.primary.light,
         },
     },
     noListItem: {
-        height: 56,
+        height: theme.spacing(7),
         padding: 0,
         [theme.breakpoints.down('sm')]: {
             marginLeft: theme.spacing(2),

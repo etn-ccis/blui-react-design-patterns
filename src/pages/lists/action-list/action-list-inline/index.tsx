@@ -94,6 +94,9 @@ const useStyles = makeStyles((theme: Theme) => ({
         cursor: 'pointer',
         fontWeight: 500,
     },
+    menuItem: {
+        minHeight: theme.spacing(6),
+    },
 }));
 
 const itemList: Item[] = [
@@ -265,9 +268,10 @@ export const ActionListInline = (): JSX.Element => {
                                                         open={Boolean(menuPosition)}
                                                         PaperProps={{
                                                             style: {
-                                                                width: 154,
+                                                                minWidth: theme.spacing(19),
                                                             },
                                                         }}
+                                                        elevation={6}
                                                         anchorOrigin={{
                                                             vertical: 'bottom',
                                                             horizontal: 'right',
@@ -282,6 +286,7 @@ export const ActionListInline = (): JSX.Element => {
                                                             <MenuItem
                                                                 key={option}
                                                                 onClick={(): void => onDeleteItem(option, activeIndex)}
+                                                                classes={{ root: classes.menuItem }}
                                                             >
                                                                 {option}
                                                             </MenuItem>

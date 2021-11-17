@@ -13,10 +13,10 @@ import Accordion from '@material-ui/core/Accordion';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
 import AccordionDetails from '@material-ui/core/AccordionDetails';
 import MenuIcon from '@material-ui/icons/Menu';
-// import MoreVert from '@material-ui/icons/MoreVert';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
 import Switch from '@material-ui/core/Switch';
 import ExpandMore from '@material-ui/icons/ExpandMore';
-import Chevron from '@material-ui/icons/ChevronRight';
 import { Language, Email, Sms, MoreVert, Edit } from '@material-ui/icons';
 import { useDispatch } from 'react-redux';
 import { TOGGLE_DRAWER } from '../../../../redux/actions';
@@ -116,6 +116,13 @@ const useStyles = makeStyles((theme: Theme) => ({
         display: 'flex',
         margin: `4px 0px 4px ${theme.spacing(4)}px`,
     },
+    menu: {
+        width: 154
+    },
+    menuList: {
+        padding: 0,
+        '&>*': {height: theme.spacing(6)},
+    }
 }));
 
 const getTitle = (deviceStatus: string, device: string, isMobile: boolean, classes: Record<string, any>): ReactNode => (
@@ -131,12 +138,6 @@ const getTitle = (deviceStatus: string, device: string, isMobile: boolean, class
     </div>
 );
 
-const getRightComponent = (isMobile: boolean, classes: Record<string, any>, tag = false): ReactNode => (
-    <div className={classes.rightComponentRoot}>
-        {tag && !isMobile && <></>} <Chevron classes={{ root: classes.rightComponentChevron }} role={'button'} />
-    </div>
-);
-
 export const ActionListLocalActions = (): JSX.Element => {
     const dispatch = useDispatch();
     const theme = useTheme();
@@ -144,6 +145,13 @@ export const ActionListLocalActions = (): JSX.Element => {
     const classes = useStyles(theme);
     const [isEmailNotificationsEnabled, setIsEmailNotificationsEnabled] = useState(true);
     const [isSmsNotificationsEnabled, setIsSmsNotificationsEnabled] = useState(true);
+    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+    const handleClick = (event: React.MouseEvent<HTMLButtonElement>): void => {
+        setAnchorEl(event.currentTarget);
+      };
+      const handleClose = (): void => {
+        setAnchorEl(null);
+      };
 
     return (
         <div style={{ backgroundColor: theme.palette.background.default, minHeight: '100vh' }}>
@@ -188,8 +196,7 @@ export const ActionListLocalActions = (): JSX.Element => {
                                 }}
                                 title={getTitle('Battery Service', 'Eaton GH142', isMobile, classes)}
                                 data-testid="listInfoListItem"
-                                rightComponent={getRightComponent(isMobile, classes, true)}
-                                divider={'partial'}
+                                divider={'full'}
                                 hidePadding
                                 chevron
                             />
@@ -199,12 +206,25 @@ export const ActionListLocalActions = (): JSX.Element => {
                                 }}
                                 data-testid="listInfoListItem"
                                 title={getTitle('Bypass Over Frequency', 'A2 Max Reveal', isMobile, classes)}
-                                divider={'partial'}
+                                divider={'full'}
                                 hidePadding
                                 rightComponent={
-                                    <IconButton edge={'end'}>
-                                    <MoreVert />
+                                    <>
+                                    <IconButton edge={'end'} onClick={handleClick}>
+                                        <MoreVert />
                                     </IconButton>
+                                    <Menu classes={{ paper: classes.menu, list: classes.menuList }}
+                                        id="more-menu" 
+                                        anchorEl={anchorEl} 
+                                        keepMounted 
+                                        open={Boolean(anchorEl)}
+                                        onClose={handleClose}
+                                        >
+                                            <MenuItem onClick={handleClose}>Edit</MenuItem>
+                                            <MenuItem onClick={handleClose}>Delete</MenuItem>
+                                            <MenuItem onClick={handleClose}>Export</MenuItem>
+                                        </Menu>
+                                    </>
                                 }
                             />
                             <InfoListItem
@@ -215,9 +235,7 @@ export const ActionListLocalActions = (): JSX.Element => {
                                 title={getTitle('Device', 'A2 Max Reveal', isMobile, classes)}
                                 subtitleSeparator={' '}
                                 hidePadding
-                                rightComponent={
-                                    <Edit />
-                                }
+                                rightComponent={<Edit />}
                             />
                         </List>
                     </AccordionDetails>
@@ -243,9 +261,12 @@ export const ActionListLocalActions = (): JSX.Element => {
                                 data-testid="ListInfoListItem"
                                 subtitle={isEmailNotificationsEnabled ? 'Enabled' : 'Disabled'}
                                 rightComponent={
-                                    <Switch checked={isEmailNotificationsEnabled} onChange={(): void => {
-                                        setIsEmailNotificationsEnabled(!isEmailNotificationsEnabled)
-                                    }} />
+                                    <Switch
+                                        checked={isEmailNotificationsEnabled}
+                                        onChange={(): void => {
+                                            setIsEmailNotificationsEnabled(!isEmailNotificationsEnabled);
+                                        }}
+                                    />
                                 }
                                 divider={'partial'}
                                 icon={<Email />}
@@ -259,9 +280,12 @@ export const ActionListLocalActions = (): JSX.Element => {
                                 title={'SMS Notifications'}
                                 subtitle={isSmsNotificationsEnabled ? 'Enabled' : 'Disabled'}
                                 rightComponent={
-                                    <Switch checked={isSmsNotificationsEnabled} onChange={(): void => {
-                                        setIsSmsNotificationsEnabled(!isSmsNotificationsEnabled)
-                                    }} />
+                                    <Switch
+                                        checked={isSmsNotificationsEnabled}
+                                        onChange={(): void => {
+                                            setIsSmsNotificationsEnabled(!isSmsNotificationsEnabled);
+                                        }}
+                                    />
                                 }
                                 icon={<Sms />}
                                 iconAlign="center"

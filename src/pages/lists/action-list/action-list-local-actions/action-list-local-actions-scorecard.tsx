@@ -7,22 +7,7 @@ import * as Colors from '@pxblue/colors';
 import { Temp } from '@pxblue/icons-mui';
 
 // const useStyles = makeStyles((theme: Theme) => ({
-//     appbarRoot: {
-//         padding: 0,
-//     },
-//     toolbarGutters: {
-//         padding: `0 ${theme.spacing(2)}px`,
-//         display: 'flex',
-//         justifyContent: 'space-between',
-//     },
-//     headerIcon: {
-//         marginLeft: theme.spacing(4),
-//     },
-//     iconButton: {
-//         '&:hover': {
-//             color: theme.palette.primary.main,
-//         },
-//     },
+
 // }));
 
 const ActionListLocalActionsScoreCardRender = (): JSX.Element => (        

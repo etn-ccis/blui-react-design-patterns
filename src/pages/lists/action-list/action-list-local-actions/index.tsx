@@ -17,7 +17,7 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import Switch from '@material-ui/core/Switch';
 import ExpandMore from '@material-ui/icons/ExpandMore';
-import { Language, Email, Sms, MoreVert, Edit } from '@material-ui/icons';
+import { Language, Email, Sms, MoreVert, Edit, ArrowBack } from '@material-ui/icons';
 import { useDispatch } from 'react-redux';
 import { TOGGLE_DRAWER } from '../../../../redux/actions';
 import { InfoListItem, Spacer } from '@pxblue/react-components';
@@ -164,42 +164,63 @@ export const ActionListLocalActions = (): JSX.Element => {
     }, [showBatteryServiceDetails]);
 
     const onShowBatteryServiceDetailsClick = useCallback((): void => {
-        // setTimeout(() => {
-            setShowLocalActionScreen(false);
-            // setTimeout(() => {
-                setShowBatteryServiceDetails(true);
-            // }, slideAnimationDurationMs);
-        // }, 2000);
+        setTimeout(() => {
+        setShowLocalActionScreen(false);
+        setTimeout(() => {
+        setShowBatteryServiceDetails(true);
+        }, slideAnimationDurationMs);
+        }, 2000);
     }, []);
 
-    // const onBackNavigation = useCallback((): void => {
-    //     setTimeout(() => {
-    //         setShowBatteryServiceDetails(false);
-    //         setTimeout(() => {
-    //             setShowLocalActionScreen(true);
-    //         }, slideAnimationDurationMs);
-    //     }, 2000);
-    // }, []);
+    const onBackNavigation = useCallback((): void => {
+        setTimeout(() => {
+            setShowBatteryServiceDetails(false);
+            setTimeout(() => {
+                setShowLocalActionScreen(true);
+            }, slideAnimationDurationMs);
+        }, 2000);
+    }, []);
+
+    const getToolbarIcon = useCallback((): ReactNode => {
+        if (showLocalActionScreen) {
+            return (
+                <Hidden mdUp={true}>
+                    <IconButton
+                        data-cy="toolbar-menu"
+                        color={'inherit'}
+                        onClick={(): void => {
+                            dispatch({ type: TOGGLE_DRAWER, payload: true });
+                        }}
+                        edge={'start'}
+                        style={{ marginRight: 20 }}
+                    >
+                        <MenuIcon />
+                    </IconButton>
+                </Hidden>
+            );
+        }
+        return (
+            <IconButton
+                data-cy="toolbar-menu"
+                color={'inherit'}
+                onClick={
+                    onBackNavigation
+                }
+                edge={'start'}
+                style={{ marginRight: 20 }}
+            >
+                <ArrowBack />
+            </IconButton>
+        );
+    }, [showLocalActionScreen]);
 
     return (
         <div style={{ backgroundColor: theme.palette.background.default, minHeight: '100vh' }}>
             <AppBar data-cy="pxb-toolbar" position={'sticky'} classes={{ root: classes.appbarRoot }}>
                 <Toolbar classes={{ gutters: classes.toolbarGutters }}>
-                    <Hidden mdUp={true}>
-                        <IconButton
-                            data-cy="toolbar-menu"
-                            color={'inherit'}
-                            onClick={(): void => {
-                                dispatch({ type: TOGGLE_DRAWER, payload: true });
-                            }}
-                            edge={'start'}
-                            style={{ marginRight: 20 }}
-                        >
-                            <MenuIcon />
-                        </IconButton>
-                    </Hidden>
+                    {getToolbarIcon()}
                     <Typography variant={'h6'} color={'inherit'}>
-                        Local Item Actions
+                        {showLocalActionScreen ? 'Local Item Actions' : 'Bypass Battery Frequency'}
                     </Typography>
                     <Spacer />
                 </Toolbar>
@@ -233,7 +254,7 @@ export const ActionListLocalActions = (): JSX.Element => {
                                     data-testid="listInfoListItem"
                                     divider={'full'}
                                     hidePadding
-                                    onClick ={onShowBatteryServiceDetailsClick}
+                                    onClick={onShowBatteryServiceDetailsClick}
                                     chevron
                                 />
                                 <InfoListItem
@@ -365,7 +386,11 @@ export const ActionListLocalActions = (): JSX.Element => {
                 mountOnEnter
                 unmountOnExit
                 timeout={slideAnimationDurationMs}
-            ><ActionListLocalActionsScoreCard /></Slide>
+            >
+                <div>
+                    <ActionListLocalActionsScoreCard />
+                </div>
+            </Slide>
         </div>
     );
 };

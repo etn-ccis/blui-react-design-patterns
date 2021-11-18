@@ -1,5 +1,5 @@
-import React, { ReactNode, useState } from 'react';
-import AppBar from '@material-ui/core/AppBar';
+import React, { ReactNode, useState, useEffect, useRef, useCallback } from 'react';
+import { AppBar, Slide } from '@material-ui/core';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import List from '@material-ui/core/List';
@@ -22,6 +22,7 @@ import { useDispatch } from 'react-redux';
 import { TOGGLE_DRAWER } from '../../../../redux/actions';
 import { InfoListItem, Spacer } from '@pxblue/react-components';
 import * as colors from '@pxblue/colors';
+import { ActionListLocalActionsScoreCard } from './action-list-local-actions-scorecard';
 
 const useStyles = makeStyles((theme: Theme) => ({
     appbarRoot: {
@@ -117,12 +118,12 @@ const useStyles = makeStyles((theme: Theme) => ({
         margin: `4px 0px 4px ${theme.spacing(4)}px`,
     },
     menu: {
-        width: 154
+        width: 154,
     },
     menuList: {
         padding: 0,
-        '&>*': {height: theme.spacing(6)},
-    }
+        '&>*': { height: theme.spacing(6) },
+    },
 }));
 
 const getTitle = (deviceStatus: string, device: string, isMobile: boolean, classes: Record<string, any>): ReactNode => (
@@ -145,13 +146,40 @@ export const ActionListLocalActions = (): JSX.Element => {
     const classes = useStyles(theme);
     const [isEmailNotificationsEnabled, setIsEmailNotificationsEnabled] = useState(true);
     const [isSmsNotificationsEnabled, setIsSmsNotificationsEnabled] = useState(true);
+    const [showLocalActionScreen, setShowLocalActionScreen] = useState(true);
+    const [showBatteryServiceDetails, setShowBatteryServiceDetails] = useState(false);
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+    const inputEl = useRef<HTMLInputElement>(null);
+    const slideAnimationDurationMs = 250;
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>): void => {
         setAnchorEl(event.currentTarget);
-      };
-      const handleClose = (): void => {
+    };
+    const handleClose = (): void => {
         setAnchorEl(null);
-      };
+    };
+    useEffect(() => {
+        if (showBatteryServiceDetails && inputEl.current) {
+            inputEl.current.focus();
+        }
+    }, [showBatteryServiceDetails]);
+
+    const onShowBatteryServiceDetailsClick = useCallback((): void => {
+        // setTimeout(() => {
+            setShowLocalActionScreen(false);
+            // setTimeout(() => {
+                setShowBatteryServiceDetails(true);
+            // }, slideAnimationDurationMs);
+        // }, 2000);
+    }, []);
+
+    // const onBackNavigation = useCallback((): void => {
+    //     setTimeout(() => {
+    //         setShowBatteryServiceDetails(false);
+    //         setTimeout(() => {
+    //             setShowLocalActionScreen(true);
+    //         }, slideAnimationDurationMs);
+    //     }, 2000);
+    // }, []);
 
     return (
         <div style={{ backgroundColor: theme.palette.background.default, minHeight: '100vh' }}>
@@ -176,151 +204,168 @@ export const ActionListLocalActions = (): JSX.Element => {
                     <Spacer />
                 </Toolbar>
             </AppBar>
-            <div className={classes.accordionContainer}>
-                <Accordion
-                    key={'today'}
-                    data-testid="Accordion"
-                    defaultExpanded={true}
-                    classes={{ root: classes.accordionRoot }}
-                >
-                    <AccordionSummary expandIcon={<ExpandMore />}>
-                        <Typography variant={'subtitle2'} color={'primary'}>
-                            Today
-                        </Typography>
-                    </AccordionSummary>
-                    <AccordionDetails classes={{ root: classes.accordionDetails }}>
-                        <List className={'list'} disablePadding>
-                            <InfoListItem
-                                classes={{
-                                    listItemText: classes.listItemText,
-                                }}
-                                title={getTitle('Battery Service', 'Eaton GH142', isMobile, classes)}
-                                data-testid="listInfoListItem"
-                                divider={'full'}
-                                hidePadding
-                                chevron
-                            />
-                            <InfoListItem
-                                classes={{
-                                    listItemText: classes.listItemText,
-                                }}
-                                data-testid="listInfoListItem"
-                                title={getTitle('Bypass Over Frequency', 'A2 Max Reveal', isMobile, classes)}
-                                divider={'full'}
-                                hidePadding
-                                rightComponent={
-                                    <>
-                                    <IconButton edge={'end'} onClick={handleClick}>
-                                        <MoreVert />
-                                    </IconButton>
-                                    <Menu classes={{ paper: classes.menu, list: classes.menuList }}
-                                        id="more-menu" 
-                                        anchorEl={anchorEl} 
-                                        keepMounted 
-                                        open={Boolean(anchorEl)}
-                                        onClose={handleClose}
-                                        >
-                                            <MenuItem onClick={handleClose}>Edit</MenuItem>
-                                            <MenuItem onClick={handleClose}>Delete</MenuItem>
-                                            <MenuItem onClick={handleClose}>Export</MenuItem>
-                                        </Menu>
-                                    </>
-                                }
-                            />
-                            <InfoListItem
-                                classes={{
-                                    listItemText: classes.listItemText,
-                                }}
-                                data-testid="ListInfoListItem"
-                                title={getTitle('Device', 'A2 Max Reveal', isMobile, classes)}
-                                subtitleSeparator={' '}
-                                hidePadding
-                                rightComponent={<Edit />}
-                            />
-                        </List>
-                    </AccordionDetails>
-                </Accordion>
-                <Accordion
-                    key={'Notifications'}
-                    data-testid="NotificationListAccordion"
-                    defaultExpanded={true}
-                    classes={{ root: classes.accordionRoot }}
-                >
-                    <AccordionSummary>
-                        <Typography variant={'subtitle2'} color={'primary'}>
-                            Notifications
-                        </Typography>
-                    </AccordionSummary>
-                    <AccordionDetails classes={{ root: classes.accordionDetails }}>
-                        <List className={'list'} disablePadding>
-                            <InfoListItem
-                                classes={{
-                                    listItemText: classes.listItemText,
-                                }}
-                                title={'Email Notifications'}
-                                data-testid="ListInfoListItem"
-                                subtitle={isEmailNotificationsEnabled ? 'Enabled' : 'Disabled'}
-                                rightComponent={
-                                    <Switch
-                                        checked={isEmailNotificationsEnabled}
-                                        onChange={(): void => {
-                                            setIsEmailNotificationsEnabled(!isEmailNotificationsEnabled);
-                                        }}
-                                    />
-                                }
-                                divider={'partial'}
-                                icon={<Email />}
-                                iconAlign="center"
-                            />
-                            <InfoListItem
-                                classes={{
-                                    listItemText: classes.listItemText,
-                                }}
-                                data-testid="ListInfoListItem"
-                                title={'SMS Notifications'}
-                                subtitle={isSmsNotificationsEnabled ? 'Enabled' : 'Disabled'}
-                                rightComponent={
-                                    <Switch
-                                        checked={isSmsNotificationsEnabled}
-                                        onChange={(): void => {
-                                            setIsSmsNotificationsEnabled(!isSmsNotificationsEnabled);
-                                        }}
-                                    />
-                                }
-                                icon={<Sms />}
-                                iconAlign="center"
-                            />
-                        </List>
-                    </AccordionDetails>
-                </Accordion>
-                <Accordion
-                    key={'Locale'}
-                    data-testid="LocaleListAccordion"
-                    defaultExpanded={true}
-                    classes={{ root: classes.accordionRoot }}
-                >
-                    <AccordionSummary>
-                        <Typography variant={'subtitle2'} color={'primary'}>
-                            Locale
-                        </Typography>
-                    </AccordionSummary>
-                    <AccordionDetails classes={{ root: classes.accordionDetails }}>
-                        <List className={'list'} disablePadding>
-                            <InfoListItem
-                                classes={{
-                                    listItemText: classes.listItemText,
-                                }}
-                                data-testid="ListInfoListItem"
-                                title={getTitle('Language', '', isMobile, classes)}
-                                icon={<Language />}
-                                hidePadding
-                                chevron
-                                iconAlign="center"
-                            />
-                        </List>
-                    </AccordionDetails>
-                </Accordion>
-            </div>
+            <Slide
+                direction={'right'}
+                in={showLocalActionScreen}
+                mountOnEnter
+                unmountOnExit
+                timeout={slideAnimationDurationMs}
+            >
+                <div className={classes.accordionContainer}>
+                    <Accordion
+                        key={'today'}
+                        data-testid="Accordion"
+                        defaultExpanded={true}
+                        classes={{ root: classes.accordionRoot }}
+                    >
+                        <AccordionSummary expandIcon={<ExpandMore />}>
+                            <Typography variant={'subtitle2'} color={'primary'}>
+                                Today
+                            </Typography>
+                        </AccordionSummary>
+                        <AccordionDetails classes={{ root: classes.accordionDetails }}>
+                            <List className={'list'} disablePadding>
+                                <InfoListItem
+                                    classes={{
+                                        listItemText: classes.listItemText,
+                                    }}
+                                    title={getTitle('Battery Service', 'Eaton GH142', isMobile, classes)}
+                                    data-testid="listInfoListItem"
+                                    divider={'full'}
+                                    hidePadding
+                                    onClick ={onShowBatteryServiceDetailsClick}
+                                    chevron
+                                />
+                                <InfoListItem
+                                    classes={{
+                                        listItemText: classes.listItemText,
+                                    }}
+                                    data-testid="listInfoListItem"
+                                    title={getTitle('Bypass Over Frequency', 'A2 Max Reveal', isMobile, classes)}
+                                    divider={'full'}
+                                    hidePadding
+                                    rightComponent={
+                                        <>
+                                            <IconButton edge={'end'} onClick={handleClick}>
+                                                <MoreVert />
+                                            </IconButton>
+                                            <Menu
+                                                classes={{ paper: classes.menu, list: classes.menuList }}
+                                                id="more-menu"
+                                                anchorEl={anchorEl}
+                                                keepMounted
+                                                open={Boolean(anchorEl)}
+                                                onClose={handleClose}
+                                            >
+                                                <MenuItem onClick={handleClose}>Edit</MenuItem>
+                                                <MenuItem onClick={handleClose}>Delete</MenuItem>
+                                                <MenuItem onClick={handleClose}>Export</MenuItem>
+                                            </Menu>
+                                        </>
+                                    }
+                                />
+                                <InfoListItem
+                                    classes={{
+                                        listItemText: classes.listItemText,
+                                    }}
+                                    data-testid="ListInfoListItem"
+                                    title={getTitle('Device', 'A2 Max Reveal', isMobile, classes)}
+                                    subtitleSeparator={' '}
+                                    hidePadding
+                                    rightComponent={<Edit />}
+                                />
+                            </List>
+                        </AccordionDetails>
+                    </Accordion>
+                    <Accordion
+                        key={'Notifications'}
+                        data-testid="NotificationListAccordion"
+                        defaultExpanded={true}
+                        classes={{ root: classes.accordionRoot }}
+                    >
+                        <AccordionSummary>
+                            <Typography variant={'subtitle2'} color={'primary'}>
+                                Notifications
+                            </Typography>
+                        </AccordionSummary>
+                        <AccordionDetails classes={{ root: classes.accordionDetails }}>
+                            <List className={'list'} disablePadding>
+                                <InfoListItem
+                                    classes={{
+                                        listItemText: classes.listItemText,
+                                    }}
+                                    title={'Email Notifications'}
+                                    data-testid="ListInfoListItem"
+                                    subtitle={isEmailNotificationsEnabled ? 'Enabled' : 'Disabled'}
+                                    rightComponent={
+                                        <Switch
+                                            checked={isEmailNotificationsEnabled}
+                                            onChange={(): void => {
+                                                setIsEmailNotificationsEnabled(!isEmailNotificationsEnabled);
+                                            }}
+                                        />
+                                    }
+                                    divider={'partial'}
+                                    icon={<Email />}
+                                    iconAlign="center"
+                                />
+                                <InfoListItem
+                                    classes={{
+                                        listItemText: classes.listItemText,
+                                    }}
+                                    data-testid="ListInfoListItem"
+                                    title={'SMS Notifications'}
+                                    subtitle={isSmsNotificationsEnabled ? 'Enabled' : 'Disabled'}
+                                    rightComponent={
+                                        <Switch
+                                            checked={isSmsNotificationsEnabled}
+                                            onChange={(): void => {
+                                                setIsSmsNotificationsEnabled(!isSmsNotificationsEnabled);
+                                            }}
+                                        />
+                                    }
+                                    icon={<Sms />}
+                                    iconAlign="center"
+                                />
+                            </List>
+                        </AccordionDetails>
+                    </Accordion>
+                    <Accordion
+                        key={'Locale'}
+                        data-testid="LocaleListAccordion"
+                        defaultExpanded={true}
+                        classes={{ root: classes.accordionRoot }}
+                    >
+                        <AccordionSummary>
+                            <Typography variant={'subtitle2'} color={'primary'}>
+                                Locale
+                            </Typography>
+                        </AccordionSummary>
+                        <AccordionDetails classes={{ root: classes.accordionDetails }}>
+                            <List className={'list'} disablePadding>
+                                <InfoListItem
+                                    classes={{
+                                        listItemText: classes.listItemText,
+                                    }}
+                                    data-testid="ListInfoListItem"
+                                    title={getTitle('Language', '', isMobile, classes)}
+                                    icon={<Language />}
+                                    hidePadding
+                                    chevron
+                                    iconAlign="center"
+                                />
+                            </List>
+                        </AccordionDetails>
+                    </Accordion>
+                </div>
+            </Slide>
+            <Slide
+                direction={'left'}
+                in={showBatteryServiceDetails}
+                mountOnEnter
+                unmountOnExit
+                timeout={slideAnimationDurationMs}
+            ><ActionListLocalActionsScoreCard /></Slide>
         </div>
     );
 };

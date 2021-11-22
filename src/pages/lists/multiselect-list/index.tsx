@@ -114,12 +114,18 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         panelHeaderRoot1: {
             paddingLeft: `${theme.spacing(1)}px`,
+            '& h6': {
+                marginLeft: `${theme.spacing(1)}px`,
+            },
         },
         panelHeaderRoot2: {
             paddingLeft: `${theme.spacing(2)}px`,
+            '& h6': {
+                marginLeft: `${theme.spacing(1)}px`,
+            },
         },
-        panelHeaderTitle: {
-            color: colors.blue[500],
+        listItemTitle: {
+            marginLeft: `${theme.spacing(1)}px`,
         },
         resetDataLink: {
             textDecoration: 'underline',
@@ -250,7 +256,6 @@ export const MultiselectList = (): JSX.Element => {
                     <div className="panel-header">
                         <InfoListItem
                             classes={{
-                                title: classes.panelHeaderTitle,
                                 root: isMobile ? classes.resetListItem : '',
                             }}
                             title={
@@ -305,7 +310,6 @@ export const MultiselectList = (): JSX.Element => {
                                                         filteredResult[day].length !== 0
                                                             ? classes.panelHeaderRoot1
                                                             : classes.panelHeaderRoot2,
-                                                    title: classes.panelHeaderTitle,
                                                 }}
                                                 icon={
                                                     filteredResult[day].length !== 0 ? (
@@ -383,6 +387,7 @@ export const MultiselectList = (): JSX.Element => {
                                     }
                                     classes={{
                                         icon: classes.listItemIcon,
+                                        title: classes.listItemTitle,
                                         root: isSelected(resultItem) ? classes.listItemRoot : '',
                                     }}
                                     hidePadding

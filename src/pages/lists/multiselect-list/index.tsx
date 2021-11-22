@@ -270,6 +270,7 @@ export const MultiselectList = (): JSX.Element => {
                     </div>
                     <div>
                         <InfoListItem
+                            data-cy="no-result"
                             hidePadding
                             divider={isMobile ? 'full' : undefined}
                             classes={{
@@ -375,6 +376,7 @@ export const MultiselectList = (): JSX.Element => {
                                 <InfoListItem
                                     key={index}
                                     data-testid="infoListItem"
+                                    data-cy={'list-content'}
                                     icon={
                                         <Checkbox
                                             value={resultItem.name}
@@ -427,7 +429,7 @@ export const MultiselectList = (): JSX.Element => {
                     <Spacer />
                     <Hidden mdUp={true}>
                         {selectedItems1.length !== 0 || selectedItems2.length !== 0 ? (
-                            <IconButton data-cy="delete-icon" color={'inherit'} onClick={onDelete} edge={'end'}>
+                            <IconButton data-cy="delete-btn" color={'inherit'} onClick={onDelete} edge={'end'}>
                                 <DeleteIcon />
                             </IconButton>
                         ) : (
@@ -441,6 +443,7 @@ export const MultiselectList = (): JSX.Element => {
                     <div className={classes.deleteRow}>
                         <Button
                             data-testid="deleteButton"
+                            data-cy="delete-btn"
                             variant={'contained'}
                             color={'inherit'}
                             className={classes.deleteBtn}

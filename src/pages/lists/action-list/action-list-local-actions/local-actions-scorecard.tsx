@@ -4,7 +4,7 @@ import { Hero, HeroBanner, ScoreCard } from '@pxblue/react-components';
 import { GradeA, Temp, Moisture as Humidity } from '@pxblue/icons-mui';
 import Button from '@material-ui/core/Button';
 
-const ActionListLocalActionsScoreCardRender = (): JSX.Element => (        
+const LocalActionsScoreCardRender = (): JSX.Element => (        
     <div style={{ display: 'flex', flexDirection: 'column' }}>
     <div
         style={{
@@ -77,4 +77,4 @@ const ActionListLocalActionsScoreCardRender = (): JSX.Element => (
     </div>
 </div>
 );
-    export const ActionListLocalActionsScoreCard = React.forwardRef(ActionListLocalActionsScoreCardRender);
+    export const LocalActionsScoreCard = React.forwardRef(LocalActionsScoreCardRender);

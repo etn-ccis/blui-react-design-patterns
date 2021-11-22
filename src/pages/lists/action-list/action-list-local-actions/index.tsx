@@ -22,7 +22,7 @@ import { useDispatch } from 'react-redux';
 import { TOGGLE_DRAWER } from '../../../../redux/actions';
 import { InfoListItem, Spacer } from '@pxblue/react-components';
 import * as colors from '@pxblue/colors';
-import { ActionListLocalActionsScoreCard } from './action-list-local-actions-scorecard';
+import { LocalActionsScoreCard } from './local-actions-scorecard';
 
 const useStyles = makeStyles((theme: Theme) => ({
     appbarRoot: {
@@ -388,7 +388,7 @@ export const ActionListLocalActions = (): JSX.Element => {
                 timeout={slideAnimationDurationMs}
             >
                 <div>
-                    <ActionListLocalActionsScoreCard />
+                    <LocalActionsScoreCard />
                 </div>
             </Slide>
         </div>

@@ -12,6 +12,7 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 import Accordion from '@material-ui/core/Accordion';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
 import AccordionDetails from '@material-ui/core/AccordionDetails';
+// import FormControl from '@material-ui/core/FormControl';
 import MenuIcon from '@material-ui/icons/Menu';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -23,6 +24,8 @@ import { TOGGLE_DRAWER } from '../../../../redux/actions';
 import { InfoListItem, Spacer } from '@pxblue/react-components';
 import * as colors from '@pxblue/colors';
 import { LocalActionsScoreCard } from './local-actions-scorecard';
+import { LanguageSelect } from './local-actions-select-language';
+import { LanguageSelectMobile } from './select-language-mobile';
 
 const useStyles = makeStyles((theme: Theme) => ({
     appbarRoot: {
@@ -302,6 +305,7 @@ export const ActionListLocalActions = (): JSX.Element => {
                         key={'Notifications'}
                         data-testid="NotificationListAccordion"
                         defaultExpanded={true}
+                        TransitionProps={{in: true}}
                         classes={{ root: classes.accordionRoot }}
                     >
                         <AccordionSummary>
@@ -355,7 +359,9 @@ export const ActionListLocalActions = (): JSX.Element => {
                         key={'Locale'}
                         data-testid="LocaleListAccordion"
                         defaultExpanded={true}
+                        TransitionProps={{in: true}}
                         classes={{ root: classes.accordionRoot }}
+                        onChange={(event: any):void => {event.preventDefault()}}
                     >
                         <AccordionSummary>
                             <Typography variant={'subtitle2'} color={'primary'}>
@@ -372,8 +378,8 @@ export const ActionListLocalActions = (): JSX.Element => {
                                     title={getTitle('Language', '', isMobile, classes)}
                                     icon={<Language />}
                                     hidePadding
-                                    chevron
                                     iconAlign="center"
+                                    rightComponent={<LanguageSelect />}
                                 />
                             </List>
                         </AccordionDetails>
@@ -391,6 +397,7 @@ export const ActionListLocalActions = (): JSX.Element => {
                     <LocalActionsScoreCard />
                 </div>
             </Slide>
+            <LanguageSelectMobile />
         </div>
     );
 };

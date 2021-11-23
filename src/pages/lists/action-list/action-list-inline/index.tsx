@@ -85,6 +85,8 @@ const useStyles = makeStyles((theme: Theme) => ({
     noListItem: {
         height: theme.spacing(7),
         padding: 0,
+    },
+    noListItemText: {
         [theme.breakpoints.down('sm')]: {
             marginLeft: theme.spacing(2),
         },
@@ -97,6 +99,9 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
     menuItem: {
         minHeight: theme.spacing(6),
+    },
+    versionNote: {
+        marginTop: theme.spacing(15),
     },
 }));
 
@@ -123,7 +128,7 @@ export const ActionListInline = (): JSX.Element => {
     const theme = useTheme();
     const classes = useStyles(theme);
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
-    const [list, setList] = useState(itemList);
+    const [list, setList] = useState(itemList.slice());
     const [hoveredItem, setHoveredItem] = useState(0);
     const [menuPosition, setMenuPosition] = useState<null | HTMLElement>(null);
     const [activeIndex, setActiveIndex] = useState<number>(-1);
@@ -145,7 +150,7 @@ export const ActionListInline = (): JSX.Element => {
     const onDeleteItem = useCallback(
         (option: string, i: number): void => {
             if (option === 'Delete') {
-                const tempList = list;
+                const tempList = list.slice();
                 tempList.splice(i, 1);
                 setList(tempList);
             }
@@ -154,9 +159,9 @@ export const ActionListInline = (): JSX.Element => {
         [list, onMenuClose]
     );
 
-    const onResetData = (): void => {
+    const onResetData = useCallback((): void => {
         setList(itemList);
-    };
+    }, []);
 
     return (
         <div className={classes.actionList}>
@@ -202,7 +207,7 @@ export const ActionListInline = (): JSX.Element => {
                                         hidePadding
                                         ripple
                                         title={getTitle(item.title)}
-                                        divider={itemList.length - 1 !== i || isMobile ? 'full' : undefined}
+                                        divider={list.length - 1 !== i || isMobile ? 'full' : undefined}
                                         info={
                                             item.hasTag && isMobile
                                                 ? [
@@ -296,7 +301,7 @@ export const ActionListInline = (): JSX.Element => {
                                                 </>
                                             )
                                         }
-                                        onMouseEnter={(): void => setHoveredItem(item.id)}
+                                        onMouseOver={(): void => setHoveredItem(item.id)}
                                         onMouseLeave={(): void => setHoveredItem(0)}
                                     />
                                 )
@@ -306,6 +311,7 @@ export const ActionListInline = (): JSX.Element => {
                                 data-testid="infoListItem"
                                 classes={{
                                     root: classes.noListItem,
+                                    listItemText: classes.noListItemText,
                                 }}
                                 hidePadding
                                 ripple
@@ -324,6 +330,11 @@ export const ActionListInline = (): JSX.Element => {
                         )}
                     </CardContent>
                 </Card>
+                {!isMobile && (
+                    <Typography classes={{ root: classes.versionNote }} variant="body1" align="center">
+                        This behaviour is exclusive to desktop version.
+                    </Typography>
+                )}
             </div>
         </div>
     );

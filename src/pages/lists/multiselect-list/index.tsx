@@ -1,123 +1,413 @@
-import React, { useState, useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import {
     makeStyles,
     createStyles,
     AppBar,
+    Button,
+    Card,
+    CardContent,
+    Checkbox,
     Toolbar,
     Typography,
-    List,
-    Checkbox,
     IconButton,
     Hidden,
     Theme,
+    useMediaQuery,
     useTheme,
-    Snackbar,
-    Tooltip,
 } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
-import CancelIcon from '@material-ui/icons/Cancel';
-import AddIcon from '@material-ui/icons/Add';
 import MenuIcon from '@material-ui/icons/Menu';
 import { TOGGLE_DRAWER } from '../../../redux/actions';
 import { useDispatch } from 'react-redux';
-import { DRAWER_WIDTH } from '../../../assets/constants';
 import { InfoListItem, Spacer } from '@pxblue/react-components';
-import { EmptyState } from './EmptyState';
+
+import * as colors from '@pxblue/colors';
 
 export type ListItemType = {
     id: number;
     name: string;
-    details: string;
     checked: boolean;
+    day: string;
 };
 
-const useStyles = makeStyles((theme: Theme) =>
-    createStyles({
-        snackbar: {
-            [theme.breakpoints.up('md')]: {
-                left: `calc((100vw - ${DRAWER_WIDTH}px)/2 + ${DRAWER_WIDTH}px);`,
-            },
-        },
-        emptyStateContainer: {
-            display: 'flex',
-            flexDirection: 'column',
-            height: `calc(100vh - ${theme.spacing(8)}px)`,
-        },
-        appbarRoot: {
-            padding: 0,
-        },
-        toolbarGutters: {
-            padding: '0 16px',
-        },
-    })
-);
+const category = ['High Humidity', 'Battery Service', 'Bypass Over Frequency'];
+const days = ['Today', 'Yesterday'];
 
-const createItem = (index: number, randomStatus: string): ListItemType => ({
+const createItem = (index: number, name: string, day: string): ListItemType => ({
     id: index,
-    name: `Item ${index}`,
-    details: `Status: ${randomStatus}`,
+    name: name,
     checked: false,
+    day: day,
 });
-
-const createRandomItem = (): ListItemType => {
-    const int = parseInt(`${Math.random() * 100}`, 10);
-    const randomStatus = Math.random() >= 0.3 ? 'normal' : 'alarm';
-    return createItem(int, randomStatus);
-};
 
 const generatedList: ListItemType[] = [];
 
-for (let i = 0; i < 10; i++) {
-    generatedList.push(createRandomItem());
+for (let i = 0; i < 5; i++) {
+    if (i < 3) {
+        generatedList.push(createItem(i, category[i], 'Today'));
+    } else {
+        generatedList.push(createItem(i, category[i - 3], 'Yesterday'));
+    }
 }
+const categorizeList = (list: ListItemType[]): any =>
+    list.reduce((r, a) => {
+        r[a.day] = r[a.day] || [];
+        r[a.day].push(a);
+        return r;
+    }, Object.create(null));
+
+const useStyles = makeStyles((theme: Theme) =>
+    createStyles({
+        appbarRoot: {
+            padding: 0,
+        },
+        listItemRoot: {
+            backgroundColor: 'rgba(0, 123, 193, 0.05)',
+        },
+        card: {
+            marginBottom: `${theme.spacing(3)}px`,
+            [theme.breakpoints.down('sm')]: {
+                boxShadow: 'none',
+                borderRadius: 0,
+                marginBottom: `${theme.spacing(2)}px`,
+            },
+        },
+        cardContent: {
+            padding: 0,
+            '&:last-child': {
+                paddingBottom: 0,
+            },
+        },
+        checkboxIndeterminate: {
+            color: theme.palette.primary.main,
+        },
+        deleteBtn: {
+            backgroundColor: theme.palette.error.main,
+            color: colors.white[50],
+            height: '36px',
+            '&:hover': {
+                backgroundColor: colors.red[300],
+            },
+        },
+        deleteRow: {
+            display: 'flex',
+            justifyContent: 'flex-end',
+            alignItems: 'center',
+            marginBottom: `${theme.spacing(3)}px`,
+        },
+        exampleContainer: {
+            padding: `${theme.spacing(3)}px`,
+            margin: '0 auto',
+            maxWidth: '816px',
+            [theme.breakpoints.down('sm')]: {
+                padding: 0,
+                boxShadow: 'none',
+                borderRadius: 0,
+                maxWidth: 'unset',
+            },
+        },
+        listItemIcon: {
+            marginLeft: `-${theme.spacing(1)}px`,
+        },
+        noResultListItem: {
+            marginLeft: `${theme.spacing(0.5)}px`,
+        },
+        panelHeaderRoot1: {
+            paddingLeft: `${theme.spacing(1)}px`,
+            '& h6': {
+                marginLeft: `${theme.spacing(1)}px`,
+            },
+        },
+        panelHeaderRoot2: {
+            paddingLeft: `${theme.spacing(2)}px`,
+            '& h6': {
+                marginLeft: `${theme.spacing(1)}px`,
+            },
+        },
+        listItemTitle: {
+            marginLeft: `${theme.spacing(1)}px`,
+        },
+        resetDataLink: {
+            textDecoration: 'underline',
+            color: theme.palette.primary.main,
+            cursor: 'pointer',
+        },
+        resetListItem: {
+            paddingLeft: `${theme.spacing(2.5)}px`,
+        },
+        toolbarGutters: {
+            padding: `0 ${theme.spacing(2)}px`,
+        },
+    })
+);
 
 export const MultiselectList = (): JSX.Element => {
     const classes = useStyles();
     const dispatch = useDispatch();
     const theme = useTheme();
-
+    const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
     const [list, setList] = useState<ListItemType[]>(generatedList);
-    const [selectedItems, setSelectedItems] = useState<ListItemType[]>([]);
+    const result = categorizeList(list);
+    const [filteredResult, setFilteredResult] = useState(result);
+    const [selectedItems1, setSelectedItems1] = useState<ListItemType[]>([]);
+    const [selectedItems2, setSelectedItems2] = useState<ListItemType[]>([]);
 
     const onSelect = useCallback(
         (item: ListItemType): void => {
-            if (!selectedItems.includes(item)) {
-                setSelectedItems([...selectedItems, item]);
-            } else {
-                const index = selectedItems.indexOf(item);
-                setSelectedItems(selectedItems.filter((_: ListItemType, i: number) => i !== index));
+            switch (item.day) {
+                case 'Yesterday': {
+                    if (!selectedItems2.includes(item)) {
+                        setSelectedItems2([...selectedItems2, item]);
+                    } else {
+                        const index = selectedItems2.indexOf(item);
+                        setSelectedItems2(selectedItems2.filter((_: ListItemType, i: number) => i !== index));
+                    }
+                    break;
+                }
+                case 'Today':
+                default: {
+                    if (!selectedItems1.includes(item)) {
+                        setSelectedItems1([...selectedItems1, item]);
+                    } else {
+                        const index = selectedItems1.indexOf(item);
+                        setSelectedItems1(selectedItems1.filter((_: ListItemType, i: number) => i !== index));
+                    }
+                    break;
+                }
             }
         },
-        [selectedItems, setSelectedItems]
+        [selectedItems1, selectedItems2]
     );
 
-    const isSelected = useCallback((item: ListItemType): boolean => selectedItems.includes(item), [selectedItems]);
+    const isSelected = useCallback(
+        (item: ListItemType): boolean => {
+            switch (item.day) {
+                case 'Yesterday': {
+                    return selectedItems2.includes(item);
+                }
+                case 'Today':
+                default: {
+                    return selectedItems1.includes(item);
+                }
+            }
+        },
+        [selectedItems1, selectedItems2]
+    );
 
-    const onAddItem = useCallback((): void => {
-        setList([...list, createRandomItem()]);
-    }, [list, setList]);
+    const isToday = useCallback((day: string): boolean => day === 'Today', []);
+
+    const resetData = useCallback(
+        (day: string): void => {
+            const resetDayDetails = categorizeList(generatedList)[day];
+            filteredResult[day] = resetDayDetails;
+            setList(generatedList);
+            setFilteredResult(filteredResult);
+            if (isToday(day)) {
+                setSelectedItems1([]);
+            } else {
+                setSelectedItems2([]);
+            }
+        },
+        [filteredResult, selectedItems1, selectedItems2]
+    );
 
     const onDelete = useCallback((): void => {
         const updatedList = [...list];
 
-        selectedItems.forEach((item: ListItemType) => {
+        selectedItems1.forEach((item: ListItemType) => {
             const index = updatedList.indexOf(item);
             updatedList.splice(index, 1);
         });
 
-        setList(updatedList);
-        setSelectedItems([]);
-    }, [list, selectedItems, setList, setSelectedItems]);
-
-    const onCancel = useCallback((): void => {
-        list.forEach((item: ListItemType): void => {
-            item.checked = false;
+        selectedItems2.forEach((item: ListItemType) => {
+            const index = updatedList.indexOf(item);
+            updatedList.splice(index, 1);
         });
-        setSelectedItems([]);
-    }, [list, setSelectedItems]);
+
+        const result1 = categorizeList(updatedList);
+
+        setList(updatedList);
+        setFilteredResult(result1);
+        setSelectedItems1([]);
+        setSelectedItems2([]);
+    }, [list, filteredResult, selectedItems1, selectedItems2]);
+
+    const selectAll = (event: React.ChangeEvent<HTMLInputElement>): void => {
+        const day = event.target.value;
+        if (event.target.checked) {
+            const newSelectedItems = filteredResult[day].filter((item: ListItemType) => item.day === day);
+            if (isToday(day)) {
+                setSelectedItems1(newSelectedItems);
+            } else {
+                setSelectedItems2(newSelectedItems);
+            }
+            return;
+        }
+        if (isToday(day)) {
+            setSelectedItems1([]);
+        } else {
+            setSelectedItems2([]);
+        }
+    };
+    const emptyCard = (day: string): JSX.Element => (
+        <div>
+            <Card classes={{ root: classes.card }}>
+                <CardContent classes={{ root: classes.cardContent }}>
+                    <div className="panel-header">
+                        <InfoListItem
+                            classes={{
+                                root: isMobile ? classes.resetListItem : '',
+                            }}
+                            title={
+                                <Typography color={'primary'} variant={'subtitle2'}>
+                                    {day}
+                                </Typography>
+                            }
+                            divider={'full'}
+                            dense
+                            hidePadding
+                        />
+                    </div>
+                    <div>
+                        <InfoListItem
+                            data-cy="no-result"
+                            hidePadding
+                            divider={isMobile ? 'full' : undefined}
+                            classes={{
+                                root: isMobile ? classes.resetListItem : '',
+                            }}
+                            title={
+                                <Typography data-cy={'empty-table'}>
+                                    No results.{' '}
+                                    <span
+                                        className={classes.resetDataLink}
+                                        onClick={(): void => resetData(day)}
+                                        data-cy={'reset'}
+                                    >
+                                        Reset data.
+                                    </span>
+                                </Typography>
+                            }
+                        />
+                    </div>
+                </CardContent>
+            </Card>
+        </div>
+    );
+    const getCardContent = (day: string): JSX.Element => (
+        <div>
+            {filteredResult[day] ? (
+                <Card classes={{ root: classes.card }}>
+                    <CardContent classes={{ root: classes.cardContent }}>
+                        {filteredResult[day].map((resultItem: ListItemType, index: number) => (
+                            <div key={`result-item-${index}`}>
+                                <div>
+                                    {index === 0 ? (
+                                        <div className="panel-header">
+                                            <InfoListItem
+                                                key={`list-header`}
+                                                classes={{
+                                                    root:
+                                                        filteredResult[day].length !== 0
+                                                            ? classes.panelHeaderRoot1
+                                                            : classes.panelHeaderRoot2,
+                                                }}
+                                                icon={
+                                                    filteredResult[day].length !== 0 ? (
+                                                        <Checkbox
+                                                            classes={{ indeterminate: classes.checkboxIndeterminate }}
+                                                            indeterminate={
+                                                                isToday(day)
+                                                                    ? selectedItems1.length > 0 &&
+                                                                      selectedItems1.length < filteredResult[day].length
+                                                                    : selectedItems2.length > 0 &&
+                                                                      selectedItems2.length < filteredResult[day].length
+                                                            }
+                                                            checked={
+                                                                isToday(day)
+                                                                    ? filteredResult[day].length > 0 &&
+                                                                      selectedItems1.length ===
+                                                                          filteredResult[day].length
+                                                                    : filteredResult[day].length > 0 &&
+                                                                      selectedItems2.length ===
+                                                                          filteredResult[day].length
+                                                            }
+                                                            onChange={selectAll}
+                                                            value={day}
+                                                            name="checkbox-header-cell"
+                                                            color="primary"
+                                                            size="medium"
+                                                            data-cy={'table-header-checkbox'}
+                                                            data-testid={'checkboxHeader'}
+                                                        />
+                                                    ) : undefined
+                                                }
+                                                title={
+                                                    isToday(day) ? (
+                                                        selectedItems1.length > 0 ? (
+                                                            <Typography color={'primary'} variant={'subtitle2'}>
+                                                                {day} (
+                                                                {selectedItems1.length > 0 ? selectedItems1.length : ''}
+                                                                )
+                                                            </Typography>
+                                                        ) : (
+                                                            <Typography color={'primary'} variant={'subtitle2'}>
+                                                                {day}
+                                                            </Typography>
+                                                        )
+                                                    ) : selectedItems2.length > 0 ? (
+                                                        <Typography color={'primary'} variant={'subtitle2'}>
+                                                            {day} (
+                                                            {selectedItems2.length > 0 ? selectedItems2.length : ''})
+                                                        </Typography>
+                                                    ) : (
+                                                        <Typography color={'primary'} variant={'subtitle2'}>
+                                                            {day}
+                                                        </Typography>
+                                                    )
+                                                }
+                                                divider={'full'}
+                                                dense
+                                                hidePadding
+                                            />
+                                        </div>
+                                    ) : undefined}
+                                </div>
+                                <InfoListItem
+                                    key={index}
+                                    data-testid="infoListItem"
+                                    data-cy={'list-content'}
+                                    icon={
+                                        <Checkbox
+                                            value={resultItem.name}
+                                            onChange={(): void => onSelect(resultItem)}
+                                            checked={isSelected(resultItem)}
+                                            name="checkbox-col-cell"
+                                            color="primary"
+                                            size="medium"
+                                        />
+                                    }
+                                    classes={{
+                                        icon: classes.listItemIcon,
+                                        title: classes.listItemTitle,
+                                        root: isSelected(resultItem) ? classes.listItemRoot : '',
+                                    }}
+                                    hidePadding
+                                    title={resultItem.name}
+                                    divider={filteredResult[day].length - 1 !== index || isMobile ? 'full' : undefined}
+                                />
+                            </div>
+                        ))}
+                    </CardContent>
+                </Card>
+            ) : (
+                emptyCard(day)
+            )}
+        </div>
+    );
 
     return (
-        <div style={{ backgroundColor: theme.palette.background.paper, minHeight: '100vh' }}>
+        <div>
             <AppBar position={'sticky'} classes={{ root: classes.appbarRoot }}>
                 <Toolbar classes={{ gutters: classes.toolbarGutters }}>
                     <Hidden mdUp={true}>
@@ -137,71 +427,39 @@ export const MultiselectList = (): JSX.Element => {
                         Multiselect List
                     </Typography>
                     <Spacer />
-                    <Tooltip title={'Add an item'}>
-                        <IconButton
-                            edge={'end'}
-                            id={'add-item-button'}
-                            data-cy={'toolbar-add'}
-                            color={'inherit'}
-                            aria-label={'add'}
-                            onClick={onAddItem}
-                        >
-                            <AddIcon />
-                        </IconButton>
-                    </Tooltip>
-                </Toolbar>
-            </AppBar>
-            {list.length < 1 && <EmptyState onAddItem={onAddItem} />}
-            <List data-cy={'list-content'} className={'list'}>
-                {list.map((item, index) => (
-                    <InfoListItem
-                        key={`listItem_${index}`}
-                        icon={
-                            <Checkbox
-                                className={'checkbox'}
-                                value={item.name}
-                                onChange={(): void => onSelect(item)}
-                                checked={isSelected(item)}
-                            />
-                        }
-                        title={item.name}
-                        subtitle={item.details}
-                        chevron
-                    >
-                        {' '}
-                    </InfoListItem>
-                ))}
-            </List>
-            <Snackbar
-                data-cy="snack-bar"
-                action={
-                    <>
-                        <Tooltip title={'Delete selected'}>
-                            <IconButton
-                                id={'remove-items-button'}
-                                onClick={onDelete}
-                                data-cy={'snackbar-delete'}
-                                color={'inherit'}
-                            >
+                    <Hidden mdUp={true}>
+                        {selectedItems1.length !== 0 || selectedItems2.length !== 0 ? (
+                            <IconButton data-cy="delete-btn" color={'inherit'} onClick={onDelete} edge={'end'}>
                                 <DeleteIcon />
                             </IconButton>
-                        </Tooltip>
-                        <Tooltip title={'Cancel'}>
-                            <IconButton
-                                id={'cancel-button'}
-                                onClick={onCancel}
-                                data-cy={'snackbar-cancel'}
-                                color={'inherit'}
-                            >
-                                <CancelIcon />
-                            </IconButton>
-                        </Tooltip>
-                    </>
-                }
-                message={`${selectedItems.length} selected item${selectedItems.length > 1 ? 's' : ''}`}
-                open={selectedItems.length > 0}
-                classes={{ root: classes.snackbar }}
-            />
+                        ) : (
+                            ''
+                        )}
+                    </Hidden>
+                </Toolbar>
+            </AppBar>
+            <div className={classes.exampleContainer}>
+                <Hidden smDown={true}>
+                    <div className={classes.deleteRow}>
+                        <Button
+                            data-testid="deleteButton"
+                            data-cy="delete-btn"
+                            variant={'contained'}
+                            color={'inherit'}
+                            className={classes.deleteBtn}
+                            startIcon={<DeleteIcon />}
+                            disabled={selectedItems1.length === 0 && selectedItems2.length === 0}
+                            onClick={onDelete}
+                        >
+                            DELETE
+                        </Button>
+                    </div>
+                </Hidden>
+
+                {days.map((day, index) => (
+                    <div key={`item-${index}`}>{getCardContent(day)}</div>
+                ))}
+            </div>
         </div>
     );
 };

@@ -20,10 +20,10 @@ import { makeStyles, Theme, useTheme } from '@material-ui/core/styles';
 import CloseIcon from '@material-ui/icons/Close';
 import MenuIcon from '@material-ui/icons/Menu';
 import DeleteIcon from '@material-ui/icons/Delete';
-import { Spacer } from '@pxblue/react-components';
+import { Spacer } from '@brightlayer-ui/react-components';
 import { useDispatch } from 'react-redux';
 import { TOGGLE_DRAWER } from '../../../redux/actions';
-import * as colors from '@pxblue/colors';
+import * as colors from '@brightlayer-ui/colors';
 import clsx from 'clsx';
 
 export type ListItemType = {

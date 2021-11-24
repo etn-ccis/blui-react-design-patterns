@@ -19,7 +19,7 @@ import { useDispatch } from 'react-redux';
 
 // Other
 import { createStyles, makeStyles, Theme, useTheme } from '@material-ui/core/styles';
-import { InfoListItem, Spacer } from '@pxblue/react-components';
+import { InfoListItem, Spacer } from '@brightlayer-ui/react-components';
 import { DRAWER_WIDTH } from '../../../assets/constants';
 import clsx from 'clsx';
 import { ArrowBack } from '@material-ui/icons';
@@ -109,7 +109,7 @@ export const SearchBar = (): JSX.Element => {
         <div style={{ minHeight: '100vh' }}>
             {/* The Regular App Bar */}
             <AppBar
-                data-cy="pxb-toolbar"
+                data-cy="blui-toolbar"
                 position={'sticky'}
                 classes={{ root: classes.appbarRoot }}
                 className={clsx(classes.appbar, classes.regularBar, searchActive && classes.searchActive)}

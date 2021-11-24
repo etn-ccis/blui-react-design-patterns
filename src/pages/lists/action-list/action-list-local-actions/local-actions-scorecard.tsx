@@ -30,7 +30,7 @@ export const LocalActionsScoreCard = (): JSX.Element => {
     const classes = useStyles(theme);
 
     return (
-        <ScoreCard style={{ minWidth: 350, maxWidth: 416 }}
+        <ScoreCard style={{ minWidth: 350, maxWidth: 416, marginTop: 16, marginLeft: 16 }}
             classes={{
                 header: classes.scorecardHeader,
                 headerContent: classes.scorecardHeaderContent,

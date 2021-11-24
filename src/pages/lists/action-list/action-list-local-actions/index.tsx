@@ -239,7 +239,7 @@ export const ActionListLocalActions = (): JSX.Element => {
               tempTitle = 'Local Item Actions';
               break;
             case 'batteryServiceScreen':
-                tempTitle = 'Battery Bypass Frequency';
+                tempTitle = 'Battery Service';
               break;
             case 'editDeviceScreen':
                 tempTitle = 'Language';

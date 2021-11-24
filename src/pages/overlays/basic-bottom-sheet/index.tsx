@@ -15,9 +15,9 @@ import {
 } from '@material-ui/core';
 import { MoreVert, NotificationsActive, Notifications, Done, GetApp, Close } from '@material-ui/icons';
 import MenuIcon from '@material-ui/icons/Menu';
-import * as colors from '@pxblue/colors';
+import * as colors from '@brightlayer-ui/colors';
 import alarms, { formatDate, Alarm } from './alarmData';
-import { InfoListItem, Spacer } from '@pxblue/react-components';
+import { InfoListItem, Spacer } from '@brightlayer-ui/react-components';
 import { useDispatch } from 'react-redux';
 import { TOGGLE_DRAWER } from '../../../redux/actions';
 
@@ -56,7 +56,7 @@ export const BasicBottomSheet = (): JSX.Element => {
 
     return (
         <div style={{ backgroundColor: theme.palette.background.paper, minHeight: '100vh' }}>
-            <AppBar data-cy="pxb-toolbar" position={'sticky'} classes={{ root: classes.appbarRoot }}>
+            <AppBar data-cy="blui-toolbar" position={'sticky'} classes={{ root: classes.appbarRoot }}>
                 <Toolbar classes={{ gutters: classes.toolbarGutters }}>
                     <Hidden mdUp={true}>
                         <IconButton

@@ -8,8 +8,8 @@
 import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 
-import * as PXBThemes from '@pxblue/react-themes';
-import '@pxblue/react-themes/open-sans';
+import * as BLUIThemes from '@brightlayer-ui/react-themes';
+import '@brightlayer-ui/react-themes/open-sans';
 import React from 'react';
 import { render } from 'react-dom';
 import { createStore } from 'redux';
@@ -21,7 +21,7 @@ import { App } from './App';
 const store = createStore(Reducer());
 
 render(
-    <MuiThemeProvider theme={createMuiTheme(PXBThemes.blue)}>
+    <MuiThemeProvider theme={createMuiTheme(BLUIThemes.blue)}>
         <BrowserRouter>
             <Provider store={store}>
                 <CssBaseline />

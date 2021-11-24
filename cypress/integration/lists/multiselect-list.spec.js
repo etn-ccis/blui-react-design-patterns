@@ -7,7 +7,7 @@ describe('Multi-select list', () => {
     });
 
     it('should display page title', () => {
-        cy.get('[data-cy=pxb-toolbar]').should('contain', 'Multiselect List');
+        cy.get('[data-cy=blui-toolbar]').should('contain', 'Multiselect List');
     });
 
     it('should remove list items when delete button is clicked', () => {

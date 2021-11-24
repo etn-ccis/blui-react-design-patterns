@@ -7,7 +7,7 @@ describe('Form validation phone number', () => {
     });
 
     it('should display page title', () => {
-        cy.get('[data-cy=pxb-toolbar]')
+        cy.get('[data-cy=blui-toolbar]')
         .should('contain', 'Phone Number Format');
     });
 

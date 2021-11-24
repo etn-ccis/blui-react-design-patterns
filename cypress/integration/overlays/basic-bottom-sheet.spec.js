@@ -7,7 +7,7 @@ describe('Basic bottom sheet', () => {
     });
 
     it('should display page title', () => {
-        cy.get('[data-cy=pxb-toolbar]').should('contain', 'Basic Bottom Sheet');
+        cy.get('[data-cy=blui-toolbar]').should('contain', 'Basic Bottom Sheet');
     });
 
     it('should display bottom sheet and action items', () => {

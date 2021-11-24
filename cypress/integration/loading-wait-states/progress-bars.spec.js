@@ -7,7 +7,7 @@ describe('Progress bar loading', () => {
     });
 
     it('should display page title', () => {
-        cy.get('[data-cy=pxb-toolbar]').should('contain', 'Progress Bars')
+        cy.get('[data-cy=blui-toolbar]').should('contain', 'Progress Bars')
     });
 
     it('Should trigger progress bar on load', () => {

@@ -142,6 +142,20 @@ const getTitle = (deviceStatus: string, device: string, isMobile: boolean, class
     </div>
 );
 
+type Screens = 'localItemActionScreen'|'batteryServiceScreen'|'editDeviceScreen'|'mobileLanguageSelectScreen'|'desktopLanguageSelectScreen';
+
+/*
+batteryService chevron onClick -> batteryServiceScreen
+deviceItem edit onClick -> editDeviceScreen
+mobileLaguageSelectScreen -> mobileLanguageSelectScreen
+desktopLaguageSelect -> desktopLanguageSelectScreen
+home -> localItemActionScreen
+
+
+*/
+
+
+
 export const ActionListLocalActions = (): JSX.Element => {
     const dispatch = useDispatch();
     const theme = useTheme();
@@ -149,8 +163,9 @@ export const ActionListLocalActions = (): JSX.Element => {
     const classes = useStyles(theme);
     const [isEmailNotificationsEnabled, setIsEmailNotificationsEnabled] = useState(true);
     const [isSmsNotificationsEnabled, setIsSmsNotificationsEnabled] = useState(true);
-    const [showLocalActionScreen, setShowLocalActionScreen] = useState(true);
-    const [showBatteryServiceDetails, setShowBatteryServiceDetails] = useState(false);
+    const [activeScreen, setActiveScreen] = useState<Screens>('localItemActionScreen');
+    // const [showLocalActionScreen, setShowLocalActionScreen] = useState(true);
+    // const [showBatteryServiceDetails, setShowBatteryServiceDetails] = useState(false);
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const inputEl = useRef<HTMLInputElement>(null);
     const slideAnimationDurationMs = 250;
@@ -161,31 +176,31 @@ export const ActionListLocalActions = (): JSX.Element => {
         setAnchorEl(null);
     };
     useEffect(() => {
-        if (showBatteryServiceDetails && inputEl.current) {
+        if (activeScreen === 'editDeviceScreen' && inputEl.current) {
             inputEl.current.focus();
         }
-    }, [showBatteryServiceDetails]);
+    }, [activeScreen]);
 
     const onShowBatteryServiceDetailsClick = useCallback((): void => {
+        // setTimeout(() => {
+        // setShowLocalActionScreen(false);
         setTimeout(() => {
-        setShowLocalActionScreen(false);
-        setTimeout(() => {
-        setShowBatteryServiceDetails(true);
+        setActiveScreen('batteryServiceScreen');
         }, slideAnimationDurationMs);
-        }, 2000);
+        // }, 2000);
     }, []);
 
     const onBackNavigation = useCallback((): void => {
-        setTimeout(() => {
-            setShowBatteryServiceDetails(false);
+        // setTimeout(() => {
+            // setShowBatteryServiceDetails(false);
             setTimeout(() => {
-                setShowLocalActionScreen(true);
+                setActiveScreen('localItemActionScreen');
             }, slideAnimationDurationMs);
-        }, 2000);
+        // }, 2000);
     }, []);
 
     const getToolbarIcon = useCallback((): ReactNode => {
-        if (showLocalActionScreen) {
+        if (activeScreen==='localItemActionScreen') {
             return (
                 <Hidden mdUp={true}>
                     <IconButton
@@ -215,7 +230,29 @@ export const ActionListLocalActions = (): JSX.Element => {
                 <ArrowBack />
             </IconButton>
         );
-    }, [showLocalActionScreen]);
+    }, [activeScreen]);
+
+    const getToolbarTitle = useCallback((): string => {
+        let tempTitle = '';
+        switch (activeScreen) {
+            case 'localItemActionScreen':
+              tempTitle = 'Local Item Actions';
+              break;
+            case 'batteryServiceScreen':
+                tempTitle = 'Battery Bypass Frequency';
+              break;
+            case 'editDeviceScreen':
+                tempTitle = 'Language';
+              break;
+            case 'mobileLanguageSelectScreen':
+                tempTitle = 'Language';
+              break;
+            default:
+                tempTitle = 'Local Item Actions';
+              break;
+          }
+          return tempTitle;
+    }, [activeScreen]);
 
     return (
         <div style={{ backgroundColor: theme.palette.background.default, minHeight: '100vh' }}>
@@ -223,14 +260,14 @@ export const ActionListLocalActions = (): JSX.Element => {
                 <Toolbar classes={{ gutters: classes.toolbarGutters }}>
                     {getToolbarIcon()}
                     <Typography variant={'h6'} color={'inherit'}>
-                        {showLocalActionScreen ? 'Local Item Actions' : 'Bypass Battery Frequency'}
+                        {getToolbarTitle()}
                     </Typography>
                     <Spacer />
                 </Toolbar>
             </AppBar>
             <Slide
                 direction={'right'}
-                in={showLocalActionScreen}
+                in={activeScreen === 'localItemActionScreen'}
                 mountOnEnter
                 unmountOnExit
                 timeout={slideAnimationDurationMs}
@@ -379,7 +416,9 @@ export const ActionListLocalActions = (): JSX.Element => {
                                     icon={<Language />}
                                     hidePadding
                                     iconAlign="center"
-                                    rightComponent={<LanguageSelect />}
+                                    rightComponent={isMobile ?<LanguageSelect /> : undefined}
+                                    chevron
+                                    onClick={():void => {if(isMobile) setActiveScreen('mobileLanguageSelectScreen')}}
                                 />
                             </List>
                         </AccordionDetails>
@@ -388,7 +427,7 @@ export const ActionListLocalActions = (): JSX.Element => {
             </Slide>
             <Slide
                 direction={'left'}
-                in={showBatteryServiceDetails}
+                in={activeScreen === 'batteryServiceScreen'}
                 mountOnEnter
                 unmountOnExit
                 timeout={slideAnimationDurationMs}
@@ -397,7 +436,17 @@ export const ActionListLocalActions = (): JSX.Element => {
                     <LocalActionsScoreCard />
                 </div>
             </Slide>
-            <LanguageSelectMobile />
+            <Slide
+                direction={'left'}
+                in={activeScreen === 'mobileLanguageSelectScreen'}
+                mountOnEnter
+                unmountOnExit
+                timeout={slideAnimationDurationMs}
+            >
+                <div>
+                    <LanguageSelectMobile />
+                </div>
+            </Slide>
         </div>
     );
 };

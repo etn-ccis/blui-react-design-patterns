@@ -22,7 +22,7 @@ import { ContactMail, HelpOutline, LocationOn, Menu } from '@material-ui/icons';
 import { makeStyles, Theme, useTheme } from '@material-ui/core/styles';
 import { useDispatch } from 'react-redux';
 import { TOGGLE_DRAWER } from '../../../redux/actions';
-import { Factory } from '@pxblue/icons-mui';
+import { Factory } from '@brightlayer-ui/icons-mui';
 import clsx from 'clsx';
 
 const mobileInputMarginSpacing = 4;
@@ -246,7 +246,7 @@ export const SectionedFormValidation = (): JSX.Element => {
 
     return (
         <>
-            <AppBar data-cy={'pxb-toolbar'} position={'sticky'} classes={{ root: classes.appbarRoot }}>
+            <AppBar data-cy={'blui-toolbar'} position={'sticky'} classes={{ root: classes.appbarRoot }}>
                 <Toolbar classes={{ gutters: classes.toolbarGutters }}>
                     <Hidden mdUp>
                         <IconButton

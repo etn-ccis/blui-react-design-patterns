@@ -7,7 +7,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import { IconButton, Hidden, useTheme } from '@material-ui/core';
 import { useDispatch } from 'react-redux';
 import { TOGGLE_DRAWER } from '../../../redux/actions';
-import { InfoListItem, ChannelValue } from '@pxblue/react-components';
+import { InfoListItem, ChannelValue } from '@brightlayer-ui/react-components';
 import { presidentsList } from './list';
 import { EmptyState } from './EmptyState';
 import { makeStyles } from '@material-ui/core/styles';
@@ -28,7 +28,7 @@ export const DataList = (): JSX.Element => {
 
     return (
         <div style={{ backgroundColor: theme.palette.background.paper, minHeight: '100vh' }}>
-            <AppBar data-cy="pxb-toolbar" position={'sticky'} classes={{ root: classes.appbarRoot }}>
+            <AppBar data-cy="blui-toolbar" position={'sticky'} classes={{ root: classes.appbarRoot }}>
                 <Toolbar classes={{ gutters: classes.toolbarGutters }}>
                     <Hidden mdUp={true}>
                         <IconButton

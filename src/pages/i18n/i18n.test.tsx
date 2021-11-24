@@ -7,7 +7,7 @@ import { Provider } from 'react-redux';
 import { I18N } from '.';
 import { Reducer } from '../../redux/reducers';
 import { Checkbox } from '@material-ui/core';
-import { InfoListItem } from '@pxblue/react-components';
+import { InfoListItem } from '@brightlayer-ui/react-components';
 import { english } from './translations/english';
 
 Enzyme.configure({ adapter: new Adapter() });

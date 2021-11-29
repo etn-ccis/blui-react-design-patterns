@@ -23,8 +23,8 @@ import { useDispatch } from 'react-redux';
 import { TOGGLE_DRAWER } from '../../../../redux/actions';
 import { InfoListItem, Spacer } from '@pxblue/react-components';
 import * as colors from '@pxblue/colors';
-import { LocalActionsScoreCard } from './local-actions-scorecard';
-import { LanguageSelect } from './local-actions-select-language';
+import { LocalActionsScoreCard } from './scorecard';
+import { LanguageSelect } from './select-language';
 import { LanguageSelectMobile } from './select-language-mobile';
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -416,7 +416,7 @@ export const ActionListLocalActions = (): JSX.Element => {
                                     icon={<Language />}
                                     hidePadding
                                     iconAlign="center"
-                                    rightComponent={isMobile ?<LanguageSelect /> : undefined}
+                                    rightComponent={isMobile ?<LanguageSelectMobile /> : <LanguageSelect />}
                                     chevron
                                     onClick={():void => {if(isMobile) setActiveScreen('mobileLanguageSelectScreen')}}
                                 />

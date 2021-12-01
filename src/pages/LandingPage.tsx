@@ -110,8 +110,8 @@ export const LandingPage = (): JSX.Element => {
                             <Typography variant={'body1'}>
                                 A <strong>design pattern</strong> is a common interaction or behavior that should be
                                 consistent across applications. In general, we follow most of the design patterns and
-                                behavior from the Material Design system. Brightlayer UI design patterns are patterns that
-                                extend/modify those from Material or are specific to Brightlayer UI applications.
+                                behavior from the Material Design system. Brightlayer UI design patterns are patterns
+                                that extend/modify those from Material or are specific to Brightlayer UI applications.
                             </Typography>
 
                             <Typography variant={'body1'}>
@@ -153,7 +153,10 @@ export const LandingPage = (): JSX.Element => {
                                 <Button target={'_blank'} href={'https://github.com/brightlayer-ui'}>
                                     Visit Us on GitHub
                                 </Button>
-                                <Button target={'_blank'} href={'https://github.com/brightlayer-ui/react-design-patterns'}>
+                                <Button
+                                    target={'_blank'}
+                                    href={'https://github.com/brightlayer-ui/react-design-patterns'}
+                                >
                                     Design Pattern Source on GitHub
                                 </Button>
                                 <Button target={'_blank'} href={'https://brightlayer-ui.github.io/roadmap'}>

@@ -12,7 +12,6 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 import Accordion from '@material-ui/core/Accordion';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
 import AccordionDetails from '@material-ui/core/AccordionDetails';
-// import FormControl from '@material-ui/core/FormControl';
 import MenuIcon from '@material-ui/icons/Menu';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -26,6 +25,7 @@ import * as colors from '@pxblue/colors';
 import { LocalActionsScoreCard } from './scorecard';
 import { LanguageSelect } from './select-language';
 import { LanguageSelectMobile } from './select-language-mobile';
+import { DeviceEdit } from './device-edit';
 
 const useStyles = makeStyles((theme: Theme) => ({
     appbarRoot: {
@@ -144,60 +144,51 @@ const getTitle = (deviceStatus: string, device: string, isMobile: boolean, class
 
 type Screens = 'localItemActionScreen'|'batteryServiceScreen'|'editDeviceScreen'|'mobileLanguageSelectScreen'|'desktopLanguageSelectScreen';
 
-/*
-batteryService chevron onClick -> batteryServiceScreen
-deviceItem edit onClick -> editDeviceScreen
-mobileLaguageSelectScreen -> mobileLanguageSelectScreen
-desktopLaguageSelect -> desktopLanguageSelectScreen
-home -> localItemActionScreen
-
-
-*/
-
-
-
 export const ActionListLocalActions = (): JSX.Element => {
     const dispatch = useDispatch();
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
     const classes = useStyles(theme);
+
     const [isEmailNotificationsEnabled, setIsEmailNotificationsEnabled] = useState(true);
     const [isSmsNotificationsEnabled, setIsSmsNotificationsEnabled] = useState(true);
     const [activeScreen, setActiveScreen] = useState<Screens>('localItemActionScreen');
-    // const [showLocalActionScreen, setShowLocalActionScreen] = useState(true);
-    // const [showBatteryServiceDetails, setShowBatteryServiceDetails] = useState(false);
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+    const [showDeviceEditDialog, setShowDeviceEditDialog] = useState(false);
+
     const inputEl = useRef<HTMLInputElement>(null);
     const slideAnimationDurationMs = 250;
-    const handleClick = (event: React.MouseEvent<HTMLButtonElement>): void => {
+
+    const onShowBatteryServiceDetailsClick = useCallback((): void => {
+        setTimeout(() => {
+        setActiveScreen('batteryServiceScreen');
+        }, slideAnimationDurationMs);
+    }, []);
+
+    const onBackNavigation = useCallback((): void => {
+            setTimeout(() => {
+                setActiveScreen('localItemActionScreen');
+            }, slideAnimationDurationMs);
+    }, []);
+
+    const openMenu = (event: React.MouseEvent<HTMLButtonElement>): void => {
         setAnchorEl(event.currentTarget);
     };
-    const handleClose = (): void => {
+
+    const closeMenu = (): void => {
         setAnchorEl(null);
     };
+
+    const handleEditDeviceClick = useCallback((): void => {
+        if (isMobile) setActiveScreen('editDeviceScreen')
+         setShowDeviceEditDialog(true);
+    }, [isMobile]);
+
     useEffect(() => {
         if (activeScreen === 'editDeviceScreen' && inputEl.current) {
             inputEl.current.focus();
         }
     }, [activeScreen]);
-
-    const onShowBatteryServiceDetailsClick = useCallback((): void => {
-        // setTimeout(() => {
-        // setShowLocalActionScreen(false);
-        setTimeout(() => {
-        setActiveScreen('batteryServiceScreen');
-        }, slideAnimationDurationMs);
-        // }, 2000);
-    }, []);
-
-    const onBackNavigation = useCallback((): void => {
-        // setTimeout(() => {
-            // setShowBatteryServiceDetails(false);
-            setTimeout(() => {
-                setActiveScreen('localItemActionScreen');
-            }, slideAnimationDurationMs);
-        // }, 2000);
-    }, []);
 
     const getToolbarIcon = useCallback((): ReactNode => {
         if (activeScreen==='localItemActionScreen') {
@@ -242,7 +233,7 @@ export const ActionListLocalActions = (): JSX.Element => {
                 tempTitle = 'Battery Service';
               break;
             case 'editDeviceScreen':
-                tempTitle = 'Language';
+                tempTitle = 'Device';
               break;
             case 'mobileLanguageSelectScreen':
                 tempTitle = 'Language';
@@ -307,7 +298,7 @@ export const ActionListLocalActions = (): JSX.Element => {
                                     hidePadding
                                     rightComponent={
                                         <>
-                                            <IconButton edge={'end'} onClick={handleClick}>
+                                            <IconButton edge={'end'} onClick={openMenu}>
                                                 <MoreVert />
                                             </IconButton>
                                             <Menu
@@ -316,11 +307,11 @@ export const ActionListLocalActions = (): JSX.Element => {
                                                 anchorEl={anchorEl}
                                                 keepMounted
                                                 open={Boolean(anchorEl)}
-                                                onClose={handleClose}
+                                                onClose={closeMenu}
                                             >
-                                                <MenuItem onClick={handleClose}>Edit</MenuItem>
-                                                <MenuItem onClick={handleClose}>Delete</MenuItem>
-                                                <MenuItem onClick={handleClose}>Export</MenuItem>
+                                                <MenuItem onClick={closeMenu}>Edit</MenuItem>
+                                                <MenuItem onClick={closeMenu}>Delete</MenuItem>
+                                                <MenuItem onClick={closeMenu}>Export</MenuItem>
                                             </Menu>
                                         </>
                                     }
@@ -333,7 +324,11 @@ export const ActionListLocalActions = (): JSX.Element => {
                                     title={getTitle('Device', 'A2 Max Reveal', isMobile, classes)}
                                     subtitleSeparator={' '}
                                     hidePadding
-                                    rightComponent={<Edit />}
+                                    rightComponent={
+                                    <IconButton edge={'end'} onClick={handleEditDeviceClick}>
+                                        <Edit />
+                                    </IconButton>
+                                    }
                                 />
                             </List>
                         </AccordionDetails>
@@ -416,7 +411,7 @@ export const ActionListLocalActions = (): JSX.Element => {
                                     icon={<Language />}
                                     hidePadding
                                     iconAlign="center"
-                                    rightComponent={isMobile ?<LanguageSelectMobile /> : <LanguageSelect />}
+                                    rightComponent={isMobile ? undefined : <LanguageSelect />}
                                     chevron
                                     onClick={():void => {if(isMobile) setActiveScreen('mobileLanguageSelectScreen')}}
                                 />
@@ -447,6 +442,10 @@ export const ActionListLocalActions = (): JSX.Element => {
                     <LanguageSelectMobile />
                 </div>
             </Slide>
+                <DeviceEdit 
+                open={showDeviceEditDialog}
+                handleClose={(): void => setShowDeviceEditDialog(false)}
+                />
         </div>
     );
 };

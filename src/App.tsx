@@ -151,7 +151,7 @@ export const App: React.FC = () => {
                             title: 'Brightlayer UI Components',
                             itemID: 'comp lib',
                             onClick: (): void => {
-                                window.open('https://pxblue-components.github.io/react/', '_blank');
+                                window.open('https://brightlayer-ui-components.github.io/react/', '_blank');
                             },
                             rightComponent: <OpenInNew />,
                         },
@@ -159,7 +159,7 @@ export const App: React.FC = () => {
                             title: 'Brightlayer UI React Guide',
                             itemID: 'react guide',
                             onClick: (): void => {
-                                window.open('https://pxblue.github.io/development/frameworks-web/react', '_blank');
+                                window.open('https://brightlayer-ui.github.io/development/frameworks-web/react', '_blank');
                             },
                             rightComponent: <OpenInNew />,
                             divider: false,

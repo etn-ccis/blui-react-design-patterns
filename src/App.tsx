@@ -159,7 +159,10 @@ export const App: React.FC = () => {
                             title: 'Brightlayer UI React Guide',
                             itemID: 'react guide',
                             onClick: (): void => {
-                                window.open('https://brightlayer-ui.github.io/development/frameworks-web/react', '_blank');
+                                window.open(
+                                    'https://brightlayer-ui.github.io/development/frameworks-web/react',
+                                    '_blank'
+                                );
                             },
                             rightComponent: <OpenInNew />,
                             divider: false,

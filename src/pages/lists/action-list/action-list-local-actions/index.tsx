@@ -142,7 +142,12 @@ const getTitle = (deviceStatus: string, device: string, isMobile: boolean, class
     </div>
 );
 
-type Screens = 'localItemActionScreen'|'batteryServiceScreen'|'editDeviceScreen'|'mobileLanguageSelectScreen'|'desktopLanguageSelectScreen';
+type Screens =
+    | 'localItemActionScreen'
+    | 'batteryServiceScreen'
+    | 'editDeviceScreen'
+    | 'mobileLanguageSelectScreen'
+    | 'desktopLanguageSelectScreen';
 
 export const ActionListLocalActions = (): JSX.Element => {
     const dispatch = useDispatch();
@@ -155,20 +160,21 @@ export const ActionListLocalActions = (): JSX.Element => {
     const [activeScreen, setActiveScreen] = useState<Screens>('localItemActionScreen');
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const [showDeviceEditDialog, setShowDeviceEditDialog] = useState(false);
+    const [subTitle, setSubTitle] = useState('A2 Max Reveal');
 
     const inputEl = useRef<HTMLInputElement>(null);
     const slideAnimationDurationMs = 250;
 
     const onShowBatteryServiceDetailsClick = useCallback((): void => {
         setTimeout(() => {
-        setActiveScreen('batteryServiceScreen');
+            setActiveScreen('batteryServiceScreen');
         }, slideAnimationDurationMs);
     }, []);
 
     const onBackNavigation = useCallback((): void => {
-            setTimeout(() => {
-                setActiveScreen('localItemActionScreen');
-            }, slideAnimationDurationMs);
+        setTimeout(() => {
+            setActiveScreen('localItemActionScreen');
+        }, slideAnimationDurationMs);
     }, []);
 
     const openMenu = (event: React.MouseEvent<HTMLButtonElement>): void => {
@@ -180,8 +186,8 @@ export const ActionListLocalActions = (): JSX.Element => {
     };
 
     const handleEditDeviceClick = useCallback((): void => {
-        if (isMobile) setActiveScreen('editDeviceScreen')
-         setShowDeviceEditDialog(true);
+        if (isMobile) setActiveScreen('editDeviceScreen');
+        setShowDeviceEditDialog(true);
     }, [isMobile]);
 
     useEffect(() => {
@@ -191,7 +197,7 @@ export const ActionListLocalActions = (): JSX.Element => {
     }, [activeScreen]);
 
     const getToolbarIcon = useCallback((): ReactNode => {
-        if (activeScreen==='localItemActionScreen') {
+        if (activeScreen === 'localItemActionScreen') {
             return (
                 <Hidden mdUp={true}>
                     <IconButton
@@ -212,9 +218,7 @@ export const ActionListLocalActions = (): JSX.Element => {
             <IconButton
                 data-cy="toolbar-menu"
                 color={'inherit'}
-                onClick={
-                    onBackNavigation
-                }
+                onClick={onBackNavigation}
                 edge={'start'}
                 style={{ marginRight: 20 }}
             >
@@ -227,22 +231,22 @@ export const ActionListLocalActions = (): JSX.Element => {
         let tempTitle = '';
         switch (activeScreen) {
             case 'localItemActionScreen':
-              tempTitle = 'Local Item Actions';
-              break;
+                tempTitle = 'Local Item Actions';
+                break;
             case 'batteryServiceScreen':
                 tempTitle = 'Battery Service';
-              break;
+                break;
             case 'editDeviceScreen':
                 tempTitle = 'Device';
-              break;
+                break;
             case 'mobileLanguageSelectScreen':
                 tempTitle = 'Language';
-              break;
+                break;
             default:
                 tempTitle = 'Local Item Actions';
-              break;
-          }
-          return tempTitle;
+                break;
+        }
+        return tempTitle;
     }, [activeScreen]);
 
     return (
@@ -321,13 +325,13 @@ export const ActionListLocalActions = (): JSX.Element => {
                                         listItemText: classes.listItemText,
                                     }}
                                     data-testid="ListInfoListItem"
-                                    title={getTitle('Device', 'A2 Max Reveal', isMobile, classes)}
+                                    title={getTitle('Device', subTitle, isMobile, classes)}
                                     subtitleSeparator={' '}
                                     hidePadding
                                     rightComponent={
-                                    <IconButton edge={'end'} onClick={handleEditDeviceClick}>
-                                        <Edit />
-                                    </IconButton>
+                                        <IconButton edge={'end'} onClick={handleEditDeviceClick}>
+                                            <Edit />
+                                        </IconButton>
                                     }
                                 />
                             </List>
@@ -337,7 +341,7 @@ export const ActionListLocalActions = (): JSX.Element => {
                         key={'Notifications'}
                         data-testid="NotificationListAccordion"
                         defaultExpanded={true}
-                        TransitionProps={{in: true}}
+                        TransitionProps={{ in: true }}
                         classes={{ root: classes.accordionRoot }}
                     >
                         <AccordionSummary>
@@ -391,9 +395,11 @@ export const ActionListLocalActions = (): JSX.Element => {
                         key={'Locale'}
                         data-testid="LocaleListAccordion"
                         defaultExpanded={true}
-                        TransitionProps={{in: true}}
+                        TransitionProps={{ in: true }}
                         classes={{ root: classes.accordionRoot }}
-                        onChange={(event: any):void => {event.preventDefault()}}
+                        onChange={(event: any): void => {
+                            event.preventDefault();
+                        }}
                     >
                         <AccordionSummary>
                             <Typography variant={'subtitle2'} color={'primary'}>
@@ -413,7 +419,9 @@ export const ActionListLocalActions = (): JSX.Element => {
                                     iconAlign="center"
                                     rightComponent={isMobile ? undefined : <LanguageSelect />}
                                     chevron
-                                    onClick={():void => {if(isMobile) setActiveScreen('mobileLanguageSelectScreen')}}
+                                    onClick={(): void => {
+                                        if (isMobile) setActiveScreen('mobileLanguageSelectScreen');
+                                    }}
                                 />
                             </List>
                         </AccordionDetails>
@@ -442,10 +450,16 @@ export const ActionListLocalActions = (): JSX.Element => {
                     <LanguageSelectMobile />
                 </div>
             </Slide>
-                <DeviceEdit 
+            <DeviceEdit
                 open={showDeviceEditDialog}
                 handleClose={(): void => setShowDeviceEditDialog(false)}
-                />
+                subTitle={subTitle}
+                updateSubTitle={(updatedSubTitle): void => {
+                    // eslint-disable-next-line no-console
+                    console.log('updatedSub; ', updatedSubTitle);
+                    setSubTitle(updatedSubTitle);
+                }}
+            />
         </div>
     );
 };

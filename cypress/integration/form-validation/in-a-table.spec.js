@@ -7,6 +7,6 @@ describe('Form validation in a table', () => {
     });
 
     it('should display page title', () => {
-        cy.get('[data-cy=pxb-toolbar]').should('contain', 'In a Table');
+        cy.get('[data-cy=blui-toolbar]').should('contain', 'In a Table');
     });
 });

@@ -1854,6 +1854,64 @@
   resolved "https://registry.yarnpkg.com/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz#75a2e8b51cb758a7553d6804a5932d7aace75c39"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
+"@brightlayer-ui/colors@^3.0.0":
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/@brightlayer-ui/colors/-/colors-3.0.1.tgz#f085acf6b6b4266a01798c78bc25841d15e44b3e"
+  integrity sha512-AE9F6FN1EQWMoqFTak6q8MN3wg9et2u2SUs6HjYhcS3GVSHjMWVSsuJZ2aD5Lu9409Gfi6pBHDWsJZ5PyeLsdQ==
+  dependencies:
+    "@brightlayer-ui/types" "^2.0.0"
+
+"@brightlayer-ui/eslint-config@^2.0.0":
+  version "2.0.5"
+  resolved "https://registry.yarnpkg.com/@brightlayer-ui/eslint-config/-/eslint-config-2.0.5.tgz#b7ee0c47f4669d2ecefc45d5fc37d7a9e209ccc9"
+  integrity sha512-qUxNX/1z+cmBWzbOeFftxGD7SPT+xkT1rUj++xsZjIQajEkwF1Ka+0mRlSY5qqAsQpRLGDCHDszx8uztmSm1lA==
+  dependencies:
+    "@typescript-eslint/parser" "^4.8.0"
+    eslint-config-prettier ">= 6.3.0"
+  optionalDependencies:
+    eslint-plugin-react "^7.16.0"
+
+"@brightlayer-ui/icons-mui@^2.4.0":
+  version "2.7.0"
+  resolved "https://registry.yarnpkg.com/@brightlayer-ui/icons-mui/-/icons-mui-2.7.0.tgz#8ac5b600bc236109524e2b7a969d8b884ffa90b6"
+  integrity sha512-xdfwrB7BTjTiK7npst6v2QfMpuB6FVuu32/O7w3TxylR4YLnBLWujW+q2MKYyx1rEXEjXD0YzZrXNjPW0eSgjg==
+
+"@brightlayer-ui/prettier-config@^1.0.2":
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/@brightlayer-ui/prettier-config/-/prettier-config-1.0.3.tgz#e40a7ae7435c6fd5118acbf249080e0aa81e93af"
+  integrity sha512-EYm3+V7Qd+oYEF+8FadsXAZqXryEHHbGnrV1BMp9selhABjceqUqXPVE4Sn3SKWQdBNJ3En2A3EzgrzRbvRTaw==
+
+"@brightlayer-ui/react-components@^5.3.0":
+  version "5.3.2"
+  resolved "https://registry.yarnpkg.com/@brightlayer-ui/react-components/-/react-components-5.3.2.tgz#7b136973fb29ce7fe9ec19ac63769aaf76412f9b"
+  integrity sha512-xSMnTnysGUNGCABeuKjqBWwzFobkP+8JKgqhjk+aDZUMjzMEPLiX9Ufi7zakap/PO6G77KjaDQyE8ubd/yDz1g==
+  dependencies:
+    "@brightlayer-ui/colors" "^3.0.0"
+    color "^3.1.2"
+
+"@brightlayer-ui/react-progress-icons@^2.0.0":
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/@brightlayer-ui/react-progress-icons/-/react-progress-icons-2.1.1.tgz#a23cbababa12fa3c50a1206a33709cef56d8ee7d"
+  integrity sha512-pNQ62FbWZdVla0RAneBDdUevTBS+C6MsyLLdTaWVoOvhltKDwWGTGuWw2xm0bLFUmZn1VvBB/rmDaRi85x4vAA==
+  dependencies:
+    clsx "^1.1.1"
+    color "^3.1.2"
+    react-jss "^10.4.0"
+
+"@brightlayer-ui/react-themes@^6.0.0":
+  version "6.1.0"
+  resolved "https://registry.yarnpkg.com/@brightlayer-ui/react-themes/-/react-themes-6.1.0.tgz#d53a89adaaeb9fb665a07f076505ea654ec04afb"
+  integrity sha512-x3EIEULFjtMLFxJG2zBwx4vTgGBQeqlz2wS0V+xZft9oi/iWDwnQsBL95dgQXBJWDdRNzm8M8VpT3AbsdxLs+Q==
+  dependencies:
+    "@brightlayer-ui/colors" "^3.0.0"
+    "@fontsource/open-sans" "^4.2.2"
+    color "^3.1.3"
+
+"@brightlayer-ui/types@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@brightlayer-ui/types/-/types-2.0.0.tgz#d8adc0cdb96c164943adbad6e74043128a8b4112"
+  integrity sha512-DTCVwND6YC9qrkQl7pkFlN6QxDReJHtjuAiFU9HkXJN368vlw+fzHQ5/j4sB1sZl2eNwOgccv5ecl2XrlolOCw==
+
 "@cnakazawa/watch@^1.0.3":
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/@cnakazawa/watch/-/watch-1.0.4.tgz#f864ae85004d0fcab6f50be9141c4da368d1656a"
@@ -2499,64 +2557,6 @@
     native-url "^0.2.6"
     schema-utils "^2.6.5"
     source-map "^0.7.3"
-
-"@pxblue/colors@^3.0.0":
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/@pxblue/colors/-/colors-3.0.0.tgz#080fb5cfd5a08fea018ece7cac8022ed38f7878f"
-  integrity sha512-rMFW4an1V9M5KX4BiNzrbbaYe2fic4o9iGL8/bPYvITbeiwgAapyFX0VbMIoo8XKlIbNaxyn7oWnrxzI/tp8Rw==
-  dependencies:
-    "@pxblue/types" "^2.0.0"
-
-"@pxblue/eslint-config@^2.0.0":
-  version "2.0.4"
-  resolved "https://registry.yarnpkg.com/@pxblue/eslint-config/-/eslint-config-2.0.4.tgz#b22d637e2e8bbf1d8606de99bfd7e95f3af2ce34"
-  integrity sha512-PDBj5dhi/6c14/QYhoFLTkMnrYRTKw8hW7AuFq/9wc7pJ4MdSOF3i5MJH1NZ1p9chBl9na4ZASPeHWsDCvvk8A==
-  dependencies:
-    "@typescript-eslint/parser" "^4.8.0"
-    eslint-config-prettier ">= 6.3.0"
-  optionalDependencies:
-    eslint-plugin-react "^7.16.0"
-
-"@pxblue/icons-mui@^2.4.0":
-  version "2.4.0"
-  resolved "https://registry.yarnpkg.com/@pxblue/icons-mui/-/icons-mui-2.4.0.tgz#12576ce8053fb11c96c93a1d63d81ec0abd0eb35"
-  integrity sha512-P8oWO2XE0MCNCnMqkw4f470wvMoCnKlxVJ3TnlG6r12B4Q0rdS0z5M2pooZDdt8/bZt4yKwn59OOigElADKcGA==
-
-"@pxblue/prettier-config@^1.0.2":
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/@pxblue/prettier-config/-/prettier-config-1.0.2.tgz#fb00503df6557b66c3d91d43c9101e614c35d2ec"
-  integrity sha512-/3cLBoTjZs3kV1ATPA/Sp0tsL7XmlV/b8HW/qt0jqR/uP5+cdXL2YIhMXQngLRa7PhpSkEiRIYK5sl0rKsXTUg==
-
-"@pxblue/react-components@^5.3.0":
-  version "5.3.0"
-  resolved "https://registry.yarnpkg.com/@pxblue/react-components/-/react-components-5.3.0.tgz#47d04070c5e87d8852ee9bcbe29dfaaa632ce939"
-  integrity sha512-ZRrg8iLv3aeD7CZ4eVGxu8Wt/oSGOAWTkljpfMBPGqsmbSxoGNPJoTerHtz9OHxVHHCBZ6H0JhOsr8NdyfxlLQ==
-  dependencies:
-    "@pxblue/colors" "^3.0.0"
-    color "^3.1.2"
-
-"@pxblue/react-progress-icons@^2.0.0":
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/@pxblue/react-progress-icons/-/react-progress-icons-2.1.0.tgz#cc93108941d286835b8d1e54804e7f75094a89da"
-  integrity sha512-qttgVZ13pM3HDc+mK5UjOeaPlje0zTb3+Q+3WvaqVPufUITXq7seZpwHvFHT0yakKizCBKlRAhanw02yuc2Ehw==
-  dependencies:
-    clsx "^1.1.1"
-    color "^3.1.2"
-    react-jss "^10.4.0"
-
-"@pxblue/react-themes@^6.0.0":
-  version "6.0.0"
-  resolved "https://registry.yarnpkg.com/@pxblue/react-themes/-/react-themes-6.0.0.tgz#35ce84165263d8721bde638ed594f820c408727c"
-  integrity sha512-KiDJjMK3Dg45VayemC+NNIPAXA0kX0ExrBcln4wYn/yVfzH9/fK5GZF1yya6i3LWgHJYQo40Z6dCluFgn0GzvQ==
-  dependencies:
-    "@fontsource/open-sans" "^4.2.2"
-    "@pxblue/colors" "^3.0.0"
-    color "^3.1.3"
-
-"@pxblue/types@^2.0.0":
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/@pxblue/types/-/types-2.0.0.tgz#3df970352aca5256974a10a97d75a2264bad1eba"
-  integrity sha512-rHABCqYALGjrDxdCfw/v4mFsHhE9y9+vdSD3VHfIzA3HY1g1Bp/VWwEuEXWbtj2H5n75D+jkMQZ0rTqSKY3vLw==
 
 "@rollup/plugin-node-resolve@^7.1.1":
   version "7.1.3"

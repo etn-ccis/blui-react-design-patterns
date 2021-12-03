@@ -7,7 +7,7 @@ describe('Loading states', () => {
     });
 
     it('should display page title', () => {
-        cy.get('[data-cy=pxb-toolbar]').should('contain', 'Spinner Overlays')
+        cy.get('[data-cy=blui-toolbar]').should('contain', 'Spinner Overlays')
     });
 
     it('Should trigger spinner loading overlay on reload ', () => {

@@ -1,8 +1,8 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Skeleton from '@material-ui/lab/Skeleton';
-import { InfoListItem } from '@pxblue/react-components';
-import * as colors from '@pxblue/colors';
+import { InfoListItem } from '@brightlayer-ui/react-components';
+import * as colors from '@brightlayer-ui/colors';
 import { KeyboardArrowRight } from '@material-ui/icons';
 import Color from 'color';
 

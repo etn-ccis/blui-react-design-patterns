@@ -1,4 +1,4 @@
-import { InfoListItemProps } from '@pxblue/react-components';
+import { InfoListItemProps } from '@brightlayer-ui/react-components';
 
 export type SortableListItemProps = Partial<InfoListItemProps> & {
     listItem: string;

@@ -15,7 +15,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import useTheme from '@material-ui/core/styles/useTheme';
 import { Theme } from '@material-ui/core/styles/createMuiTheme';
 import makeStyles from '@material-ui/core/styles/makeStyles';
-import { InfoListItem } from '@pxblue/react-components';
+import { InfoListItem } from '@brightlayer-ui/react-components';
 import { useDispatch } from 'react-redux';
 import { TOGGLE_DRAWER } from '../../../../redux/actions';
 
@@ -192,7 +192,7 @@ export const ActionListPanelHeader = (): JSX.Element => {
 
     return (
         <div className={classes.actionList}>
-            <AppBar data-cy={'pxb-toolbar'} position={'sticky'} classes={{ root: classes.appbarRoot }}>
+            <AppBar data-cy={'blui-toolbar'} position={'sticky'} classes={{ root: classes.appbarRoot }}>
                 <Toolbar classes={{ gutters: classes.toolbarGutters }}>
                     <Hidden mdUp={true}>
                         <IconButton

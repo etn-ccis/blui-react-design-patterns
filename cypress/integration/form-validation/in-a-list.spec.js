@@ -7,7 +7,7 @@ describe('Form validation in a list', () => {
     });
 
     it('should display page title', () => {
-        cy.get('[data-cy=pxb-toolbar]').should('contain', 'In a List');
+        cy.get('[data-cy=blui-toolbar]').should('contain', 'In a List');
     });
 
     it('should display ip address left aligned', () => {

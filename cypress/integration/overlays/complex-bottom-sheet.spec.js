@@ -9,7 +9,7 @@ describe('Complex bottom sheet', () => {
     });
 
     it('should display page title', () => {
-        cy.get('[data-cy=pxb-toolbar]').should('contain', 'Complex Bottom Sheet');
+        cy.get('[data-cy=blui-toolbar]').should('contain', 'Complex Bottom Sheet');
     });
 
     it('should dismiss overlay when page is selected', () => {

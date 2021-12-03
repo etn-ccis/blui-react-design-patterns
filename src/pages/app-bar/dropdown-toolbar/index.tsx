@@ -2,7 +2,7 @@ import React, { useCallback, useState } from 'react';
 import { AppBar, Drawer, Hidden, List, ListItem, ListItemText, Toolbar, IconButton } from '@material-ui/core';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import MenuIcon from '@material-ui/icons/Menu';
-import { DropdownToolbar } from '@pxblue/react-components';
+import { DropdownToolbar } from '@brightlayer-ui/react-components';
 import { useDispatch } from 'react-redux';
 import { TOGGLE_DRAWER } from '../../../redux/actions';
 
@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
 }));
 
-export const PxbDropdownToolbar = (): JSX.Element => {
+export const BluiDropdownToolbar = (): JSX.Element => {
     const dispatch = useDispatch();
     const classes = useStyles();
     const [showMenu, setShowMenu] = useState<boolean>(false);

@@ -12,7 +12,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import useTheme from '@material-ui/core/styles/useTheme';
 import { Theme } from '@material-ui/core/styles/createMuiTheme';
 import makeStyles from '@material-ui/core/styles/makeStyles';
-import { EmptyState, InfoListItem, Spacer } from '@pxblue/react-components';
+import { EmptyState, InfoListItem, Spacer } from '@brightlayer-ui/react-components';
 import { useDispatch } from 'react-redux';
 import { TOGGLE_DRAWER } from '../../../../redux/actions';
 import AddIcon from '@material-ui/icons/Add';
@@ -144,7 +144,7 @@ export const ActionListButtonPanel = (): JSX.Element => {
 
     return (
         <div className={classes.container}>
-            <AppBar data-cy={'pxb-toolbar'} position={'sticky'} classes={{ root: classes.appbarRoot }}>
+            <AppBar data-cy={'blui-toolbar'} position={'sticky'} classes={{ root: classes.appbarRoot }}>
                 <Toolbar classes={{ gutters: classes.toolbarGutters }}>
                     <Hidden mdUp={true}>
                         <IconButton

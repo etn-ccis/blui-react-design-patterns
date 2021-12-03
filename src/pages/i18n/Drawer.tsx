@@ -21,7 +21,7 @@ import HelpIcon from '@material-ui/icons/Help';
 
 import { english } from './translations/english';
 import './translations/i18n';
-import { InfoListItem } from '@pxblue/react-components';
+import { InfoListItem } from '@brightlayer-ui/react-components';
 
 const useStyles = makeStyles((theme: Theme) => ({
     drawer: {
@@ -85,7 +85,7 @@ export const Drawer = (props: DrawerProps): JSX.Element => {
                     <BoltIcon style={{ fontSize: '64px', transform: 'rotate(42deg)' }} />
                     <div style={{ padding: theme.spacing(0.5) }}>
                         <Typography variant={'h5'} color={'inherit'}>
-                            PX {t('BLUE')}
+                            {t('Brightlayer')} UI
                         </Typography>
                         <Typography variant={'subtitle1'} color={'inherit'}>
                             {t('I18N')}

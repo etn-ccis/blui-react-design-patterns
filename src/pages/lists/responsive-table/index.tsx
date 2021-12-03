@@ -17,7 +17,7 @@ import { Menu as MenuIcon } from '@material-ui/icons';
 
 import { useDispatch } from 'react-redux';
 import { TOGGLE_DRAWER } from '../../../redux/actions';
-import { InfoListItem } from '@pxblue/react-components';
+import { InfoListItem } from '@brightlayer-ui/react-components';
 
 import './index.css';
 import { makeStyles } from '@material-ui/core';
@@ -64,7 +64,7 @@ export const ResponsiveTable = (): JSX.Element => {
                 minHeight: '100vh',
             }}
         >
-            <AppBar data-cy="pxb-toolbar" position="sticky" classes={{ root: classes.appbarRoot }}>
+            <AppBar data-cy="blui-toolbar" position="sticky" classes={{ root: classes.appbarRoot }}>
                 <Toolbar classes={{ gutters: classes.toolbarGutters }}>
                     <Hidden mdUp>
                         <IconButton

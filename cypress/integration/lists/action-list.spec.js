@@ -7,7 +7,7 @@ describe('Action list', () => {
     });
 
     it('should display page title', () => {
-        cy.get('[data-cy=pxb-toolbar]').should('contain', 'Action List');
+        cy.get('[data-cy=blui-toolbar]').should('contain', 'Action List');
     });
     
     it('should add list items when add is clicked', () => {
@@ -32,7 +32,7 @@ describe('Action list', () => {
         cy.get('[data-cy=toolbar-delete]').click()
         cy.get('[data-cy=list-content]').children().should('have.length', '0');
         cy.contains('No Items Found');
-        cy.get('[data-cy=pxb-empty-state-add]').click()
+        cy.get('[data-cy=blui-empty-state-add]').click()
         cy.get('[data-cy=list-content]').children().should('have.length', '1');
     });
 });

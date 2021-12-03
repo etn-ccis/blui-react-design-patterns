@@ -7,6 +7,6 @@ describe('Action list inline', () => {
     });
 
     it('should display page title', () => {
-        cy.get('[data-cy=pxb-toolbar] > .MuiToolbar-root').should('contain', 'Local Item Actions');
+        cy.get('[data-cy=blui-toolbar] > .MuiToolbar-root').should('contain', 'Local Item Actions');
     });
 });

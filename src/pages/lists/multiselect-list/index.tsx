@@ -19,9 +19,9 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import MenuIcon from '@material-ui/icons/Menu';
 import { TOGGLE_DRAWER } from '../../../redux/actions';
 import { useDispatch } from 'react-redux';
-import { InfoListItem, Spacer } from '@pxblue/react-components';
+import { InfoListItem, Spacer } from '@brightlayer-ui/react-components';
 
-import * as colors from '@pxblue/colors';
+import * as colors from '@brightlayer-ui/colors';
 
 export type ListItemType = {
     id: number;
@@ -423,7 +423,7 @@ export const MultiselectList = (): JSX.Element => {
                             <MenuIcon />
                         </IconButton>
                     </Hidden>
-                    <Typography variant={'h6'} data-cy={'pxb-toolbar'} color={'inherit'}>
+                    <Typography variant={'h6'} data-cy={'blui-toolbar'} color={'inherit'}>
                         Multiselect List
                     </Typography>
                     <Spacer />

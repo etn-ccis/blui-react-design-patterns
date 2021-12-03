@@ -7,7 +7,7 @@ describe('Data list', () => {
     });
 
     it('should display page title', () => {
-        cy.get('[data-cy=pxb-toolbar]').should('contain', 'Data List');
+        cy.get('[data-cy=blui-toolbar]').should('contain', 'Data List');
     });
 
     it('should display list', () => {

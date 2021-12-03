@@ -22,9 +22,9 @@ import HelpIcon from '@material-ui/icons/Help';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { useDispatch } from 'react-redux';
 import { TOGGLE_DRAWER } from '../../../redux/actions';
-import { InfoListItem, ListItemTag, Spacer } from '@pxblue/react-components';
-import * as colors from '@pxblue/colors';
-import { Maintenance } from '@pxblue/icons-mui';
+import { InfoListItem, ListItemTag, Spacer } from '@brightlayer-ui/react-components';
+import * as colors from '@brightlayer-ui/colors';
+import { Maintenance } from '@brightlayer-ui/icons-mui';
 
 const useStyles = makeStyles((theme: Theme) => ({
     appbarRoot: {
@@ -232,7 +232,7 @@ export const StatusList = (): JSX.Element => {
 
     return (
         <div style={{ backgroundColor: theme.palette.background.default, minHeight: '100vh' }}>
-            <AppBar data-cy="pxb-toolbar" position={'sticky'} classes={{ root: classes.appbarRoot }}>
+            <AppBar data-cy="blui-toolbar" position={'sticky'} classes={{ root: classes.appbarRoot }}>
                 <Toolbar classes={{ gutters: classes.toolbarGutters }}>
                     <Hidden mdUp={true}>
                         <IconButton

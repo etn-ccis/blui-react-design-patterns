@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
@@ -21,6 +21,20 @@ const useStyles = makeStyles(() =>
             width: 450,
             height: 600,
         },
+        dialogActions: {
+            flexDirection:'column',
+            padding: 0,
+        },
+        dialogButton: {
+            margin: '16px',
+            width: 'calc(100% - 32px)',
+        },
+        dialogDivider: {
+            width:'100%',
+        },
+        textField: {
+            marginTop: '32px'
+        }
     })
 );
 
@@ -29,12 +43,7 @@ export const DeviceEdit = (props: DialogProps): JSX.Element => {
     const { open, handleClose, subTitle = '', updateSubTitle } = props;
     const [tempSubTitle, setTempSubTitle] = useState(subTitle);
     const onSubmit = (): void => {
-        // eslint-disable-next-line no-console
-        console.log('tempSub; ',tempSubTitle)
-        // pass subTitle to parent
         updateSubTitle(tempSubTitle);
-
-        // call the onClose
         handleClose();
     };
 
@@ -42,6 +51,10 @@ export const DeviceEdit = (props: DialogProps): JSX.Element => {
         setTempSubTitle(subTitle)
         handleClose();
     };
+
+    useEffect(() => {
+        setTempSubTitle(subTitle)
+    }, [subTitle]);
 
     return (
         <Dialog
@@ -56,15 +69,16 @@ export const DeviceEdit = (props: DialogProps): JSX.Element => {
                 <TextField
                     onChange={(event): void => setTempSubTitle(event?.target.value)}
                     value={tempSubTitle}
+                    className={classes.textField}
                     variant="filled"
                     label="Type"
                     type="text"
                     fullWidth
                 />
             </DialogContent>
-            <DialogActions style={{flexDirection:'column', padding: 0}}>
-            <Divider style={{width:'100%', marginLeft: '-8px' , marginRight: '-8px'  }} />
-                <Button style={{margin: '16px', width: 'calc(100% - 32px)'}}
+            <DialogActions className={classes.dialogActions} >
+            <Divider className={classes.dialogDivider} />
+                <Button className={classes.dialogButton}
                 onClick={onSubmit} 
                 color={'primary'}  
                 variant={'contained'}>

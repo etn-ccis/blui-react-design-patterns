@@ -26,6 +26,7 @@ import { LocalActionsScoreCard } from './scorecard';
 import { LanguageSelect } from './select-language';
 import { LanguageSelectMobile } from './select-language-mobile';
 import { DeviceEdit } from './device-edit';
+import { DeviceEditMobile } from './device-edit-mobile';
 
 const useStyles = makeStyles((theme: Theme) => ({
     appbarRoot: {
@@ -134,11 +135,11 @@ const getTitle = (deviceStatus: string, device: string, isMobile: boolean, class
         <Typography variant={'subtitle1'} noWrap>
             {deviceStatus}
         </Typography>
-        {!isMobile && (
+        {/* {!isMobile && ( */}
             <Typography variant={'body1'} noWrap>
                 : &nbsp;{device}
             </Typography>
-        )}
+        {/* )} */}
     </div>
 );
 
@@ -164,17 +165,18 @@ export const ActionListLocalActions = (): JSX.Element => {
 
     const inputEl = useRef<HTMLInputElement>(null);
     const slideAnimationDurationMs = 250;
+    const exitSlideAnimationDurationMs = 0;
 
     const onShowBatteryServiceDetailsClick = useCallback((): void => {
-        setTimeout(() => {
+        // setTimeout(() => {
             setActiveScreen('batteryServiceScreen');
-        }, slideAnimationDurationMs);
+        // }, slideAnimationDurationMs);
     }, []);
 
     const onBackNavigation = useCallback((): void => {
-        setTimeout(() => {
+        // setTimeout(() => {
             setActiveScreen('localItemActionScreen');
-        }, slideAnimationDurationMs);
+        // }, slideAnimationDurationMs);
     }, []);
 
     const openMenu = (event: React.MouseEvent<HTMLButtonElement>): void => {
@@ -187,7 +189,7 @@ export const ActionListLocalActions = (): JSX.Element => {
 
     const handleEditDeviceClick = useCallback((): void => {
         if (isMobile) setActiveScreen('editDeviceScreen');
-        setShowDeviceEditDialog(true);
+        if (!isMobile) setShowDeviceEditDialog(true);
     }, [isMobile]);
 
     useEffect(() => {
@@ -265,7 +267,7 @@ export const ActionListLocalActions = (): JSX.Element => {
                 in={activeScreen === 'localItemActionScreen'}
                 mountOnEnter
                 unmountOnExit
-                timeout={slideAnimationDurationMs}
+                timeout={{enter:slideAnimationDurationMs, exit:exitSlideAnimationDurationMs}}
             >
                 <div className={classes.accordionContainer}>
                     <Accordion
@@ -413,7 +415,7 @@ export const ActionListLocalActions = (): JSX.Element => {
                                         listItemText: classes.listItemText,
                                     }}
                                     data-testid="ListInfoListItem"
-                                    title={getTitle('Language', '', isMobile, classes)}
+                                    title={'Language'}
                                     icon={<Language />}
                                     hidePadding
                                     iconAlign="center"
@@ -433,18 +435,35 @@ export const ActionListLocalActions = (): JSX.Element => {
                 in={activeScreen === 'batteryServiceScreen'}
                 mountOnEnter
                 unmountOnExit
-                timeout={slideAnimationDurationMs}
+                timeout={{enter:slideAnimationDurationMs, exit:exitSlideAnimationDurationMs}}
             >
-                <div>
+                <div style={{ display: 'flex', flexDirection: 'column', height: 'calc(100vh - 64px)' }}>
                     <LocalActionsScoreCard />
                 </div>
+            </Slide>
+            <Slide
+                direction={'left'}
+                in={activeScreen === 'editDeviceScreen'}
+                mountOnEnter
+                unmountOnExit
+                timeout={{enter:slideAnimationDurationMs, exit:exitSlideAnimationDurationMs}}
+            >
+                     <div style={{ display: 'flex', flexDirection: 'column', height: 'calc(100vh - 64px)' }}>
+                    <DeviceEditMobile
+                    navigateBack={onBackNavigation} 
+                     subTitle={subTitle}
+                     updateSubTitle={(updatedSubTitle): void => {
+                         setSubTitle(updatedSubTitle);
+                     }}
+                    />
+                    </div>
             </Slide>
             <Slide
                 direction={'left'}
                 in={activeScreen === 'mobileLanguageSelectScreen'}
                 mountOnEnter
                 unmountOnExit
-                timeout={slideAnimationDurationMs}
+                timeout={{enter:slideAnimationDurationMs, exit:exitSlideAnimationDurationMs}}
             >
                 <div>
                     <LanguageSelectMobile />
@@ -455,8 +474,6 @@ export const ActionListLocalActions = (): JSX.Element => {
                 handleClose={(): void => setShowDeviceEditDialog(false)}
                 subTitle={subTitle}
                 updateSubTitle={(updatedSubTitle): void => {
-                    // eslint-disable-next-line no-console
-                    console.log('updatedSub; ', updatedSubTitle);
                     setSubTitle(updatedSubTitle);
                 }}
             />

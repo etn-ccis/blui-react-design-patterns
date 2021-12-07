@@ -1,6 +1,6 @@
 import React from 'react';
 import { Chip as MuiChip, ChipProps as MuiChipProps, Typography, makeStyles, Theme, useTheme } from '@material-ui/core';
-import * as colors from '@pxblue/colors';
+import * as colors from '@brightlayer-ui/colors';
 
 const useStyles = makeStyles((theme: Theme) => ({
     userMenuChip: {

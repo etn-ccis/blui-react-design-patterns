@@ -6,24 +6,21 @@ describe('Search bar', () => {
     });
 
     it('should display page title', () => {
-        cy.get('[data-cy=pxb-toolbar]').should('contain', 'Search');
+        cy.get('[data-cy=blui-toolbar]').should('contain', 'Search Bar');
     });
 
-    // it('should filter data when searching', () => {
-    //     cy.get('[data-cy=search-btn]').click()
-    //     cy.get('#search-field').type('bill clinton')
-    //     cy.get('[data-cy=list-view]').should('contain', 'Bill Clinton').and('have.length', (1))
-    //     cy.get('[data-cy=search-close-btn]').click()
-    //     cy.get('[data-cy=search-btn]').click()
-    //     cy.get('#search-field').type('ron')
-    //     cy.get('[data-cy=list-view]').should('contain', 'Ronald Reagan').and('have.length', (1))
-    //     cy.get('[data-cy=search-close-btn]').click()
-    // });
+    it('should filter data when searching', () => {
+        cy.get('[data-cy=search-btn]').click()
+        cy.get('[data-cy=search-field').type('grape')
+        cy.get('[data-cy=list-view] > .MuiListItem-root').should('contain', 'Grape').and('have.length', (1))
+        cy.get('[data-cy=clear-search-field] > .MuiIconButton-label > .MuiSvgIcon-root').click()
+        cy.get('[data-cy=search-field').type('water')
+        cy.get('[data-cy=list-view] > .MuiListItem-root').should('contain', 'Watermelon').and('have.length', (1))
+    });
 
-    // it('should return no results when data does not exist', () => {
-    //     cy.get('[data-cy=search-btn]').click()
-    //     cy.get('#search-field').type('123')
-    //     cy.get('[data-test=frame]').should('contain', 'No matching presidents')
-    //     cy.get('[data-cy=search-close-btn]').click()
-    // });
+    it('should return no results when data does not exist', () => {
+        cy.get('[data-cy=search-btn]').click()
+        cy.get('[data-cy=search-field').type('123')
+        cy.get('body').should('contain', 'No Results')
+    });
 });

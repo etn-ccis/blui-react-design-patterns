@@ -73,6 +73,18 @@ export const PAGES: Routes = {
         ACTION_LIST: {
             title: 'Action List',
             route: 'action-list',
+            IN_BUTTON_PANEL: {
+                title: 'In Button Panel',
+                route: 'in-button-panel',
+            },
+            IN_PANEL_HEADER: {
+                title: 'In Panel Header',
+                route: 'in-panel-header',
+            },
+            INLINE: {
+                title: 'Inline Actions',
+                route: 'inline-actions',
+            },
         },
         DATA_LIST: {
             title: 'Data List',
@@ -182,7 +194,11 @@ export type Routes = {
     };
     I18N: RouteMetaData;
     LISTS: RouteMetaData & {
-        ACTION_LIST: RouteMetaData;
+        ACTION_LIST: RouteMetaData & {
+            IN_BUTTON_PANEL: RouteMetaData;
+            IN_PANEL_HEADER: RouteMetaData;
+            INLINE: RouteMetaData;
+        };
         DATA_LIST: RouteMetaData;
         MULTISELECT_LIST: RouteMetaData;
         SORTABLE_LIST: RouteMetaData;

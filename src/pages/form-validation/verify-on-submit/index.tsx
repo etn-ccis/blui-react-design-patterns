@@ -15,7 +15,7 @@ import { Add, CheckCircle, Menu, Search } from '@material-ui/icons';
 import { makeStyles, Theme, useTheme } from '@material-ui/core/styles';
 import { useDispatch } from 'react-redux';
 import { TOGGLE_DRAWER } from '../../../redux/actions';
-import { EmptyState } from '@pxblue/react-components';
+import { EmptyState } from '@brightlayer-ui/react-components';
 
 type OnChangeHandler = InputProps['onChange'];
 const slideAnimationDurationMs = 250;
@@ -114,7 +114,7 @@ export const VerifyOnSubmitValidation = (): JSX.Element => {
 
     return (
         <>
-            <AppBar data-cy={'pxb-toolbar'} position={'sticky'} classes={{ root: classes.appbarRoot }}>
+            <AppBar data-cy={'blui-toolbar'} position={'sticky'} classes={{ root: classes.appbarRoot }}>
                 <Toolbar classes={{ gutters: classes.toolbarGutters }}>
                     <Hidden mdUp>
                         <IconButton

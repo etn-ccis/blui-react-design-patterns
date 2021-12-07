@@ -19,7 +19,7 @@ import { useDispatch } from 'react-redux';
 
 // Other
 import { createStyles, makeStyles, Theme, useTheme } from '@material-ui/core/styles';
-import { InfoListItem, Spacer } from '@pxblue/react-components';
+import { InfoListItem, Spacer } from '@brightlayer-ui/react-components';
 import { DRAWER_WIDTH } from '../../../assets/constants';
 import clsx from 'clsx';
 import { ArrowBack } from '@material-ui/icons';
@@ -109,7 +109,7 @@ export const SearchBar = (): JSX.Element => {
         <div style={{ minHeight: '100vh' }}>
             {/* The Regular App Bar */}
             <AppBar
-                data-cy="pxb-toolbar"
+                data-cy="blui-toolbar"
                 position={'sticky'}
                 classes={{ root: classes.appbarRoot }}
                 className={clsx(classes.appbar, classes.regularBar, searchActive && classes.searchActive)}
@@ -145,7 +145,6 @@ export const SearchBar = (): JSX.Element => {
 
             {/* Search Bar */}
             <AppBar
-                data-cy="searchField"
                 className={clsx(classes.appbar, classes.searchbar, searchActive && classes.searchActive)}
                 position={'fixed'}
                 color={'default'}
@@ -168,6 +167,7 @@ export const SearchBar = (): JSX.Element => {
                             InputProps={{ disableUnderline: true }}
                             autoFocus
                             id={'#search-field'}
+                            data-cy={'search-field'}
                         />
                     )}
                     {query && (
@@ -175,7 +175,7 @@ export const SearchBar = (): JSX.Element => {
                             color={'inherit'}
                             onClick={(): void => setQuery('')}
                             edge={'end'}
-                            data-cy="search-close-btn"
+                            data-cy="clear-search-field"
                             style={{ color: theme.palette.text.secondary }}
                         >
                             <Close />

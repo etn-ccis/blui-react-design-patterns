@@ -2,9 +2,9 @@ import React from 'react';
 import { makeStyles, useTheme, Theme } from '@material-ui/core/styles';
 import { Card, CardActions, CardContent, Divider, Typography } from '@material-ui/core';
 import Skeleton from '@material-ui/lab/Skeleton';
-import * as colors from '@pxblue/colors';
+import * as colors from '@brightlayer-ui/colors';
 import { KeyboardArrowRight } from '@material-ui/icons';
-import { Spacer } from '@pxblue/react-components';
+import { Spacer } from '@brightlayer-ui/react-components';
 import Color from 'color';
 
 const useStyles = makeStyles((theme: Theme) => ({

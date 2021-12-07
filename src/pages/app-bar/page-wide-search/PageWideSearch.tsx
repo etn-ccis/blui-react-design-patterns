@@ -16,7 +16,7 @@ import HelpIcon from '@material-ui/icons/Help';
 import MenuIcon from '@material-ui/icons/Menu';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import NotificationsIcon from '@material-ui/icons/Notifications';
-import { AppBar, InfoListItem, Spacer } from '@pxblue/react-components';
+import { AppBar, InfoListItem, Spacer } from '@brightlayer-ui/react-components';
 import { useDispatch } from 'react-redux';
 import { TOGGLE_DRAWER } from '../../../redux/actions';
 import { Close, Search } from '@material-ui/icons';
@@ -144,7 +144,7 @@ export const PageWideSearch = (): JSX.Element => {
             </AppBar>
             {isMobile && (
                 <AppBar variant={'collapsed'} classes={{ root: classes.mobileAppbar }} elevation={0}>
-                    <Toolbar className={classes.mobileSearchToolbar}>
+                    <Toolbar className={classes.mobileSearchToolbar} data-cy={'search-field'}>
                         <TextField
                             placeholder="Search"
                             variant="standard"
@@ -182,6 +182,7 @@ export const PageWideSearch = (): JSX.Element => {
                     <div className={classes.desktopSearchContainer}>
                         <Spacer />
                         <TextField
+                            data-cy={'search-field'}
                             placeholder="Search"
                             variant="standard"
                             value={searchTerm}
@@ -201,6 +202,7 @@ export const PageWideSearch = (): JSX.Element => {
                     <Card className={classes.resultsCard} elevation={isMobile ? 0 : undefined}>
                         {searchResults.map((item, index) => (
                             <InfoListItem
+                                data-cy={'list-items'}
                                 title={
                                     // eslint-disable-next-line @typescript-eslint/naming-convention
                                     <div dangerouslySetInnerHTML={{ __html: item }} />

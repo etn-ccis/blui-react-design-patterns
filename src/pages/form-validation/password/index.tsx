@@ -19,8 +19,8 @@ import { Done, Visibility, VisibilityOff } from '@material-ui/icons';
 import { makeStyles, useTheme, Theme } from '@material-ui/core/styles';
 import { useDispatch } from 'react-redux';
 import { TOGGLE_DRAWER } from '../../../redux/actions';
-import * as Colors from '@pxblue/colors';
-import { Spacer } from '@pxblue/react-components';
+import * as Colors from '@brightlayer-ui/colors';
+import { Spacer } from '@brightlayer-ui/react-components';
 import clsx from 'clsx';
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -275,7 +275,7 @@ export const PasswordFormValidation = (): JSX.Element => {
 
     return (
         <div className={classes.root}>
-            <AppBar data-cy={'pxb-toolbar'} position={'sticky'} classes={{ root: classes.appbarRoot }}>
+            <AppBar data-cy={'blui-toolbar'} position={'sticky'} classes={{ root: classes.appbarRoot }}>
                 <Toolbar classes={{ gutters: classes.toolbarGutters }}>
                     <Hidden mdUp>
                         <IconButton

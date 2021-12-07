@@ -16,7 +16,7 @@ import { Done, Menu, Refresh } from '@material-ui/icons';
 import { makeStyles, Theme, useTheme } from '@material-ui/core/styles';
 import { useDispatch } from 'react-redux';
 import { TOGGLE_DRAWER } from '../../../redux/actions';
-import * as Colors from '@pxblue/colors';
+import * as Colors from '@brightlayer-ui/colors';
 
 type OnChangeHandler = InputProps['onChange'];
 
@@ -124,7 +124,7 @@ export const FixedLengthPasscodeValidation = (): JSX.Element => {
 
     return (
         <>
-            <AppBar data-cy={'pxb-toolbar'} position={'sticky'} classes={{ root: classes.appbarRoot }}>
+            <AppBar data-cy={'blui-toolbar'} position={'sticky'} classes={{ root: classes.appbarRoot }}>
                 <Toolbar classes={{ gutters: classes.toolbarGutters }}>
                     <Hidden mdUp>
                         <IconButton

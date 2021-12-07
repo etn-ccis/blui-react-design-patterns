@@ -9,8 +9,8 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import { Hero, HeroBanner, InfoListItem, Spacer } from '@pxblue/react-components';
-import * as Colors from '@pxblue/colors';
+import { Hero, HeroBanner, InfoListItem, Spacer } from '@brightlayer-ui/react-components';
+import * as Colors from '@brightlayer-ui/colors';
 import Box from '@material-ui/core/Box';
 
 import Close from '@material-ui/icons/Close';
@@ -173,7 +173,7 @@ export const ComplexBottomSheet = (): JSX.Element => {
 
     return (
         <div style={{ backgroundColor: theme.palette.background.paper, minHeight: '100vh' }}>
-            <AppBar data-cy="pxb-toolbar" position={'sticky'} classes={{ root: classes.appbarRoot }}>
+            <AppBar data-cy="blui-toolbar" position={'sticky'} classes={{ root: classes.appbarRoot }}>
                 <Toolbar classes={{ gutters: classes.toolbarGutters }}>
                     <Hidden mdUp>
                         <IconButton

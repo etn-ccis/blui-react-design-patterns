@@ -8,7 +8,7 @@ import {
     DrawerNavGroup,
     NavItem,
     Spacer,
-} from '@pxblue/react-components';
+} from '@brightlayer-ui/react-components';
 import { OpenInNew } from '@material-ui/icons';
 import CloseIcon from '@material-ui/icons/Close';
 import React, { useEffect, useState } from 'react';
@@ -131,7 +131,7 @@ export const App: React.FC = () => {
                                 dispatch({ type: TOGGLE_DRAWER, payload: false });
                             }}
                         >
-                            <Typography variant="h6">PX Blue</Typography>
+                            <Typography variant="h6">Brightlayer UI</Typography>
                             <Typography variant="body1" className={classes.subtitle}>
                                 React Design Patterns
                             </Typography>
@@ -148,18 +148,21 @@ export const App: React.FC = () => {
                     titleContent={<Typography variant={'overline'}>More Resources</Typography>}
                     items={[
                         {
-                            title: 'PX Blue Components',
+                            title: 'Brightlayer UI Components',
                             itemID: 'comp lib',
                             onClick: (): void => {
-                                window.open('https://pxblue-components.github.io/react/', '_blank');
+                                window.open('https://brightlayer-ui-components.github.io/react/', '_blank');
                             },
                             rightComponent: <OpenInNew />,
                         },
                         {
-                            title: 'PX Blue React Guide',
+                            title: 'Brightlayer UI React Guide',
                             itemID: 'react guide',
                             onClick: (): void => {
-                                window.open('https://pxblue.github.io/development/frameworks-web/react', '_blank');
+                                window.open(
+                                    'https://brightlayer-ui.github.io/development/frameworks-web/react',
+                                    '_blank'
+                                );
                             },
                             rightComponent: <OpenInNew />,
                             divider: false,
@@ -177,7 +180,7 @@ export const App: React.FC = () => {
                 >
                     <img
                         src={
-                            'https://raw.githubusercontent.com/pxblue/react-design-patterns/master/src/assets/EatonLogo.svg'
+                            'https://raw.githubusercontent.com/brightlayer-ui/react-design-patterns/master/src/assets/EatonLogo.svg'
                         }
                         style={{ margin: '10px' }}
                         alt={'Eaton Logo'}

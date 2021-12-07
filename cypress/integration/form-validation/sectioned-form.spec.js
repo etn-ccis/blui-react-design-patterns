@@ -6,7 +6,7 @@ describe('Form validation sectioned form', () => {
     });
 
     it('should display page title', () => {
-        cy.get('[data-cy=pxb-toolbar]').should('contain', 'Sectioned Form');
+        cy.get('[data-cy=blui-toolbar]').should('contain', 'Sectioned Form');
     });
 
     it('should display required for fields on submit', () => {

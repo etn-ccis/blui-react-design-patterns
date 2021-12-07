@@ -18,14 +18,14 @@ import {
     useTheme,
 } from '@material-ui/core';
 import { makeStyles, Theme, createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
-import * as PXBThemes from '@pxblue/react-themes';
+import * as BLUIThemes from '@brightlayer-ui/react-themes';
 import MenuIcon from '@material-ui/icons/Menu';
 import { Folder, Description, Publish } from '@material-ui/icons';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import { useDispatch } from 'react-redux';
 import { TOGGLE_DRAWER } from '../../../redux/actions';
-import * as Colors from '@pxblue/colors';
-import { InfoListItem } from '@pxblue/react-components';
+import * as Colors from '@brightlayer-ui/colors';
+import { InfoListItem } from '@brightlayer-ui/react-components';
 type FolderItem = {
     id: number;
     name: string;
@@ -111,7 +111,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 const createFileItem = (increment: number): FolderItem => ({
     id: increment,
-    name: 'PX Blue is Awesome.pdf',
+    name: 'Brightlayer UI is Awesome.pdf',
     progress: 0,
     status: `Uploading (0%)`,
     open: true,
@@ -181,7 +181,7 @@ export const ProgressBar = (): JSX.Element => {
 
     return (
         <div style={{ minHeight: '100vh' }}>
-            <AppBar data-cy="pxb-toolbar" position={'sticky'}>
+            <AppBar data-cy="blui-toolbar" position={'sticky'}>
                 <Toolbar classes={{ gutters: classes.toolbarGutters }}>
                     <Hidden mdUp={true}>
                         <IconButton
@@ -263,7 +263,7 @@ export const ProgressBar = (): JSX.Element => {
                                     }
                                 >
                                     <div>
-                                        <MuiThemeProvider theme={createMuiTheme(PXBThemes.blueDark)}>
+                                        <MuiThemeProvider theme={createMuiTheme(BLUIThemes.blueDark)}>
                                             <InfoListItem
                                                 data-cy={'upload-status-snackbar'}
                                                 style={{ boxShadow: theme.shadows[6] }}

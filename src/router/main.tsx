@@ -9,6 +9,8 @@ import { Collapsible } from '../pages/app-bar/collapsible';
 import { ContextualAction } from '../pages/app-bar/contextual-action';
 import { I18N } from '../pages/i18n';
 import { ActionList } from '../pages/lists/action-list';
+import { ActionListButtonPanel } from '../pages/lists/action-list/action-list-button-panel';
+import { ActionListPanelHeader } from '../pages/lists/action-list/action-list-panel-header';
 import { DataList } from '../pages/lists/data-list';
 import { MultiselectList } from '../pages/lists/multiselect-list';
 import { StatusList } from '../pages/lists/status-list';
@@ -24,7 +26,7 @@ import { ContextualSpinner } from '../pages/loading-waiting-states/contextual-sp
 import { Skeletons } from '../pages/loading-waiting-states/skeletons/Skeletons';
 import { InAnAppBar } from '../pages/account-menu/in-an-app-bar';
 import { InADrawer } from '../pages/account-menu/in-a-drawer';
-import { PxbDropdownToolbar } from '../pages/app-bar/dropdown-toolbar';
+import { BluiDropdownToolbar } from '../pages/app-bar/dropdown-toolbar';
 import { ListFormValidation } from '../pages/form-validation/list';
 import { FixedLengthPasscodeValidation } from '../pages/form-validation/fixed-length-passcode';
 import { SectionedFormValidation } from '../pages/form-validation/sectioned-form';
@@ -33,6 +35,7 @@ import { PhoneNumberFormatValidation } from '../pages/form-validation/phone-numb
 import { TableFormValidation } from '../pages/form-validation/table';
 import { PageWideSearch } from '../pages/app-bar/page-wide-search/PageWideSearch';
 import { PasswordFormValidation } from '../pages/form-validation/password';
+import { ActionListInline } from '../pages/lists/action-list/action-list-inline';
 /*
 The main page body, which contains the route definitions
 */
@@ -44,7 +47,7 @@ export const Main = (): JSX.Element => (
         <Route exact path={`/${PAGES.APP_BAR.COLLAPSIBLE.route || ''}`} component={Collapsible} />
         <Route exact path={`/${PAGES.APP_BAR.CONTEXTUAL_ACTION.route || ''}`} component={ContextualAction} />
         <Route exact path={`/${PAGES.APP_BAR.PAGE_WIDE_SEARCH.route || ''}`} component={PageWideSearch} />
-        <Route exact path={`/${PAGES.APP_BAR.DROPDOWN_COLLAPSIBLE.route || ''}`} component={PxbDropdownToolbar} />
+        <Route exact path={`/${PAGES.APP_BAR.DROPDOWN_COLLAPSIBLE.route || ''}`} component={BluiDropdownToolbar} />
 
         <Route exact path={`/${PAGES.FORM_VALIDATION.LIST.route || ''}`} component={ListFormValidation} />
         <Route exact path={`/${PAGES.FORM_VALIDATION.PASSWORD.route || ''}`} component={PasswordFormValidation} />
@@ -72,6 +75,17 @@ export const Main = (): JSX.Element => (
         <Route exact path={`/${PAGES.I18N.route || ''}`} component={I18N} />
 
         <Route exact path={`/${PAGES.LISTS.ACTION_LIST.route || ''}`} component={ActionList} />
+        <Route
+            exact
+            path={`/${PAGES.LISTS.ACTION_LIST.IN_PANEL_HEADER.route || ''}`}
+            component={ActionListPanelHeader}
+        />
+        <Route exact path={`/${PAGES.LISTS.ACTION_LIST.INLINE.route || ''}`} component={ActionListInline} />
+        <Route
+            exact
+            path={`/${PAGES.LISTS.ACTION_LIST.IN_BUTTON_PANEL.route || ''}`}
+            component={ActionListButtonPanel}
+        />
         <Route exact path={`/${PAGES.LISTS.DATA_LIST.route || ''}`} component={DataList} />
         <Route exact path={`/${PAGES.LISTS.MULTISELECT_LIST.route || ''}`} component={MultiselectList} />
         <Route exact path={`/${PAGES.LISTS.STATUS_LIST.route || ''}`} component={StatusList} />

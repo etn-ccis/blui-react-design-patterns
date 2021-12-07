@@ -11,9 +11,9 @@ import {
     DrawerLayout,
     NavItem,
     Spacer,
-} from '@pxblue/react-components';
+} from '@brightlayer-ui/react-components';
 import CloseIcon from '@material-ui/icons/Close';
-import { Device } from '@pxblue/icons-mui';
+import { Device } from '@brightlayer-ui/icons-mui';
 
 const backgroundImage = require('../../../assets/cubes_tile.png').default;
 const linearGradientOverlayImage = `linear-gradient(to right, rgba(0, 123, 193, 1) 22.4%, rgba(0, 123, 193, 0.2) 100%), url(${backgroundImage})`;
@@ -60,7 +60,7 @@ type DrawerProps = {
 
 const avatarImage = require('../../../assets/avatar_40.png').default;
 
-export const PxbDrawer = (props: DrawerProps): JSX.Element => {
+export const BluiDrawer = (props: DrawerProps): JSX.Element => {
     const { open, toggleDrawer } = props;
     const theme = useTheme();
     const classes = useStyles(theme);
@@ -162,6 +162,7 @@ export const PxbDrawer = (props: DrawerProps): JSX.Element => {
                         classes={{ background: classes.backgroundGradient }}
                         backgroundOpacity={0.5}
                         titleContent={<DrawerHeaderContent />}
+                        data-cy={'drawer-header'}
                     />
                     <DrawerBody>
                         <DrawerNavGroup items={navGroupItems1} />

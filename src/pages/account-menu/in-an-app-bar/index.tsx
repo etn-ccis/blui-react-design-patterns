@@ -6,11 +6,11 @@ import InfoIcon from '@material-ui/icons/Info';
 import { AccountCircle, Apps, ExitToApp, LockOpen, Settings, VpnKey } from '@material-ui/icons';
 import ExpandMoreOutlinedIcon from '@material-ui/icons/ExpandMoreOutlined';
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
-import { Spacer, UserMenu } from '@pxblue/react-components';
+import { Spacer, UserMenu } from '@brightlayer-ui/react-components';
 import { Chip } from './Chip';
 import { useDispatch } from 'react-redux';
 import { TOGGLE_DRAWER } from '../../../redux/actions';
-import * as colors from '@pxblue/colors';
+import * as colors from '@brightlayer-ui/colors';
 
 const avatarImage = require('../../../assets/avatar_40.png').default;
 const menuGroupItems = [
@@ -88,7 +88,7 @@ export const InAnAppBar = (): JSX.Element => {
 
     return (
         <div style={{ minHeight: '100vh' }}>
-            <AppBar data-cy="pxb-toolbar" position={'sticky'}>
+            <AppBar data-cy="toolbar" position={'sticky'}>
                 <Toolbar classes={{ gutters: classes.toolbarGutters }}>
                     <Hidden mdUp={true}>
                         <IconButton
@@ -134,6 +134,7 @@ export const InAnAppBar = (): JSX.Element => {
                             <Spacer />
                             <UserMenu
                                 avatar={<Avatar />}
+                                data-cy={'generic-avatar-menu'}
                                 menuGroups={[
                                     {
                                         items: [

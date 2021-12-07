@@ -20,10 +20,10 @@ import { makeStyles, Theme, useTheme } from '@material-ui/core/styles';
 import CloseIcon from '@material-ui/icons/Close';
 import MenuIcon from '@material-ui/icons/Menu';
 import DeleteIcon from '@material-ui/icons/Delete';
-import { Spacer } from '@pxblue/react-components';
+import { Spacer } from '@brightlayer-ui/react-components';
 import { useDispatch } from 'react-redux';
 import { TOGGLE_DRAWER } from '../../../redux/actions';
-import * as colors from '@pxblue/colors';
+import * as colors from '@brightlayer-ui/colors';
 import clsx from 'clsx';
 
 export type ListItemType = {
@@ -203,6 +203,7 @@ export const ContextualAction = (): JSX.Element => {
                                 name="checkbox-header-cell"
                                 color="primary"
                                 size="medium"
+                                data-cy={'table-header-checkbox'}
                             />
                         </TableCell>
                         <TableCell className={classes.dataCell}>Name</TableCell>
@@ -221,6 +222,7 @@ export const ContextualAction = (): JSX.Element => {
                                 component="th"
                                 scope="row"
                                 className={clsx(classes.checkboxCell, classes.sticky)}
+                                data-cy={'table-cell-checkbox'}
                             >
                                 <Checkbox
                                     value={row.name}
@@ -243,7 +245,7 @@ export const ContextualAction = (): JSX.Element => {
     return (
         <div style={{ backgroundColor: theme.palette.background.default, minHeight: '100vh' }}>
             <AppBar
-                data-cy="primary-toolbar"
+                data-cy="app-bar"
                 position={'sticky'}
                 classes={{ root: classes.appbarRoot }}
                 className={clsx(classes.appbar, selectedItems.length !== 0 && isMobile && classes.contextualBarActive)}
@@ -268,7 +270,6 @@ export const ContextualAction = (): JSX.Element => {
                 </Toolbar>
             </AppBar>
             <AppBar
-                data-cy="contextual-bar"
                 className={clsx(
                     classes.appbar,
                     classes.contextualAppBar,
@@ -278,20 +279,14 @@ export const ContextualAction = (): JSX.Element => {
                 color={'default'}
             >
                 <Toolbar classes={{ gutters: classes.secondaryToolbar }}>
-                    <IconButton
-                        data-cy="toolbar-close"
-                        color={'inherit'}
-                        edge={'start'}
-                        style={{ marginRight: 20 }}
-                        onClick={onClose}
-                    >
+                    <IconButton color={'inherit'} edge={'start'} style={{ marginRight: 20 }} onClick={onClose}>
                         <CloseIcon />
                     </IconButton>
                     <Typography variant={'h6'} color={'inherit'}>
                         {selectedItems.length} selected
                     </Typography>
                     <Spacer />
-                    <IconButton data-cy="toolbar-delete" color={'inherit'} edge={'end'} onClick={onDelete}>
+                    <IconButton color={'inherit'} edge={'end'} onClick={onDelete}>
                         <DeleteIcon />
                     </IconButton>
                 </Toolbar>
@@ -318,9 +313,9 @@ export const ContextualAction = (): JSX.Element => {
                         </Hidden>
                         <div>{getTable()}</div>
                         {list.length === 0 ? (
-                            <Typography className={classes.noResult}>
+                            <Typography className={classes.noResult} data-cy={'empty-table'}>
                                 No items found.{' '}
-                                <span className={classes.resetTableLink} onClick={resetTable}>
+                                <span className={classes.resetTableLink} onClick={resetTable} data-cy={'reset'}>
                                     Reset table
                                 </span>
                             </Typography>

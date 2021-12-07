@@ -56,6 +56,7 @@ jobs:
         parallelism: 2
         docker:
             - image: circleci/node:12.6-browsers
+        resource_class: large
         steps:
             - checkout
             - restore_cache:

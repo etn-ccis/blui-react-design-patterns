@@ -93,14 +93,6 @@ const useStyles = makeStyles((theme: Theme) => ({
         display: 'flex',
         alignItems: 'center',
     },
-    headerIcon: {
-        marginLeft: theme.spacing(4),
-    },
-    iconButton: {
-        '&:hover': {
-            color: theme.palette.primary.main,
-        },
-    },
     menu: {
         width: 154,
     },

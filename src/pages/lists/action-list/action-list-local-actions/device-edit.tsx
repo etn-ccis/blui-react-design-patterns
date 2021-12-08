@@ -22,7 +22,7 @@ const useStyles = makeStyles(() =>
             height: 600,
         },
         dialogActions: {
-            flexDirection:'column',
+            flexDirection: 'column',
             padding: 0,
         },
         dialogButton: {
@@ -30,11 +30,11 @@ const useStyles = makeStyles(() =>
             width: 'calc(100% - 32px)',
         },
         dialogDivider: {
-            width:'100%',
+            width: '100%',
         },
         textField: {
-            marginTop: '32px'
-        }
+            marginTop: '32px',
+        },
     })
 );
 
@@ -48,12 +48,12 @@ export const DeviceEdit = (props: DialogProps): JSX.Element => {
     };
 
     const onClose = (): void => {
-        setTempSubTitle(subTitle)
+        setTempSubTitle(subTitle);
         handleClose();
     };
 
     useEffect(() => {
-        setTempSubTitle(subTitle)
+        setTempSubTitle(subTitle);
     }, [subTitle]);
 
     return (
@@ -76,12 +76,9 @@ export const DeviceEdit = (props: DialogProps): JSX.Element => {
                     fullWidth
                 />
             </DialogContent>
-            <DialogActions className={classes.dialogActions} >
-            <Divider className={classes.dialogDivider} />
-                <Button className={classes.dialogButton}
-                onClick={onSubmit} 
-                color={'primary'}  
-                variant={'contained'}>
+            <DialogActions className={classes.dialogActions}>
+                <Divider className={classes.dialogDivider} />
+                <Button className={classes.dialogButton} onClick={onSubmit} color={'primary'} variant={'contained'}>
                     DONE
                 </Button>
             </DialogActions>

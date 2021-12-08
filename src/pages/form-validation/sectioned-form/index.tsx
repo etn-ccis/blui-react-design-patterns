@@ -211,9 +211,10 @@ export const SectionedFormValidation = (): JSX.Element => {
         [showRequiredError, emailError]
     );
 
-    const getRequiredHelperText = useCallback((value) => (showRequiredError && !value ? 'Required' : ''), [
-        showRequiredError,
-    ]);
+    const getRequiredHelperText = useCallback(
+        (value) => (showRequiredError && !value ? 'Required' : ''),
+        [showRequiredError]
+    );
 
     const onSubmit = (): void => {
         setShowRequiredError(true);

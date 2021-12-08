@@ -7,7 +7,7 @@ import Divider from '@material-ui/core/Divider';
 type DeviceEditProps = {
     subTitle: string;
     updateSubTitle: (tempSubTitle: string) => void;
-    navigateBack: () => void
+    navigateBack: () => void;
 };
 
 const useStyles = makeStyles(() =>

@@ -71,10 +71,10 @@ export const PhoneNumberFormatValidation = (): JSX.Element => {
     const [countryCode, setCountryCode] = useState('US');
     const [blurred, setBlurred] = useState(false);
 
-    const isValidPhoneNumber = useCallback((): boolean => checkPhoneNumber(phoneNumber, countryCode), [
-        countryCode,
-        phoneNumber,
-    ]);
+    const isValidPhoneNumber = useCallback(
+        (): boolean => checkPhoneNumber(phoneNumber, countryCode),
+        [countryCode, phoneNumber]
+    );
 
     const onPhoneNumberChange: OnChangeHandler = useCallback(
         (event) => {

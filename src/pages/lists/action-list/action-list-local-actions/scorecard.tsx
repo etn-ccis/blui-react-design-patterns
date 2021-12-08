@@ -1,7 +1,7 @@
 import React from 'react';
-import * as Colors from '@pxblue/colors';
-import { Hero, HeroBanner, ScoreCard } from '@pxblue/react-components';
-import { GradeA, Temp, Moisture as Humidity } from '@pxblue/icons-mui';
+import * as Colors from '@brightlayer-ui/colors';
+import { Hero, HeroBanner, ScoreCard } from '@brightlayer-ui/react-components';
+import { GradeA, Temp, Moisture as Humidity } from '@brightlayer-ui/icons-mui';
 import Button from '@material-ui/core/Button';
 import { createStyles, makeStyles, Theme, useTheme } from '@material-ui/core';
 

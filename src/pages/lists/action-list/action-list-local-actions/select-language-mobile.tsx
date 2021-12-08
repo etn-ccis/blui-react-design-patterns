@@ -1,5 +1,5 @@
 import React from 'react';
-import { InfoListItem } from '@pxblue/react-components';
+import { InfoListItem } from '@brightlayer-ui/react-components';
 import { Done } from '@material-ui/icons';
 import createStyles from '@material-ui/core/styles/createStyles';
 import makeStyles from '@material-ui/core/styles/makeStyles';

@@ -20,14 +20,13 @@ import ExpandMore from '@material-ui/icons/ExpandMore';
 import { Language, Email, Sms, MoreVert, Edit, ArrowBack } from '@material-ui/icons';
 import { useDispatch } from 'react-redux';
 import { TOGGLE_DRAWER } from '../../../../redux/actions';
-import { InfoListItem, Spacer } from '@pxblue/react-components';
-import * as colors from '@pxblue/colors';
+import { InfoListItem, Spacer } from '@brightlayer-ui/react-components';
+import * as colors from '@brightlayer-ui/colors';
 import { LocalActionsScoreCard } from './scorecard';
 import { LanguageSelect } from './select-language';
 import { LanguageSelectMobile } from './select-language-mobile';
 import { DeviceEdit } from './device-edit';
 import { DeviceEditMobile } from './device-edit-mobile';
-import clsx from 'clsx';
 
 const useStyles = makeStyles((theme: Theme) => ({
     appbarRoot: {
@@ -84,7 +83,7 @@ const useStyles = makeStyles((theme: Theme) => ({
             },
         },
     },
-    accordionRootDisableClick: {
+    accordionSummary: {
         pointerEvents: 'none',
     },
     accordionDetails: {
@@ -365,9 +364,9 @@ export const ActionListLocalActions = (): JSX.Element => {
                         data-testid="NotificationListAccordion"
                         defaultExpanded={true}
                         TransitionProps={{ in: true }}
-                        classes={{ root: clsx(classes.accordionRoot, classes.accordionRootDisableClick) }}
+                        classes={{ root: classes.accordionRoot }}
                     >
-                        <AccordionSummary>
+                        <AccordionSummary classes={{ root: classes.accordionSummary }}>
                             <Typography variant={'subtitle2'} color={'primary'}>
                                 Notifications
                             </Typography>
@@ -420,12 +419,12 @@ export const ActionListLocalActions = (): JSX.Element => {
                         data-testid="LocaleListAccordion"
                         defaultExpanded={true}
                         TransitionProps={{ in: true }}
-                        classes={{ root: clsx(classes.accordionRoot, classes.accordionRootDisableClick) }}
+                        classes={{ root: classes.accordionRoot }}
                         onChange={(event: any): void => {
                             event.preventDefault();
                         }}
                     >
-                        <AccordionSummary>
+                        <AccordionSummary classes={{ root: classes.accordionSummary }}>
                             <Typography variant={'subtitle2'} color={'primary'}>
                                 Locale
                             </Typography>

@@ -9,7 +9,7 @@ import Typography from '@material-ui/core/Typography';
 import AddIcon from '@material-ui/icons/Add';
 import DeleteIcon from '@material-ui/icons/Delete';
 import List from '@material-ui/core/List';
-import { Spacer, InfoListItem } from '@pxblue/react-components';
+import { Spacer, InfoListItem } from '@brightlayer-ui/react-components';
 import { useDispatch } from 'react-redux';
 import { TOGGLE_DRAWER } from '../../../redux/actions';
 import { Menu as MenuIcon } from '@material-ui/icons';
@@ -97,7 +97,7 @@ export const ActionList = (): JSX.Element => {
     return (
         <div style={{ backgroundColor: theme.palette.background.paper, minHeight: '100vh' }}>
             <AppBar position={'sticky'} classes={{ root: classes.appbarRoot }}>
-                <Toolbar data-cy={'pxb-toolbar'} classes={{ gutters: classes.toolbarGutters }}>
+                <Toolbar data-cy={'blui-toolbar'} classes={{ gutters: classes.toolbarGutters }}>
                     <Hidden mdUp={true}>
                         <IconButton
                             data-cy="toolbar-menu"

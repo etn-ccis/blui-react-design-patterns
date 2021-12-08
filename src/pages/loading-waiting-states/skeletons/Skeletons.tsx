@@ -7,9 +7,9 @@ import { Cloud, KeyboardArrowRight, ListAlt, Menu, Notifications } from '@materi
 import { ScorecardPlaceholder } from './components/ScorecardPlaceholder';
 import { ListItemDensePlaceholder, ListItemPlaceholder } from './components/ListItemPlaceholder';
 import { HeroBannerPlaceholder } from './components/HeroBannerPlaceholder';
-import { Hero, HeroBanner, InfoListItem, ScoreCard, Spacer } from '@pxblue/react-components';
-import * as colors from '@pxblue/colors';
-import { CurrentCircled, GradeA, Temp, Device, Moisture } from '@pxblue/icons-mui';
+import { Hero, HeroBanner, InfoListItem, ScoreCard, Spacer } from '@brightlayer-ui/react-components';
+import * as colors from '@brightlayer-ui/colors';
+import { CurrentCircled, GradeA, Temp, Device, Moisture } from '@brightlayer-ui/icons-mui';
 
 const backgroundImage = require('../../../assets/topology_40.png').default;
 
@@ -86,7 +86,7 @@ export const Skeletons = (): JSX.Element => {
 
     return (
         <>
-            <AppBar data-cy="pxb-toolbar" position={'sticky'} classes={{ root: classes.appbarRoot }}>
+            <AppBar data-cy="blui-toolbar" position={'sticky'} classes={{ root: classes.appbarRoot }}>
                 <Toolbar classes={{ gutters: classes.toolbarGutters }}>
                     <Hidden mdUp={true}>
                         <IconButton

@@ -123,7 +123,7 @@ export const PhoneNumberFormatValidation = (): JSX.Element => {
 
     return (
         <>
-            <AppBar data-cy={'pxb-toolbar'} position={'sticky'} classes={{ root: classes.appbarRoot }}>
+            <AppBar data-cy={'blui-toolbar'} position={'sticky'} classes={{ root: classes.appbarRoot }}>
                 <Toolbar classes={{ gutters: classes.toolbarGutters }}>
                     <Hidden mdUp>
                         <IconButton

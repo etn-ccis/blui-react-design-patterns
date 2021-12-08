@@ -1,8 +1,8 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Skeleton from '@material-ui/lab/Skeleton';
-import { HeroBanner } from '@pxblue/react-components';
-import * as colors from '@pxblue/colors';
+import { HeroBanner } from '@brightlayer-ui/react-components';
+import * as colors from '@brightlayer-ui/colors';
 
 const useStyles = makeStyles(() => ({
     heroBanner: {

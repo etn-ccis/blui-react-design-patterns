@@ -7,7 +7,7 @@ describe('Loading contextual spinner', () => {
     });
 
     it('should display page title', () => {
-        cy.get('[data-cy=pxb-toolbar]').should('contain', 'Contextual Spinner')
+        cy.get('[data-cy=blui-toolbar]').should('contain', 'Contextual Spinner')
     });
 
     it('Should trigger spinner loading overlay on login button ', () => {

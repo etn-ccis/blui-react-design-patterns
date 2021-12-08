@@ -7,42 +7,35 @@ describe('Multi-select list', () => {
     });
 
     it('should display page title', () => {
-        cy.get('[data-cy=pxb-toolbar]').should('contain', 'Multiselect List');
+        cy.get('[data-cy=blui-toolbar]').should('contain', 'Multiselect List');
     });
 
-    it('should add list items when add is clicked', () => {
-        cy.get('[data-cy=list-content]').children().should('have.length', '10')
-        cy.get('[data-cy=toolbar-add]').click().click()
-        cy.get('[data-cy=list-content]').children().should('have.length', '12')
-
-    });
-
-    it('should remove list items when delete is clicked', () => {
-        cy.get('[data-cy=list-content]').children().should('have.length', '10')
-        cy.get('[type="checkbox"]').first().check({ force: true })
-        cy.get('.MuiSnackbarContent-message').should('contain', '1 selected item')
-        cy.get('[data-cy=snackbar-delete]').click()
-        cy.get('[data-cy=list-content]').children().should('have.length', '9')        
+    it('should remove list items when delete button is clicked', () => {
+        cy.get('[data-cy=list-content]').should('have.length', '5')
+        cy.get('[data-cy=table-header-checkbox]').first().click()
+        cy.get('[data-cy=delete-btn]').click()
+        cy.get('[data-cy=list-content]').should('have.length', '2')
 
     });
 
-    it('should cancel selected list items', () => {
-        cy.get('[data-cy=list-content]').children().should('have.length', '10')
-        cy.get('[type="checkbox"]').first().check({ force: true })
-        cy.get('.MuiSnackbarContent-message').should('contain', '1 selected item')
-        cy.get('[data-cy=snackbar-cancel]').click()
-        cy.get('[data-cy=list-content]').children().should('have.length', '10')        
-
+    it('should display delete button enabled & disabled', () => {
+        cy.get('[data-cy=table-header-checkbox]').first().click()
+        cy.get('[data-cy=delete-btn]').should('be.enabled')
+        cy.get('[data-cy=table-header-checkbox]').first().click()
+        cy.get('[data-cy=delete-btn]').should('be.disabled')
     });
 
-    it('should select all and remove list items & empty state displays', () => {
-        cy.get('[data-cy=list-content]').children().should('have.length', '10')
-        cy.get('[type="checkbox"]').check({ force: true })
-        cy.get('.MuiSnackbarContent-message').should('contain', '10 selected items')
-        cy.get('[data-cy=snackbar-delete]').click()
-        cy.contains('No Items Found')
-        cy.get('[data-cy=pxb-empty-state-add]').click()
-        cy.get('[data-cy=list-content]').children().should('have.length', '1')
+    it('should display no results text when delete button is clicked after select all', () => {
+        cy.get('[data-cy=table-header-checkbox]').first().click()
+        cy.get('[data-cy=delete-btn]').click()
+        cy.get('[data-cy=no-result]').should('contain', 'No results. Reset data.');
+    });
 
+    it('should reset data when no results found', () => {
+        cy.get('[data-cy=table-header-checkbox]').first().click()
+        cy.get('[data-cy=delete-btn]').click()
+        cy.get('[data-cy=no-result]').should('contain', 'No results. Reset data.');
+        cy.get('[data-cy=reset]').click()
+        cy.get('[data-cy=list-content]').should('have.length', '5')
     });
 });

@@ -22,14 +22,14 @@ import { ContactMail, HelpOutline, LocationOn, Menu } from '@material-ui/icons';
 import { makeStyles, Theme, useTheme } from '@material-ui/core/styles';
 import { useDispatch } from 'react-redux';
 import { TOGGLE_DRAWER } from '../../../redux/actions';
-import { Factory } from '@pxblue/icons-mui';
+import { Factory } from '@brightlayer-ui/icons-mui';
 import clsx from 'clsx';
 
 const mobileInputMarginSpacing = 4;
 type OnChangeHandler = InputProps['onChange'];
 const MAX_CHARS_LIMIT = 50;
-const pxbProtection = 'PXB Protection';
-const pxbProtectionDescription = 'PXB Protection provides a three-year power expert warranty.';
+const bluiProtection = 'Brightlayer Protection';
+const bluiProtectionDescription = 'Brightlayer Protection provides a three-year Brightlayer warranty.';
 const emailRegex = new RegExp(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i);
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -246,7 +246,7 @@ export const SectionedFormValidation = (): JSX.Element => {
 
     return (
         <>
-            <AppBar data-cy={'pxb-toolbar'} position={'sticky'} classes={{ root: classes.appbarRoot }}>
+            <AppBar data-cy={'blui-toolbar'} position={'sticky'} classes={{ root: classes.appbarRoot }}>
                 <Toolbar classes={{ gutters: classes.toolbarGutters }}>
                     <Hidden mdUp>
                         <IconButton
@@ -309,8 +309,8 @@ export const SectionedFormValidation = (): JSX.Element => {
                             </Select>
                         </FormControl>
                         <Hidden xsDown>
-                            <FormControlLabel control={<Checkbox name={'checkedC'} />} label={pxbProtection} />
-                            <Tooltip arrow title={pxbProtectionDescription} placement={'top'}>
+                            <FormControlLabel control={<Checkbox name={'checkedC'} />} label={bluiProtection} />
+                            <Tooltip arrow title={bluiProtectionDescription} placement={'top'}>
                                 <HelpOutline style={{ color: theme.palette.text.disabled }} />
                             </Tooltip>
                         </Hidden>
@@ -329,9 +329,9 @@ export const SectionedFormValidation = (): JSX.Element => {
                                     style={{ marginTop: -6 }}
                                 />
                                 <div>
-                                    <Typography variant={'body1'}>PXB Protection</Typography>
+                                    <Typography variant={'body1'}>Brightlayer Protection</Typography>
                                     <Typography variant={'body2'} style={{ color: theme.palette.text.secondary }}>
-                                        PXB Protection provides a three-year power xpert warranty.
+                                        Brightlayer Protection provides a three-year power xpert warranty.
                                     </Typography>
                                 </div>
                             </div>

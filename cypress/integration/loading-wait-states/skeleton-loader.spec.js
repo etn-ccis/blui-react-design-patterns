@@ -7,7 +7,7 @@ describe('Skeleton loading state', () => {
     });
 
     it('should display page title', () => {
-        cy.get('[data-cy=pxb-toolbar]').should('contain', 'Skeletons')
+        cy.get('[data-cy=blui-toolbar]').should('contain', 'Skeletons')
     });
 
     it('Should trigger score card skeleton loading on refresh', () => {

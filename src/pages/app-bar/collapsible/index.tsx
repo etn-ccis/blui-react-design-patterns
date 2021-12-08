@@ -5,7 +5,7 @@ import HelpIcon from '@material-ui/icons/Help';
 import MenuIcon from '@material-ui/icons/Menu';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import NotificationsIcon from '@material-ui/icons/Notifications';
-import { AppBar, Spacer, ThreeLiner } from '@pxblue/react-components';
+import { AppBar, Spacer, ThreeLiner } from '@brightlayer-ui/react-components';
 import { useDispatch } from 'react-redux';
 import { TOGGLE_DRAWER } from '../../../redux/actions';
 import { getBodyFiller } from '../utils/utils';

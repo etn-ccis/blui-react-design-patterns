@@ -7,7 +7,7 @@ describe('Sortable list', () => {
     });
 
     it('should display page title', () => {
-        cy.get('[data-cy=pxb-toolbar]').should('contain', 'Sortable List');
+        cy.get('[data-cy=blui-toolbar]').should('contain', 'Sortable List');
     });
 
     it('should enable sortable list items', () => {

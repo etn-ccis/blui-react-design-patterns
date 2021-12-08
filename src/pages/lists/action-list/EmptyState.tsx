@@ -1,6 +1,6 @@
 import React from 'react';
 import Button from '@material-ui/core/Button';
-import { EmptyState as PXBEmptyState } from '@pxblue/react-components';
+import { EmptyState as BLUIEmptyState } from '@brightlayer-ui/react-components';
 import { useTheme } from '@material-ui/core';
 import ErrorIcon from '@material-ui/icons/Error';
 import AddIcon from '@material-ui/icons/Add';
@@ -17,12 +17,12 @@ export const EmptyState: React.FC<EmptyStateProps> = (props) => {
                 height: `calc(100vh - ${theme.spacing(8)}px)`,
             }}
         >
-            <PXBEmptyState
+            <BLUIEmptyState
                 icon={<ErrorIcon style={{ fontSize: '100px' }} />}
                 title={'No Items Found'}
                 actions={
                     <Button
-                        data-cy="pxb-empty-state-add"
+                        data-cy="blui-empty-state-add"
                         variant={'contained'}
                         color={'primary'}
                         style={{ margin: theme.spacing() }}

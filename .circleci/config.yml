@@ -6,6 +6,7 @@ jobs:
         working_directory: ~/react-design-patterns
         docker:
             - image: circleci/node:12.6-browsers
+        resource_class: large
         steps:
             - checkout
             - restore_cache:
@@ -25,10 +26,6 @@ jobs:
                 name: Prettier Check
                 command: |
                     yarn prettier:check
-            - run:
-                name: Set Max Memory
-                command: |
-                    NODE_OPTIONS=--max_old_space_size=5120
             - run:
                 name: Lint
                 command: |
@@ -55,6 +52,7 @@ jobs:
         parallelism: 2
         docker:
             - image: circleci/node:12.6-browsers
+        resource_class: large
         steps:
             - checkout
             - restore_cache:

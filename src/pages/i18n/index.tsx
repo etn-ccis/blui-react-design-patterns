@@ -19,7 +19,7 @@ import {
 import { makeStyles, Theme, useTheme } from '@material-ui/core/styles';
 import { useDispatch } from 'react-redux';
 import { TOGGLE_DRAWER } from '../../redux/actions';
-import { InfoListItem, Spacer } from '@pxblue/react-components';
+import { InfoListItem, Spacer } from '@brightlayer-ui/react-components';
 import clsx from 'clsx';
 
 import MenuIcon from '@material-ui/icons/Menu';

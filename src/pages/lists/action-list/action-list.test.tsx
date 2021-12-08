@@ -6,7 +6,7 @@ import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import { Reducer } from '../../../redux/reducers';
-import { InfoListItem } from '@pxblue/react-components';
+import { InfoListItem } from '@brightlayer-ui/react-components';
 
 Enzyme.configure({ adapter: new Adapter() });
 const store = createStore(Reducer());

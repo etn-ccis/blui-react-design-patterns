@@ -93,7 +93,7 @@ export const LandingPage = (): JSX.Element => {
                             <MenuIcon />
                         </IconButton>
                         <Typography variant={'h6'} color={'inherit'}>
-                            PX Blue Design Patterns
+                            Brightlayer UI Design Patterns
                         </Typography>
                     </Toolbar>
                 </AppBar>
@@ -110,8 +110,8 @@ export const LandingPage = (): JSX.Element => {
                             <Typography variant={'body1'}>
                                 A <strong>design pattern</strong> is a common interaction or behavior that should be
                                 consistent across applications. In general, we follow most of the design patterns and
-                                behavior from the Material Design system. PX Blue design patterns are patterns that
-                                extend/modify those from Material or are specific to PX Blue applications.
+                                behavior from the Material Design system. Brightlayer UI design patterns are patterns
+                                that extend/modify those from Material or are specific to Brightlayer UI applications.
                             </Typography>
 
                             <Typography variant={'body1'}>
@@ -129,7 +129,7 @@ export const LandingPage = (): JSX.Element => {
                                         dispatch({ type: TOGGLE_DRAWER, payload: true });
                                     }}
                                 >
-                                    Explore PX Blue Design Patterns
+                                    Explore Brightlayer UI Design Patterns
                                 </Button>
                             </Hidden>
                         </div>
@@ -140,26 +140,29 @@ export const LandingPage = (): JSX.Element => {
                             <div className={classes.links}>
                                 <Button
                                     target={'_blank'}
-                                    href={'https://pxblue.github.io/development/frameworks-web/react'}
+                                    href={'https://brightlayer-ui.github.io/development/frameworks-web/react'}
                                 >
                                     React Getting Started Guide
                                 </Button>
-                                <Button target={'_blank'} href={'https://pxblue.github.io/patterns'}>
+                                <Button target={'_blank'} href={'https://brightlayer-ui.github.io/patterns'}>
                                     Design Pattern Descriptions
                                 </Button>
-                                <Button target={'_blank'} href={'https://pxblue-components.github.io/react/'}>
-                                    PX Blue React Component Library
+                                <Button target={'_blank'} href={'https://brightlayer-ui-components.github.io/react/'}>
+                                    Brightlayer UI React Component Library
                                 </Button>
-                                <Button target={'_blank'} href={'https://github.com/pxblue'}>
+                                <Button target={'_blank'} href={'https://github.com/brightlayer-ui'}>
                                     Visit Us on GitHub
                                 </Button>
-                                <Button target={'_blank'} href={'https://github.com/pxblue/react-design-patterns'}>
+                                <Button
+                                    target={'_blank'}
+                                    href={'https://github.com/brightlayer-ui/react-design-patterns'}
+                                >
                                     Design Pattern Source on GitHub
                                 </Button>
-                                <Button target={'_blank'} href={'https://pxblue.github.io/roadmap'}>
+                                <Button target={'_blank'} href={'https://brightlayer-ui.github.io/roadmap'}>
                                     Release Roadmap
                                 </Button>
-                                <Button target={'_blank'} href={'https://pxblue.github.io/community/contactus'}>
+                                <Button target={'_blank'} href={'https://brightlayer-ui.github.io/community/contactus'}>
                                     Send Feedback or Suggestions
                                 </Button>
                             </div>

@@ -6,7 +6,7 @@ describe('Form validation verify on submit', () => {
     });
 
     it('should display page title', () => {
-        cy.get('[data-cy=pxb-toolbar]').should('contain', 'Verify on Submit');
+        cy.get('[data-cy=blui-toolbar]').should('contain', 'Verify on Submit');
     });
 
     it('should display input field as focused by default', () => {

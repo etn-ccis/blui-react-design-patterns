@@ -7,7 +7,7 @@ describe('Dynamic stepper', () => {
     });
 
     it('should display page title', () => {
-        cy.get('[data-cy=pxb-toolbar]').should('contain', 'Dynamic Stepper');
+        cy.get('[data-cy=blui-toolbar]').should('contain', 'Dynamic Stepper');
     });
 
     it('should add steps to stepper when add is cllicked', () => {

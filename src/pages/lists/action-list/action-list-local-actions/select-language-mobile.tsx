@@ -11,6 +11,12 @@ type LanguageData = {
     title: string;
 };
 
+type LanguageSelectMobileProps = {
+    language:string
+    updateLanguage:(tempLanguage: string) => void;
+
+};
+
 const languageData: LanguageData[] = [
     {
         id: 'deutch',
@@ -36,10 +42,13 @@ const useStyles = makeStyles((theme: Theme) =>
     })
 );
 
-export const LanguageSelectMobile: React.FC = () => {
+export const LanguageSelectMobile = (props: LanguageSelectMobileProps): JSX.Element => {
     const theme = useTheme();
     const classes = useStyles(theme);
     const [language, setLanguage] = React.useState('english');
+    const {language, updateLanguage} = props;
+    // eslint-disable-next-line no-console
+    console.log(props)
 
     return (
         <div className={classes.container}>

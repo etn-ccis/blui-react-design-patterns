@@ -251,6 +251,22 @@ export const ActionListLocalActions = (): JSX.Element => {
         return tempTitle;
     }, [activeScreen]);
 
+    // const getLanguageSubTitle = useCallback((): string => {
+    //     let tempSubTitle = '';
+    //     switch (activeSubTitle) {
+    //         case 'desktopLanguageSubTitle':
+    //             tempSubTitle = '';
+    //             break;
+    //         case 'mobileLanguageSubTitle':
+    //             tempSubTitle = '';
+    //             break;
+    //         default:
+    //             tempSubTitle = 'A2 Max Reveal';
+    //             break;
+    //     }
+    //     return tempSubTitle;
+    // }, [activeSubTitle]);
+
     return (
         <div style={{ backgroundColor: theme.palette.background.default, minHeight: '100vh' }}>
             <AppBar data-cy="pxb-toolbar" position={'sticky'} classes={{ root: classes.appbarRoot }}>
@@ -416,6 +432,7 @@ export const ActionListLocalActions = (): JSX.Element => {
                                     }}
                                     data-testid="ListInfoListItem"
                                     title={'Language'}
+                                    // subtitle={isLanguageSubTitleUpdated ? '' : ''}
                                     icon={<Language />}
                                     hidePadding
                                     iconAlign="center"

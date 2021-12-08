@@ -21,7 +21,6 @@ import { Language, Email, Sms, MoreVert, Edit, ArrowBack } from '@material-ui/ic
 import { useDispatch } from 'react-redux';
 import { TOGGLE_DRAWER } from '../../../../redux/actions';
 import { InfoListItem, Spacer } from '@brightlayer-ui/react-components';
-import * as colors from '@brightlayer-ui/colors';
 import { LocalActionsScoreCard } from './scorecard';
 import { LanguageSelect } from './select-language';
 import { LanguageSelectMobile } from './select-language-mobile';
@@ -94,17 +93,6 @@ const useStyles = makeStyles((theme: Theme) => ({
         display: 'flex',
         alignItems: 'center',
     },
-    leftComponentRoot: {
-        display: 'flex',
-        flexDirection: 'column',
-        fontSize: '12px',
-        marginRight: theme.spacing(4),
-    },
-    rightComponentRoot: {
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
     headerIcon: {
         marginLeft: theme.spacing(4),
     },
@@ -112,17 +100,6 @@ const useStyles = makeStyles((theme: Theme) => ({
         '&:hover': {
             color: theme.palette.primary.main,
         },
-    },
-    listItemTag: {
-        marginLeft: theme.spacing(2),
-        marginRight: theme.spacing(4),
-    },
-    rightComponentChevron: {
-        color: colors.gray[500],
-    },
-    infoComponent: {
-        display: 'flex',
-        margin: `4px 0px 4px ${theme.spacing(4)}px`,
     },
     menu: {
         width: 154,

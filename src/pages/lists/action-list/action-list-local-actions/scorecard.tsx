@@ -7,6 +7,12 @@ import { createStyles, makeStyles, Theme, useTheme } from '@material-ui/core';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
+        scorecardRoot: {
+            width: 350,
+            height: 250,
+            marginTop: 16,
+            marginLeft: 16,
+        },
         scorecardHeader: {
             display: 'flex',
             height: 48,
@@ -30,8 +36,9 @@ export const LocalActionsScoreCard = (): JSX.Element => {
     const classes = useStyles(theme);
 
     return (
-        <ScoreCard style={{ minWidth: 350, maxWidth: 416, marginTop: 16, marginLeft: 16 }}
+        <ScoreCard
             classes={{
+                root: classes.scorecardRoot,
                 header: classes.scorecardHeader,
                 headerContent: classes.scorecardHeaderContent,
                 bodyWrapper: classes.bodyWrapper,

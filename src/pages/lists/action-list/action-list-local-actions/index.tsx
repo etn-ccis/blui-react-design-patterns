@@ -27,6 +27,7 @@ import { LanguageSelect } from './select-language';
 import { LanguageSelectMobile } from './select-language-mobile';
 import { DeviceEdit } from './device-edit';
 import { DeviceEditMobile } from './device-edit-mobile';
+import clsx from 'clsx';
 
 const useStyles = makeStyles((theme: Theme) => ({
     appbarRoot: {
@@ -83,6 +84,9 @@ const useStyles = makeStyles((theme: Theme) => ({
             },
         },
     },
+    accordionRootDisableClick: {
+        pointerEvents: 'none',
+    },
     accordionDetails: {
         display: 'block',
         padding: 0,
@@ -130,16 +134,14 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
 }));
 
-const getTitle = (deviceStatus: string, device: string, isMobile: boolean, classes: Record<string, any>): ReactNode => (
+const getTitle = (deviceStatus: string, device: string, classes: Record<string, any>): ReactNode => (
     <div className={classes.listItemTitle}>
         <Typography variant={'subtitle1'} noWrap>
             {deviceStatus}
         </Typography>
-        {/* {!isMobile && ( */}
-            <Typography variant={'body1'} noWrap>
-                : &nbsp;{device}
-            </Typography>
-        {/* )} */}
+        <Typography variant={'body1'} noWrap>
+            : &nbsp;{device}
+        </Typography>
     </div>
 );
 
@@ -156,27 +158,24 @@ export const ActionListLocalActions = (): JSX.Element => {
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
     const classes = useStyles(theme);
 
-    const [isEmailNotificationsEnabled, setIsEmailNotificationsEnabled] = useState(true);
+    const [isEmailNotificationsEnabled, setIsEmailNotificationsEnabled] = useState(false);
     const [isSmsNotificationsEnabled, setIsSmsNotificationsEnabled] = useState(true);
     const [activeScreen, setActiveScreen] = useState<Screens>('localItemActionScreen');
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const [showDeviceEditDialog, setShowDeviceEditDialog] = useState(false);
-    const [subTitle, setSubTitle] = useState('A2 Max Reveal');
+    const [subTitle, setSubTitle] = useState('A2 Max Reval');
+    const [language, setLanguage] = useState('english');
 
     const inputEl = useRef<HTMLInputElement>(null);
     const slideAnimationDurationMs = 250;
     const exitSlideAnimationDurationMs = 0;
 
     const onShowBatteryServiceDetailsClick = useCallback((): void => {
-        // setTimeout(() => {
-            setActiveScreen('batteryServiceScreen');
-        // }, slideAnimationDurationMs);
+        setActiveScreen('batteryServiceScreen');
     }, []);
 
     const onBackNavigation = useCallback((): void => {
-        // setTimeout(() => {
-            setActiveScreen('localItemActionScreen');
-        // }, slideAnimationDurationMs);
+        setActiveScreen('localItemActionScreen');
     }, []);
 
     const openMenu = (event: React.MouseEvent<HTMLButtonElement>): void => {
@@ -251,21 +250,26 @@ export const ActionListLocalActions = (): JSX.Element => {
         return tempTitle;
     }, [activeScreen]);
 
-    // const getLanguageSubTitle = useCallback((): string => {
-    //     let tempSubTitle = '';
-    //     switch (activeSubTitle) {
-    //         case 'desktopLanguageSubTitle':
-    //             tempSubTitle = '';
-    //             break;
-    //         case 'mobileLanguageSubTitle':
-    //             tempSubTitle = '';
-    //             break;
-    //         default:
-    //             tempSubTitle = 'A2 Max Reveal';
-    //             break;
-    //     }
-    //     return tempSubTitle;
-    // }, [activeSubTitle]);
+    const getSubtitleByLanguage = useCallback((): string => {
+        let tempSubTitle = '';
+        switch (language) {
+            case 'english':
+                tempSubTitle = 'English (United States)';
+                break;
+            case 'deutsch':
+                tempSubTitle = 'Deutsch';
+                break;
+            case 'espanol':
+                tempSubTitle = 'Español';
+                break;
+            case 'francais':
+                tempSubTitle = 'Français';
+                break;
+            default:
+                tempSubTitle = 'English (United States)';
+        }
+        return tempSubTitle;
+    }, [language]);
 
     return (
         <div style={{ backgroundColor: theme.palette.background.default, minHeight: '100vh' }}>
@@ -283,7 +287,7 @@ export const ActionListLocalActions = (): JSX.Element => {
                 in={activeScreen === 'localItemActionScreen'}
                 mountOnEnter
                 unmountOnExit
-                timeout={{enter:slideAnimationDurationMs, exit:exitSlideAnimationDurationMs}}
+                timeout={{ enter: slideAnimationDurationMs, exit: exitSlideAnimationDurationMs }}
             >
                 <div className={classes.accordionContainer}>
                     <Accordion
@@ -303,7 +307,7 @@ export const ActionListLocalActions = (): JSX.Element => {
                                     classes={{
                                         listItemText: classes.listItemText,
                                     }}
-                                    title={getTitle('Battery Service', 'Eaton GH142', isMobile, classes)}
+                                    title={getTitle('Battery Service', 'Eaton GH142', classes)}
                                     data-testid="listInfoListItem"
                                     divider={'full'}
                                     hidePadding
@@ -315,7 +319,7 @@ export const ActionListLocalActions = (): JSX.Element => {
                                         listItemText: classes.listItemText,
                                     }}
                                     data-testid="listInfoListItem"
-                                    title={getTitle('Bypass Over Frequency', 'A2 Max Reveal', isMobile, classes)}
+                                    title={getTitle('Bypass Over Frequency', 'A2 Max Reval', classes)}
                                     divider={'full'}
                                     hidePadding
                                     rightComponent={
@@ -343,7 +347,7 @@ export const ActionListLocalActions = (): JSX.Element => {
                                         listItemText: classes.listItemText,
                                     }}
                                     data-testid="ListInfoListItem"
-                                    title={getTitle('Device', subTitle, isMobile, classes)}
+                                    title={getTitle('Device', subTitle, classes)}
                                     subtitleSeparator={' '}
                                     hidePadding
                                     rightComponent={
@@ -351,6 +355,7 @@ export const ActionListLocalActions = (): JSX.Element => {
                                             <Edit />
                                         </IconButton>
                                     }
+                                    divider={isMobile ? 'full' : undefined}
                                 />
                             </List>
                         </AccordionDetails>
@@ -360,7 +365,7 @@ export const ActionListLocalActions = (): JSX.Element => {
                         data-testid="NotificationListAccordion"
                         defaultExpanded={true}
                         TransitionProps={{ in: true }}
-                        classes={{ root: classes.accordionRoot }}
+                        classes={{ root: clsx(classes.accordionRoot, classes.accordionRootDisableClick) }}
                     >
                         <AccordionSummary>
                             <Typography variant={'subtitle2'} color={'primary'}>
@@ -405,6 +410,7 @@ export const ActionListLocalActions = (): JSX.Element => {
                                     }
                                     icon={<Sms />}
                                     iconAlign="center"
+                                    divider={isMobile ? 'partial' : undefined}
                                 />
                             </List>
                         </AccordionDetails>
@@ -414,7 +420,7 @@ export const ActionListLocalActions = (): JSX.Element => {
                         data-testid="LocaleListAccordion"
                         defaultExpanded={true}
                         TransitionProps={{ in: true }}
-                        classes={{ root: classes.accordionRoot }}
+                        classes={{ root: clsx(classes.accordionRoot, classes.accordionRootDisableClick) }}
                         onChange={(event: any): void => {
                             event.preventDefault();
                         }}
@@ -432,15 +438,29 @@ export const ActionListLocalActions = (): JSX.Element => {
                                     }}
                                     data-testid="ListInfoListItem"
                                     title={'Language'}
-                                    // subtitle={isLanguageSubTitleUpdated ? '' : ''}
+                                    subtitle={getSubtitleByLanguage()}
                                     icon={<Language />}
                                     hidePadding
                                     iconAlign="center"
-                                    rightComponent={isMobile ? undefined : <LanguageSelect />}
+                                    rightComponent={
+                                        isMobile ? undefined : (
+                                            <LanguageSelect
+                                                language={language}
+                                                updateLanguage={(updatedLanguage): void => {
+                                                    setLanguage(updatedLanguage);
+                                                }}
+                                            />
+                                        )
+                                    }
                                     chevron
-                                    onClick={(): void => {
-                                        if (isMobile) setActiveScreen('mobileLanguageSelectScreen');
-                                    }}
+                                    onClick={
+                                        isMobile
+                                            ? (): void => {
+                                                  setActiveScreen('mobileLanguageSelectScreen');
+                                              }
+                                            : undefined
+                                    }
+                                    divider={isMobile ? 'full' : undefined}
                                 />
                             </List>
                         </AccordionDetails>
@@ -452,9 +472,9 @@ export const ActionListLocalActions = (): JSX.Element => {
                 in={activeScreen === 'batteryServiceScreen'}
                 mountOnEnter
                 unmountOnExit
-                timeout={{enter:slideAnimationDurationMs, exit:exitSlideAnimationDurationMs}}
+                timeout={{ enter: slideAnimationDurationMs, exit: exitSlideAnimationDurationMs }}
             >
-                <div style={{ display: 'flex', flexDirection: 'column', height: 'calc(100vh - 64px)' }}>
+                <div>
                     <LocalActionsScoreCard />
                 </div>
             </Slide>
@@ -463,27 +483,33 @@ export const ActionListLocalActions = (): JSX.Element => {
                 in={activeScreen === 'editDeviceScreen'}
                 mountOnEnter
                 unmountOnExit
-                timeout={{enter:slideAnimationDurationMs, exit:exitSlideAnimationDurationMs}}
+                timeout={{ enter: slideAnimationDurationMs, exit: exitSlideAnimationDurationMs }}
             >
-                     <div style={{ display: 'flex', flexDirection: 'column', height: 'calc(100vh - 64px)' }}>
+                <div style={{ display: 'flex', flexDirection: 'column', height: 'calc(100vh - 64px)' }}>
                     <DeviceEditMobile
-                    navigateBack={onBackNavigation} 
-                     subTitle={subTitle}
-                     updateSubTitle={(updatedSubTitle): void => {
-                         setSubTitle(updatedSubTitle);
-                     }}
+                        navigateBack={(): void => onBackNavigation()}
+                        subTitle={subTitle}
+                        updateSubTitle={(updatedSubTitle): void => {
+                            setSubTitle(updatedSubTitle);
+                        }}
                     />
-                    </div>
+                </div>
             </Slide>
             <Slide
                 direction={'left'}
                 in={activeScreen === 'mobileLanguageSelectScreen'}
                 mountOnEnter
                 unmountOnExit
-                timeout={{enter:slideAnimationDurationMs, exit:exitSlideAnimationDurationMs}}
+                timeout={{ enter: slideAnimationDurationMs, exit: exitSlideAnimationDurationMs }}
             >
                 <div>
-                    <LanguageSelectMobile />
+                    <LanguageSelectMobile
+                        language={language}
+                        updateLanguage={(updatedLanguage): void => {
+                            setLanguage(updatedLanguage);
+                        }}
+                        navigateBack={(): void => onBackNavigation()}
+                    />
                 </div>
             </Slide>
             <DeviceEdit

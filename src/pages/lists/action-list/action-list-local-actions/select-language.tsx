@@ -4,6 +4,7 @@ import Select from '@material-ui/core/Select';
 import createStyles from '@material-ui/core/styles/createStyles';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import React from 'react';
+import { LanguageSelectProps } from './select-language-mobile';
 
 const useStyles = makeStyles(() =>
     createStyles({
@@ -13,12 +14,12 @@ const useStyles = makeStyles(() =>
     })
 );
 
-export const LanguageSelect: React.FC = () => {
+export const LanguageSelect = (props: LanguageSelectProps): JSX.Element => {
     const classes = useStyles();
-    const [language, setLanguage] = React.useState('english');
+    const { language, updateLanguage } = props;
 
     const handleChange = (event: React.ChangeEvent<{ value: unknown }>): void => {
-        setLanguage(event.target.value as string);
+        updateLanguage(event.target.value as string);
     };
 
     return (

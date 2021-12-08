@@ -6,20 +6,20 @@ import makeStyles from '@material-ui/core/styles/makeStyles';
 import { useTheme } from '@material-ui/styles';
 import { Theme } from '@material-ui/core/styles/createMuiTheme';
 
+export type LanguageSelectProps = {
+    language: string;
+    updateLanguage: (tempLanguage: string) => void;
+    navigateBack?: () => void;
+};
+
 type LanguageData = {
     id: string;
     title: string;
 };
 
-type LanguageSelectMobileProps = {
-    language:string
-    updateLanguage:(tempLanguage: string) => void;
-
-};
-
 const languageData: LanguageData[] = [
     {
-        id: 'deutch',
+        id: 'deutsch',
         title: 'Deutsch',
     },
     {
@@ -42,13 +42,10 @@ const useStyles = makeStyles((theme: Theme) =>
     })
 );
 
-export const LanguageSelectMobile = (props: LanguageSelectMobileProps): JSX.Element => {
+export const LanguageSelectMobile = (props: LanguageSelectProps): JSX.Element => {
     const theme = useTheme();
     const classes = useStyles(theme);
-    const [language, setLanguage] = React.useState('english');
-    const {language, updateLanguage} = props;
-    // eslint-disable-next-line no-console
-    console.log(props)
+    const { language, updateLanguage, navigateBack = (): void => {} } = props;
 
     return (
         <div className={classes.container}>
@@ -58,7 +55,8 @@ export const LanguageSelectMobile = (props: LanguageSelectMobileProps): JSX.Elem
                     title={data.title}
                     icon={language === data.id ? <Done /> : undefined}
                     onClick={(): void => {
-                        setLanguage(data.id);
+                        updateLanguage(data.id);
+                        navigateBack();
                     }}
                     divider={'full'}
                 />

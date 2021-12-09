@@ -260,7 +260,7 @@ export const ActionListLocalActions = (): JSX.Element => {
                 <div className={classes.accordionContainer}>
                     <Accordion
                         key={'today'}
-                        data-testid="Accordion"
+                        data-testid="accordion"
                         defaultExpanded={true}
                         classes={{ root: classes.accordionRoot }}
                     >
@@ -276,7 +276,7 @@ export const ActionListLocalActions = (): JSX.Element => {
                                         listItemText: classes.listItemText,
                                     }}
                                     title={getTitle('Battery Service', 'Eaton GH142', classes)}
-                                    data-testid="listInfoListItem"
+                                    data-testid="infoListItem"
                                     divider={'full'}
                                     hidePadding
                                     onClick={onShowBatteryServiceDetailsClick}
@@ -286,7 +286,7 @@ export const ActionListLocalActions = (): JSX.Element => {
                                     classes={{
                                         listItemText: classes.listItemText,
                                     }}
-                                    data-testid="listInfoListItem"
+                                    data-testid="infoListItem"
                                     title={getTitle('Bypass Over Frequency', 'A2 Max Reval', classes)}
                                     divider={'full'}
                                     hidePadding
@@ -314,7 +314,7 @@ export const ActionListLocalActions = (): JSX.Element => {
                                     classes={{
                                         listItemText: classes.listItemText,
                                     }}
-                                    data-testid="ListInfoListItem"
+                                    data-testid="infoListItem"
                                     title={getTitle('Device', subTitle, classes)}
                                     subtitleSeparator={' '}
                                     hidePadding
@@ -330,7 +330,7 @@ export const ActionListLocalActions = (): JSX.Element => {
                     </Accordion>
                     <Accordion
                         key={'Notifications'}
-                        data-testid="NotificationListAccordion"
+                        data-testid="accordion"
                         defaultExpanded={true}
                         TransitionProps={{ in: true }}
                         classes={{ root: classes.accordionRoot }}
@@ -347,7 +347,7 @@ export const ActionListLocalActions = (): JSX.Element => {
                                         listItemText: classes.listItemText,
                                     }}
                                     title={'Email Notifications'}
-                                    data-testid="ListInfoListItem"
+                                    data-testid="infoListItem"
                                     subtitle={isEmailNotificationsEnabled ? 'Enabled' : 'Disabled'}
                                     rightComponent={
                                         <Switch
@@ -365,7 +365,7 @@ export const ActionListLocalActions = (): JSX.Element => {
                                     classes={{
                                         listItemText: classes.listItemText,
                                     }}
-                                    data-testid="ListInfoListItem"
+                                    data-testid="infoListItem"
                                     title={'SMS Notifications'}
                                     subtitle={isSmsNotificationsEnabled ? 'Enabled' : 'Disabled'}
                                     rightComponent={
@@ -385,7 +385,7 @@ export const ActionListLocalActions = (): JSX.Element => {
                     </Accordion>
                     <Accordion
                         key={'Locale'}
-                        data-testid="LocaleListAccordion"
+                        data-testid="accordion"
                         defaultExpanded={true}
                         TransitionProps={{ in: true }}
                         classes={{ root: classes.accordionRoot }}
@@ -404,7 +404,7 @@ export const ActionListLocalActions = (): JSX.Element => {
                                     classes={{
                                         listItemText: classes.listItemText,
                                     }}
-                                    data-testid="ListInfoListItem"
+                                    data-testid="infoListItem"
                                     title={'Language'}
                                     subtitle={getSubtitleByLanguage()}
                                     icon={<Language />}

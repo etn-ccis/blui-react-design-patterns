@@ -24,7 +24,7 @@ export const LanguageSelect = (props: LanguageSelectProps): JSX.Element => {
 
     return (
         <FormControl variant={'outlined'} size={'small'} className={classes.formControl}>
-            <Select value={language} onChange={handleChange}>
+            <Select value={language} onChange={handleChange} data-testid="LanguageDesktop">
                 <MenuItem value="deutsch">Deutsch</MenuItem>
                 <MenuItem value="english">English</MenuItem>
                 <MenuItem value="espanol">Español</MenuItem>

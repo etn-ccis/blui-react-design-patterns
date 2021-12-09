@@ -53,6 +53,7 @@ export const LanguageSelectMobile = (props: LanguageSelectProps): JSX.Element =>
                 <InfoListItem
                     key={data.id}
                     title={data.title}
+                    data-testid="LanguageMobile"
                     icon={language === data.id ? <Done /> : undefined}
                     onClick={(): void => {
                         updateLanguage(data.id);

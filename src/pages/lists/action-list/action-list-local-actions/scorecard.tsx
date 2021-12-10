@@ -81,7 +81,7 @@ export const LocalActionsScoreCard = (): JSX.Element => {
                     variant={'contained'}
                     color={'primary'}
                     disableElevation={true}
-                    style={{ margin: 16, width: 'calc(100% - 32px)' }}
+                    style={{ margin: theme.spacing(2), width: 'calc(100% - 32px)' }}
                 >
                     Run Diagnostics
                 </Button>

@@ -67,9 +67,7 @@ export const DeviceEdit = (props: DialogProps): JSX.Element => {
                 paper: classes.dialogPaper,
             }}
         >
-            <DialogTitle
-            className={classes.dialogTitle}
-            >Device</DialogTitle>
+            <DialogTitle className={classes.dialogTitle}>Device</DialogTitle>
             <DialogContent>
                 <TextField
                     onChange={(event): void => setTempSubTitle(event?.target.value)}
@@ -83,7 +81,13 @@ export const DeviceEdit = (props: DialogProps): JSX.Element => {
             </DialogContent>
             <DialogActions className={classes.dialogActions}>
                 <Divider className={classes.dialogDivider} />
-                <Button className={classes.dialogButton} onClick={onSubmit} color={'primary'} variant={'contained'} disableElevation={true}>
+                <Button
+                    className={classes.dialogButton}
+                    onClick={onSubmit}
+                    color={'primary'}
+                    variant={'contained'}
+                    disableElevation={true}
+                >
                     DONE
                 </Button>
             </DialogActions>

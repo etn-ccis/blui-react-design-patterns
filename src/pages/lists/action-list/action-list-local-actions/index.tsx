@@ -50,13 +50,13 @@ const useStyles = makeStyles((theme: Theme) => ({
         },
     },
     accordionRoot: {
-        marginBottom: theme.spacing(3),
+        marginBottom: theme.spacing(2),
         borderRadius: 4,
         '&:before': {
             display: 'none',
         },
         '&.Mui-expanded': {
-            marginBottom: theme.spacing(3),
+            marginBottom: theme.spacing(2),
         },
         '& .MuiAccordionSummary-root': {
             height: theme.spacing(6),
@@ -359,7 +359,7 @@ export const ActionListLocalActions = (): JSX.Element => {
                                     }
                                     divider={'partial'}
                                     icon={<Email />}
-                                    iconAlign="center"
+                                    iconAlign="left"
                                 />
                                 <InfoListItem
                                     classes={{
@@ -377,8 +377,8 @@ export const ActionListLocalActions = (): JSX.Element => {
                                         />
                                     }
                                     icon={<Sms />}
-                                    iconAlign="center"
-                                    divider={isMobile ? 'partial' : undefined}
+                                    iconAlign="left"
+                                    divider={isMobile ? 'full' : undefined}
                                 />
                             </List>
                         </AccordionDetails>
@@ -409,7 +409,7 @@ export const ActionListLocalActions = (): JSX.Element => {
                                     subtitle={getSubtitleByLanguage()}
                                     icon={<Language />}
                                     hidePadding
-                                    iconAlign="center"
+                                    iconAlign="left"
                                     rightComponent={
                                         isMobile ? undefined : (
                                             <LanguageSelect

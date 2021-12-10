@@ -21,12 +21,15 @@ const useStyles = makeStyles(() =>
             width: 450,
             height: 600,
         },
+        dialogTitle: {
+            padding: '32px 24px',
+        },
         dialogActions: {
             flexDirection: 'column',
-            padding: 0,
+            padding: '24px',
         },
         dialogButton: {
-            margin: '16px',
+            margin: '24px',
             width: 'calc(100% - 32px)',
         },
         dialogDivider: {
@@ -64,7 +67,9 @@ export const DeviceEdit = (props: DialogProps): JSX.Element => {
                 paper: classes.dialogPaper,
             }}
         >
-            <DialogTitle>Device</DialogTitle>
+            <DialogTitle
+            className={classes.dialogTitle}
+            >Device</DialogTitle>
             <DialogContent>
                 <TextField
                     onChange={(event): void => setTempSubTitle(event?.target.value)}
@@ -78,7 +83,7 @@ export const DeviceEdit = (props: DialogProps): JSX.Element => {
             </DialogContent>
             <DialogActions className={classes.dialogActions}>
                 <Divider className={classes.dialogDivider} />
-                <Button className={classes.dialogButton} onClick={onSubmit} color={'primary'} variant={'contained'}>
+                <Button className={classes.dialogButton} onClick={onSubmit} color={'primary'} variant={'contained'} disableElevation={true}>
                     DONE
                 </Button>
             </DialogActions>

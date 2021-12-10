@@ -38,7 +38,7 @@ export const DeviceEditMobile = (props: DeviceEditProps): JSX.Element => {
 
     return (
         <>
-            <div style={{ flex: 1 }}>
+            <div style={{ flex: 1, background: 'white' }}>
                 <TextField
                     onChange={(event): void => setTempSubTitle(event?.target.value)}
                     value={tempSubTitle}

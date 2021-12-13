@@ -18,6 +18,10 @@ const useStyles = makeStyles((theme: Theme) =>
             height: 48,
             borderBottom: `1px solid ${theme.palette.divider}`,
         },
+        headerTitle: {
+            fontSize: '0.875rem'
+
+        },
         scorecardHeaderContent: {
             padding: '0 16px',
             alignItems: 'center',
@@ -43,6 +47,7 @@ export const LocalActionsScoreCard = (): JSX.Element => {
                 headerContent: classes.scorecardHeaderContent,
                 bodyWrapper: classes.bodyWrapper,
                 badgeWrapper: classes.badgeWrapper,
+                headerTitle: classes.headerTitle
             }}
             headerTitle={'Overview'}
             headerColor={Colors.white[50]}

@@ -89,6 +89,14 @@ const useStyles = makeStyles((theme: Theme) => ({
         display: 'block',
         padding: 0,
     },
+    deviceEditMobileContainer: {
+        display: 'flex',
+        flexDirection: 'column',
+        height: 'calc(100vh - 64px)',
+        [theme.breakpoints.down('xs')]: {
+            height: 'calc(100vh - 56px)',
+        },
+    },
     listItemTitle: {
         display: 'flex',
         alignItems: 'center',
@@ -455,7 +463,7 @@ export const ActionListLocalActions = (): JSX.Element => {
                 unmountOnExit
                 timeout={{ enter: slideAnimationDurationMs, exit: exitSlideAnimationDurationMs }}
             >
-                <div style={{ display: 'flex', flexDirection: 'column', height: 'calc(100vh - 64px)' }}>
+                <div className={classes.deviceEditMobileContainer}>
                     <DeviceEditMobile
                         navigateBack={(): void => onBackNavigation()}
                         subTitle={subTitle}

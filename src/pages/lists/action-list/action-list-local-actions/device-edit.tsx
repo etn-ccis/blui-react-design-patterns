@@ -29,11 +29,11 @@ const useStyles = makeStyles(() =>
             padding: '24px',
         },
         dialogButton: {
-            margin: '24px',
-            width: 'calc(100% - 32px)',
+            width: '100%',
+            marginTop: '24px',
         },
         dialogDivider: {
-            width: '100%',
+            width: 'calc(100% + 48px)',
         },
         textField: {
             marginTop: '32px',

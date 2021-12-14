@@ -131,7 +131,7 @@ export const ActionListLocalActions = (): JSX.Element => {
     const [activeScreen, setActiveScreen] = useState<Screens>('localItemActionScreen');
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const [showDeviceEditDialog, setShowDeviceEditDialog] = useState(false);
-    const [subTitle, setSubTitle] = useState('A2 Max Reval');
+    const [subTitle, setSubTitle] = useState('A2 Max Reveal');
     const [language, setLanguage] = useState('english');
 
     const inputEl = useRef<HTMLInputElement>(null);
@@ -287,7 +287,7 @@ export const ActionListLocalActions = (): JSX.Element => {
                                         listItemText: classes.listItemText,
                                     }}
                                     data-testid="infoListItem"
-                                    title={getTitle('Bypass Over Frequency', 'A2 Max Reval', classes)}
+                                    title={getTitle('Bypass Over Frequency', 'A2 Max Reveal', classes)}
                                     divider={'full'}
                                     hidePadding
                                     rightComponent={

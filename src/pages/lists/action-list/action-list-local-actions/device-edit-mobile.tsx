@@ -3,6 +3,7 @@ import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import { createStyles, makeStyles } from '@material-ui/core';
 import Divider from '@material-ui/core/Divider';
+import * as colors from '@brightlayer-ui/colors';
 
 type DeviceEditProps = {
     subTitle: string;
@@ -38,7 +39,7 @@ export const DeviceEditMobile = (props: DeviceEditProps): JSX.Element => {
 
     return (
         <>
-            <div style={{ flex: 1, background: 'white' }}>
+            <div style={{ flex: 1, backgroundColor: colors.white[50] }}>
                 <TextField
                     onChange={(event): void => setTempSubTitle(event?.target.value)}
                     value={tempSubTitle}

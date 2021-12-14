@@ -108,9 +108,9 @@ const getTitle = (deviceStatus: string, device: string, isMobile: boolean, class
             {deviceStatus}
         </Typography>
         {!isMobile && (
-        <Typography variant={'body1'} noWrap>
-            : &nbsp;{device}
-        </Typography>
+            <Typography variant={'body1'} noWrap>
+                : &nbsp;{device}
+            </Typography>
         )}
     </div>
 );

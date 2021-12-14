@@ -102,14 +102,16 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
 }));
 
-const getTitle = (deviceStatus: string, device: string, classes: Record<string, any>): ReactNode => (
+const getTitle = (deviceStatus: string, device: string, isMobile: boolean, classes: Record<string, any>): ReactNode => (
     <div className={classes.listItemTitle}>
         <Typography variant={'subtitle1'} noWrap>
             {deviceStatus}
         </Typography>
+        {!isMobile && (
         <Typography variant={'body1'} noWrap>
             : &nbsp;{device}
         </Typography>
+        )}
     </div>
 );
 
@@ -275,7 +277,7 @@ export const ActionListLocalActions = (): JSX.Element => {
                                     classes={{
                                         listItemText: classes.listItemText,
                                     }}
-                                    title={getTitle('Battery Service', 'Eaton GH142', classes)}
+                                    title={getTitle('Battery Service', 'Eaton GH142', isMobile, classes)}
                                     data-testid="infoListItem"
                                     divider={'full'}
                                     hidePadding
@@ -287,7 +289,7 @@ export const ActionListLocalActions = (): JSX.Element => {
                                         listItemText: classes.listItemText,
                                     }}
                                     data-testid="infoListItem"
-                                    title={getTitle('Bypass Over Frequency', 'A2 Max Reveal', classes)}
+                                    title={getTitle('Bypass Over Frequency', 'A2 Max Reveal', isMobile, classes)}
                                     divider={'full'}
                                     hidePadding
                                     rightComponent={
@@ -315,7 +317,7 @@ export const ActionListLocalActions = (): JSX.Element => {
                                         listItemText: classes.listItemText,
                                     }}
                                     data-testid="infoListItem"
-                                    title={getTitle('Device', subTitle, classes)}
+                                    title={getTitle('Device', subTitle, isMobile, classes)}
                                     subtitleSeparator={' '}
                                     hidePadding
                                     rightComponent={

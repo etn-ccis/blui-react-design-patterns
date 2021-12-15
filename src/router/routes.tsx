@@ -81,6 +81,10 @@ export const PAGES: Routes = {
                 title: 'In Panel Header',
                 route: 'in-panel-header',
             },
+            WITH_LOCAL_ACTIONS: {
+                title: 'Local Actions',
+                route: 'with-local-actions',
+            },
             INLINE: {
                 title: 'Inline Actions',
                 route: 'inline-actions',
@@ -197,6 +201,7 @@ export type Routes = {
         ACTION_LIST: RouteMetaData & {
             IN_BUTTON_PANEL: RouteMetaData;
             IN_PANEL_HEADER: RouteMetaData;
+            WITH_LOCAL_ACTIONS: RouteMetaData;
             INLINE: RouteMetaData;
         };
         DATA_LIST: RouteMetaData;

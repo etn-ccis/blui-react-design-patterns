@@ -5,8 +5,7 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import { createStyles, makeStyles } from '@material-ui/core';
-import Divider from '@material-ui/core/Divider';
+import { createStyles, makeStyles, Theme } from '@material-ui/core';
 
 type DialogProps = {
     open: boolean;
@@ -15,28 +14,24 @@ type DialogProps = {
     updateSubTitle: (tempSubTitle: string) => void;
 };
 
-const useStyles = makeStyles(() =>
+const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         dialogPaper: {
             width: 450,
             height: 600,
         },
         dialogTitle: {
-            padding: '32px 24px',
+            padding: `${theme.spacing(4)}px ${theme.spacing(3)}px`,
         },
         dialogActions: {
-            flexDirection: 'column',
-            padding: '24px',
+            padding: theme.spacing(3),
+            borderTop: `1px solid ${theme.palette.divider}`,
         },
         dialogButton: {
             width: '100%',
-            marginTop: '24px',
-        },
-        dialogDivider: {
-            width: 'calc(100% + 48px)',
         },
         textField: {
-            marginTop: '32px',
+            marginTop: theme.spacing(4),
         },
     })
 );
@@ -80,7 +75,6 @@ export const DeviceEdit = (props: DialogProps): JSX.Element => {
                 />
             </DialogContent>
             <DialogActions className={classes.dialogActions}>
-                <Divider className={classes.dialogDivider} />
                 <Button
                     className={classes.dialogButton}
                     onClick={onSubmit}

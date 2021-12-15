@@ -235,13 +235,13 @@ export const ActionListLocalActions = (): JSX.Element => {
                 tempSubTitle = 'English (United States)';
                 break;
             case 'deutsch':
-                tempSubTitle = 'Deutsch';
+                tempSubTitle = 'Deutsch (Germany)';
                 break;
             case 'espanol':
-                tempSubTitle = 'Español';
+                tempSubTitle = 'Español (Spain)';
                 break;
             case 'francais':
-                tempSubTitle = 'Français';
+                tempSubTitle = 'Français (France)';
                 break;
             default:
                 tempSubTitle = 'English (United States)';

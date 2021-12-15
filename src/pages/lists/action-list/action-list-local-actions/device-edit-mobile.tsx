@@ -29,11 +29,11 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         textField: {
             display: 'flex',
-            margin: '16px',
+            margin: theme.spacing(2),
         },
         button: {
             display: 'flex',
-            margin: '16px',
+            margin: theme.spacing(2),
         },
     })
 );

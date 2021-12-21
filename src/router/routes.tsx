@@ -110,6 +110,10 @@ export const PAGES: Routes = {
             title: 'Responsive Table',
             route: 'responsive-table',
         },
+        TREE_STRUCTURE: {
+            title: 'Tree Structure',
+            route: 'tree-structure',
+        },
     },
     LOADING_WAITING_STATES: {
         title: 'Loading & Waiting',
@@ -209,6 +213,7 @@ export type Routes = {
         SORTABLE_LIST: RouteMetaData;
         STATUS_LIST: RouteMetaData;
         RESPONSIVE_TABLE: RouteMetaData;
+        TREE_STRUCTURE: RouteMetaData;
     };
     LOADING_WAITING_STATES: RouteMetaData & {
         PROGRESS_BAR: RouteMetaData;

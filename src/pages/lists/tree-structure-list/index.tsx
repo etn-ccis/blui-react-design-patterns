@@ -18,6 +18,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ClosedFolderIcon from '@material-ui/icons/Folder';
 import OpenFolderIcon from '@material-ui/icons/FolderOpen';
 import { Accordion, AccordionDetails, AccordionSummary, Radio } from '@material-ui/core';
+import clsx from 'clsx';
 
 const useStyles = makeStyles((theme: Theme) => ({
     container: {
@@ -55,9 +56,17 @@ const useStyles = makeStyles((theme: Theme) => ({
     accordionRoot: {
         marginBottom: '0 !important',
         marginTop: '0 !important',
+        padding: 0,
+    },
+    nestedAccordionRoot: {
+        boxShadow: 'none',
     },
     accordionSummaryRoot: {
         height: 56,
+        '&.Mui-expanded': {
+            minHeight: 56,
+        },
+        paddingLeft: 8,
     },
     accordionSummarySelected: {
         backgroundColor: theme.palette.primary.light,
@@ -72,11 +81,15 @@ const useStyles = makeStyles((theme: Theme) => ({
         marginLeft: 8,
         marginRight: 16,
     },
+    accordionDetailsRoot: {
+        padding: 0,
+    },
 }));
 
 export type TreeItem = {
     title: string;
     id: number;
+    depth?: number;
     selected?: boolean;
     opened?: boolean;
     children?: TreeItem[];
@@ -85,32 +98,39 @@ export type TreeItem = {
 const treeItems: TreeItem[] = [
     {
         id: 0,
+        depth: 0,
         title: 'The Best Design Team',
         children: [
             {
                 id: 1,
+                depth: 1,
                 title: 'Studio Blue',
             },
         ],
     },
     {
         id: 2,
+        depth: 0,
         title: 'The Best UX Team',
         children: [
             {
                 id: 3,
+                depth: 1,
                 title: 'Design Thinking',
             },
             {
                 id: 4,
+                depth: 1,
                 title: 'User Interface',
                 children: [
                     {
                         id: 5,
+                        depth: 2,
                         title: 'Design System',
                     },
                     {
                         id: 6,
+                        depth: 2,
                         title: 'Component Library',
                     },
                 ],
@@ -119,114 +139,111 @@ const treeItems: TreeItem[] = [
     },
 ];
 
-// type TreeItemProps = {
-//     title: string;
-//     selected?: boolean;
-//     open?: boolean;
-//     children?: TreeItem[];
-// }
+type TreeItemProps = {
+    id: number;
+    title: string;
+    depth?: number;
+    selectedItemId?: number | null;
+    selected?: boolean;
+    childItems?: TreeItem[];
+    setSelectedItem?: (id: number) => void;
+};
 
-// export const TreeItem = (props: TreeItemProps): JSX.Element => {
-//     const {title, selected, open, children} = props;
-//     const dispatch = useDispatch();
-//     const theme = useTheme();
-//     const classes = useStyles(theme);
-//     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
-//     const [isExpanded, setIsExpanded] = useState(false);
+const TreeItem = (props: TreeItemProps): JSX.Element => {
+    const { id, depth = 0, title, selected, selectedItemId, childItems = [], setSelectedItem = (): void => {} } = props;
+    const theme = useTheme();
+    const classes = useStyles(theme);
+    const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+    const [isExpanded, setIsExpanded] = useState(false);
 
-//     return(
-//                     <Accordion
-//                         square={isMobile}
-//                         classes={{ root: classes.accordionRoot }}
-//                         onClick={(): void => {
-//                             setIsExpanded(!isExpanded);
-//                         }}
-//                     >
-//                         <AccordionSummary
-//                             className={selectedItem === item.id ? classes.accordionSummarySelected : ''}
-//                             classes={{ root: classes.accordionSummaryRoot }}
-//                             expandIcon={
-//                                 <ExpandMoreIcon
-//                                     className={selectedItem === item.id ? classes.expandIconSelected : ''}
-//                                 />
-//                             }
-//                         >
-//                             <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
-//                                 <Radio
-//                                     checked={selectedItem === item.id}
-//                                     onClick={(event): void => {
-//                                         event.stopPropagation();
-//                                         setSelectedItem(item.id);
-//                                     }}
-//                                 />
-//                                 {isExpanded ? (
-//                                     <OpenFolderIcon className={classes.folderIcon} />
-//                                 ) : (
-//                                     <ClosedFolderIcon className={classes.folderIcon} />
-//                                 )}
-//                                 {/* {!isExpanded && <ClosedFolderIcon className={classes.folderIcon} />}
-//                                 {isExpanded && <OpenFolderIcon className={classes.folderIcon} />} */}
-//                                 <Typography variant={'subtitle1'}>{item.title}</Typography>
-//                             </div>
-//                         </AccordionSummary>
-//                         {item && item.children && item?.children?.length > 0 && <AccordionDetails></AccordionDetails>}
-//                     </Accordion>
-//     );
-// };
+    return (
+        <Accordion
+            square={isMobile || depth > 0}
+            classes={{
+                root: depth > 0 ? clsx(classes.accordionRoot, classes.nestedAccordionRoot) : classes.accordionRoot,
+            }}
+            onClick={(event): void => {
+                event.stopPropagation();
+                if (childItems && childItems.length > 0) {
+                    event.preventDefault();
+                    setIsExpanded(!isExpanded);
+                }
+            }}
+            expanded={isExpanded}
+        >
+            <AccordionSummary
+                className={selected ? classes.accordionSummarySelected : ''}
+                classes={{ root: classes.accordionSummaryRoot }}
+                expandIcon={
+                    childItems && childItems.length > 0 ? (
+                        <ExpandMoreIcon className={selected ? classes.expandIconSelected : ''} />
+                    ) : undefined
+                }
+            >
+                <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
+                    <Radio
+                        checked={selected}
+                        onClick={(event): void => {
+                            event.stopPropagation();
+                            setSelectedItem(id);
+                        }}
+                    />
+                    <Spacer width={depth * 32} />
+                    {!isExpanded && <ClosedFolderIcon className={classes.folderIcon} />}
+                    {isExpanded && <OpenFolderIcon className={classes.folderIcon} />}
+                    <Typography variant={'subtitle1'}>{title}</Typography>
+                </div>
+            </AccordionSummary>
+            {childItems && childItems.length > 0 && (
+                <AccordionDetails classes={{ root: classes.accordionDetailsRoot }}>
+                    <div style={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
+                        {childItems.map((item) => (
+                            <TreeItem
+                                key={item.id}
+                                id={item.id}
+                                depth={item.depth}
+                                title={item.title}
+                                childItems={item.children}
+                                selected={selectedItemId === item.id}
+                                setSelectedItem={(updatedId: number): void => {
+                                    setSelectedItem(updatedId);
+                                }}
+                            />
+                        ))}
+                    </div>
+                </AccordionDetails>
+            )}
+        </Accordion>
+    );
+};
 
 export const TreeStructureList = (): JSX.Element => {
     const dispatch = useDispatch();
     const theme = useTheme();
     const classes = useStyles(theme);
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
-    const [selectedItem, setSelectedItem] = useState(0);
-    const [isExpanded, setIsExpanded] = useState(false);
+    const [selectedItem, setSelectedItem] = useState<number | null>(null);
 
     const renderTreeList = useCallback(
         (): JSX.Element => (
-            <div>
+            <>
                 {treeItems.map((item) => (
-                    <Accordion
+                    <TreeItem
                         key={item.id}
-                        square={isMobile}
-                        classes={{ root: classes.accordionRoot }}
-                        onClick={(): void => {
-                            setIsExpanded(!isExpanded);
+                        id={item.id}
+                        depth={item.depth}
+                        title={item.title}
+                        childItems={item.children}
+                        selected={selectedItem === item.id}
+                        selectedItemId={selectedItem}
+                        setSelectedItem={(id): void => {
+                            setSelectedItem(id);
                         }}
-                    >
-                        <AccordionSummary
-                            className={selectedItem === item.id ? classes.accordionSummarySelected : ''}
-                            classes={{ root: classes.accordionSummaryRoot }}
-                            expandIcon={
-                                <ExpandMoreIcon
-                                    className={selectedItem === item.id ? classes.expandIconSelected : ''}
-                                />
-                            }
-                        >
-                            <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
-                                <Radio
-                                    checked={selectedItem === item.id}
-                                    onClick={(event): void => {
-                                        event.stopPropagation();
-                                        setSelectedItem(item.id);
-                                    }}
-                                />
-                                {isExpanded ? (
-                                    <OpenFolderIcon className={classes.folderIcon} />
-                                ) : (
-                                    <ClosedFolderIcon className={classes.folderIcon} />
-                                )}
-                                {/* {!isExpanded && <ClosedFolderIcon className={classes.folderIcon} />}
-                                {isExpanded && <OpenFolderIcon className={classes.folderIcon} />} */}
-                                <Typography variant={'subtitle1'}>{item.title}</Typography>
-                            </div>
-                        </AccordionSummary>
-                        {item && item.children && item?.children?.length > 0 && <AccordionDetails></AccordionDetails>}
-                    </Accordion>
+                    />
                 ))}
-            </div>
+            </>
         ),
-        [selectedItem, isMobile, isExpanded]
+        [selectedItem, isMobile]
     );
 
     return (
@@ -297,11 +314,7 @@ export const TreeStructureList = (): JSX.Element => {
                         </Button>
                     </div>
                 )}
-                {/* <Card classes={{ root: classes.card }}>
-                    <CardContent classes={{ root: classes.cardContent }}> */}
                 {renderTreeList()}
-                {/* </CardContent>
-                </Card> */}
             </div>
         </div>
     );

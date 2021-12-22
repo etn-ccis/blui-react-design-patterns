@@ -53,10 +53,21 @@ const useStyles = makeStyles((theme: Theme) => ({
         marginTop: -8,
         marginBottom: 16,
     },
+    firstAccordionBorderRadius: {
+        borderTopLeftRadius: 4,
+        borderTopRightRadius: 4,
+    },
     accordionRoot: {
         marginBottom: '0 !important',
         marginTop: '0 !important',
         padding: 0,
+        '&::before': {
+            display: 'none',
+        },
+        '&:first-child': {
+            borderTopLeftRadius: 4,
+            borderTopRightRadius: 4,
+        },
     },
     nestedAccordionRoot: {
         boxShadow: 'none',
@@ -147,10 +158,20 @@ type TreeItemProps = {
     selected?: boolean;
     childItems?: TreeItem[];
     setSelectedItem?: (id: number) => void;
+    isLastItemAtDepth: boolean;
 };
 
 const TreeItem = (props: TreeItemProps): JSX.Element => {
-    const { id, depth = 0, title, selected, selectedItemId, childItems = [], setSelectedItem = (): void => {} } = props;
+    const {
+        id,
+        depth = 0,
+        title,
+        selected,
+        selectedItemId,
+        childItems = [],
+        setSelectedItem = (): void => {},
+        isLastItemAtDepth,
+    } = props;
     const theme = useTheme();
     const classes = useStyles(theme);
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
@@ -158,7 +179,7 @@ const TreeItem = (props: TreeItemProps): JSX.Element => {
 
     return (
         <Accordion
-            square={isMobile || depth > 0}
+            square={isMobile || (depth > 0 && !isLastItemAtDepth)}
             classes={{
                 root: depth > 0 ? clsx(classes.accordionRoot, classes.nestedAccordionRoot) : classes.accordionRoot,
             }}
@@ -197,7 +218,7 @@ const TreeItem = (props: TreeItemProps): JSX.Element => {
             {childItems && childItems.length > 0 && (
                 <AccordionDetails classes={{ root: classes.accordionDetailsRoot }}>
                     <div style={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
-                        {childItems.map((item) => (
+                        {childItems.map((item, i, childItemsClone) => (
                             <TreeItem
                                 key={item.id}
                                 id={item.id}
@@ -208,6 +229,8 @@ const TreeItem = (props: TreeItemProps): JSX.Element => {
                                 setSelectedItem={(updatedId: number): void => {
                                     setSelectedItem(updatedId);
                                 }}
+                                selectedItemId={selectedItemId}
+                                isLastItemAtDepth={i + 1 === childItemsClone.length}
                             />
                         ))}
                     </div>
@@ -227,7 +250,7 @@ export const TreeStructureList = (): JSX.Element => {
     const renderTreeList = useCallback(
         (): JSX.Element => (
             <>
-                {treeItems.map((item) => (
+                {treeItems.map((item, i, treeItemsClone) => (
                     <TreeItem
                         key={item.id}
                         id={item.id}
@@ -239,6 +262,7 @@ export const TreeStructureList = (): JSX.Element => {
                         setSelectedItem={(id): void => {
                             setSelectedItem(id);
                         }}
+                        isLastItemAtDepth={i + 1 === treeItemsClone.length}
                     />
                 ))}
             </>

@@ -17,12 +17,16 @@ import CreateNewFolderIcon from '@material-ui/icons/CreateNewFolder';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ClosedFolderIcon from '@material-ui/icons/Folder';
 import OpenFolderIcon from '@material-ui/icons/FolderOpen';
-import { Accordion, AccordionDetails, AccordionSummary, Radio } from '@material-ui/core';
+import { Accordion, AccordionDetails, AccordionSummary, Card, Radio } from '@material-ui/core';
 import clsx from 'clsx';
 
 const useStyles = makeStyles((theme: Theme) => ({
     container: {
         minHeight: '100vh',
+        [theme.breakpoints.down('sm')]: {
+            display: 'flex',
+            flexDirection: 'column',
+        },
     },
     appbarRoot: {
         padding: 0,
@@ -53,21 +57,19 @@ const useStyles = makeStyles((theme: Theme) => ({
         marginTop: -8,
         marginBottom: 16,
     },
-    firstAccordionBorderRadius: {
-        borderTopLeftRadius: 4,
-        borderTopRightRadius: 4,
-    },
     accordionRoot: {
         marginBottom: '0 !important',
         marginTop: '0 !important',
         padding: 0,
+        borderTop: `1px solid ${theme.palette.divider}`,
         '&::before': {
             display: 'none',
         },
-        '&:first-child': {
-            borderTopLeftRadius: 4,
-            borderTopRightRadius: 4,
-        },
+    },
+    firstAccordion: {
+        borderTopLeftRadius: 4,
+        borderTopRightRadius: 4,
+        border: 'none',
     },
     nestedAccordionRoot: {
         boxShadow: 'none',
@@ -158,20 +160,10 @@ type TreeItemProps = {
     selected?: boolean;
     childItems?: TreeItem[];
     setSelectedItem?: (id: number) => void;
-    isLastItemAtDepth: boolean;
 };
 
 const TreeItem = (props: TreeItemProps): JSX.Element => {
-    const {
-        id,
-        depth = 0,
-        title,
-        selected,
-        selectedItemId,
-        childItems = [],
-        setSelectedItem = (): void => {},
-        isLastItemAtDepth,
-    } = props;
+    const { id, depth = 0, title, selected, selectedItemId, childItems = [], setSelectedItem = (): void => {} } = props;
     const theme = useTheme();
     const classes = useStyles(theme);
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
@@ -179,9 +171,15 @@ const TreeItem = (props: TreeItemProps): JSX.Element => {
 
     return (
         <Accordion
-            square={isMobile || (depth > 0 && !isLastItemAtDepth)}
+            elevation={0}
+            square={isMobile || depth > 0}
             classes={{
-                root: depth > 0 ? clsx(classes.accordionRoot, classes.nestedAccordionRoot) : classes.accordionRoot,
+                root:
+                    id === 0
+                        ? clsx(classes.accordionRoot, classes.firstAccordion)
+                        : depth > 0
+                        ? clsx(classes.accordionRoot, classes.nestedAccordionRoot)
+                        : classes.accordionRoot,
             }}
             onClick={(event): void => {
                 event.stopPropagation();
@@ -201,7 +199,13 @@ const TreeItem = (props: TreeItemProps): JSX.Element => {
                     ) : undefined
                 }
             >
-                <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
+                <div
+                    style={{
+                        display: 'flex',
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                    }}
+                >
                     <Radio
                         checked={selected}
                         onClick={(event): void => {
@@ -218,7 +222,7 @@ const TreeItem = (props: TreeItemProps): JSX.Element => {
             {childItems && childItems.length > 0 && (
                 <AccordionDetails classes={{ root: classes.accordionDetailsRoot }}>
                     <div style={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
-                        {childItems.map((item, i, childItemsClone) => (
+                        {childItems.map((item) => (
                             <TreeItem
                                 key={item.id}
                                 id={item.id}
@@ -230,7 +234,6 @@ const TreeItem = (props: TreeItemProps): JSX.Element => {
                                     setSelectedItem(updatedId);
                                 }}
                                 selectedItemId={selectedItemId}
-                                isLastItemAtDepth={i + 1 === childItemsClone.length}
                             />
                         ))}
                     </div>
@@ -250,7 +253,7 @@ export const TreeStructureList = (): JSX.Element => {
     const renderTreeList = useCallback(
         (): JSX.Element => (
             <>
-                {treeItems.map((item, i, treeItemsClone) => (
+                {treeItems.map((item) => (
                     <TreeItem
                         key={item.id}
                         id={item.id}
@@ -262,7 +265,6 @@ export const TreeStructureList = (): JSX.Element => {
                         setSelectedItem={(id): void => {
                             setSelectedItem(id);
                         }}
-                        isLastItemAtDepth={i + 1 === treeItemsClone.length}
                     />
                 ))}
             </>
@@ -333,13 +335,39 @@ export const TreeStructureList = (): JSX.Element => {
                                 marginRight: 0,
                             }}
                             onClick={(): void => {}}
+                            disabled={selectedItem === null}
                         >
                             Move File
                         </Button>
                     </div>
                 )}
-                {renderTreeList()}
+                <Card style={{ borderRadius: isMobile ? 0 : 4 }}>{renderTreeList()}</Card>
             </div>
+            {isMobile && (
+                <div style={{ display: 'flex', flexDirection: 'column', flex: 1 }}>
+                    <Spacer />
+                    <div
+                        style={{
+                            backgroundColor: theme.palette.background.paper,
+                            display: 'flex',
+                            borderTop: `1px solid ${theme.palette.divider}`,
+                        }}
+                    >
+                        <Button
+                            variant={'contained'}
+                            color={'primary'}
+                            style={{
+                                width: '100%',
+                                margin: theme.spacing(2),
+                            }}
+                            onClick={(): void => {}}
+                            disabled={selectedItem === null}
+                        >
+                            Move File
+                        </Button>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };

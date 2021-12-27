@@ -5,6 +5,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Hidden from '@material-ui/core/Hidden';
 import Button from '@material-ui/core/Button';
+import Card from '@material-ui/core/Card';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import MenuIcon from '@material-ui/icons/Menu';
 import useTheme from '@material-ui/core/styles/useTheme';
@@ -14,11 +15,7 @@ import { Spacer } from '@brightlayer-ui/react-components';
 import { useDispatch } from 'react-redux';
 import { TOGGLE_DRAWER } from '../../../redux/actions';
 import CreateNewFolderIcon from '@material-ui/icons/CreateNewFolder';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import ClosedFolderIcon from '@material-ui/icons/Folder';
-import OpenFolderIcon from '@material-ui/icons/FolderOpen';
-import { Accordion, AccordionDetails, AccordionSummary, Card, Radio } from '@material-ui/core';
-import clsx from 'clsx';
+import { TreeItem, TreeItemComponent } from './tree-item-component';
 
 const useStyles = makeStyles((theme: Theme) => ({
     container: {
@@ -57,56 +54,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         marginTop: -8,
         marginBottom: 16,
     },
-    accordionRoot: {
-        marginBottom: '0 !important',
-        marginTop: '0 !important',
-        padding: 0,
-        borderTop: `1px solid ${theme.palette.divider}`,
-        '&::before': {
-            display: 'none',
-        },
-    },
-    firstAccordion: {
-        borderTopLeftRadius: 4,
-        borderTopRightRadius: 4,
-        border: 'none',
-    },
-    nestedAccordionRoot: {
-        boxShadow: 'none',
-    },
-    accordionSummaryRoot: {
-        height: 56,
-        '&.Mui-expanded': {
-            minHeight: 56,
-        },
-        paddingLeft: 8,
-    },
-    accordionSummarySelected: {
-        backgroundColor: theme.palette.primary.light,
-        color: theme.palette.primary.main,
-    },
-    expandIconSelected: {
-        color: theme.palette.primary.main,
-    },
-    folderIcon: {
-        width: 18,
-        height: 18,
-        marginLeft: 8,
-        marginRight: 16,
-    },
-    accordionDetailsRoot: {
-        padding: 0,
-    },
 }));
-
-export type TreeItem = {
-    title: string;
-    id: number;
-    depth?: number;
-    selected?: boolean;
-    opened?: boolean;
-    children?: TreeItem[];
-};
 
 const treeItems: TreeItem[] = [
     {
@@ -152,97 +100,6 @@ const treeItems: TreeItem[] = [
     },
 ];
 
-type TreeItemProps = {
-    id: number;
-    title: string;
-    depth?: number;
-    selectedItemId?: number | null;
-    selected?: boolean;
-    childItems?: TreeItem[];
-    setSelectedItem?: (id: number) => void;
-};
-
-const TreeItem = (props: TreeItemProps): JSX.Element => {
-    const { id, depth = 0, title, selected, selectedItemId, childItems = [], setSelectedItem = (): void => {} } = props;
-    const theme = useTheme();
-    const classes = useStyles(theme);
-    const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
-    const [isExpanded, setIsExpanded] = useState(false);
-
-    return (
-        <Accordion
-            elevation={0}
-            square={isMobile || depth > 0}
-            classes={{
-                root:
-                    id === 0
-                        ? clsx(classes.accordionRoot, classes.firstAccordion)
-                        : depth > 0
-                        ? clsx(classes.accordionRoot, classes.nestedAccordionRoot)
-                        : classes.accordionRoot,
-            }}
-            onClick={(event): void => {
-                event.stopPropagation();
-                if (childItems && childItems.length > 0) {
-                    event.preventDefault();
-                    setIsExpanded(!isExpanded);
-                }
-            }}
-            expanded={isExpanded}
-        >
-            <AccordionSummary
-                className={selected ? classes.accordionSummarySelected : ''}
-                classes={{ root: classes.accordionSummaryRoot }}
-                expandIcon={
-                    childItems && childItems.length > 0 ? (
-                        <ExpandMoreIcon className={selected ? classes.expandIconSelected : ''} />
-                    ) : undefined
-                }
-            >
-                <div
-                    style={{
-                        display: 'flex',
-                        flexDirection: 'row',
-                        alignItems: 'center',
-                    }}
-                >
-                    <Radio
-                        checked={selected}
-                        onClick={(event): void => {
-                            event.stopPropagation();
-                            setSelectedItem(id);
-                        }}
-                    />
-                    <Spacer width={depth * 32} />
-                    {!isExpanded && <ClosedFolderIcon className={classes.folderIcon} />}
-                    {isExpanded && <OpenFolderIcon className={classes.folderIcon} />}
-                    <Typography variant={'subtitle1'}>{title}</Typography>
-                </div>
-            </AccordionSummary>
-            {childItems && childItems.length > 0 && (
-                <AccordionDetails classes={{ root: classes.accordionDetailsRoot }}>
-                    <div style={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
-                        {childItems.map((item) => (
-                            <TreeItem
-                                key={item.id}
-                                id={item.id}
-                                depth={item.depth}
-                                title={item.title}
-                                childItems={item.children}
-                                selected={selectedItemId === item.id}
-                                setSelectedItem={(updatedId: number): void => {
-                                    setSelectedItem(updatedId);
-                                }}
-                                selectedItemId={selectedItemId}
-                            />
-                        ))}
-                    </div>
-                </AccordionDetails>
-            )}
-        </Accordion>
-    );
-};
-
 export const TreeStructureList = (): JSX.Element => {
     const dispatch = useDispatch();
     const theme = useTheme();
@@ -254,7 +111,7 @@ export const TreeStructureList = (): JSX.Element => {
         (): JSX.Element => (
             <>
                 {treeItems.map((item) => (
-                    <TreeItem
+                    <TreeItemComponent
                         key={item.id}
                         id={item.id}
                         depth={item.depth}

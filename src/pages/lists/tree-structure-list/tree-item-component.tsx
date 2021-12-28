@@ -13,6 +13,7 @@ import AccordionDetails from '@material-ui/core/AccordionDetails';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
 import Radio from '@material-ui/core/Radio';
 import clsx from 'clsx';
+import Color from 'color';
 
 const useStyles = makeStyles((theme: Theme) => ({
     accordionRoot: {
@@ -40,7 +41,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         paddingLeft: 8,
     },
     accordionSummarySelected: {
-        backgroundColor: theme.palette.primary.light,
+        backgroundColor: Color(theme.palette.primary.main).fade(0.95).string(),
         color: theme.palette.primary.main,
     },
     expandIconSelected: {
@@ -51,6 +52,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         height: 18,
         marginLeft: 8,
         marginRight: 16,
+        color: theme.palette.text.secondary,
     },
     accordionDetailsRoot: {
         padding: 0,

@@ -4,17 +4,14 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Hidden from '@material-ui/core/Hidden';
-import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import MenuIcon from '@material-ui/icons/Menu';
 import useTheme from '@material-ui/core/styles/useTheme';
 import { Theme } from '@material-ui/core/styles/createMuiTheme';
 import makeStyles from '@material-ui/core/styles/makeStyles';
-import { Spacer } from '@brightlayer-ui/react-components';
 import { useDispatch } from 'react-redux';
 import { TOGGLE_DRAWER } from '../../../redux/actions';
-import CreateNewFolderIcon from '@material-ui/icons/CreateNewFolder';
 import { TreeItem, TreeItemComponent } from './tree-item-component';
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -39,7 +36,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         marginTop: -theme.spacing(1),
     },
     contentContainer: {
-        maxWidth: 800,
+        maxWidth: 768,
         padding: theme.spacing(3),
         margin: '0 auto',
         [theme.breakpoints.down('sm')]: {
@@ -47,12 +44,6 @@ const useStyles = makeStyles((theme: Theme) => ({
             padding: 0,
             margin: 0,
         },
-    },
-    buttonRow: {
-        display: 'flex',
-        flexDirection: 'row',
-        marginTop: -8,
-        marginBottom: 16,
     },
 }));
 
@@ -154,77 +145,11 @@ export const TreeStructureList = (): JSX.Element => {
                             Folder Structure
                         </Typography>
                     </div>
-                    <Spacer />
-                    {isMobile && (
-                        <div style={{ display: 'flex' }}>
-                            <IconButton
-                                id={'add-item-button'}
-                                data-cy={'toolbar-add'}
-                                color={'inherit'}
-                                aria-label={'add'}
-                                edge={'end'}
-                                onClick={(): void => {}}
-                            >
-                                <CreateNewFolderIcon />
-                            </IconButton>
-                        </div>
-                    )}
                 </Toolbar>
             </AppBar>
             <div className={classes.contentContainer}>
-                {!isMobile && (
-                    <div className={classes.buttonRow}>
-                        <Button
-                            variant={'outlined'}
-                            color={'primary'}
-                            style={{ margin: theme.spacing(), marginLeft: 0 }}
-                            onClick={(): void => {}}
-                            startIcon={<CreateNewFolderIcon />}
-                        >
-                            New Folder
-                        </Button>
-                        <Spacer />
-                        <Button
-                            variant={'contained'}
-                            color={'primary'}
-                            style={{
-                                margin: theme.spacing(),
-                                marginRight: 0,
-                            }}
-                            onClick={(): void => {}}
-                            disabled={selectedItem === null}
-                        >
-                            Move File
-                        </Button>
-                    </div>
-                )}
                 <Card style={{ borderRadius: isMobile ? 0 : 4 }}>{renderTreeList()}</Card>
             </div>
-            {isMobile && (
-                <div style={{ display: 'flex', flexDirection: 'column', flex: 1 }}>
-                    <Spacer />
-                    <div
-                        style={{
-                            backgroundColor: theme.palette.background.paper,
-                            display: 'flex',
-                            borderTop: `1px solid ${theme.palette.divider}`,
-                        }}
-                    >
-                        <Button
-                            variant={'contained'}
-                            color={'primary'}
-                            style={{
-                                width: '100%',
-                                margin: theme.spacing(2),
-                            }}
-                            onClick={(): void => {}}
-                            disabled={selectedItem === null}
-                        >
-                            Move File
-                        </Button>
-                    </div>
-                </div>
-            )}
         </div>
     );
 };

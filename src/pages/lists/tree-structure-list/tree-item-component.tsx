@@ -54,6 +54,9 @@ const useStyles = makeStyles((theme: Theme) => ({
         marginRight: 16,
         color: theme.palette.text.secondary,
     },
+    folderIconSelected: {
+        color: theme.palette.primary.main,
+    },
     accordionDetailsRoot: {
         padding: 0,
     },
@@ -128,10 +131,23 @@ export const TreeItemComponent = (props: TreeItemProps): JSX.Element => {
                             event.stopPropagation();
                             setSelectedItem(id);
                         }}
+                        color={'primary'}
                     />
                     <Spacer width={depth * 32} />
-                    {!isExpanded && <ClosedFolderIcon className={classes.folderIcon} />}
-                    {isExpanded && <OpenFolderIcon className={classes.folderIcon} />}
+                    {!isExpanded && (
+                        <ClosedFolderIcon
+                            className={
+                                selected ? clsx([classes.folderIcon, classes.folderIconSelected]) : classes.folderIcon
+                            }
+                        />
+                    )}
+                    {isExpanded && (
+                        <OpenFolderIcon
+                            className={
+                                selected ? clsx([classes.folderIcon, classes.folderIconSelected]) : classes.folderIcon
+                            }
+                        />
+                    )}
                     <Typography variant={'subtitle1'}>{title}</Typography>
                 </div>
             </AccordionSummary>

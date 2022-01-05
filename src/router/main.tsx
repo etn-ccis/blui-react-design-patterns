@@ -37,6 +37,7 @@ import { TableFormValidation } from '../pages/form-validation/table';
 import { PageWideSearch } from '../pages/app-bar/page-wide-search/PageWideSearch';
 import { PasswordFormValidation } from '../pages/form-validation/password';
 import { ActionListInline } from '../pages/lists/action-list/action-list-inline';
+import { TreeStructureList } from '../pages/lists/tree-structure-list';
 /*
 The main page body, which contains the route definitions
 */
@@ -97,6 +98,7 @@ export const Main = (): JSX.Element => (
         <Route exact path={`/${PAGES.LISTS.STATUS_LIST.route || ''}`} component={StatusList} />
         <Route exact path={`/${PAGES.LISTS.SORTABLE_LIST.route || ''}`} component={SortableList} />
         <Route exact path={`/${PAGES.LISTS.RESPONSIVE_TABLE.route || ''}`} component={ResponsiveTable} />
+        <Route exact path={`/${PAGES.LISTS.TREE_STRUCTURE.route || ''}`} component={TreeStructureList} />
 
         <Route exact path={`/${PAGES.OVERLAYS.BASIC_BOTTOM_SHEET.route || ''}`} component={BasicBottomSheet} />
         <Route exact path={`/${PAGES.OVERLAYS.COMPLEX_BOTTOM_SHEET.route || ''}`} component={ComplexBottomSheet} />

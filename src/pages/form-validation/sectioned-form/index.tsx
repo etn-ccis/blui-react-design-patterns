@@ -399,6 +399,7 @@ export const SectionedFormValidation = (): JSX.Element => {
                             fullWidth
                             className={classes.textField}
                             id={'state-field'}
+                            error={showRequiredError && !state}
                         >
                             <InputLabel id={'select-state'} required={false}>
                                 State
@@ -407,7 +408,6 @@ export const SectionedFormValidation = (): JSX.Element => {
                                 inputRef={stateRef}
                                 labelId={'select-state'}
                                 value={state}
-                                error={showRequiredError && !state}
                                 onChange={(e): void => setState(String(e.target.value))}
                             >
                                 <MenuItem value={'CA'}>CA</MenuItem>

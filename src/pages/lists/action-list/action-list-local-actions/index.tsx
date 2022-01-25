@@ -89,6 +89,13 @@ const useStyles = makeStyles((theme: Theme) => ({
         display: 'block',
         padding: 0,
     },
+    changeBackgroundColor: {
+        [theme.breakpoints.up('md')]: {
+            '&:hover': {
+                backgroundColor: 'transparent',
+            },
+        },
+    },
     deviceEditMobileContainer: {
         display: 'flex',
         flexDirection: 'column',
@@ -413,6 +420,7 @@ export const ActionListLocalActions = (): JSX.Element => {
                                 <InfoListItem
                                     classes={{
                                         listItemText: classes.listItemText,
+                                        root: classes.changeBackgroundColor,
                                     }}
                                     data-testid="infoListItem"
                                     title={'Language'}

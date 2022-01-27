@@ -68,7 +68,7 @@
         "@babel/helper-call-delegate": "^7.11.4",
         "@cypress/code-coverage": "^3.9.8",
         "@cypress/instrument-cra": "^1.4.0",
-        "@cypress/react": "^5.9.2",
+        "@cypress/react": "^5.12.1",
         "@cypress/webpack-dev-server": "^1.4.0",
         "@brightlayer-ui/eslint-config": "^2.0.0",
         "@brightlayer-ui/prettier-config": "^1.0.2",

@@ -5,7 +5,7 @@ jobs:
     build_project:
         working_directory: ~/react-design-patterns
         docker:
-            - image: circleci/node:12.14.1-browsers
+            - image: circleci/node:14.17.0-browsers
         resource_class: large
         steps:
             - checkout

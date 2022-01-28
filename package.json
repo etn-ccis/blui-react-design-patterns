@@ -73,7 +73,7 @@
         "@brightlayer-ui/eslint-config": "^2.0.0",
         "@brightlayer-ui/prettier-config": "^1.0.2",
         "@testing-library/jest-dom": "^5.0.0",
-        "@testing-library/react": "^11.0.0",
+        "@testing-library/react": "^12.1.2",
         "@testing-library/user-event": "^13.0.0",
         "@types/color": "^3.0.2",
         "@types/enzyme": "^3.10.11",

@@ -13,7 +13,7 @@
         "@brightlayer-ui/react-progress-icons": "^2.0.0",
         "@brightlayer-ui/react-themes": "^6.0.0",
         "@types/enzyme-adapter-react-16": "^1.0.6",
-        "array-move": "^3.0.0",
+        "array-move": "^4.0.0",
         "color": "^3.1.3",
         "i18next": "^20.0.0",
         "i18next-browser-languagedetector": "^6.1.3",

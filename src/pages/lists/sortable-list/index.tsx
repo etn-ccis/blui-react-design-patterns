@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import { SortableContainer, SortableElement, SortableHandle } from 'react-sortable-hoc';
-import {arrayMoveImmutable} from 'array-move';
+import { arrayMoveImmutable } from 'array-move';
 import AppBar from '@material-ui/core/AppBar';
 import Button from '@material-ui/core/Button';
 import Hidden from '@material-ui/core/Hidden';

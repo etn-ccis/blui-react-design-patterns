@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import { SortableContainer, SortableElement, SortableHandle } from 'react-sortable-hoc';
-import arrayMove from 'array-move';
+import {arrayMoveImmutable} from 'array-move';
 import AppBar from '@material-ui/core/AppBar';
 import Button from '@material-ui/core/Button';
 import Hidden from '@material-ui/core/Hidden';
@@ -135,7 +135,7 @@ export const SortableList = (): JSX.Element => {
 
     const onSortEnd = useCallback(
         ({ oldIndex, newIndex }: OnSortEndProps): void => {
-            setList(arrayMove(list, oldIndex, newIndex));
+            setList(arrayMoveImmutable(list, oldIndex, newIndex));
             setIsSorting(false);
         },
         [list, setList]

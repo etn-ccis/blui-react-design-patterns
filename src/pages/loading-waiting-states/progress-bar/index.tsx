@@ -17,7 +17,7 @@ import {
     useMediaQuery,
     useTheme,
 } from '@material-ui/core';
-import { makeStyles, Theme, createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
+import { makeStyles, Theme, createTheme, MuiThemeProvider } from '@material-ui/core/styles';
 import * as BLUIThemes from '@brightlayer-ui/react-themes';
 import MenuIcon from '@material-ui/icons/Menu';
 import { Folder, Description, Publish } from '@material-ui/icons';
@@ -263,7 +263,7 @@ export const ProgressBar = (): JSX.Element => {
                                     }
                                 >
                                     <div>
-                                        <MuiThemeProvider theme={createMuiTheme(BLUIThemes.blueDark)}>
+                                        <MuiThemeProvider theme={createTheme(BLUIThemes.blueDark)}>
                                             <InfoListItem
                                                 data-cy={'upload-status-snackbar'}
                                                 style={{ boxShadow: theme.shadows[6] }}

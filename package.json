@@ -95,7 +95,7 @@
         "enzyme-adapter-react-16": "^1.14.0",
         "eslint": "^7.0.0",
         "eslint-config-prettier": "^8.0.0",
-        "eslint-plugin-react": "^7.18.3",
+        "eslint-plugin-react": "^7.28.0",
         "mocha": "^8.0.1",
         "prettier": "^2.0.0",
         "start-server-and-test": "^1.12.1",

@@ -99,7 +99,7 @@
         "prettier": "^2.0.0",
         "start-server-and-test": "^1.12.1",
         "typescript": "^4.0.0",
-        "yarn-audit-fix": "^4.0.0"
+        "yarn-audit-fix": "^9.0.10"
     },
     "prettier": "@brightlayer-ui/prettier-config",
     "nyc": {

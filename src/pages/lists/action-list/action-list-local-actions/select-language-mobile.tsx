@@ -4,7 +4,7 @@ import { Done } from '@material-ui/icons';
 import createStyles from '@material-ui/core/styles/createStyles';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import { useTheme } from '@material-ui/styles';
-import { Theme } from '@material-ui/core/styles/createMuiTheme';
+import { Theme } from '@material-ui/core/styles/createTheme';
 
 export type LanguageSelectProps = {
     language: string;

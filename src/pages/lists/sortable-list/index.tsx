@@ -8,7 +8,7 @@ import List from '@material-ui/core/List';
 import Toolbar from '@material-ui/core/Toolbar';
 import Card from '@material-ui/core/Card';
 import Typography from '@material-ui/core/Typography';
-import { Theme } from '@material-ui/core/styles/createMuiTheme';
+import { Theme } from '@material-ui/core/styles/createTheme';
 import useTheme from '@material-ui/core/styles/useTheme';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';

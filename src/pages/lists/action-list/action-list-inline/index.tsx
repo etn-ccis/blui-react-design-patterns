@@ -16,7 +16,7 @@ import BookmarkIcon from '@material-ui/icons/Bookmark';
 import ArchiveIcon from '@material-ui/icons/Archive';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import useTheme from '@material-ui/core/styles/useTheme';
-import { Theme } from '@material-ui/core/styles/createMuiTheme';
+import { Theme } from '@material-ui/core/styles/createTheme';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import { InfoListItem, ListItemTag } from '@brightlayer-ui/react-components';
 import { useDispatch } from 'react-redux';

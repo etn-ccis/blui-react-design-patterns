@@ -10,7 +10,7 @@ import CardContent from '@material-ui/core/CardContent';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import MenuIcon from '@material-ui/icons/Menu';
 import useTheme from '@material-ui/core/styles/useTheme';
-import { Theme } from '@material-ui/core/styles/createMuiTheme';
+import { Theme } from '@material-ui/core/styles/createTheme';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import { EmptyState, InfoListItem, Spacer } from '@brightlayer-ui/react-components';
 import { useDispatch } from 'react-redux';

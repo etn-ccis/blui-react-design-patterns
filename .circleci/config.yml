@@ -51,7 +51,7 @@ jobs:
         working_directory: ~/react-design-patterns
         parallelism: 2
         docker:
-            - image: circleci/node:12.6-browsers
+            - image: circleci/node:14.17.0-browsers
         resource_class: large
         steps:
             - checkout
@@ -82,7 +82,7 @@ jobs:
     coverage_reports:
         working_directory: ~/react-design-patterns
         docker:
-            - image: circleci/node:12.6-browsers
+            - image: circleci/node:14.17.0-browsers
         steps:
             - checkout
             - attach_workspace:

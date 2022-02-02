@@ -70,7 +70,7 @@
         "@cypress/code-coverage": "^3.9.8",
         "@cypress/instrument-cra": "^1.4.0",
         "@cypress/react": "^5.12.1",
-        "@cypress/webpack-dev-server": "^1.4.0",
+        "@cypress/webpack-dev-server": "^1.8.0",
         "@testing-library/jest-dom": "^5.0.0",
         "@testing-library/react": "^12.1.2",
         "@testing-library/user-event": "^13.0.0",

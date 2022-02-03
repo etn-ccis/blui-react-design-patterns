@@ -10962,10 +10962,10 @@ pkg-up@3.1.0:
   dependencies:
     find-up "^3.0.0"
 
-placeholder-loading@^0.2.6:
-  version "0.2.6"
-  resolved "https://registry.yarnpkg.com/placeholder-loading/-/placeholder-loading-0.2.6.tgz#6c34c12397785b74c7f8473c9d6d788cc4a97612"
-  integrity sha512-5h/8xiTzhVBwtj9aZWN3SMK+bjjXT+UvV5q8FZQ5Gn5VFBrEefBzSc+s/SuepToSpbMQf2SeiOrMhKYGhZaGAA==
+placeholder-loading@^0.5.0:
+  version "0.5.0"
+  resolved "https://registry.yarnpkg.com/placeholder-loading/-/placeholder-loading-0.5.0.tgz#eab6f164c58eb8e462d39fcf83628ad0e2535cf9"
+  integrity sha512-7nhBjcdyhj/mdNiom0k3UBbwVL7M8jJj9uz9nODsWS319KJ+yWyhgFSc+Mwzf/oR/sprcQlcmEw43iqZ/I6rPw==
 
 pnp-webpack-plugin@1.6.4:
   version "1.6.4"

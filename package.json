@@ -86,7 +86,7 @@
         "@typescript-eslint/parser": "^4.0.0",
         "@wojtekmaj/enzyme-adapter-react-17": "^0.6.0",
         "babel-plugin-istanbul": "^6.0.0",
-        "chai": "^4.2.0",
+        "chai": "^4.3.6",
         "chance": "^1.1.6",
         "codecov": "^3.8.1",
         "cypress": "^8.0.0",

@@ -63,7 +63,7 @@
     },
     "author": "Brightlayer UI <brightlayer-ui@eaton.com>",
     "devDependencies": {
-        "@4tw/cypress-drag-drop": "^1.4.0",
+        "@4tw/cypress-drag-drop": "^2.1.0",
         "@babel/helper-call-delegate": "^7.11.4",
         "@brightlayer-ui/eslint-config": "^2.0.0",
         "@brightlayer-ui/prettier-config": "^1.0.2",

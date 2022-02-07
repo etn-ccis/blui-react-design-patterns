@@ -2065,10 +2065,10 @@
     minimatch "^3.0.4"
     strip-json-comments "^3.1.1"
 
-"@fontsource/noto-sans@^4.5.2":
-  version "4.5.2"
-  resolved "https://registry.yarnpkg.com/@fontsource/noto-sans/-/noto-sans-4.5.2.tgz#2020c706bd9ac0fbdb3861b98a7218284bf840c0"
-  integrity sha512-tRvrggm3CojdPPyYQD0pIfHQ8+V82SG8vawiM5JlHLKwtEsvp2iC1cgAOrKrDhdXM3bq319NK/iyoh16qMh0EQ==
+"@fontsource/noto-sans@^4.5.3":
+  version "4.5.3"
+  resolved "https://registry.yarnpkg.com/@fontsource/noto-sans/-/noto-sans-4.5.3.tgz#124c4475a885257b65fe4167af6615ab1bba477b"
+  integrity sha512-pBKuG/g7pMv1dCJ+x3piXqRfWuE/quPlPYaeGf3FwKUBGZyHl4LvM4bA8YmSlQzoMvH/MhcnvVHBhQ5x0fhseA==
 
 "@fontsource/open-sans@^4.2.2":
   version "4.5.2"

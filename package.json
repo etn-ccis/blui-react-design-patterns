@@ -8,7 +8,7 @@
         "@brightlayer-ui/react-components": "^5.3.0",
         "@brightlayer-ui/react-progress-icons": "^2.0.0",
         "@brightlayer-ui/react-themes": "^6.0.0",
-        "@fontsource/noto-sans": "^4.1.0",
+        "@fontsource/noto-sans": "^4.5.2",
         "@material-ui/core": "~4.12.3",
         "@material-ui/icons": "^4.11.2",
         "@material-ui/lab": "4.0.0-alpha.60",

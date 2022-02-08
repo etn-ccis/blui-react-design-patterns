@@ -1850,12 +1850,13 @@
   resolved "https://registry.yarnpkg.com/@brightlayer-ui/prettier-config/-/prettier-config-1.0.3.tgz#e40a7ae7435c6fd5118acbf249080e0aa81e93af"
   integrity sha512-EYm3+V7Qd+oYEF+8FadsXAZqXryEHHbGnrV1BMp9selhABjceqUqXPVE4Sn3SKWQdBNJ3En2A3EzgrzRbvRTaw==
 
-"@brightlayer-ui/react-components@^5.3.0":
-  version "5.3.3"
-  resolved "https://registry.yarnpkg.com/@brightlayer-ui/react-components/-/react-components-5.3.3.tgz#5db194cda7c75868a73a6c86ab99a24d12197c61"
-  integrity sha512-xJJv7QeGWNNImhgUsqI0v0WPie6ZjlgiSXXoObAAeOK89Jnfz80UnxjKbSv6q7rmyRgrIr0lHDDGTArz3YvC3A==
+"@brightlayer-ui/react-components@^5.4.0":
+  version "5.4.0"
+  resolved "https://registry.yarnpkg.com/@brightlayer-ui/react-components/-/react-components-5.4.0.tgz#3ec831994a907ba14847a879f5a551dfea46efb3"
+  integrity sha512-4XXfzsiWmD40yCAQWXTuGY6P8GamZpgnLk9CYo43UTqfwZRshf9hhTBXZqk7uqtm5Fh+xEBrp421A6oD0yOSsQ==
   dependencies:
     "@brightlayer-ui/colors" "^3.0.0"
+    "@seznam/compose-react-refs" "^1.0.6"
     color "^3.1.2"
 
 "@brightlayer-ui/react-progress-icons@^2.0.0":
@@ -2488,6 +2489,11 @@
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/@rushstack/eslint-patch/-/eslint-patch-1.1.0.tgz#7f698254aadf921e48dda8c0a6b304026b8a9323"
   integrity sha512-JLo+Y592QzIE+q7Dl2pMUtt4q8SKYI5jDrZxrozEQxnGVOyYE+GWK9eLkwTaeN9DDctlaRAQ3TBmzZ1qdLE30A==
+
+"@seznam/compose-react-refs@^1.0.6":
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/@seznam/compose-react-refs/-/compose-react-refs-1.0.6.tgz#6ec4e70bdd6e32f8e70b4100f27267cf306bd8df"
+  integrity sha512-izzOXQfeQLonzrIQb8u6LQ8dk+ymz3WXTIXjvOlTXHq6sbzROg3NWU+9TTAOpEoK9Bth24/6F/XrfHJ5yR5n6Q==
 
 "@sideway/address@^4.1.3":
   version "4.1.3"

@@ -76,7 +76,7 @@
         "@testing-library/user-event": "^13.0.0",
         "@types/color": "^3.0.3",
         "@types/enzyme": "^3.10.11",
-        "@types/jest": "^26.0.0",
+        "@types/jest": "^27.4.0",
         "@types/node": "^17.0.14",
         "@types/react": "^17.0.39",
         "@types/react-dom": "^17.0.0",

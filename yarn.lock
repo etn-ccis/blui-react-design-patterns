@@ -1868,10 +1868,10 @@
     color "^3.1.2"
     react-jss "^10.4.0"
 
-"@brightlayer-ui/react-themes@^6.0.0":
-  version "6.1.0"
-  resolved "https://registry.yarnpkg.com/@brightlayer-ui/react-themes/-/react-themes-6.1.0.tgz#d53a89adaaeb9fb665a07f076505ea654ec04afb"
-  integrity sha512-x3EIEULFjtMLFxJG2zBwx4vTgGBQeqlz2wS0V+xZft9oi/iWDwnQsBL95dgQXBJWDdRNzm8M8VpT3AbsdxLs+Q==
+"@brightlayer-ui/react-themes@^6.1.1":
+  version "6.1.1"
+  resolved "https://registry.yarnpkg.com/@brightlayer-ui/react-themes/-/react-themes-6.1.1.tgz#20b35b2be2c4782afec57c10c90515e39d8477f1"
+  integrity sha512-NZGk7jen761D8JcrHO2+3FeiLHny+0ddDJGeD+5UO25qiC+yHBIraJSK3IlW64aH8DRBu5DborTDq+qTPpxYnA==
   dependencies:
     "@brightlayer-ui/colors" "^3.0.0"
     "@fontsource/open-sans" "^4.2.2"

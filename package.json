@@ -89,7 +89,7 @@
         "chai": "^4.3.6",
         "chance": "^1.1.6",
         "codecov": "^3.8.1",
-        "cypress": "^9.4.1",
+        "cypress": "^9.5.0",
         "enzyme": "^3.10.0",
         "enzyme-adapter-react-16": "^1.14.0",
         "eslint": "^7.0.0",

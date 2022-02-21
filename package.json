@@ -95,7 +95,7 @@
         "eslint": "^7.0.0",
         "eslint-config-prettier": "^8.4.0",
         "eslint-plugin-react": "^7.28.0",
-        "mocha": "^9.2.0",
+        "mocha": "^9.2.1",
         "prettier": "^2.0.0",
         "start-server-and-test": "^1.12.1",
         "typescript": "^4.5.5",

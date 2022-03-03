@@ -1,6 +1,6 @@
 # React Design Patterns
 
-[![](https://img.shields.io/circleci/project/github/brightlayer-ui/react-design-patterns/master.svg?style=flat)](https://circleci.com/gh/brightlayer-ui/react-design-patterns/tree/master)
+[![](https://img.shields.io/circleci/project/github/brightlayer-ui/react-design-patterns/master.svg?style=flat)](https://circleci.com/gh/brightlayer-ui/react-design-patterns/tree/master) [![codecov](https://codecov.io/gh/brightlayer-ui/react-design-patterns/branch/master/graph/badge.svg?token=GG1T9203PD)](https://codecov.io/gh/brightlayer-ui/react-design-patterns)
 
 This repository holds the source code examples for [Brightlayer UI design patterns](https://brightlayer-ui.github.io/patterns), written in React. The code is organized to make it easy to copy and paste the examples into your own projects.
 

@@ -68,7 +68,6 @@ export const BasicBottomSheet = (): JSX.Element => {
                             }}
                             edge={'start'}
                             style={{ marginRight: 20 }}
-                            size="large"
                         >
                             <MenuIcon />
                         </IconButton>
@@ -82,7 +81,6 @@ export const BasicBottomSheet = (): JSX.Element => {
                         color={'inherit'}
                         edge={'end'}
                         onClick={(): void => setShowMenu(true)}
-                        size="large"
                     >
                         <MoreVert />
                     </IconButton>

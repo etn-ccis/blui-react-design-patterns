@@ -201,7 +201,6 @@ export const ActionListPanelHeader = (): JSX.Element => {
                             }}
                             edge={'start'}
                             style={{ marginRight: 20 }}
-                            size="large"
                         >
                             <MenuIcon />
                         </IconButton>

@@ -132,7 +132,7 @@ export const BluiDrawer = (props: DrawerProps): JSX.Element => {
                     edge={'end'}
                     classes={{ edgeEnd: classes.closeIcon }}
                     onClick={toggleDrawer}
-                    size="large">
+                >
                     <CloseIcon />
                 </IconButton>
             </div>

@@ -78,7 +78,6 @@ export const ResponsiveTable = (): JSX.Element => {
                             }}
                             edge={'start'}
                             style={{ marginRight: 20 }}
-                            size="large"
                         >
                             <MenuIcon />
                         </IconButton>

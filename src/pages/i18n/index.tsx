@@ -15,17 +15,18 @@ import {
     Toolbar,
     Tooltip,
     Typography,
-} from '@material-ui/core';
-import { makeStyles, Theme, useTheme } from '@material-ui/core/styles';
+} from '@mui/material';
+import { Theme, useTheme } from '@mui/material/styles';
+import makeStyles from '@mui/styles/makeStyles';
 import { useDispatch } from 'react-redux';
 import { TOGGLE_DRAWER } from '../../redux/actions';
 import { InfoListItem, Spacer } from '@brightlayer-ui/react-components';
 import clsx from 'clsx';
 
-import MenuIcon from '@material-ui/icons/Menu';
-import CartIcon from '@material-ui/icons/AddShoppingCart';
-import CancelIcon from '@material-ui/icons/Cancel';
-import MenuOpenIcon from '@material-ui/icons/MenuOpen';
+import MenuIcon from '@mui/icons-material/Menu';
+import CartIcon from '@mui/icons-material/AddShoppingCart';
+import CancelIcon from '@mui/icons-material/Cancel';
+import MenuOpenIcon from '@mui/icons-material/MenuOpen';
 
 import { english } from './translations/english';
 import { DRAWER_WIDTH } from '../../assets/constants';
@@ -133,7 +134,7 @@ export const I18N = (): JSX.Element => {
                             }}
                             edge={isRTL() ? 'end' : 'start'}
                             style={{ marginRight: isRTL() ? '' : 20, marginLeft: isRTL() ? 20 : '' }}
-                        >
+                            size="large">
                             <MenuIcon />
                         </IconButton>
                     </Hidden>
@@ -148,7 +149,7 @@ export const I18N = (): JSX.Element => {
                             onClick={(): void => setDrawerOpen(!drawerOpen)}
                             edge={isRTL() ? 'start' : 'end'}
                             className={clsx(isRTL() && classes.RTL)}
-                        >
+                            size="large">
                             <MenuOpenIcon />
                         </IconButton>
                     </Tooltip>
@@ -216,7 +217,7 @@ export const I18N = (): JSX.Element => {
                                     color={'inherit'}
                                     id={'deselect-all-button'}
                                     data-cy={'snackbar-deselect-all'}
-                                >
+                                    size="large">
                                     <CancelIcon />
                                 </IconButton>
                             </Tooltip>

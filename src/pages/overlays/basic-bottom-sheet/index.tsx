@@ -7,14 +7,14 @@ import {
     List,
     Drawer,
     Hidden,
-    makeStyles,
-    createStyles,
     Avatar,
     useTheme,
     Theme,
-} from '@material-ui/core';
-import { MoreVert, NotificationsActive, Notifications, Done, GetApp, Close } from '@material-ui/icons';
-import MenuIcon from '@material-ui/icons/Menu';
+} from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
+import createStyles from '@mui/styles/createStyles';
+import { MoreVert, NotificationsActive, Notifications, Done, GetApp, Close } from '@mui/icons-material';
+import MenuIcon from '@mui/icons-material/Menu';
 import * as colors from '@brightlayer-ui/colors';
 import alarms, { formatDate, Alarm } from './alarmData';
 import { InfoListItem, Spacer } from '@brightlayer-ui/react-components';
@@ -67,7 +67,7 @@ export const BasicBottomSheet = (): JSX.Element => {
                             }}
                             edge={'start'}
                             style={{ marginRight: 20 }}
-                        >
+                            size="large">
                             <MenuIcon />
                         </IconButton>
                     </Hidden>
@@ -80,7 +80,7 @@ export const BasicBottomSheet = (): JSX.Element => {
                         color={'inherit'}
                         edge={'end'}
                         onClick={(): void => setShowMenu(true)}
-                    >
+                        size="large">
                         <MoreVert />
                     </IconButton>
                 </Toolbar>

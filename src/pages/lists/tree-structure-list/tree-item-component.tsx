@@ -1,17 +1,16 @@
 import React, { useState } from 'react';
-import Typography from '@material-ui/core/Typography';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
-import useTheme from '@material-ui/core/styles/useTheme';
-import { Theme } from '@material-ui/core/styles/createTheme';
-import makeStyles from '@material-ui/core/styles/makeStyles';
+import Typography from '@mui/material/Typography';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { useTheme, Theme } from '@mui/material/styles';
+import makeStyles from '@mui/styles/makeStyles';
 import { Spacer } from '@brightlayer-ui/react-components';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import ClosedFolderIcon from '@material-ui/icons/Folder';
-import OpenFolderIcon from '@material-ui/icons/FolderOpen';
-import Accordion from '@material-ui/core/Accordion';
-import AccordionDetails from '@material-ui/core/AccordionDetails';
-import AccordionSummary from '@material-ui/core/AccordionSummary';
-import Radio from '@material-ui/core/Radio';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import ClosedFolderIcon from '@mui/icons-material/Folder';
+import OpenFolderIcon from '@mui/icons-material/FolderOpen';
+import Accordion from '@mui/material/Accordion';
+import AccordionDetails from '@mui/material/AccordionDetails';
+import AccordionSummary from '@mui/material/AccordionSummary';
+import Radio from '@mui/material/Radio';
 import clsx from 'clsx';
 import Color from 'color';
 
@@ -85,7 +84,7 @@ export const TreeItemComponent = (props: TreeItemProps): JSX.Element => {
     const { id, depth = 0, title, selected, selectedItemId, childItems = [], setSelectedItem = (): void => {} } = props;
     const theme = useTheme();
     const classes = useStyles(theme);
-    const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+    const isMobile = useMediaQuery(theme.breakpoints.down('xl'));
     const [isExpanded, setIsExpanded] = useState(false);
 
     return (

@@ -1,6 +1,6 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Skeleton from '@material-ui/lab/Skeleton';
+import makeStyles from '@mui/styles/makeStyles';
+import Skeleton from '@mui/material/Skeleton';
 import { HeroBanner } from '@brightlayer-ui/react-components';
 import * as colors from '@brightlayer-ui/colors';
 
@@ -36,7 +36,7 @@ export const HeroBannerPlaceholder = (props: { animation: 'pulse' | 'wave' }): J
                 <div className={classes.centeredColumn}>
                     <Skeleton
                         animation={animation}
-                        variant="circle"
+                        variant="circular"
                         width={36}
                         height={36}
                         classes={{ root: classes.skeletonRoot }}
@@ -59,7 +59,7 @@ export const HeroBannerPlaceholder = (props: { animation: 'pulse' | 'wave' }): J
                 <div className={classes.centeredColumn}>
                     <Skeleton
                         animation={animation}
-                        variant="circle"
+                        variant="circular"
                         width={36}
                         height={36}
                         classes={{ root: classes.skeletonRoot }}
@@ -82,7 +82,7 @@ export const HeroBannerPlaceholder = (props: { animation: 'pulse' | 'wave' }): J
                 <div className={classes.centeredColumn}>
                     <Skeleton
                         animation={animation}
-                        variant="circle"
+                        variant="circular"
                         width={36}
                         height={36}
                         classes={{ root: classes.skeletonRoot }}

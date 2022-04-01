@@ -14,16 +14,17 @@ import {
     TextField,
     Toolbar,
     Typography,
-} from '@material-ui/core';
-import { Menu } from '@material-ui/icons';
-import { makeStyles, Theme, useTheme } from '@material-ui/core/styles';
+} from '@mui/material';
+import { Menu } from '@mui/icons-material';
+import { Theme, useTheme } from '@mui/material/styles';
+import makeStyles from '@mui/styles/makeStyles';
 import { useDispatch } from 'react-redux';
 import { TOGGLE_DRAWER } from '../../../redux/actions';
 import { InfoListItem } from '@brightlayer-ui/react-components';
 
 const useStyles = makeStyles((theme: Theme) => ({
     toolbarGutters: {
-        padding: `0 ${theme.spacing(2)}px`,
+        padding: `0 ${theme.spacing(2)}`,
     },
     appbarRoot: {
         padding: 0,
@@ -168,37 +169,35 @@ export const TableFormValidation = (): JSX.Element => {
         </>
     );
 
-    return (
-        <>
-            <AppBar data-cy={'blui-toolbar'} position={'sticky'} classes={{ root: classes.appbarRoot }}>
-                <Toolbar classes={{ gutters: classes.toolbarGutters }}>
-                    <Hidden mdUp>
-                        <IconButton
-                            data-cy={'toolbar-menu'}
-                            color={'inherit'}
-                            onClick={(): void => {
-                                dispatch({ type: TOGGLE_DRAWER, payload: true });
-                            }}
-                            edge={'start'}
-                            style={{ marginRight: 20 }}
-                        >
-                            <Menu />
-                        </IconButton>
-                    </Hidden>
-                    <Typography variant={'h6'} color={'inherit'}>
-                        In a Table
-                    </Typography>
-                </Toolbar>
-            </AppBar>
+    return <>
+        <AppBar data-cy={'blui-toolbar'} position={'sticky'} classes={{ root: classes.appbarRoot }}>
+            <Toolbar classes={{ gutters: classes.toolbarGutters }}>
+                <Hidden mdUp>
+                    <IconButton
+                        data-cy={'toolbar-menu'}
+                        color={'inherit'}
+                        onClick={(): void => {
+                            dispatch({ type: TOGGLE_DRAWER, payload: true });
+                        }}
+                        edge={'start'}
+                        style={{ marginRight: 20 }}
+                        size="large">
+                        <Menu />
+                    </IconButton>
+                </Hidden>
+                <Typography variant={'h6'} color={'inherit'}>
+                    In a Table
+                </Typography>
+            </Toolbar>
+        </AppBar>
 
-            <Hidden xsDown>{getTable()}</Hidden>
-            <Hidden smUp>
-                <div style={{ background: 'white' }}>{getList()}</div>
-            </Hidden>
-            <Typography style={{ padding: theme.spacing(2) }} variant={'body1'}>
-                Remember that in a real application you would need to implement form validations to check, for example,
-                &quot;Min&quot; is less than &quot;Max&quot;.
-            </Typography>
-        </>
-    );
+        <Hidden lgDown>{getTable()}</Hidden>
+        <Hidden smUp>
+            <div style={{ background: 'white' }}>{getList()}</div>
+        </Hidden>
+        <Typography style={{ padding: theme.spacing(2) }} variant={'body1'}>
+            Remember that in a real application you would need to implement form validations to check, for example,
+            &quot;Min&quot; is less than &quot;Max&quot;.
+        </Typography>
+    </>;
 };

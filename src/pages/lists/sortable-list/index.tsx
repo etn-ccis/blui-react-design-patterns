@@ -1,25 +1,24 @@
 import React, { useCallback, useState } from 'react';
 import { SortableContainer, SortableElement, SortableHandle } from 'react-sortable-hoc';
-import AppBar from '@material-ui/core/AppBar';
-import Button from '@material-ui/core/Button';
-import Hidden from '@material-ui/core/Hidden';
-import IconButton from '@material-ui/core/IconButton';
-import List from '@material-ui/core/List';
-import Toolbar from '@material-ui/core/Toolbar';
-import Card from '@material-ui/core/Card';
-import Typography from '@material-ui/core/Typography';
-import { Theme } from '@material-ui/core/styles/createTheme';
-import useTheme from '@material-ui/core/styles/useTheme';
-import makeStyles from '@material-ui/core/styles/makeStyles';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
-import createStyles from '@material-ui/core/styles/createStyles';
+import AppBar from '@mui/material/AppBar';
+import Button from '@mui/material/Button';
+import Hidden from '@mui/material/Hidden';
+import IconButton from '@mui/material/IconButton';
+import List from '@mui/material/List';
+import Toolbar from '@mui/material/Toolbar';
+import Card from '@mui/material/Card';
+import Typography from '@mui/material/Typography';
+import { Theme, useTheme } from '@mui/material/styles';
+import makeStyles from '@mui/styles/makeStyles';
+import createStyles from '@mui/styles/createStyles';
+import useMediaQuery from '@mui/material/useMediaQuery';
 import { InfoListItem, Spacer } from '@brightlayer-ui/react-components';
 import { TOGGLE_DRAWER } from '../../../redux/actions';
 import { useDispatch } from 'react-redux';
-import MenuIcon from '@material-ui/icons/Menu';
-import DragHandleIcon from '@material-ui/icons/DragHandle';
-import SortIcon from '@material-ui/icons/Sort';
-import CheckIcon from '@material-ui/icons/Check';
+import MenuIcon from '@mui/icons-material/Menu';
+import DragHandleIcon from '@mui/icons-material/DragHandle';
+import SortIcon from '@mui/icons-material/Sort';
+import CheckIcon from '@mui/icons-material/Check';
 
 import { OnSortEndProps, SortableListEditProps, SortableListItemProps } from './types';
 
@@ -38,13 +37,13 @@ const useStyles = makeStyles((theme: Theme) =>
             padding: 0,
         },
         toolbarGutters: {
-            padding: `0 ${theme.spacing(2)}px`,
+            padding: `0 ${theme.spacing(2)}`,
         },
         container: {
             maxWidth: 818,
             padding: theme.spacing(3),
             margin: '0 auto',
-            [theme.breakpoints.down('sm')]: {
+            [theme.breakpoints.down('xl')]: {
                 maxWidth: '100%',
                 padding: 0,
                 margin: 0,
@@ -54,7 +53,7 @@ const useStyles = makeStyles((theme: Theme) =>
             marginTop: theme.spacing(3),
             boxShadow: theme.shadows[1],
             borderRadius: 4,
-            [theme.breakpoints.down('sm')]: {
+            [theme.breakpoints.down('xl')]: {
                 marginTop: 0,
                 boxShadow: 'none',
                 borderRadius: 0,
@@ -70,7 +69,7 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         dragHandleIconButton: {
             backgroundColor: 'transparent',
-            [theme.breakpoints.down('sm')]: {
+            [theme.breakpoints.down('xl')]: {
                 marginLeft: 4,
             },
         },
@@ -94,7 +93,10 @@ const SortableListItem = SortableElement(({ listItem, classes, ...other }: Sorta
         {...other}
         classes={{ root: classes.sortableInfoListItem, listItemText: classes.listItemText }}
         icon={
-            <IconButton disableRipple classes={{ root: classes.dragHandleIconButton }}>
+            <IconButton
+                disableRipple
+                classes={{ root: classes.dragHandleIconButton }}
+                size="large">
                 <DragHandle />
             </IconButton>
         }
@@ -127,7 +129,7 @@ export const SortableList = (): JSX.Element => {
     const dispatch = useDispatch();
     const theme = useTheme();
     const classes = useStyles(theme);
-    const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+    const isMobile = useMediaQuery(theme.breakpoints.down('xl'));
     const [list, setList] = useState<string[]>(itemsList);
     const [sortable, setSortable] = useState<boolean>(false);
     const [isSorting, setIsSorting] = useState<boolean>(false);
@@ -160,7 +162,7 @@ export const SortableList = (): JSX.Element => {
                             }}
                             edge={'start'}
                             style={{ marginRight: 20 }}
-                        >
+                            size="large">
                             <MenuIcon />
                         </IconButton>
                     </Hidden>
@@ -173,7 +175,7 @@ export const SortableList = (): JSX.Element => {
                             data-cy="sort-done"
                             classes={{ root: classes.sortButtonMobile }}
                             onClick={(): void => setSortable(!sortable)}
-                        >
+                            size="large">
                             {sortable ? <CheckIcon /> : <SortIcon />}
                         </IconButton>
                     )}

@@ -1,4 +1,5 @@
-import { Divider, IconButton, makeStyles, useMediaQuery, useTheme, Theme, Typography } from '@material-ui/core';
+import { Divider, IconButton, useMediaQuery, useTheme, Theme, Typography } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
 import {
     Drawer,
     DrawerBody,
@@ -9,8 +10,8 @@ import {
     NavItem,
     Spacer,
 } from '@brightlayer-ui/react-components';
-import { OpenInNew } from '@material-ui/icons';
-import CloseIcon from '@material-ui/icons/Close';
+import { OpenInNew } from '@mui/icons-material';
+import CloseIcon from '@mui/icons-material/Close';
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router';
 import { Main } from './router/main';
@@ -28,19 +29,19 @@ const useStyles = makeStyles((theme: Theme) => ({
         display: 'flex',
         justifyContent: 'space-between',
         zIndex: 1,
-        padding: `0 ${theme.spacing(2)}px`,
+        padding: `0 ${theme.spacing(2)}`,
         alignItems: 'center',
         width: '100%',
         height: '100%',
-        [theme.breakpoints.down('sm')]: {
-            padding: `0 ${theme.spacing(2)}px 0 0`,
+        [theme.breakpoints.down('lg')]: {
+            padding: `0 ${theme.spacing(2)} 0 0`,
         },
     },
     headerDetails: {
         flex: 1,
     },
     subtitle: {
-        marginTop: `-${theme.spacing(1)}px`,
+        marginTop: theme.spacing(-1),
     },
 }));
 
@@ -49,7 +50,7 @@ export const App: React.FC = () => {
     const history = useHistory();
     const open = useSelector((state: AppState) => state.app.drawerOpen);
     const theme = useTheme();
-    const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+    const isMobile = useMediaQuery(theme.breakpoints.down('lg'));
     const dispatch = useDispatch();
 
     const [selected, setSelected] = useState('');
@@ -117,7 +118,7 @@ export const App: React.FC = () => {
                             onClick={(): void => {
                                 dispatch({ type: TOGGLE_DRAWER, payload: false });
                             }}
-                        >
+                            size="large">
                             <CloseIcon />
                         </IconButton>
                     ) : undefined

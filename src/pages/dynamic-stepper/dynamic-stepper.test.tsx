@@ -6,7 +6,7 @@ import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import { Reducer } from '../../redux/reducers';
 import { DynamicStepper } from '.';
-import { StepButton } from '@material-ui/core';
+import { StepButton } from '@mui/material';
 
 Enzyme.configure({ adapter: new Adapter() });
 const store = createStore(Reducer());

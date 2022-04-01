@@ -1,25 +1,24 @@
 import React, { ReactNode } from 'react';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import List from '@material-ui/core/List';
-import Hidden from '@material-ui/core/Hidden';
-import IconButton from '@material-ui/core/IconButton';
-import { Theme } from '@material-ui/core/styles/createTheme';
-import useTheme from '@material-ui/core/styles/useTheme';
-import makeStyles from '@material-ui/core/styles/makeStyles';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
-import Accordion from '@material-ui/core/Accordion';
-import AccordionSummary from '@material-ui/core/AccordionSummary';
-import AccordionDetails from '@material-ui/core/AccordionDetails';
-import Badge from '@material-ui/core/Badge';
-import MenuIcon from '@material-ui/icons/Menu';
-import ExpandMore from '@material-ui/icons/ExpandMore';
-import Chevron from '@material-ui/icons/ChevronRight';
-import NotificationsActiveIcon from '@material-ui/icons/NotificationsActive';
-import NotificationIcon from '@material-ui/icons/Notifications';
-import HelpIcon from '@material-ui/icons/Help';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
+import AppBar from '@mui/material/AppBar';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
+import List from '@mui/material/List';
+import Hidden from '@mui/material/Hidden';
+import IconButton from '@mui/material/IconButton';
+import { Theme, useTheme } from '@mui/material/styles';
+import makeStyles from '@mui/styles/makeStyles';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import Accordion from '@mui/material/Accordion';
+import AccordionSummary from '@mui/material/AccordionSummary';
+import AccordionDetails from '@mui/material/AccordionDetails';
+import Badge from '@mui/material/Badge';
+import MenuIcon from '@mui/icons-material/Menu';
+import ExpandMore from '@mui/icons-material/ExpandMore';
+import Chevron from '@mui/icons-material/ChevronRight';
+import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
+import NotificationIcon from '@mui/icons-material/Notifications';
+import HelpIcon from '@mui/icons-material/Help';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { useDispatch } from 'react-redux';
 import { TOGGLE_DRAWER } from '../../../redux/actions';
 import { InfoListItem, ListItemTag, Spacer } from '@brightlayer-ui/react-components';
@@ -31,7 +30,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         padding: 0,
     },
     toolbarGutters: {
-        padding: `0 ${theme.spacing(2)}px`,
+        padding: `0 ${theme.spacing(2)}`,
         display: 'flex',
         justifyContent: 'space-between',
     },
@@ -41,10 +40,10 @@ const useStyles = makeStyles((theme: Theme) => ({
     accordionContainer: {
         maxWidth: 768,
         margin: '0 auto',
-        padding: `${theme.spacing(3)}px ${theme.spacing(2)}px`,
-        [theme.breakpoints.down('sm')]: {
+        padding: `${theme.spacing(3)} ${theme.spacing(2)}`,
+        [theme.breakpoints.down('xl')]: {
             maxWidth: '100%',
-            margin: `0 auto ${theme.spacing(3)}px auto`,
+            margin: `0 auto ${theme.spacing(3)} auto`,
             padding: 0,
         },
     },
@@ -64,7 +63,7 @@ const useStyles = makeStyles((theme: Theme) => ({
                 borderBottom: `1px solid ${theme.palette.divider}`,
             },
         },
-        [theme.breakpoints.down('sm')]: {
+        [theme.breakpoints.down('xl')]: {
             maxWidth: '100%',
             boxShadow: 'none',
             borderRadius: 0,
@@ -137,7 +136,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
     infoComponent: {
         display: 'flex',
-        margin: `4px 0px 4px ${theme.spacing(4)}px`,
+        margin: `4px 0px 4px ${theme.spacing(4)}`,
     },
 }));
 
@@ -227,7 +226,7 @@ const getInfoComponent = (
 export const StatusList = (): JSX.Element => {
     const dispatch = useDispatch();
     const theme = useTheme();
-    const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+    const isMobile = useMediaQuery(theme.breakpoints.down('xl'));
     const classes = useStyles(theme);
 
     return (
@@ -243,7 +242,7 @@ export const StatusList = (): JSX.Element => {
                             }}
                             edge={'start'}
                             style={{ marginRight: 20 }}
-                        >
+                            size="large">
                             <MenuIcon />
                         </IconButton>
                     </Hidden>
@@ -251,7 +250,7 @@ export const StatusList = (): JSX.Element => {
                         Status Lists
                     </Typography>
                     <Spacer />
-                    <IconButton color={'inherit'} edge={'end'}>
+                    <IconButton color={'inherit'} edge={'end'} size="large">
                         <HelpIcon />
                         <Badge classes={{ root: classes.headerIcon }} color="error" badgeContent={88}>
                             <NotificationIcon />

@@ -10,16 +10,17 @@ import {
     Toolbar,
     Typography,
     useMediaQuery,
-} from '@material-ui/core';
-import { makeStyles, Theme, useTheme } from '@material-ui/core/styles';
-import HelpIcon from '@material-ui/icons/Help';
-import MenuIcon from '@material-ui/icons/Menu';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
-import NotificationsIcon from '@material-ui/icons/Notifications';
+} from '@mui/material';
+import { Theme, useTheme } from '@mui/material/styles';
+import makeStyles from '@mui/styles/makeStyles';
+import HelpIcon from '@mui/icons-material/Help';
+import MenuIcon from '@mui/icons-material/Menu';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+import NotificationsIcon from '@mui/icons-material/Notifications';
 import { AppBar, InfoListItem, Spacer } from '@brightlayer-ui/react-components';
 import { useDispatch } from 'react-redux';
 import { TOGGLE_DRAWER } from '../../../redux/actions';
-import { Close, Search } from '@material-ui/icons';
+import { Close, Search } from '@mui/icons-material';
 
 type OnChangeHandler = InputProps['onChange'];
 
@@ -56,15 +57,15 @@ const useStyles = makeStyles((theme: Theme) => ({
         marginRight: theme.spacing(4),
     },
     resultsCard: {
-        margin: `0 ${theme.spacing(4)}px`,
-        [theme.breakpoints.down('xs')]: {
+        margin: `0 ${theme.spacing(4)}`,
+        [theme.breakpoints.down('lg')]: {
             margin: 0,
             borderRadius: 0,
         },
     },
     noResults: {
-        margin: `0 ${theme.spacing(4)}px`,
-        [theme.breakpoints.down('xs')]: {
+        margin: `0 ${theme.spacing(4)}`,
+        [theme.breakpoints.down('lg')]: {
             marginTop: theme.spacing(4),
         },
     },
@@ -76,7 +77,7 @@ export const PageWideSearch = (): JSX.Element => {
     const dispatch = useDispatch();
     const theme = useTheme();
     const classes = useStyles(theme);
-    const isMobile = useMediaQuery(theme.breakpoints.down('xs'));
+    const isMobile = useMediaQuery(theme.breakpoints.down('lg'));
     const [searchTerm, setSearchTerm] = useState('');
     const [searchResults, setSearchResults] = useState(data);
 
@@ -119,7 +120,7 @@ export const PageWideSearch = (): JSX.Element => {
                             color={'inherit'}
                             edge={'start'}
                             style={{ marginRight: 20 }}
-                        >
+                            size="large">
                             <MenuIcon />
                         </IconButton>
                     </Hidden>
@@ -128,15 +129,15 @@ export const PageWideSearch = (): JSX.Element => {
                     </Typography>
                     <Spacer />
                     <div className={classes.toolbarRightContent}>
-                        <IconButton color={'inherit'}>
+                        <IconButton color={'inherit'} size="large">
                             <HelpIcon />
                         </IconButton>
-                        <IconButton color={'inherit'}>
+                        <IconButton color={'inherit'} size="large">
                             <Badge color="error" badgeContent={88}>
                                 <NotificationsIcon />
                             </Badge>
                         </IconButton>
-                        <IconButton color={'inherit'}>
+                        <IconButton color={'inherit'} size="large">
                             <MoreVertIcon />
                         </IconButton>
                     </div>

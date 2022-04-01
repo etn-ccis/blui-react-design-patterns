@@ -1,7 +1,5 @@
 import React, { useCallback, useState } from 'react';
 import {
-    makeStyles,
-    createStyles,
     AppBar,
     Button,
     Card,
@@ -14,9 +12,11 @@ import {
     Theme,
     useMediaQuery,
     useTheme,
-} from '@material-ui/core';
-import DeleteIcon from '@material-ui/icons/Delete';
-import MenuIcon from '@material-ui/icons/Menu';
+} from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
+import createStyles from '@mui/styles/createStyles';
+import DeleteIcon from '@mui/icons-material/Delete';
+import MenuIcon from '@mui/icons-material/Menu';
 import { TOGGLE_DRAWER } from '../../../redux/actions';
 import { useDispatch } from 'react-redux';
 import { InfoListItem, Spacer } from '@brightlayer-ui/react-components';
@@ -65,11 +65,11 @@ const useStyles = makeStyles((theme: Theme) =>
             backgroundColor: 'rgba(0, 123, 193, 0.05)',
         },
         card: {
-            marginBottom: `${theme.spacing(3)}px`,
-            [theme.breakpoints.down('sm')]: {
+            marginBottom: theme.spacing(3),
+            [theme.breakpoints.down('xl')]: {
                 boxShadow: 'none',
                 borderRadius: 0,
-                marginBottom: `${theme.spacing(2)}px`,
+                marginBottom: theme.spacing(2),
             },
         },
         cardContent: {
@@ -93,13 +93,13 @@ const useStyles = makeStyles((theme: Theme) =>
             display: 'flex',
             justifyContent: 'flex-end',
             alignItems: 'center',
-            marginBottom: `${theme.spacing(3)}px`,
+            marginBottom: theme.spacing(3),
         },
         exampleContainer: {
-            padding: `${theme.spacing(3)}px`,
+            padding: theme.spacing(3),
             margin: '0 auto',
             maxWidth: '816px',
-            [theme.breakpoints.down('sm')]: {
+            [theme.breakpoints.down('xl')]: {
                 padding: 0,
                 boxShadow: 'none',
                 borderRadius: 0,
@@ -107,25 +107,25 @@ const useStyles = makeStyles((theme: Theme) =>
             },
         },
         listItemIcon: {
-            marginLeft: `-${theme.spacing(1)}px`,
+            marginLeft: theme.spacing(-1),
         },
         noResultListItem: {
-            marginLeft: `${theme.spacing(0.5)}px`,
+            marginLeft: theme.spacing(0.5),
         },
         panelHeaderRoot1: {
-            paddingLeft: `${theme.spacing(1)}px`,
+            paddingLeft: theme.spacing(1),
             '& h6': {
-                marginLeft: `${theme.spacing(1)}px`,
+                marginLeft: theme.spacing(1),
             },
         },
         panelHeaderRoot2: {
-            paddingLeft: `${theme.spacing(2)}px`,
+            paddingLeft: theme.spacing(2),
             '& h6': {
-                marginLeft: `${theme.spacing(1)}px`,
+                marginLeft: theme.spacing(1),
             },
         },
         listItemTitle: {
-            marginLeft: `${theme.spacing(1)}px`,
+            marginLeft: theme.spacing(1),
         },
         resetDataLink: {
             textDecoration: 'underline',
@@ -133,10 +133,10 @@ const useStyles = makeStyles((theme: Theme) =>
             cursor: 'pointer',
         },
         resetListItem: {
-            paddingLeft: `${theme.spacing(2.5)}px`,
+            paddingLeft: theme.spacing(2.5),
         },
         toolbarGutters: {
-            padding: `0 ${theme.spacing(2)}px`,
+            padding: `0 ${theme.spacing(2)}`,
         },
     })
 );
@@ -145,7 +145,7 @@ export const MultiselectList = (): JSX.Element => {
     const classes = useStyles();
     const dispatch = useDispatch();
     const theme = useTheme();
-    const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+    const isMobile = useMediaQuery(theme.breakpoints.down('xl'));
     const [list, setList] = useState<ListItemType[]>(generatedList);
     const result = categorizeList(list);
     const [filteredResult, setFilteredResult] = useState(result);
@@ -419,7 +419,7 @@ export const MultiselectList = (): JSX.Element => {
                             }}
                             edge={'start'}
                             style={{ marginRight: 20 }}
-                        >
+                            size="large">
                             <MenuIcon />
                         </IconButton>
                     </Hidden>
@@ -429,7 +429,12 @@ export const MultiselectList = (): JSX.Element => {
                     <Spacer />
                     <Hidden mdUp={true}>
                         {selectedItems1.length !== 0 || selectedItems2.length !== 0 ? (
-                            <IconButton data-cy="delete-btn" color={'inherit'} onClick={onDelete} edge={'end'}>
+                            <IconButton
+                                data-cy="delete-btn"
+                                color={'inherit'}
+                                onClick={onDelete}
+                                edge={'end'}
+                                size="large">
                                 <DeleteIcon />
                             </IconButton>
                         ) : (
@@ -439,7 +444,7 @@ export const MultiselectList = (): JSX.Element => {
                 </Toolbar>
             </AppBar>
             <div className={classes.exampleContainer}>
-                <Hidden smDown={true}>
+                <Hidden xlDown={true}>
                     <div className={classes.deleteRow}>
                         <Button
                             data-testid="deleteButton"

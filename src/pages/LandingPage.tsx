@@ -1,19 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import MenuIcon from '@material-ui/icons/Menu';
-import {
-    IconButton,
-    Hidden,
-    useTheme,
-    makeStyles,
-    Theme,
-    createStyles,
-    Fade,
-    Divider,
-    Button,
-} from '@material-ui/core';
+import AppBar from '@mui/material/AppBar';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
+import MenuIcon from '@mui/icons-material/Menu';
+import { IconButton, Hidden, useTheme, Theme, Fade, Divider, Button } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
+import createStyles from '@mui/styles/createStyles';
 import { useDispatch } from 'react-redux';
 import { TOGGLE_DRAWER } from '../redux/actions';
 import clsx from 'clsx';
@@ -48,7 +40,7 @@ const useStyles = makeStyles((theme: Theme) =>
                 marginBottom: theme.spacing(1),
                 verticalAlign: 'top',
             },
-            [theme.breakpoints.down('xs')]: {
+            [theme.breakpoints.down('lg')]: {
                 columnCount: 1,
                 '& > *': {
                     display: 'block',
@@ -89,7 +81,7 @@ export const LandingPage = (): JSX.Element => {
                                 dispatch({ type: TOGGLE_DRAWER, payload: true });
                             }}
                             edge={'start'}
-                        >
+                            size="large">
                             <MenuIcon />
                         </IconButton>
                         <Typography variant={'h6'} color={'inherit'}>

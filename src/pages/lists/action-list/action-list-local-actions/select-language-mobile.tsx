@@ -1,10 +1,10 @@
 import React from 'react';
 import { InfoListItem } from '@brightlayer-ui/react-components';
-import { Done } from '@material-ui/icons';
-import createStyles from '@material-ui/core/styles/createStyles';
-import makeStyles from '@material-ui/core/styles/makeStyles';
-import { useTheme } from '@material-ui/styles';
-import { Theme } from '@material-ui/core/styles/createTheme';
+import { Done } from '@mui/icons-material';
+import { Theme } from '@mui/material/styles';
+import createStyles from '@mui/styles/createStyles';
+import makeStyles from '@mui/styles/makeStyles';
+import { useTheme } from '@mui/styles';
 
 export type LanguageSelectProps = {
     language: string;

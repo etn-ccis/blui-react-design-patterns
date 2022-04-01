@@ -1,30 +1,31 @@
 import React from 'react';
-import { AppBar, Toolbar, Typography, Hidden, IconButton, useMediaQuery } from '@material-ui/core';
-import { makeStyles, Theme, useTheme } from '@material-ui/core/styles';
-import MenuIcon from '@material-ui/icons/Menu';
+import { AppBar, Toolbar, Typography, Hidden, IconButton, useMediaQuery } from '@mui/material';
+import { Theme, useTheme } from '@mui/material/styles';
+import makeStyles from '@mui/styles/makeStyles';
+import MenuIcon from '@mui/icons-material/Menu';
 import { useDispatch } from 'react-redux';
 import { TOGGLE_DRAWER } from '../../../redux/actions';
 import { EmptyState } from '@brightlayer-ui/react-components';
-import { BluetoothSearching } from '@material-ui/icons';
-import LinearProgress from '@material-ui/core/LinearProgress';
+import { BluetoothSearching } from '@mui/icons-material';
+import LinearProgress from '@mui/material/LinearProgress';
 
 const useStyles = makeStyles((theme: Theme) => ({
     container: {
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        height: `calc(100vh - ${theme.spacing(8)}px)`,
-        [theme.breakpoints.down('xs')]: {
-            height: `calc(100vh - ${theme.spacing(7)}px)`,
+        height: `calc(100vh - ${theme.spacing(8)})`,
+        [theme.breakpoints.down('lg')]: {
+            height: `calc(100vh - ${theme.spacing(7)})`,
         },
     },
     toolbarGutters: {
-        padding: `0px ${theme.spacing(2)}px`,
+        padding: `0px ${theme.spacing(2)}`,
     },
     LinearProgressBarIndeterminate: {
         position: 'absolute',
         bottom: 0,
-        marginLeft: `-${theme.spacing(2)}px`,
+        marginLeft: theme.spacing(-2),
         width: '100%',
     },
 }));
@@ -33,7 +34,7 @@ export const ProgressBarIndeterminate = (): JSX.Element => {
     const dispatch = useDispatch();
     const theme = useTheme();
     const classes = useStyles();
-    const isMobile = useMediaQuery(theme.breakpoints.down('xs'));
+    const isMobile = useMediaQuery(theme.breakpoints.down('lg'));
 
     return (
         <div style={{ backgroundColor: theme.palette.background.paper, minHeight: '100vh' }}>
@@ -48,7 +49,7 @@ export const ProgressBarIndeterminate = (): JSX.Element => {
                             }}
                             edge={'start'}
                             style={{ marginRight: 20 }}
-                        >
+                            size="large">
                             <MenuIcon />
                         </IconButton>
                     </Hidden>

@@ -16,16 +16,23 @@ import {
     Snackbar,
     useMediaQuery,
     useTheme,
-} from '@material-ui/core';
-import { makeStyles, Theme, createTheme, MuiThemeProvider } from '@material-ui/core/styles';
+} from '@mui/material';
+import { Theme, createTheme, ThemeProvider, StyledEngineProvider } from '@mui/material/styles';
+import makeStyles from '@mui/styles/makeStyles';
 import * as BLUIThemes from '@brightlayer-ui/react-themes';
-import MenuIcon from '@material-ui/icons/Menu';
-import { Folder, Description, Publish } from '@material-ui/icons';
-import LinearProgress from '@material-ui/core/LinearProgress';
+import MenuIcon from '@mui/icons-material/Menu';
+import { Folder, Description, Publish } from '@mui/icons-material';
+import LinearProgress from '@mui/material/LinearProgress';
 import { useDispatch } from 'react-redux';
 import { TOGGLE_DRAWER } from '../../../redux/actions';
 import * as Colors from '@brightlayer-ui/colors';
 import { InfoListItem } from '@brightlayer-ui/react-components';
+
+declare module '@mui/styles/defaultTheme' {
+    // eslint-disable-next-line @typescript-eslint/no-empty-interface
+    interface DefaultTheme extends Theme {}
+}
+
 type FolderItem = {
     id: number;
     name: string;
@@ -45,7 +52,7 @@ const uploadFileList: FolderItem[] = [];
 
 const useStyles = makeStyles((theme: Theme) => ({
     container: {
-        padding: `${theme.spacing(2)}px ${theme.spacing(2)}px`,
+        padding: `${theme.spacing(2)} ${theme.spacing(2)}`,
         maxWidth: 600,
         margin: '0 auto',
     },
@@ -57,7 +64,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
     uploadButtonContainer: {
         textAlign: 'right',
-        paddingBottom: `${theme.spacing(2)}px`,
+        paddingBottom: theme.spacing(2),
     },
     formControl: {
         width: '100%',
@@ -67,14 +74,14 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
     icon: {
         fill: Colors.black[200],
-        marginLeft: `${theme.spacing(0.5)}px`,
+        marginLeft: theme.spacing(0.5),
     },
     iconContainer: {
-        marginRight: `${theme.spacing(2)}px`,
+        marginRight: theme.spacing(2),
         maxWidth: '40px',
         minWidth: '40px',
         width: '40px',
-        marginTop: `${theme.spacing(1)}px`,
+        marginTop: theme.spacing(1),
     },
     formLabel: {
         margin: 0,
@@ -86,13 +93,13 @@ const useStyles = makeStyles((theme: Theme) => ({
         },
     },
     toolbarGutters: {
-        padding: `0 ${theme.spacing(2)}px`,
+        padding: `0 ${theme.spacing(2)}`,
     },
     placementOfList: {
         position: 'absolute',
         bottom: theme.spacing(3),
         right: theme.spacing(3),
-        [theme.breakpoints.down('xs')]: {
+        [theme.breakpoints.down('md')]: {
             bottom: 0,
             right: 0,
             width: '100%',
@@ -123,7 +130,7 @@ export const ProgressBar = (): JSX.Element => {
     const dispatch = useDispatch();
     const classes = useStyles();
     const theme = useTheme();
-    const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+    const isMobile = useMediaQuery(theme.breakpoints.down('lg'));
 
     const [fileUploadList, setFileUploadList] = useState<FolderItem[]>(uploadFileList);
 
@@ -192,6 +199,7 @@ export const ProgressBar = (): JSX.Element => {
                             }}
                             edge={'start'}
                             style={{ marginRight: 20 }}
+                            size="large"
                         >
                             <MenuIcon />
                         </IconButton>
@@ -263,26 +271,30 @@ export const ProgressBar = (): JSX.Element => {
                                     }
                                 >
                                     <div>
-                                        <MuiThemeProvider theme={createTheme(BLUIThemes.blueDark)}>
-                                            <InfoListItem
-                                                data-cy={'upload-status-snackbar'}
-                                                style={{ boxShadow: theme.shadows[6] }}
-                                                title={item.name}
-                                                subtitle={item.status}
-                                                icon={<Description />}
-                                                backgroundColor={Colors.black[900]}
-                                                rightComponent={
-                                                    <Button
-                                                        variant="outlined"
-                                                        style={{ width: 80 }}
-                                                        onClick={(): void => markUploadComplete(item.id, item.status)}
-                                                    >
-                                                        {item.progress === 100 ? 'View' : 'Cancel'}
-                                                    </Button>
-                                                }
-                                            />
-                                            <LinearProgress variant={'determinate'} value={item.progress} />
-                                        </MuiThemeProvider>
+                                        <StyledEngineProvider injectFirst>
+                                            <ThemeProvider theme={createTheme(BLUIThemes.blueDark)}>
+                                                <InfoListItem
+                                                    data-cy={'upload-status-snackbar'}
+                                                    style={{ boxShadow: theme.shadows[6] }}
+                                                    title={item.name}
+                                                    subtitle={item.status}
+                                                    icon={<Description />}
+                                                    backgroundColor={Colors.black[900]}
+                                                    rightComponent={
+                                                        <Button
+                                                            variant="outlined"
+                                                            style={{ width: 80 }}
+                                                            onClick={(): void =>
+                                                                markUploadComplete(item.id, item.status)
+                                                            }
+                                                        >
+                                                            {item.progress === 100 ? 'View' : 'Cancel'}
+                                                        </Button>
+                                                    }
+                                                />
+                                                <LinearProgress variant={'determinate'} value={item.progress} />
+                                            </ThemeProvider>
+                                        </StyledEngineProvider>
                                     </div>
                                 </Snackbar>
                             </div>

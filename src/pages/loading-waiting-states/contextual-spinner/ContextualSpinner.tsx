@@ -1,19 +1,20 @@
 import React, { useCallback, useState, useEffect } from 'react';
-import { makeStyles, useTheme, Theme } from '@material-ui/core/styles';
-import { AppBar, Toolbar, Hidden, IconButton, Typography, Button, Fab, CircularProgress } from '@material-ui/core';
+import { useTheme, Theme } from '@mui/material/styles';
+import makeStyles from '@mui/styles/makeStyles';
+import { AppBar, Toolbar, Hidden, IconButton, Typography, Button, Fab, CircularProgress } from '@mui/material';
 import { TOGGLE_DRAWER } from '../../../redux/actions';
 import { useDispatch } from 'react-redux';
-import { Menu, PlayArrow } from '@material-ui/icons';
+import { Menu, PlayArrow } from '@mui/icons-material';
 
 const useStyles = makeStyles((theme: Theme) => ({
     appbarRoot: {
         padding: 0,
     },
     toolbarGutters: {
-        padding: `0 ${theme.spacing(2)}px`,
+        padding: `0 ${theme.spacing(2)}`,
     },
     exampleContainer: {
-        margin: `${theme.spacing(3)}px ${theme.spacing(2)}px`,
+        margin: `${theme.spacing(3)} ${theme.spacing(2)}`,
     },
     description: {
         marginBottom: theme.spacing(2),
@@ -113,6 +114,7 @@ export const ContextualSpinner = (): JSX.Element => {
                             }}
                             edge={'start'}
                             style={{ marginRight: 20 }}
+                            size="large"
                         >
                             <Menu />
                         </IconButton>
@@ -138,7 +140,7 @@ export const ContextualSpinner = (): JSX.Element => {
                 <br />
                 <Fab
                     data-cy={'start-btn'}
-                    variant={isStartRoutineLoading ? 'round' : 'extended'}
+                    variant={isStartRoutineLoading ? 'circular' : 'extended'}
                     color="primary"
                     className={isStartRoutineLoading ? classes.startRoutineLoadingButton : classes.startRoutineButton}
                     onClick={handleStartRoutineClick}

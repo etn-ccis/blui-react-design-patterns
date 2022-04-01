@@ -1,5 +1,6 @@
 import React from 'react';
-import { Drawer as MuiDrawer, Typography, List, makeStyles, Theme, useTheme } from '@material-ui/core';
+import { Drawer as MuiDrawer, Typography, List, Theme, useTheme } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
 import clsx from 'clsx';
 import { TFunction } from 'i18next';
 
@@ -12,12 +13,12 @@ import 'moment/locale/zh-cn';
 import 'moment/locale/ar';
 import 'moment/locale/pt';
 
-import BoltIcon from '@material-ui/icons/OfflineBolt';
-import HomeIcon from '@material-ui/icons/Home';
-import FolderIcon from '@material-ui/icons/Folder';
-import ErrorIcon from '@material-ui/icons/Error';
-import SettingsIcon from '@material-ui/icons/Settings';
-import HelpIcon from '@material-ui/icons/Help';
+import BoltIcon from '@mui/icons-material/OfflineBolt';
+import HomeIcon from '@mui/icons-material/Home';
+import FolderIcon from '@mui/icons-material/Folder';
+import ErrorIcon from '@mui/icons-material/Error';
+import SettingsIcon from '@mui/icons-material/Settings';
+import HelpIcon from '@mui/icons-material/Help';
 
 import { english } from './translations/english';
 import './translations/i18n';

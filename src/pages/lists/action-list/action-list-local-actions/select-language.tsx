@@ -1,8 +1,8 @@
-import FormControl from '@material-ui/core/FormControl';
-import MenuItem from '@material-ui/core/MenuItem';
-import Select from '@material-ui/core/Select';
-import createStyles from '@material-ui/core/styles/createStyles';
-import makeStyles from '@material-ui/core/styles/makeStyles';
+import FormControl from '@mui/material/FormControl';
+import MenuItem from '@mui/material/MenuItem';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
+import createStyles from '@mui/styles/createStyles';
+import makeStyles from '@mui/styles/makeStyles';
 import React from 'react';
 import { LanguageSelectProps } from './select-language-mobile';
 
@@ -18,8 +18,8 @@ export const LanguageSelect = (props: LanguageSelectProps): JSX.Element => {
     const classes = useStyles();
     const { language, updateLanguage } = props;
 
-    const handleChange = (event: React.ChangeEvent<{ value: unknown }>): void => {
-        updateLanguage(event.target.value as string);
+    const handleChange = (event: SelectChangeEvent): void => {
+        updateLanguage(event.target.value);
     };
 
     return (

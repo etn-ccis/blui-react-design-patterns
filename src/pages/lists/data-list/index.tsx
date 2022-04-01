@@ -1,16 +1,16 @@
 import React from 'react';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import List from '@material-ui/core/List';
-import MenuIcon from '@material-ui/icons/Menu';
-import { IconButton, Hidden, useTheme } from '@material-ui/core';
+import AppBar from '@mui/material/AppBar';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
+import List from '@mui/material/List';
+import MenuIcon from '@mui/icons-material/Menu';
+import { IconButton, Hidden, useTheme } from '@mui/material';
 import { useDispatch } from 'react-redux';
 import { TOGGLE_DRAWER } from '../../../redux/actions';
 import { InfoListItem, ChannelValue } from '@brightlayer-ui/react-components';
 import { presidentsList } from './list';
 import { EmptyState } from './EmptyState';
-import { makeStyles } from '@material-ui/core/styles';
+import makeStyles from '@mui/styles/makeStyles';
 
 const useStyles = makeStyles(() => ({
     appbarRoot: {
@@ -39,7 +39,7 @@ export const DataList = (): JSX.Element => {
                             }}
                             edge={'start'}
                             style={{ marginRight: 20 }}
-                        >
+                            size="large">
                             <MenuIcon />
                         </IconButton>
                     </Hidden>

@@ -1,9 +1,10 @@
 import React from 'react';
-import { makeStyles, useTheme, Theme } from '@material-ui/core/styles';
-import { Card, CardActions, CardContent, Divider, Typography } from '@material-ui/core';
-import Skeleton from '@material-ui/lab/Skeleton';
+import { useTheme, Theme } from '@mui/material/styles';
+import makeStyles from '@mui/styles/makeStyles';
+import { Card, CardActions, CardContent, Divider, Typography } from '@mui/material';
+import Skeleton from '@mui/material/Skeleton';
 import * as colors from '@brightlayer-ui/colors';
-import { KeyboardArrowRight } from '@material-ui/icons';
+import { KeyboardArrowRight } from '@mui/icons-material';
 import { Spacer } from '@brightlayer-ui/react-components';
 import Color from 'color';
 
@@ -52,7 +53,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',
-        padding: `0 ${theme.spacing(2)}px`,
+        padding: `0 ${theme.spacing(2)}`,
         color: Color(colors.black[300]).alpha(0.36).string(),
     },
 }));
@@ -94,7 +95,7 @@ export const ScorecardPlaceholder = (props: { animation: 'pulse' | 'wave' }): JS
                         <div className={classes.centeredRow}>
                             <Skeleton
                                 animation={animation}
-                                variant="circle"
+                                variant="circular"
                                 width={24}
                                 height={24}
                                 classes={{ root: classes.skeletonRoot }}
@@ -109,7 +110,7 @@ export const ScorecardPlaceholder = (props: { animation: 'pulse' | 'wave' }): JS
                         <div className={classes.centeredRow}>
                             <Skeleton
                                 animation={animation}
-                                variant="circle"
+                                variant="circular"
                                 width={24}
                                 height={24}
                                 classes={{ root: classes.skeletonRoot }}
@@ -124,7 +125,7 @@ export const ScorecardPlaceholder = (props: { animation: 'pulse' | 'wave' }): JS
                         <div className={classes.centeredRow}>
                             <Skeleton
                                 animation={animation}
-                                variant="circle"
+                                variant="circular"
                                 width={24}
                                 height={24}
                                 classes={{ root: classes.skeletonRoot }}
@@ -141,7 +142,7 @@ export const ScorecardPlaceholder = (props: { animation: 'pulse' | 'wave' }): JS
                         <div className={classes.centeredColumn} style={{ marginRight: 32 }}>
                             <Skeleton
                                 animation={animation}
-                                variant="circle"
+                                variant="circular"
                                 width={36}
                                 height={36}
                                 classes={{ root: classes.skeletonRoot }}
@@ -164,7 +165,7 @@ export const ScorecardPlaceholder = (props: { animation: 'pulse' | 'wave' }): JS
                         <div className={classes.centeredColumn}>
                             <Skeleton
                                 animation={animation}
-                                variant="circle"
+                                variant="circular"
                                 width={36}
                                 height={36}
                                 classes={{ root: classes.skeletonRoot }}

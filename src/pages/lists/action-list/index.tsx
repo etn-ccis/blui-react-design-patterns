@@ -1,21 +1,21 @@
 import React, { useState, useCallback } from 'react';
-import IconButton from '@material-ui/core/IconButton';
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import AddIcon from '@material-ui/icons/Add';
-import DeleteIcon from '@material-ui/icons/Delete';
-import List from '@material-ui/core/List';
+import IconButton from '@mui/material/IconButton';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+import AppBar from '@mui/material/AppBar';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
+import AddIcon from '@mui/icons-material/Add';
+import DeleteIcon from '@mui/icons-material/Delete';
+import List from '@mui/material/List';
 import { Spacer, InfoListItem } from '@brightlayer-ui/react-components';
 import { useDispatch } from 'react-redux';
 import { TOGGLE_DRAWER } from '../../../redux/actions';
-import { Menu as MenuIcon } from '@material-ui/icons';
-import { Hidden, useTheme, Tooltip } from '@material-ui/core';
+import { Menu as MenuIcon } from '@mui/icons-material';
+import { Hidden, useTheme, Tooltip } from '@mui/material';
 import { EmptyState } from './EmptyState';
-import { makeStyles } from '@material-ui/core/styles';
+import makeStyles from '@mui/styles/makeStyles';
 
 type Option = 'Delete' | 'View Details';
 type Item = {
@@ -107,7 +107,7 @@ export const ActionList = (): JSX.Element => {
                             }}
                             edge={'start'}
                             style={{ marginRight: 20 }}
-                        >
+                            size="large">
                             <MenuIcon />
                         </IconButton>
                     </Hidden>
@@ -122,7 +122,7 @@ export const ActionList = (): JSX.Element => {
                             color={'inherit'}
                             aria-label={'Delete'}
                             onClick={onRemoveAll}
-                        >
+                            size="large">
                             <DeleteIcon />
                         </IconButton>
                     </Tooltip>
@@ -134,7 +134,7 @@ export const ActionList = (): JSX.Element => {
                             aria-label={'add'}
                             edge={'end'}
                             onClick={onAddItem}
-                        >
+                            size="large">
                             <AddIcon />
                         </IconButton>
                     </Tooltip>
@@ -158,7 +158,7 @@ export const ActionList = (): JSX.Element => {
                                     data-cy={'action-menu'}
                                     onClick={(evt): void => onMenuClick(evt, i)}
                                     edge={'end'}
-                                >
+                                    size="large">
                                     <MoreVertIcon />
                                 </IconButton>
                             }

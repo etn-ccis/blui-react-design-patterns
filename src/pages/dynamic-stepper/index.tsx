@@ -1,28 +1,31 @@
 import React, { useState, useCallback } from 'react';
-import { useTheme, makeStyles, Theme, createStyles } from '@material-ui/core/styles';
+import { useTheme, Theme } from '@mui/material/styles';
 
-import Stepper from '@material-ui/core/Stepper';
-import Step from '@material-ui/core/Step';
-import StepButton from '@material-ui/core/StepButton';
-import StepContent from '@material-ui/core/StepContent';
+import makeStyles from '@mui/styles/makeStyles';
+import createStyles from '@mui/styles/createStyles';
 
-import FormControl from '@material-ui/core/FormControl';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import RadioGroup from '@material-ui/core/RadioGroup';
-import Radio from '@material-ui/core/Radio';
+import Stepper from '@mui/material/Stepper';
+import Step from '@mui/material/Step';
+import StepButton from '@mui/material/StepButton';
+import StepContent from '@mui/material/StepContent';
 
-import Typography from '@material-ui/core/Typography';
-import Toolbar from '@material-ui/core/Toolbar';
-import AppBar from '@material-ui/core/AppBar';
-import Tooltip from '@material-ui/core/Tooltip';
-import Hidden from '@material-ui/core/Hidden';
-import Button from '@material-ui/core/Button';
+import FormControl from '@mui/material/FormControl';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import RadioGroup from '@mui/material/RadioGroup';
+import Radio from '@mui/material/Radio';
 
-import Add from '@material-ui/icons/AddCircle';
-import Delete from '@material-ui/icons/Delete';
-import DeleteSweep from '@material-ui/icons/DeleteSweep';
-import IconButton from '@material-ui/core/IconButton';
-import Menu from '@material-ui/icons/Menu';
+import Typography from '@mui/material/Typography';
+import Toolbar from '@mui/material/Toolbar';
+import AppBar from '@mui/material/AppBar';
+import Tooltip from '@mui/material/Tooltip';
+import Hidden from '@mui/material/Hidden';
+import Button from '@mui/material/Button';
+
+import Add from '@mui/icons-material/AddCircle';
+import Delete from '@mui/icons-material/Delete';
+import DeleteSweep from '@mui/icons-material/DeleteSweep';
+import IconButton from '@mui/material/IconButton';
+import Menu from '@mui/icons-material/Menu';
 
 import { Spacer } from '@brightlayer-ui/react-components';
 
@@ -116,7 +119,7 @@ export const DynamicStepper = (): JSX.Element => {
                             }}
                             edge={'start'}
                             style={{ marginRight: 20 }}
-                        >
+                            size="large">
                             <Menu />
                         </IconButton>
                     </Hidden>
@@ -131,7 +134,7 @@ export const DynamicStepper = (): JSX.Element => {
                             edge={'end'}
                             onClick={(): void => setSteps([])}
                             id={'remove-all'}
-                        >
+                            size="large">
                             <DeleteSweep />
                         </IconButton>
                     </Tooltip>

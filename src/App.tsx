@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         alignItems: 'center',
         width: '100%',
         height: '100%',
-        [theme.breakpoints.down('lg')]: {
+        [theme.breakpoints.down('md')]: {
             padding: `0 ${theme.spacing(2)} 0 0`,
         },
     },
@@ -50,7 +50,7 @@ export const App: React.FC = () => {
     const history = useHistory();
     const open = useSelector((state: AppState) => state.app.drawerOpen);
     const theme = useTheme();
-    const isMobile = useMediaQuery(theme.breakpoints.down('lg'));
+    const isMobile = useMediaQuery(theme.breakpoints.down('md'));
     const dispatch = useDispatch();
 
     const [selected, setSelected] = useState('');
@@ -118,7 +118,8 @@ export const App: React.FC = () => {
                             onClick={(): void => {
                                 dispatch({ type: TOGGLE_DRAWER, payload: false });
                             }}
-                            size="large">
+                            size="large"
+                        >
                             <CloseIcon />
                         </IconButton>
                     ) : undefined

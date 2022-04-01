@@ -8,7 +8,6 @@ import {
     Toolbar,
     Typography,
     IconButton,
-    Hidden,
     Theme,
     useMediaQuery,
     useTheme,
@@ -66,7 +65,7 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         card: {
             marginBottom: theme.spacing(3),
-            [theme.breakpoints.down('xl')]: {
+            [theme.breakpoints.down('md')]: {
                 boxShadow: 'none',
                 borderRadius: 0,
                 marginBottom: theme.spacing(2),
@@ -99,7 +98,7 @@ const useStyles = makeStyles((theme: Theme) =>
             padding: theme.spacing(3),
             margin: '0 auto',
             maxWidth: '816px',
-            [theme.breakpoints.down('xl')]: {
+            [theme.breakpoints.down('md')]: {
                 padding: 0,
                 boxShadow: 'none',
                 borderRadius: 0,
@@ -145,7 +144,9 @@ export const MultiselectList = (): JSX.Element => {
     const classes = useStyles();
     const dispatch = useDispatch();
     const theme = useTheme();
-    const isMobile = useMediaQuery(theme.breakpoints.down('xl'));
+    const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+    const md = useMediaQuery(theme.breakpoints.up('md'));
+    const smDown = useMediaQuery(theme.breakpoints.down('sm'));
     const [list, setList] = useState<ListItemType[]>(generatedList);
     const result = categorizeList(list);
     const [filteredResult, setFilteredResult] = useState(result);
@@ -410,7 +411,7 @@ export const MultiselectList = (): JSX.Element => {
         <div>
             <AppBar position={'sticky'} classes={{ root: classes.appbarRoot }}>
                 <Toolbar classes={{ gutters: classes.toolbarGutters }}>
-                    <Hidden mdUp={true}>
+                    {md ? null : (
                         <IconButton
                             data-cy="toolbar-menu"
                             color={'inherit'}
@@ -419,32 +420,25 @@ export const MultiselectList = (): JSX.Element => {
                             }}
                             edge={'start'}
                             style={{ marginRight: 20 }}
-                            size="large">
+                        >
                             <MenuIcon />
                         </IconButton>
-                    </Hidden>
+                    )}
                     <Typography variant={'h6'} data-cy={'blui-toolbar'} color={'inherit'}>
                         Multiselect List
                     </Typography>
                     <Spacer />
-                    <Hidden mdUp={true}>
-                        {selectedItems1.length !== 0 || selectedItems2.length !== 0 ? (
-                            <IconButton
-                                data-cy="delete-btn"
-                                color={'inherit'}
-                                onClick={onDelete}
-                                edge={'end'}
-                                size="large">
-                                <DeleteIcon />
-                            </IconButton>
-                        ) : (
-                            ''
-                        )}
-                    </Hidden>
+                    {md ? null : selectedItems1.length !== 0 || selectedItems2.length !== 0 ? (
+                        <IconButton data-cy="delete-btn" color={'inherit'} onClick={onDelete} edge={'end'}>
+                            <DeleteIcon />
+                        </IconButton>
+                    ) : (
+                        ''
+                    )}
                 </Toolbar>
             </AppBar>
             <div className={classes.exampleContainer}>
-                <Hidden xlDown={true}>
+                {smDown ? null : (
                     <div className={classes.deleteRow}>
                         <Button
                             data-testid="deleteButton"
@@ -459,8 +453,7 @@ export const MultiselectList = (): JSX.Element => {
                             DELETE
                         </Button>
                     </div>
-                </Hidden>
-
+                )}
                 {days.map((day, index) => (
                     <div key={`item-${index}`}>{getCardContent(day)}</div>
                 ))}

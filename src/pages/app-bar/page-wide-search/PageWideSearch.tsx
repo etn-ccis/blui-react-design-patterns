@@ -3,7 +3,6 @@ import {
     Badge,
     Card,
     Divider,
-    Hidden,
     IconButton,
     InputProps,
     TextField,
@@ -58,14 +57,14 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
     resultsCard: {
         margin: `0 ${theme.spacing(4)}`,
-        [theme.breakpoints.down('lg')]: {
+        [theme.breakpoints.down('sm')]: {
             margin: 0,
             borderRadius: 0,
         },
     },
     noResults: {
         margin: `0 ${theme.spacing(4)}`,
-        [theme.breakpoints.down('lg')]: {
+        [theme.breakpoints.down('sm')]: {
             marginTop: theme.spacing(4),
         },
     },
@@ -77,7 +76,8 @@ export const PageWideSearch = (): JSX.Element => {
     const dispatch = useDispatch();
     const theme = useTheme();
     const classes = useStyles(theme);
-    const isMobile = useMediaQuery(theme.breakpoints.down('lg'));
+    const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+    const md = useMediaQuery(theme.breakpoints.up('md'));
     const [searchTerm, setSearchTerm] = useState('');
     const [searchResults, setSearchResults] = useState(data);
 
@@ -111,7 +111,7 @@ export const PageWideSearch = (): JSX.Element => {
         <div style={{ minHeight: '100vh' }}>
             <AppBar classes={{ root: classes.appBar }} variant={'collapsed'} position={'sticky'}>
                 <Toolbar data-cy={'toolbar'} classes={{ gutters: classes.toolbarGutters }}>
-                    <Hidden mdUp={true}>
+                    {md ? null : (
                         <IconButton
                             data-cy="toolbar-menu"
                             onClick={(): void => {
@@ -120,24 +120,24 @@ export const PageWideSearch = (): JSX.Element => {
                             color={'inherit'}
                             edge={'start'}
                             style={{ marginRight: 20 }}
-                            size="large">
+                        >
                             <MenuIcon />
                         </IconButton>
-                    </Hidden>
+                    )}
                     <Typography variant={'h6'} color={'inherit'}>
                         {isMobile ? 'Page Search' : 'Page Wide Search'}
                     </Typography>
                     <Spacer />
                     <div className={classes.toolbarRightContent}>
-                        <IconButton color={'inherit'} size="large">
+                        <IconButton color={'inherit'}>
                             <HelpIcon />
                         </IconButton>
-                        <IconButton color={'inherit'} size="large">
+                        <IconButton color={'inherit'}>
                             <Badge color="error" badgeContent={88}>
                                 <NotificationsIcon />
                             </Badge>
                         </IconButton>
-                        <IconButton color={'inherit'} size="large">
+                        <IconButton color={'inherit'}>
                             <MoreVertIcon />
                         </IconButton>
                     </div>

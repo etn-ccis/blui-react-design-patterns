@@ -1,5 +1,5 @@
 import React from 'react';
-import { AppBar, Hidden, Toolbar, IconButton } from '@mui/material';
+import { AppBar, Toolbar, IconButton, useMediaQuery, useTheme } from '@mui/material';
 import { Theme } from '@mui/material/styles';
 import makeStyles from '@mui/styles/makeStyles';
 import MenuIcon from '@mui/icons-material/Menu';
@@ -10,7 +10,7 @@ import { TOGGLE_DRAWER } from '../../../redux/actions';
 const useStyles = makeStyles((theme: Theme) => ({
     toolbarGutters: {
         padding: 0,
-        [theme.breakpoints.down('xl')]: {
+        [theme.breakpoints.down('md')]: {
             padding: `0px ${theme.spacing(2)}`,
         },
     },
@@ -32,6 +32,9 @@ const useStyles = makeStyles((theme: Theme) => ({
 export const BluiDropdownToolbar = (): JSX.Element => {
     const dispatch = useDispatch();
     const classes = useStyles();
+    const theme = useTheme();
+    const md = useMediaQuery(theme.breakpoints.up('md'));
+
     // const [showMenu, setShowMenu] = useState<boolean>(false);
     // const [subtitle, setSubtitle] = useState<string>('Subtitle');
 
@@ -71,7 +74,7 @@ export const BluiDropdownToolbar = (): JSX.Element => {
         <div style={{ minHeight: '100vh' }}>
             <AppBar position={'sticky'}>
                 <Toolbar classes={{ gutters: classes.toolbarGutters }} data-cy={'toolbar'}>
-                    <Hidden mdUp={true}>
+                    {md ? null : (
                         <IconButton
                             data-cy="toolbar-menu"
                             color={'inherit'}
@@ -83,7 +86,7 @@ export const BluiDropdownToolbar = (): JSX.Element => {
                         >
                             <MenuIcon />
                         </IconButton>
-                    </Hidden>
+                    )}
                     {/* <Hidden lgDown={true}>
                         <ToolbarMenu title={'Title'} subtitle={subtitle} menuGroups={menuGroups}></ToolbarMenu>
                     </Hidden>

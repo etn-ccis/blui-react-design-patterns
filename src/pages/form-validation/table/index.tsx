@@ -2,7 +2,6 @@ import React from 'react';
 import {
     AppBar,
     Divider,
-    Hidden,
     IconButton,
     Paper,
     Table,
@@ -14,6 +13,7 @@ import {
     TextField,
     Toolbar,
     Typography,
+    useMediaQuery,
 } from '@mui/material';
 import { Menu } from '@mui/icons-material';
 import { Theme, useTheme } from '@mui/material/styles';
@@ -58,6 +58,9 @@ export const TableFormValidation = (): JSX.Element => {
     const theme = useTheme();
     const classes = useStyles(theme);
     const dispatch = useDispatch();
+    const md = useMediaQuery(theme.breakpoints.up('md'));
+    const xsDown = useMediaQuery(theme.breakpoints.down('xs'));
+    const smUp = useMediaQuery(theme.breakpoints.up('sm'));
 
     const getTable = (): JSX.Element => (
         <TableContainer component={Paper} className={classes.tableContainer}>
@@ -169,35 +172,34 @@ export const TableFormValidation = (): JSX.Element => {
         </>
     );
 
-    return <>
-        <AppBar data-cy={'blui-toolbar'} position={'sticky'} classes={{ root: classes.appbarRoot }}>
-            <Toolbar classes={{ gutters: classes.toolbarGutters }}>
-                <Hidden mdUp>
-                    <IconButton
-                        data-cy={'toolbar-menu'}
-                        color={'inherit'}
-                        onClick={(): void => {
-                            dispatch({ type: TOGGLE_DRAWER, payload: true });
-                        }}
-                        edge={'start'}
-                        style={{ marginRight: 20 }}
-                        size="large">
-                        <Menu />
-                    </IconButton>
-                </Hidden>
-                <Typography variant={'h6'} color={'inherit'}>
-                    In a Table
-                </Typography>
-            </Toolbar>
-        </AppBar>
-
-        <Hidden lgDown>{getTable()}</Hidden>
-        <Hidden smUp>
-            <div style={{ background: 'white' }}>{getList()}</div>
-        </Hidden>
-        <Typography style={{ padding: theme.spacing(2) }} variant={'body1'}>
-            Remember that in a real application you would need to implement form validations to check, for example,
-            &quot;Min&quot; is less than &quot;Max&quot;.
-        </Typography>
-    </>;
+    return (
+        <>
+            <AppBar data-cy={'blui-toolbar'} position={'sticky'} classes={{ root: classes.appbarRoot }}>
+                <Toolbar classes={{ gutters: classes.toolbarGutters }}>
+                    {md ? null : (
+                        <IconButton
+                            data-cy={'toolbar-menu'}
+                            color={'inherit'}
+                            onClick={(): void => {
+                                dispatch({ type: TOGGLE_DRAWER, payload: true });
+                            }}
+                            edge={'start'}
+                            style={{ marginRight: 20 }}
+                        >
+                            <Menu />
+                        </IconButton>
+                    )}
+                    <Typography variant={'h6'} color={'inherit'}>
+                        In a Table
+                    </Typography>
+                </Toolbar>
+            </AppBar>
+            {xsDown ? null : getTable()}
+            {smUp ? null : <div style={{ background: 'white' }}>{getList()}</div>}
+            <Typography style={{ padding: theme.spacing(2) }} variant={'body1'}>
+                Remember that in a real application you would need to implement form validations to check, for example,
+                &quot;Min&quot; is less than &quot;Max&quot;.
+            </Typography>
+        </>
+    );
 };

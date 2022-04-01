@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { AppBar, Button, Toolbar, Typography, Hidden, IconButton } from '@mui/material';
+import { AppBar, Button, Toolbar, Typography, IconButton, useMediaQuery } from '@mui/material';
 import { Theme, useTheme } from '@mui/material/styles';
 import makeStyles from '@mui/styles/makeStyles';
 import MenuIcon from '@mui/icons-material/Menu';
@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         flexDirection: 'column',
         alignItems: 'center',
         height: `calc(100vh - ${theme.spacing(8)})`,
-        [theme.breakpoints.down('xl')]: {
+        [theme.breakpoints.down('sm')]: {
             height: `calc(100vh - ${theme.spacing(7)})`,
         },
     },
@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
-        [theme.breakpoints.down('xl')]: {
+        [theme.breakpoints.down('sm')]: {
             height: `calc(100vh - ${theme.spacing(7)})`,
         },
     },
@@ -51,6 +51,7 @@ export const InADrawer = (): JSX.Element => {
     const theme = useTheme();
     const classes = useStyles();
     const [drawerOpen, setDrawerOpen] = useState(false);
+    const md = useMediaQuery(theme.breakpoints.up('md'));
 
     return (
         <div style={{ backgroundColor: theme.palette.background.paper, minHeight: '100vh' }}>
@@ -62,7 +63,7 @@ export const InADrawer = (): JSX.Element => {
                     }}
                 />
                 <Toolbar classes={{ gutters: classes.toolbarGutters }}>
-                    <Hidden mdUp={true}>
+                    {md ? null : (
                         <IconButton
                             data-cy="toolbar-menu"
                             color={'inherit'}
@@ -71,10 +72,10 @@ export const InADrawer = (): JSX.Element => {
                             }}
                             edge={'start'}
                             style={{ marginRight: 20 }}
-                            size="large">
+                        >
                             <MenuIcon />
                         </IconButton>
-                    </Hidden>
+                    )}
                     <Typography variant={'h6'} color={'inherit'}>
                         In a Drawer
                     </Typography>

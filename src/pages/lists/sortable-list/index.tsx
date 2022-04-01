@@ -2,7 +2,6 @@ import React, { useCallback, useState } from 'react';
 import { SortableContainer, SortableElement, SortableHandle } from 'react-sortable-hoc';
 import AppBar from '@mui/material/AppBar';
 import Button from '@mui/material/Button';
-import Hidden from '@mui/material/Hidden';
 import IconButton from '@mui/material/IconButton';
 import List from '@mui/material/List';
 import Toolbar from '@mui/material/Toolbar';
@@ -43,7 +42,7 @@ const useStyles = makeStyles((theme: Theme) =>
             maxWidth: 818,
             padding: theme.spacing(3),
             margin: '0 auto',
-            [theme.breakpoints.down('xl')]: {
+            [theme.breakpoints.down('md')]: {
                 maxWidth: '100%',
                 padding: 0,
                 margin: 0,
@@ -53,7 +52,7 @@ const useStyles = makeStyles((theme: Theme) =>
             marginTop: theme.spacing(3),
             boxShadow: theme.shadows[1],
             borderRadius: 4,
-            [theme.breakpoints.down('xl')]: {
+            [theme.breakpoints.down('md')]: {
                 marginTop: 0,
                 boxShadow: 'none',
                 borderRadius: 0,
@@ -69,7 +68,7 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         dragHandleIconButton: {
             backgroundColor: 'transparent',
-            [theme.breakpoints.down('xl')]: {
+            [theme.breakpoints.down('md')]: {
                 marginLeft: 4,
             },
         },
@@ -93,10 +92,7 @@ const SortableListItem = SortableElement(({ listItem, classes, ...other }: Sorta
         {...other}
         classes={{ root: classes.sortableInfoListItem, listItemText: classes.listItemText }}
         icon={
-            <IconButton
-                disableRipple
-                classes={{ root: classes.dragHandleIconButton }}
-                size="large">
+            <IconButton disableRipple classes={{ root: classes.dragHandleIconButton }}>
                 <DragHandle />
             </IconButton>
         }
@@ -129,10 +125,11 @@ export const SortableList = (): JSX.Element => {
     const dispatch = useDispatch();
     const theme = useTheme();
     const classes = useStyles(theme);
-    const isMobile = useMediaQuery(theme.breakpoints.down('xl'));
+    const isMobile = useMediaQuery(theme.breakpoints.down('md'));
     const [list, setList] = useState<string[]>(itemsList);
     const [sortable, setSortable] = useState<boolean>(false);
     const [isSorting, setIsSorting] = useState<boolean>(false);
+    const md = useMediaQuery(theme.breakpoints.up('md'));
 
     const arrayMove = useCallback((newList: string[], oldIndex: number, newIndex: number) => {
         const element = newList[oldIndex];
@@ -153,7 +150,7 @@ export const SortableList = (): JSX.Element => {
         <div className={classes.sortableList}>
             <AppBar data-cy="blui-toolbar" position={'sticky'} classes={{ root: classes.appbarRoot }}>
                 <Toolbar classes={{ gutters: classes.toolbarGutters }}>
-                    <Hidden mdUp={true}>
+                    {md ? null : (
                         <IconButton
                             data-cy="toolbar-menu"
                             color={'inherit'}
@@ -162,10 +159,10 @@ export const SortableList = (): JSX.Element => {
                             }}
                             edge={'start'}
                             style={{ marginRight: 20 }}
-                            size="large">
+                        >
                             <MenuIcon />
                         </IconButton>
-                    </Hidden>
+                    )}
                     <Typography variant={'h6'} color={'inherit'}>
                         Sortable List
                     </Typography>
@@ -175,7 +172,7 @@ export const SortableList = (): JSX.Element => {
                             data-cy="sort-done"
                             classes={{ root: classes.sortButtonMobile }}
                             onClick={(): void => setSortable(!sortable)}
-                            size="large">
+                        >
                             {sortable ? <CheckIcon /> : <SortIcon />}
                         </IconButton>
                     )}

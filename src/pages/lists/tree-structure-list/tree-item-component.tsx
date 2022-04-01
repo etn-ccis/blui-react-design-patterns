@@ -84,7 +84,7 @@ export const TreeItemComponent = (props: TreeItemProps): JSX.Element => {
     const { id, depth = 0, title, selected, selectedItemId, childItems = [], setSelectedItem = (): void => {} } = props;
     const theme = useTheme();
     const classes = useStyles(theme);
-    const isMobile = useMediaQuery(theme.breakpoints.down('xl'));
+    const isMobile = useMediaQuery(theme.breakpoints.down('md'));
     const [isExpanded, setIsExpanded] = useState(false);
 
     return (

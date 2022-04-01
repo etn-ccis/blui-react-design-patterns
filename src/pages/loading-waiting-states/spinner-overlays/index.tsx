@@ -10,7 +10,8 @@ import {
     CircularProgress,
     Divider,
     FormControlLabel,
-    Hidden,
+    useMediaQuery,
+    useTheme,
     IconButton,
     Toolbar,
     Typography,
@@ -28,7 +29,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         maxWidth: '450px',
         margin: '0 auto',
         height: `calc(100vh - ${theme.spacing(8)})`,
-        [theme.breakpoints.down('lg')]: {
+        [theme.breakpoints.down('sm')]: {
             height: `calc(100vh - ${theme.spacing(7)})`,
             padding: 0,
         },
@@ -58,7 +59,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         overflow: 'auto',
         display: 'flex',
         flexDirection: 'column',
-        [theme.breakpoints.down('lg')]: {
+        [theme.breakpoints.down('sm')]: {
             maxWidth: 'none',
             maxHeight: 'none',
             borderRadius: 0,
@@ -66,7 +67,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
     cardTitle: {
         padding: `${theme.spacing(4)} ${theme.spacing(3)} 0 ${theme.spacing(3)}`,
-        [theme.breakpoints.down('lg')]: {
+        [theme.breakpoints.down('sm')]: {
             padding: `${theme.spacing(2)} ${theme.spacing(2)} 0 ${theme.spacing(2)}`,
         },
     },
@@ -77,14 +78,14 @@ const useStyles = makeStyles((theme: Theme) => ({
         flexDirection: 'column',
         position: 'relative',
         padding: `${theme.spacing(2)} ${theme.spacing(3)}`,
-        [theme.breakpoints.down('lg')]: {
+        [theme.breakpoints.down('sm')]: {
             padding: `${theme.spacing(2)} ${theme.spacing(2)} ${theme.spacing(3)} ${theme.spacing(2)}`,
         },
     },
     cardActions: {
         padding: theme.spacing(3),
         justifyContent: 'flex-end',
-        [theme.breakpoints.down('lg')]: {
+        [theme.breakpoints.down('sm')]: {
             padding: theme.spacing(2),
         },
     },
@@ -108,6 +109,8 @@ export const SpinnerOverlays = (): JSX.Element => {
     const classes = useStyles();
     const [eulaAccepted, setEulaAccepted] = useState(false);
     const [eulaLoaded, setEulaLoaded] = useState(false);
+    const theme = useTheme();
+    const md = useMediaQuery(theme.breakpoints.up('md'));
 
     const changeCheckboxState = (event: React.ChangeEvent<HTMLInputElement>): void => {
         setEulaAccepted(event.target.checked);
@@ -134,7 +137,7 @@ export const SpinnerOverlays = (): JSX.Element => {
         <div style={{ minHeight: '100vh' }}>
             <AppBar data-cy="blui-toolbar" position={'sticky'}>
                 <Toolbar classes={{ gutters: classes.toolbarGutters }}>
-                    <Hidden mdUp={true}>
+                    {md ? null : (
                         <IconButton
                             data-cy="toolbar-menu"
                             color={'inherit'}
@@ -143,10 +146,10 @@ export const SpinnerOverlays = (): JSX.Element => {
                             }}
                             edge={'start'}
                             style={{ marginRight: 20 }}
-                            size="large">
+                        >
                             <MenuIcon />
                         </IconButton>
-                    </Hidden>
+                    )}
                     <Typography variant={'h6'} color={'inherit'}>
                         Spinner Overlays
                     </Typography>

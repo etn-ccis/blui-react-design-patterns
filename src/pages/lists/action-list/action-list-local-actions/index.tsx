@@ -3,7 +3,6 @@ import { AppBar, Slide } from '@mui/material';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import List from '@mui/material/List';
-import Hidden from '@mui/material/Hidden';
 import IconButton from '@mui/material/IconButton';
 import { Theme, useTheme } from '@mui/material/styles';
 import makeStyles from '@mui/styles/makeStyles';
@@ -42,7 +41,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         maxWidth: 768,
         margin: '0 auto',
         padding: `${theme.spacing(3)} ${theme.spacing(2)}`,
-        [theme.breakpoints.down('xl')]: {
+        [theme.breakpoints.down('md')]: {
             maxWidth: '100%',
             margin: `0 auto ${theme.spacing(3)} auto`,
             padding: 0,
@@ -64,7 +63,7 @@ const useStyles = makeStyles((theme: Theme) => ({
                 borderBottom: `1px solid ${theme.palette.divider}`,
             },
         },
-        [theme.breakpoints.down('xl')]: {
+        [theme.breakpoints.down('md')]: {
             maxWidth: '100%',
             boxShadow: 'none',
             borderRadius: 0,
@@ -99,7 +98,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         display: 'flex',
         flexDirection: 'column',
         height: 'calc(100vh - 64px)',
-        [theme.breakpoints.down('lg')]: {
+        [theme.breakpoints.down('sm')]: {
             height: 'calc(100vh - 56px)',
         },
     },
@@ -139,7 +138,8 @@ type Screens =
 export const ActionListLocalActions = (): JSX.Element => {
     const dispatch = useDispatch();
     const theme = useTheme();
-    const isMobile = useMediaQuery(theme.breakpoints.down('xl'));
+    const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+    const md = useMediaQuery(theme.breakpoints.up('md'));
     const classes = useStyles(theme);
 
     const [isEmailNotificationsEnabled, setIsEmailNotificationsEnabled] = useState(false);
@@ -183,20 +183,18 @@ export const ActionListLocalActions = (): JSX.Element => {
 
     const getToolbarIcon = useCallback((): ReactNode => {
         if (activeScreen === 'localItemActionScreen') {
-            return (
-                <Hidden mdUp={true}>
-                    <IconButton
-                        data-cy="toolbar-menu"
-                        color={'inherit'}
-                        onClick={(): void => {
-                            dispatch({ type: TOGGLE_DRAWER, payload: true });
-                        }}
-                        edge={'start'}
-                        style={{ marginRight: 20 }}
-                        size="large">
-                        <MenuIcon />
-                    </IconButton>
-                </Hidden>
+            return md ? null : (
+                <IconButton
+                    data-cy="toolbar-menu"
+                    color={'inherit'}
+                    onClick={(): void => {
+                        dispatch({ type: TOGGLE_DRAWER, payload: true });
+                    }}
+                    edge={'start'}
+                    style={{ marginRight: 20 }}
+                >
+                    <MenuIcon />
+                </IconButton>
             );
         }
         return (
@@ -206,7 +204,7 @@ export const ActionListLocalActions = (): JSX.Element => {
                 onClick={onBackNavigation}
                 edge={'start'}
                 style={{ marginRight: 20 }}
-                size="large">
+            >
                 <ArrowBack />
             </IconButton>
         );
@@ -308,7 +306,7 @@ export const ActionListLocalActions = (): JSX.Element => {
                                     hidePadding
                                     rightComponent={
                                         <>
-                                            <IconButton edge={'end'} onClick={openMenu} size="large">
+                                            <IconButton edge={'end'} onClick={openMenu}>
                                                 <MoreVert />
                                             </IconButton>
                                             <Menu
@@ -335,7 +333,7 @@ export const ActionListLocalActions = (): JSX.Element => {
                                     subtitleSeparator={' '}
                                     hidePadding
                                     rightComponent={
-                                        <IconButton edge={'end'} onClick={handleEditDeviceClick} size="large">
+                                        <IconButton edge={'end'} onClick={handleEditDeviceClick}>
                                             <Edit />
                                         </IconButton>
                                     }

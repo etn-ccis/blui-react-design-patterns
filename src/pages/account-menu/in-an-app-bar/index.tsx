@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from 'react';
-import { AppBar, Avatar, Badge, Hidden, Toolbar, IconButton, Typography } from '@mui/material';
+import { AppBar, Avatar, Badge, Toolbar, IconButton, Typography, useTheme, useMediaQuery } from '@mui/material';
 import { Theme } from '@mui/material/styles';
 import makeStyles from '@mui/styles/makeStyles';
 import MenuIcon from '@mui/icons-material/Menu';
@@ -56,7 +56,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     appBarHeader: {
         maxWidth: 600,
         margin: `${theme.spacing(5)} auto ${theme.spacing(3)}`,
-        [theme.breakpoints.down('xl')]: {
+        [theme.breakpoints.down('lg')]: {
             padding: `0 ${theme.spacing(2)}`,
         },
     },
@@ -82,6 +82,8 @@ export const InAnAppBar = (): JSX.Element => {
     const dispatch = useDispatch();
     const classes = useStyles();
     const [chipToggled, setChipToggled] = useState(false);
+    const theme = useTheme();
+    const md = useMediaQuery(theme.breakpoints.up('md'));
 
     const toggleChip = useCallback((): void => {
         setChipToggled((oldValue) => !oldValue);
@@ -91,7 +93,7 @@ export const InAnAppBar = (): JSX.Element => {
         <div style={{ minHeight: '100vh' }}>
             <AppBar data-cy="toolbar" position={'sticky'}>
                 <Toolbar classes={{ gutters: classes.toolbarGutters }}>
-                    <Hidden mdUp={true}>
+                    {md ? null : (
                         <IconButton
                             data-cy="toolbar-menu"
                             color={'inherit'}
@@ -100,10 +102,10 @@ export const InAnAppBar = (): JSX.Element => {
                             }}
                             edge={'start'}
                             style={{ marginRight: 20 }}
-                            size="large">
+                        >
                             <MenuIcon />
                         </IconButton>
-                    </Hidden>
+                    )}
                     <Typography variant={'h6'} color={'inherit'}>
                         In an App Bar
                     </Typography>
@@ -121,7 +123,7 @@ export const InAnAppBar = (): JSX.Element => {
                     {/* Generic Icon Avatar Example */}
                     <AppBar position="static" color="inherit" className={classes.appBar}>
                         <Toolbar classes={{ gutters: classes.toolbarGutters }}>
-                            <IconButton edge={'start'} size="large">
+                            <IconButton edge={'start'}>
                                 <MenuIcon />
                             </IconButton>
                             <div className={classes.textContainer}>
@@ -176,7 +178,7 @@ export const InAnAppBar = (): JSX.Element => {
                     {/* Basic Letter Avatar Example */}
                     <AppBar position="static" color="inherit" className={classes.appBar}>
                         <Toolbar classes={{ gutters: classes.toolbarGutters }}>
-                            <IconButton edge={'start'} size="large">
+                            <IconButton edge={'start'}>
                                 <MenuIcon />
                             </IconButton>
                             <div className={classes.textContainer}>
@@ -212,7 +214,7 @@ export const InAnAppBar = (): JSX.Element => {
                     {/* Image Avatar Example */}
                     <AppBar position="static" color="inherit" className={classes.appBar}>
                         <Toolbar classes={{ gutters: classes.toolbarGutters }}>
-                            <IconButton edge={'start'} size="large">
+                            <IconButton edge={'start'}>
                                 <MenuIcon />
                             </IconButton>
                             <div className={classes.textContainer}>
@@ -248,7 +250,7 @@ export const InAnAppBar = (): JSX.Element => {
                     {/* Status Avatar Example */}
                     <AppBar position="static" color="inherit" className={classes.appBar}>
                         <Toolbar classes={{ gutters: classes.toolbarGutters }}>
-                            <IconButton edge={'start'} size="large">
+                            <IconButton edge={'start'}>
                                 <MenuIcon />
                             </IconButton>
                             <div className={classes.textContainer}>
@@ -296,7 +298,7 @@ export const InAnAppBar = (): JSX.Element => {
                     {/* Text Menu Example */}
                     <AppBar position="static" color="inherit" className={classes.appBar}>
                         <Toolbar classes={{ gutters: classes.toolbarGutters }}>
-                            <IconButton color={'inherit'} edge={'start'} size="large">
+                            <IconButton color={'inherit'} edge={'start'}>
                                 <MenuIcon />
                             </IconButton>
                             <div className={classes.textContainer}>

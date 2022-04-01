@@ -6,7 +6,6 @@ import {
     CardContent,
     Toolbar,
     Typography,
-    Hidden,
     IconButton,
     Radio,
     RadioGroup,
@@ -27,11 +26,6 @@ import { useDispatch } from 'react-redux';
 import { TOGGLE_DRAWER } from '../../../redux/actions';
 import * as Colors from '@brightlayer-ui/colors';
 import { InfoListItem } from '@brightlayer-ui/react-components';
-
-declare module '@mui/styles/defaultTheme' {
-    // eslint-disable-next-line @typescript-eslint/no-empty-interface
-    interface DefaultTheme extends Theme {}
-}
 
 type FolderItem = {
     id: number;
@@ -99,7 +93,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         position: 'absolute',
         bottom: theme.spacing(3),
         right: theme.spacing(3),
-        [theme.breakpoints.down('md')]: {
+        [theme.breakpoints.down('sm')]: {
             bottom: 0,
             right: 0,
             width: '100%',
@@ -130,7 +124,8 @@ export const ProgressBar = (): JSX.Element => {
     const dispatch = useDispatch();
     const classes = useStyles();
     const theme = useTheme();
-    const isMobile = useMediaQuery(theme.breakpoints.down('lg'));
+    const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+    const md = useMediaQuery(theme.breakpoints.up('md'));
 
     const [fileUploadList, setFileUploadList] = useState<FolderItem[]>(uploadFileList);
 
@@ -190,7 +185,7 @@ export const ProgressBar = (): JSX.Element => {
         <div style={{ minHeight: '100vh' }}>
             <AppBar data-cy="blui-toolbar" position={'sticky'}>
                 <Toolbar classes={{ gutters: classes.toolbarGutters }}>
-                    <Hidden mdUp={true}>
+                    {md ? null : (
                         <IconButton
                             data-cy="toolbar-menu"
                             color={'inherit'}
@@ -199,11 +194,10 @@ export const ProgressBar = (): JSX.Element => {
                             }}
                             edge={'start'}
                             style={{ marginRight: 20 }}
-                            size="large"
                         >
                             <MenuIcon />
                         </IconButton>
-                    </Hidden>
+                    )}
                     <Typography variant={'h6'} color={'inherit'}>
                         Progress Bars
                     </Typography>

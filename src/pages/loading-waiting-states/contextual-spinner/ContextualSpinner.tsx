@@ -1,7 +1,7 @@
 import React, { useCallback, useState, useEffect } from 'react';
 import { useTheme, Theme } from '@mui/material/styles';
 import makeStyles from '@mui/styles/makeStyles';
-import { AppBar, Toolbar, Hidden, IconButton, Typography, Button, Fab, CircularProgress } from '@mui/material';
+import { AppBar, Toolbar, useMediaQuery, IconButton, Typography, Button, Fab, CircularProgress } from '@mui/material';
 import { TOGGLE_DRAWER } from '../../../redux/actions';
 import { useDispatch } from 'react-redux';
 import { Menu, PlayArrow } from '@mui/icons-material';
@@ -73,6 +73,7 @@ export const ContextualSpinner = (): JSX.Element => {
     const [isLoginLoading, setIsLoginLoading] = useState(false);
     const [isStartRoutineLoading, setIsStartRoutineLoading] = useState(false);
     const [shouldAnimate, setShouldAnimate] = useState(false);
+    const md = useMediaQuery(theme.breakpoints.up('md'));
     let loginTimeout: ReturnType<typeof setTimeout>;
     let startRoutineTimeout: ReturnType<typeof setTimeout>;
 
@@ -105,7 +106,7 @@ export const ContextualSpinner = (): JSX.Element => {
         <div>
             <AppBar data-cy="blui-toolbar" position={'sticky'} classes={{ root: classes.appbarRoot }}>
                 <Toolbar classes={{ gutters: classes.toolbarGutters }}>
-                    <Hidden mdUp={true}>
+                    {md ? null : (
                         <IconButton
                             data-cy="toolbar-menu"
                             color={'inherit'}
@@ -114,11 +115,10 @@ export const ContextualSpinner = (): JSX.Element => {
                             }}
                             edge={'start'}
                             style={{ marginRight: 20 }}
-                            size="large"
                         >
                             <Menu />
                         </IconButton>
-                    </Hidden>
+                    )}
                     <Typography variant={'h6'} color={'inherit'}>
                         Contextual Spinner
                     </Typography>

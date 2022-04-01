@@ -18,8 +18,8 @@ import Typography from '@mui/material/Typography';
 import Toolbar from '@mui/material/Toolbar';
 import AppBar from '@mui/material/AppBar';
 import Tooltip from '@mui/material/Tooltip';
-import Hidden from '@mui/material/Hidden';
 import Button from '@mui/material/Button';
+import { useMediaQuery } from '@mui/material';
 
 import Add from '@mui/icons-material/AddCircle';
 import Delete from '@mui/icons-material/Delete';
@@ -75,6 +75,7 @@ export const DynamicStepper = (): JSX.Element => {
     const [steps, setSteps] = useState([-1]); // -1 = 'waiting for user input', other = 'the user choice'
     const [activeStep, setActiveStep] = useState(0);
     const [finished, setFinished] = useState(false);
+    const md = useMediaQuery(theme.breakpoints.up('md'));
 
     const changeStepValue = useCallback(
         (index: number, choice: number): void => {
@@ -110,7 +111,7 @@ export const DynamicStepper = (): JSX.Element => {
         <div style={{ backgroundColor: theme.palette.background.paper, minHeight: '100vh' }}>
             <AppBar data-cy="blui-toolbar" position={'sticky'} classes={{ root: classes.appbarRoot }}>
                 <Toolbar classes={{ gutters: classes.toolbarGutters }}>
-                    <Hidden mdUp={true}>
+                    {md ? null : (
                         <IconButton
                             data-cy="toolbar-menu"
                             color={'inherit'}
@@ -119,10 +120,10 @@ export const DynamicStepper = (): JSX.Element => {
                             }}
                             edge={'start'}
                             style={{ marginRight: 20 }}
-                            size="large">
+                        >
                             <Menu />
                         </IconButton>
-                    </Hidden>
+                    )}
                     <Typography variant={'h6'} color={'inherit'}>
                         Dynamic Stepper
                     </Typography>
@@ -134,7 +135,7 @@ export const DynamicStepper = (): JSX.Element => {
                             edge={'end'}
                             onClick={(): void => setSteps([])}
                             id={'remove-all'}
-                            size="large">
+                        >
                             <DeleteSweep />
                         </IconButton>
                     </Tooltip>

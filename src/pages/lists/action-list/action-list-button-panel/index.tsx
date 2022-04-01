@@ -3,7 +3,6 @@ import IconButton from '@mui/material/IconButton';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import Hidden from '@mui/material/Hidden';
 import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
@@ -17,7 +16,7 @@ import { TOGGLE_DRAWER } from '../../../../redux/actions';
 import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
 // @TODO: MUI v5 - Update the warning icon to use WarningAmber instead of Warning
-import WarningIcon from '@mui/icons-material/Warning';
+import WarningAmberIcon from '@mui/icons-material/WarningAmber';
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
@@ -50,7 +49,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         maxWidth: 800,
         padding: theme.spacing(3),
         margin: '0 auto',
-        [theme.breakpoints.down('xl')]: {
+        [theme.breakpoints.down('md')]: {
             maxWidth: '100%',
             padding: 0,
             margin: 0,
@@ -64,7 +63,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
     card: {
         borderRadius: 4,
-        [theme.breakpoints.down('xl')]: {
+        [theme.breakpoints.down('md')]: {
             marginTop: 0,
             boxShadow: 'none',
             borderRadius: 0,
@@ -112,7 +111,8 @@ export const ActionListButtonPanel = (): JSX.Element => {
     const dispatch = useDispatch();
     const theme = useTheme();
     const classes = useStyles(theme);
-    const isMobile = useMediaQuery(theme.breakpoints.down('xl'));
+    const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+    const md = useMediaQuery(theme.breakpoints.up('md'));
 
     const [list, setList] = useState(itemList);
     const [open, setOpen] = React.useState(false);
@@ -145,7 +145,7 @@ export const ActionListButtonPanel = (): JSX.Element => {
         <div className={classes.container}>
             <AppBar data-cy={'blui-toolbar'} position={'sticky'} classes={{ root: classes.appbarRoot }}>
                 <Toolbar classes={{ gutters: classes.toolbarGutters }}>
-                    <Hidden mdUp={true}>
+                    {md ? null : (
                         <IconButton
                             data-cy="toolbar-menu"
                             color={'inherit'}
@@ -154,10 +154,10 @@ export const ActionListButtonPanel = (): JSX.Element => {
                             }}
                             edge={'start'}
                             style={{ marginRight: 20 }}
-                            size="large">
+                        >
                             <MenuIcon />
                         </IconButton>
-                    </Hidden>
+                    )}
                     <div className={classes.toolbarTextContainer}>
                         <Typography variant={'h6'} color={'inherit'}>
                             Global Action List
@@ -176,7 +176,7 @@ export const ActionListButtonPanel = (): JSX.Element => {
                                     color={'inherit'}
                                     aria-label={'Delete'}
                                     onClick={onRemoveAll}
-                                    size="large">
+                                >
                                     <DeleteIcon />
                                 </IconButton>
                             )}
@@ -187,7 +187,7 @@ export const ActionListButtonPanel = (): JSX.Element => {
                                 aria-label={'add'}
                                 edge={'end'}
                                 onClick={onAddItem}
-                                size="large">
+                            >
                                 <AddIcon />
                             </IconButton>
                         </div>
@@ -252,7 +252,7 @@ export const ActionListButtonPanel = (): JSX.Element => {
                 <div className={classes.emptyStateContainer}>
                     <EmptyState
                         style={{ maxWidth: 365 }}
-                        icon={<WarningIcon style={{ fontSize: 'inherit' }} />}
+                        icon={<WarningAmberIcon style={{ fontSize: 'inherit' }} />}
                         title={'No Items Found'}
                         description={'No items added to a list. You can add an item and create a list of items.'}
                         actions={

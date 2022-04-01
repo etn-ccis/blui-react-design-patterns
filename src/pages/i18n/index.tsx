@@ -5,7 +5,6 @@ import {
     AppBar,
     Button,
     Checkbox,
-    Hidden,
     IconButton,
     List,
     MenuItem,
@@ -15,6 +14,7 @@ import {
     Toolbar,
     Tooltip,
     Typography,
+    useMediaQuery,
 } from '@mui/material';
 import { Theme, useTheme } from '@mui/material/styles';
 import makeStyles from '@mui/styles/makeStyles';
@@ -86,6 +86,7 @@ export const I18N = (): JSX.Element => {
     const isRTL = (): boolean => lang === 'ar';
     const getDirection = (): 'rtl' | 'ltr' => (isRTL() ? 'rtl' : 'ltr');
     const dispatch = useDispatch();
+    const md = useMediaQuery(theme.breakpoints.up('md'));
 
     const changeLanguage = useCallback(
         (lng) => {
@@ -125,7 +126,7 @@ export const I18N = (): JSX.Element => {
                     translator={t}
                 />
                 <Toolbar classes={{ gutters: classes.toolbarGutters }}>
-                    <Hidden mdUp>
+                    {md ? null : (
                         <IconButton
                             data-cy={'toolbar-menu'}
                             color={'inherit'}
@@ -134,10 +135,10 @@ export const I18N = (): JSX.Element => {
                             }}
                             edge={isRTL() ? 'end' : 'start'}
                             style={{ marginRight: isRTL() ? '' : 20, marginLeft: isRTL() ? 20 : '' }}
-                            size="large">
+                        >
                             <MenuIcon />
                         </IconButton>
-                    </Hidden>
+                    )}
                     <Typography data-cy={'toolbar-title'} variant={'h6'} color={'inherit'}>
                         {t('I18N')}
                     </Typography>
@@ -149,7 +150,7 @@ export const I18N = (): JSX.Element => {
                             onClick={(): void => setDrawerOpen(!drawerOpen)}
                             edge={isRTL() ? 'start' : 'end'}
                             className={clsx(isRTL() && classes.RTL)}
-                            size="large">
+                        >
                             <MenuOpenIcon />
                         </IconButton>
                     </Tooltip>
@@ -217,7 +218,7 @@ export const I18N = (): JSX.Element => {
                                     color={'inherit'}
                                     id={'deselect-all-button'}
                                     data-cy={'snackbar-deselect-all'}
-                                    size="large">
+                                >
                                     <CancelIcon />
                                 </IconButton>
                             </Tooltip>

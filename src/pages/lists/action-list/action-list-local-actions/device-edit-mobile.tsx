@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme: Theme) =>
             flexDirection: 'column',
             backgroundColor: colors.white[50],
             height: 'calc(100vh - 64px)',
-            [theme.breakpoints.down('lg')]: {
+            [theme.breakpoints.down('sm')]: {
                 height: 'calc(100vh - 56px)',
             },
         },

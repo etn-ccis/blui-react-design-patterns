@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Divider from '@mui/material/Divider';
 import Drawer from '@mui/material/Drawer';
-import Hidden from '@mui/material/Hidden';
 import IconButton from '@mui/material/IconButton';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
@@ -160,7 +159,8 @@ export const ComplexBottomSheet = (): JSX.Element => {
     const [showActiveAlarms, setShowActiveAlarms] = useState(true);
     const [showSettings, setShowSettings] = useState(true);
     const [showSessions, setShowSessions] = useState(true);
-    const isMobile = useMediaQuery(theme.breakpoints.down('xl'));
+    const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+    const md = useMediaQuery(theme.breakpoints.up('md'));
 
     useEffect(() => {
         setList(
@@ -177,7 +177,7 @@ export const ComplexBottomSheet = (): JSX.Element => {
         <div style={{ backgroundColor: theme.palette.background.paper, minHeight: '100vh' }}>
             <AppBar data-cy="blui-toolbar" position={'sticky'} classes={{ root: classes.appbarRoot }}>
                 <Toolbar classes={{ gutters: classes.toolbarGutters }}>
-                    <Hidden mdUp>
+                    {md ? null : (
                         <IconButton
                             data-cy="toolbar-menu"
                             color={'inherit'}
@@ -186,10 +186,10 @@ export const ComplexBottomSheet = (): JSX.Element => {
                             }}
                             edge={'start'}
                             style={{ marginRight: 20 }}
-                            size="large">
+                        >
                             <Menu />
                         </IconButton>
-                    </Hidden>
+                    )}
                     <Typography variant={'h6'} color={'inherit'} noWrap>
                         Complex Bottom Sheet
                     </Typography>
@@ -199,7 +199,7 @@ export const ComplexBottomSheet = (): JSX.Element => {
                         color={'inherit'}
                         onClick={(): void => setShowMenu(true)}
                         edge={'end'}
-                        size="large">
+                    >
                         <MoreVert />
                     </IconButton>
                 </Toolbar>

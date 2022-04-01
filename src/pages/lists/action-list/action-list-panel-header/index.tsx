@@ -4,7 +4,6 @@ import MenuItem from '@mui/material/MenuItem';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import Hidden from '@mui/material/Hidden';
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import FormControl from '@mui/material/FormControl';
@@ -46,7 +45,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         maxWidth: 818,
         padding: theme.spacing(3),
         margin: '0 auto',
-        [theme.breakpoints.down('xl')]: {
+        [theme.breakpoints.down('md')]: {
             maxWidth: '100%',
             padding: 0,
             margin: 0,
@@ -54,7 +53,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
     card: {
         borderRadius: 4,
-        [theme.breakpoints.down('xl')]: {
+        [theme.breakpoints.down('md')]: {
             marginTop: 0,
             boxShadow: 'none',
             borderRadius: 0,
@@ -138,7 +137,8 @@ export const ActionListPanelHeader = (): JSX.Element => {
     const dispatch = useDispatch();
     const theme = useTheme();
     const classes = useStyles(theme);
-    const isMobile = useMediaQuery(theme.breakpoints.down('xl'));
+    const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+    const md = useMediaQuery(theme.breakpoints.up('md'));
 
     const [range, setRange] = useState<string>(String(ranges[0]));
     const [list, setList] = useState(itemList);
@@ -192,7 +192,7 @@ export const ActionListPanelHeader = (): JSX.Element => {
         <div className={classes.actionList}>
             <AppBar data-cy={'blui-toolbar'} position={'sticky'} classes={{ root: classes.appbarRoot }}>
                 <Toolbar classes={{ gutters: classes.toolbarGutters }}>
-                    <Hidden mdUp={true}>
+                    {md ? null : (
                         <IconButton
                             data-cy="toolbar-menu"
                             color={'inherit'}
@@ -205,7 +205,7 @@ export const ActionListPanelHeader = (): JSX.Element => {
                         >
                             <MenuIcon />
                         </IconButton>
-                    </Hidden>
+                    )}
                     <div className={classes.toolbarTextContainer}>
                         <Typography variant={'h6'} color={'inherit'}>
                             Global Action List

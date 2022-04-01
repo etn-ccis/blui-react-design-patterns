@@ -7,7 +7,6 @@ import {
     FormControl,
     FormControlLabel,
     FormHelperText,
-    Hidden,
     IconButton,
     InputLabel,
     InputProps,
@@ -17,6 +16,7 @@ import {
     Toolbar,
     Tooltip,
     Typography,
+    useMediaQuery,
 } from '@mui/material';
 import { ContactMail, HelpOutline, LocationOn, Menu } from '@mui/icons-material';
 import { Theme, useTheme } from '@mui/material/styles';
@@ -41,7 +41,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         alignItems: 'start',
         flex: '1 1 0',
         minHeight: 'calc(100vh - 64px)',
-        [theme.breakpoints.down('lg')]: {
+        [theme.breakpoints.down('sm')]: {
             minHeight: 'calc(100vh - 56px)',
         },
     },
@@ -50,7 +50,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         width: '100%',
         paddingTop: theme.spacing(5),
         paddingBottom: theme.spacing(5),
-        [theme.breakpoints.down('lg')]: {
+        [theme.breakpoints.down('sm')]: {
             maxWidth: '100%',
             padding: theme.spacing(2),
         },
@@ -70,7 +70,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     icon: {
         marginRight: theme.spacing(2),
         color: theme.palette.text.secondary,
-        [theme.breakpoints.down('lg')]: {
+        [theme.breakpoints.down('sm')]: {
             marginRight: theme.spacing(4),
         },
     },
@@ -78,7 +78,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         marginTop: theme.spacing(4),
         display: 'flex',
         alignItems: 'center',
-        [theme.breakpoints.down('lg')]: {
+        [theme.breakpoints.down('sm')]: {
             flexDirection: 'column',
             justifyContent: 'center',
             width: '100%',
@@ -88,7 +88,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     selectLevelForm: {
         marginRight: theme.spacing(3),
         width: 200,
-        [theme.breakpoints.down('lg')]: {
+        [theme.breakpoints.down('sm')]: {
             width: '100%',
             marginRight: 0,
         },
@@ -96,7 +96,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     firstNameFormField: {
         width: '50%',
         marginRight: theme.spacing(1),
-        [theme.breakpoints.down('lg')]: {
+        [theme.breakpoints.down('sm')]: {
             marginRight: 0,
             width: '100%',
         },
@@ -104,7 +104,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     lastNameFormField: {
         width: '50%',
         marginLeft: theme.spacing(1),
-        [theme.breakpoints.down('lg')]: {
+        [theme.breakpoints.down('sm')]: {
             width: '100%',
             marginLeft: 0,
             marginTop: theme.spacing(mobileInputMarginSpacing),
@@ -114,19 +114,19 @@ const useStyles = makeStyles((theme: Theme) => ({
         marginTop: theme.spacing(5),
         display: 'flex',
         justifyContent: 'flex-end',
-        [theme.breakpoints.down('lg')]: {
+        [theme.breakpoints.down('sm')]: {
             width: '100%',
         },
     },
     submitButton: {
-        [theme.breakpoints.down('lg')]: {
+        [theme.breakpoints.down('sm')]: {
             width: '100%',
         },
     },
     zipInput: {
         marginRight: theme.spacing(2),
         marginLeft: theme.spacing(2),
-        [theme.breakpoints.down('lg')]: {
+        [theme.breakpoints.down('sm')]: {
             margin: `${theme.spacing(mobileInputMarginSpacing)} 0 ${theme.spacing(mobileInputMarginSpacing)} 0`,
         },
     },
@@ -152,6 +152,9 @@ export const SectionedFormValidation = (): JSX.Element => {
     const [zip, setZip] = useState('');
     const [emailError, setEmailError] = useState('');
     const [showRequiredError, setShowRequiredError] = useState(false);
+    const md = useMediaQuery(theme.breakpoints.up('md'));
+    const xsDown = useMediaQuery(theme.breakpoints.down('xs'));
+    const smUp = useMediaQuery(theme.breakpoints.up('sm'));
 
     const nameRef = useRef<HTMLInputElement>(null);
     const addressRef = useRef<HTMLInputElement>(null);
@@ -246,270 +249,274 @@ export const SectionedFormValidation = (): JSX.Element => {
         }
     };
 
-    return <>
-        <AppBar data-cy={'blui-toolbar'} position={'sticky'} classes={{ root: classes.appbarRoot }}>
-            <Toolbar classes={{ gutters: classes.toolbarGutters }}>
-                <Hidden mdUp>
-                    <IconButton
-                        data-cy={'toolbar-menu'}
-                        color={'inherit'}
-                        onClick={(): void => {
-                            dispatch({ type: TOGGLE_DRAWER, payload: true });
-                        }}
-                        edge={'start'}
-                        style={{ marginRight: 20 }}
-                        size="large">
-                        <Menu />
-                    </IconButton>
-                </Hidden>
-                <Typography variant={'h6'} color={'inherit'}>
-                    Sectioned Form
-                </Typography>
-            </Toolbar>
-        </AppBar>
-
-        <div className={classes.containerWrapper}>
-            <div className={classes.container}>
-                <div style={{ display: 'flex', alignItems: 'center', marginBottom: theme.spacing(3) }}>
-                    <Factory className={classes.icon} />
-                    <Typography variant={'h6'}>Factory</Typography>
-                </div>
-                <div>
-                    <TextField
-                        required
-                        className={classes.textField}
-                        value={name}
-                        label={'Name'}
-                        variant={'filled'}
-                        onChange={(e): void => setName(e.target.value)}
-                        inputProps={{ maxLength: MAX_CHARS_LIMIT }}
-                        helperText={characterLimitsHelperText}
-                        error={showRequiredError && !name}
-                        inputRef={nameRef}
-                        InputLabelProps={{ required: false }}
-                        id={'name-field'}
-                    />
-                </div>
-
-                <div className={classes.formLine}>
-                    <FormControl className={classes.selectLevelForm} variant={'filled'}>
-                        <InputLabel htmlFor={'select-level'}>Level</InputLabel>
-                        <Select
-                            fullWidth
-                            labelId={'select-level'}
-                            value={level}
-                            onChange={(e): void => setLevel(String(e.target.value))}
-                            inputProps={{
-                                name: 'level',
-                                id: 'select-level',
+    return (
+        <>
+            <AppBar data-cy={'blui-toolbar'} position={'sticky'} classes={{ root: classes.appbarRoot }}>
+                <Toolbar classes={{ gutters: classes.toolbarGutters }}>
+                    {md ? null : (
+                        <IconButton
+                            data-cy={'toolbar-menu'}
+                            color={'inherit'}
+                            onClick={(): void => {
+                                dispatch({ type: TOGGLE_DRAWER, payload: true });
                             }}
+                            edge={'start'}
+                            style={{ marginRight: 20 }}
                         >
-                            <MenuItem value={'level I'}>Level I (Regional)</MenuItem>
-                            <MenuItem value={'level II'}>Level II (Regional)</MenuItem>
-                            <MenuItem value={'level III'}>Level III (Regional)</MenuItem>
-                        </Select>
-                    </FormControl>
-                    <Hidden lgDown>
-                        <FormControlLabel control={<Checkbox name={'checkedC'} />} label={bluiProtection} />
-                        <Tooltip arrow title={bluiProtectionDescription} placement={'top'}>
-                            <HelpOutline style={{ color: theme.palette.text.disabled }} />
-                        </Tooltip>
-                    </Hidden>
-                    <Hidden smUp>
-                        <div
-                            style={{
-                                display: 'flex',
-                                width: '100%',
-                                marginTop: theme.spacing(5),
-                                alignItems: 'end',
-                            }}
-                        >
-                            <FormControlLabel
-                                control={<Checkbox name={'checkedC'} />}
-                                label={''}
-                                style={{ marginTop: -6 }}
-                            />
-                            <div>
-                                <Typography variant={'body1'}>Brightlayer Protection</Typography>
-                                <Typography variant={'body2'} style={{ color: theme.palette.text.secondary }}>
-                                    Brightlayer Protection provides a three-year power xpert warranty.
-                                </Typography>
-                            </div>
-                        </div>
-                    </Hidden>
-                </div>
-
-                <Divider className={classes.divider} />
-
-                <div style={{ display: 'flex', alignItems: 'center', marginBottom: theme.spacing(3) }}>
-                    <LocationOn className={classes.icon} />
-                    <Typography variant={'h6'}>Address</Typography>
-                </div>
-
-                <div>
-                    <Typography variant={'body1'}>
-                        Note that different country write addresses in different ways. The following fields are for
-                        a United States address.
+                            <Menu />
+                        </IconButton>
+                    )}
+                    <Typography variant={'h6'} color={'inherit'}>
+                        Sectioned Form
                     </Typography>
-                </div>
+                </Toolbar>
+            </AppBar>
 
-                <div className={classes.formLine}>
-                    <TextField
-                        required
-                        inputRef={addressRef}
-                        className={classes.textField}
-                        value={address}
-                        label={'Address'}
-                        variant={'filled'}
-                        onChange={(e): void => setAddress(e.target.value)}
-                        error={showRequiredError && !address}
-                        helperText={getRequiredHelperText(address)}
-                        InputLabelProps={{ required: false }}
-                        id={'address-field'}
-                    />
-                </div>
-                <div className={classes.formLine}>
-                    <TextField
-                        className={classes.textField}
-                        value={addressLine2}
-                        label={'Address Line 2 (Optional)'}
-                        variant={'filled'}
-                        onChange={(e): void => setAddressLine2(e.target.value)}
-                    />
-                </div>
-                <div className={classes.formLine}>
-                    <TextField
-                        required
-                        inputRef={cityRef}
-                        className={classes.textField}
-                        value={city}
-                        label={'City'}
-                        variant={'filled'}
-                        error={showRequiredError && !city}
-                        helperText={getRequiredHelperText(city)}
-                        InputLabelProps={{ required: false }}
-                        onChange={(e): void => setCity(e.target.value)}
-                        id={'city-field'}
-                    />
-                </div>
-                <div className={classes.formLine}>
-                    <FormControl
-                        variant={'filled'}
-                        required
-                        fullWidth
-                        className={classes.textField}
-                        id={'state-field'}
-                        error={showRequiredError && !state}
-                    >
-                        <InputLabel id={'select-state'} required={false}>
-                            State
-                        </InputLabel>
-                        <Select
-                            inputRef={stateRef}
-                            labelId={'select-state'}
-                            value={state}
-                            onChange={(e): void => setState(String(e.target.value))}
+            <div className={classes.containerWrapper}>
+                <div className={classes.container}>
+                    <div style={{ display: 'flex', alignItems: 'center', marginBottom: theme.spacing(3) }}>
+                        <Factory className={classes.icon} />
+                        <Typography variant={'h6'}>Factory</Typography>
+                    </div>
+                    <div>
+                        <TextField
+                            required
+                            className={classes.textField}
+                            value={name}
+                            label={'Name'}
+                            variant={'filled'}
+                            onChange={(e): void => setName(e.target.value)}
+                            inputProps={{ maxLength: MAX_CHARS_LIMIT }}
+                            helperText={characterLimitsHelperText}
+                            error={showRequiredError && !name}
+                            inputRef={nameRef}
+                            InputLabelProps={{ required: false }}
+                            id={'name-field'}
+                        />
+                    </div>
+
+                    <div className={classes.formLine}>
+                        <FormControl className={classes.selectLevelForm} variant={'filled'}>
+                            <InputLabel htmlFor={'select-level'}>Level</InputLabel>
+                            <Select
+                                fullWidth
+                                labelId={'select-level'}
+                                value={level}
+                                onChange={(e): void => setLevel(String(e.target.value))}
+                                inputProps={{
+                                    name: 'level',
+                                    id: 'select-level',
+                                }}
+                            >
+                                <MenuItem value={'level I'}>Level I (Regional)</MenuItem>
+                                <MenuItem value={'level II'}>Level II (Regional)</MenuItem>
+                                <MenuItem value={'level III'}>Level III (Regional)</MenuItem>
+                            </Select>
+                        </FormControl>
+                        {xsDown ? null : (
+                            <>
+                                <FormControlLabel control={<Checkbox name={'checkedC'} />} label={bluiProtection} />
+                                <Tooltip arrow title={bluiProtectionDescription} placement={'top'}>
+                                    <HelpOutline style={{ color: theme.palette.text.disabled }} />
+                                </Tooltip>
+                            </>
+                        )}
+                        {smUp ? null : (
+                            <div
+                                style={{
+                                    display: 'flex',
+                                    width: '100%',
+                                    marginTop: theme.spacing(5),
+                                    alignItems: 'end',
+                                }}
+                            >
+                                <FormControlLabel
+                                    control={<Checkbox name={'checkedC'} />}
+                                    label={''}
+                                    style={{ marginTop: -6 }}
+                                />
+                                <div>
+                                    <Typography variant={'body1'}>Brightlayer Protection</Typography>
+                                    <Typography variant={'body2'} style={{ color: theme.palette.text.secondary }}>
+                                        Brightlayer Protection provides a three-year power xpert warranty.
+                                    </Typography>
+                                </div>
+                            </div>
+                        )}
+                    </div>
+
+                    <Divider className={classes.divider} />
+
+                    <div style={{ display: 'flex', alignItems: 'center', marginBottom: theme.spacing(3) }}>
+                        <LocationOn className={classes.icon} />
+                        <Typography variant={'h6'}>Address</Typography>
+                    </div>
+
+                    <div>
+                        <Typography variant={'body1'}>
+                            Note that different country write addresses in different ways. The following fields are for
+                            a United States address.
+                        </Typography>
+                    </div>
+
+                    <div className={classes.formLine}>
+                        <TextField
+                            required
+                            inputRef={addressRef}
+                            className={classes.textField}
+                            value={address}
+                            label={'Address'}
+                            variant={'filled'}
+                            onChange={(e): void => setAddress(e.target.value)}
+                            error={showRequiredError && !address}
+                            helperText={getRequiredHelperText(address)}
+                            InputLabelProps={{ required: false }}
+                            id={'address-field'}
+                        />
+                    </div>
+                    <div className={classes.formLine}>
+                        <TextField
+                            className={classes.textField}
+                            value={addressLine2}
+                            label={'Address Line 2 (Optional)'}
+                            variant={'filled'}
+                            onChange={(e): void => setAddressLine2(e.target.value)}
+                        />
+                    </div>
+                    <div className={classes.formLine}>
+                        <TextField
+                            required
+                            inputRef={cityRef}
+                            className={classes.textField}
+                            value={city}
+                            label={'City'}
+                            variant={'filled'}
+                            error={showRequiredError && !city}
+                            helperText={getRequiredHelperText(city)}
+                            InputLabelProps={{ required: false }}
+                            onChange={(e): void => setCity(e.target.value)}
+                            id={'city-field'}
+                        />
+                    </div>
+                    <div className={classes.formLine}>
+                        <FormControl
+                            variant={'filled'}
+                            required
+                            fullWidth
+                            className={classes.textField}
+                            id={'state-field'}
+                            error={showRequiredError && !state}
                         >
-                            <MenuItem value={'CA'}>CA</MenuItem>
-                            <MenuItem value={'MI'}>MI</MenuItem>
-                            <MenuItem value={'GA'}>GA</MenuItem>
-                        </Select>
-                        {showRequiredError && !state && <FormHelperText error={true}>Required</FormHelperText>}
-                    </FormControl>
+                            <InputLabel id={'select-state'} required={false}>
+                                State
+                            </InputLabel>
+                            <Select
+                                inputRef={stateRef}
+                                labelId={'select-state'}
+                                value={state}
+                                onChange={(e): void => setState(String(e.target.value))}
+                            >
+                                <MenuItem value={'CA'}>CA</MenuItem>
+                                <MenuItem value={'MI'}>MI</MenuItem>
+                                <MenuItem value={'GA'}>GA</MenuItem>
+                            </Select>
+                            {showRequiredError && !state && <FormHelperText error={true}>Required</FormHelperText>}
+                        </FormControl>
 
-                    <TextField
-                        required
-                        inputRef={zipRef}
-                        className={clsx(classes.zipInput, classes.textField)}
-                        value={zip}
-                        label={'Zip'}
-                        variant={'filled'}
-                        onChange={(e): void => {
-                            if (!isNaN(Number(e.target.value))) {
-                                setZip(e.target.value);
-                            }
-                        }}
-                        InputLabelProps={{ required: false }}
-                        error={showRequiredError && !zip}
-                        helperText={getRequiredHelperText(zip)}
-                        id={'zip-field'}
-                    />
+                        <TextField
+                            required
+                            inputRef={zipRef}
+                            className={clsx(classes.zipInput, classes.textField)}
+                            value={zip}
+                            label={'Zip'}
+                            variant={'filled'}
+                            onChange={(e): void => {
+                                if (!isNaN(Number(e.target.value))) {
+                                    setZip(e.target.value);
+                                }
+                            }}
+                            InputLabelProps={{ required: false }}
+                            error={showRequiredError && !zip}
+                            helperText={getRequiredHelperText(zip)}
+                            id={'zip-field'}
+                        />
 
-                    <TextField
-                        disabled
-                        style={{ minWidth: 170 }}
-                        className={classes.textField}
-                        value={'United States'}
-                        label={'Country'}
-                        variant={'filled'}
-                    />
-                </div>
+                        <TextField
+                            disabled
+                            style={{ minWidth: 170 }}
+                            className={classes.textField}
+                            value={'United States'}
+                            label={'Country'}
+                            variant={'filled'}
+                        />
+                    </div>
 
-                <Divider className={classes.divider} />
+                    <Divider className={classes.divider} />
 
-                <div style={{ display: 'flex', alignItems: 'center', marginBottom: theme.spacing(3) }}>
-                    <ContactMail className={classes.icon} />
-                    <Typography variant={'h6'}>Key Contact</Typography>
-                </div>
+                    <div style={{ display: 'flex', alignItems: 'center', marginBottom: theme.spacing(3) }}>
+                        <ContactMail className={classes.icon} />
+                        <Typography variant={'h6'}>Key Contact</Typography>
+                    </div>
 
-                <div className={classes.formLine}>
-                    <TextField
-                        inputRef={firstNameRef}
-                        className={clsx(classes.firstNameFormField, classes.textField)}
-                        value={firstName}
-                        label={'First Name'}
-                        variant={'filled'}
-                        onChange={(e): void => setFirstName(e.target.value)}
-                        error={showRequiredError && !firstName}
-                        helperText={getRequiredHelperText(firstName)}
-                        InputLabelProps={{ required: false }}
-                        id={'first-name-field'}
-                    />
-                    <TextField
-                        className={clsx(classes.lastNameFormField, classes.textField)}
-                        value={lastName}
-                        label={'Last Name (Optional)'}
-                        variant={'filled'}
-                        onChange={(e): void => setLastName(e.target.value)}
-                    />
-                </div>
+                    <div className={classes.formLine}>
+                        <TextField
+                            inputRef={firstNameRef}
+                            className={clsx(classes.firstNameFormField, classes.textField)}
+                            value={firstName}
+                            label={'First Name'}
+                            variant={'filled'}
+                            onChange={(e): void => setFirstName(e.target.value)}
+                            error={showRequiredError && !firstName}
+                            helperText={getRequiredHelperText(firstName)}
+                            InputLabelProps={{ required: false }}
+                            id={'first-name-field'}
+                        />
+                        <TextField
+                            className={clsx(classes.lastNameFormField, classes.textField)}
+                            value={lastName}
+                            label={'Last Name (Optional)'}
+                            variant={'filled'}
+                            onChange={(e): void => setLastName(e.target.value)}
+                        />
+                    </div>
 
-                <div className={classes.formLine}>
-                    <TextField
-                        required
-                        inputRef={emailRef}
-                        className={classes.textField}
-                        value={email}
-                        label={'Email'}
-                        variant={'filled'}
-                        InputLabelProps={{ required: false }}
-                        error={(showRequiredError && Boolean(emailError)) || (showRequiredError && !email)}
-                        helperText={getEmailHelperText(email)}
-                        onChange={onEmailChange}
-                        onBlur={onEmailBlur}
-                        id={'email-field'}
-                    />
-                </div>
+                    <div className={classes.formLine}>
+                        <TextField
+                            required
+                            inputRef={emailRef}
+                            className={classes.textField}
+                            value={email}
+                            label={'Email'}
+                            variant={'filled'}
+                            InputLabelProps={{ required: false }}
+                            error={(showRequiredError && Boolean(emailError)) || (showRequiredError && !email)}
+                            helperText={getEmailHelperText(email)}
+                            onChange={onEmailChange}
+                            onBlur={onEmailBlur}
+                            id={'email-field'}
+                        />
+                    </div>
 
-                <Hidden smUp>
-                    <Divider
-                        className={classes.divider}
-                        style={{ marginBottom: -theme.spacing(3), marginTop: theme.spacing(4) }}
-                    />
-                </Hidden>
+                    {smUp ? null : (
+                        <Divider
+                            className={classes.divider}
+                            style={{ marginBottom: -theme.spacing(3), marginTop: theme.spacing(4) }}
+                        />
+                    )}
 
-                <div className={classes.submitButtonContainer}>
-                    <Button
-                        className={classes.submitButton}
-                        color={'primary'}
-                        variant={'contained'}
-                        onClick={onSubmit}
-                        id={'submit-button'}
-                    >
-                        Submit
-                    </Button>
+                    <div className={classes.submitButtonContainer}>
+                        <Button
+                            className={classes.submitButton}
+                            color={'primary'}
+                            variant={'contained'}
+                            onClick={onSubmit}
+                            id={'submit-button'}
+                        >
+                            Submit
+                        </Button>
+                    </div>
                 </div>
             </div>
-        </div>
-    </>;
+        </>
+    );
 };

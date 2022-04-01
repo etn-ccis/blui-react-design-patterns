@@ -13,7 +13,7 @@ import { Spacer, InfoListItem } from '@brightlayer-ui/react-components';
 import { useDispatch } from 'react-redux';
 import { TOGGLE_DRAWER } from '../../../redux/actions';
 import { Menu as MenuIcon } from '@mui/icons-material';
-import { Hidden, useTheme, Tooltip } from '@mui/material';
+import { useTheme, Tooltip, useMediaQuery } from '@mui/material';
 import { EmptyState } from './EmptyState';
 import makeStyles from '@mui/styles/makeStyles';
 
@@ -60,6 +60,7 @@ export const ActionList = (): JSX.Element => {
     const [list, setList] = useState<Item[]>(generatedList);
     const [menuPosition, setMenuPosition] = useState<null | HTMLElement>(null);
     const [activeIndex, setActiveIndex] = useState<number>(-1);
+    const md = useMediaQuery(theme.breakpoints.up('md'));
 
     const onAddItem = useCallback((): void => {
         setList([...list, createRandomItem()]);
@@ -98,7 +99,7 @@ export const ActionList = (): JSX.Element => {
         <div style={{ backgroundColor: theme.palette.background.paper, minHeight: '100vh' }}>
             <AppBar position={'sticky'} classes={{ root: classes.appbarRoot }}>
                 <Toolbar data-cy={'blui-toolbar'} classes={{ gutters: classes.toolbarGutters }}>
-                    <Hidden mdUp={true}>
+                    {md ? null : (
                         <IconButton
                             data-cy="toolbar-menu"
                             color={'inherit'}
@@ -107,10 +108,10 @@ export const ActionList = (): JSX.Element => {
                             }}
                             edge={'start'}
                             style={{ marginRight: 20 }}
-                            size="large">
+                        >
                             <MenuIcon />
                         </IconButton>
-                    </Hidden>
+                    )}
                     <Typography variant={'h6'} color={'inherit'}>
                         Action List
                     </Typography>
@@ -122,7 +123,7 @@ export const ActionList = (): JSX.Element => {
                             color={'inherit'}
                             aria-label={'Delete'}
                             onClick={onRemoveAll}
-                            size="large">
+                        >
                             <DeleteIcon />
                         </IconButton>
                     </Tooltip>
@@ -134,7 +135,7 @@ export const ActionList = (): JSX.Element => {
                             aria-label={'add'}
                             edge={'end'}
                             onClick={onAddItem}
-                            size="large">
+                        >
                             <AddIcon />
                         </IconButton>
                     </Tooltip>
@@ -158,7 +159,7 @@ export const ActionList = (): JSX.Element => {
                                     data-cy={'action-menu'}
                                     onClick={(evt): void => onMenuClick(evt, i)}
                                     edge={'end'}
-                                    size="large">
+                                >
                                     <MoreVertIcon />
                                 </IconButton>
                             }

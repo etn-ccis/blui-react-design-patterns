@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useTheme, Theme } from '@mui/material/styles';
 import makeStyles from '@mui/styles/makeStyles';
-import { AppBar, Toolbar, Hidden, IconButton, Typography, Button, ButtonGroup, Card, List } from '@mui/material';
+import { AppBar, Toolbar, IconButton, Typography, Button, ButtonGroup, Card, List, useMediaQuery } from '@mui/material';
 import { TOGGLE_DRAWER } from '../../../redux/actions';
 import { useDispatch } from 'react-redux';
 import { Cloud, KeyboardArrowRight, ListAlt, Menu, Notifications } from '@mui/icons-material';
@@ -63,6 +63,7 @@ export const Skeletons = (): JSX.Element => {
     const dispatch = useDispatch();
     const [isLoading, setIsLoading] = useState(true);
     const [animationStyle, setAnimationStyle] = useState<'pulse' | 'wave'>('pulse');
+    const md = useMediaQuery(theme.breakpoints.up('md'));
     let refreshTimeout: ReturnType<typeof setTimeout>;
     let looperTimeout: ReturnType<typeof setTimeout>;
 
@@ -89,7 +90,7 @@ export const Skeletons = (): JSX.Element => {
         <>
             <AppBar data-cy="blui-toolbar" position={'sticky'} classes={{ root: classes.appbarRoot }}>
                 <Toolbar classes={{ gutters: classes.toolbarGutters }}>
-                    <Hidden mdUp={true}>
+                    {md ? null : (
                         <IconButton
                             data-cy="toolbar-menu"
                             color={'inherit'}
@@ -98,11 +99,10 @@ export const Skeletons = (): JSX.Element => {
                             }}
                             edge={'start'}
                             style={{ marginRight: 20 }}
-                            size="large"
                         >
                             <Menu />
                         </IconButton>
-                    </Hidden>
+                    )}
                     <Typography variant={'h6'} color={'inherit'}>
                         Skeletons
                     </Typography>

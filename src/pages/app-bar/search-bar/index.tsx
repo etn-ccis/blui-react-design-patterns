@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 
 import AppBar from '@mui/material/AppBar';
-import Hidden from '@mui/material/Hidden';
 import IconButton from '@mui/material/IconButton';
 import List from '@mui/material/List';
 import TextField from '@mui/material/TextField';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
+import { useMediaQuery } from '@mui/material';
 
 // Material Icons
 import Close from '@mui/icons-material/Close';
@@ -55,7 +55,7 @@ const useStyles = makeStyles((theme: Theme) =>
             },
             '&$searchActive': {
                 width: `calc(100% - ${DRAWER_WIDTH}px)`,
-                [theme.breakpoints.down('xl')]: {
+                [theme.breakpoints.down('md')]: {
                     width: '100%',
                 },
             },
@@ -89,6 +89,7 @@ export const SearchBar = (): JSX.Element => {
     const [filteredList, setFilteredList] = useState(list);
     const [searchActive, setSearchActive] = useState(false);
     const [query, setQuery] = useState('');
+    const md = useMediaQuery(theme.breakpoints.up('md'));
 
     useEffect(() => {
         if (searchActive) {
@@ -117,7 +118,7 @@ export const SearchBar = (): JSX.Element => {
                 className={clsx(classes.appbar, classes.regularBar, searchActive && classes.searchActive)}
             >
                 <Toolbar classes={{ gutters: classes.toolbarGutters }}>
-                    <Hidden mdUp={true}>
+                    {md ? null : (
                         <IconButton
                             data-cy="toolbar-menu"
                             color={'inherit'}
@@ -126,10 +127,10 @@ export const SearchBar = (): JSX.Element => {
                             }}
                             edge={'start'}
                             style={{ marginRight: 20 }}
-                            size="large">
+                        >
                             <MenuIcon />
                         </IconButton>
-                    </Hidden>
+                    )}
                     <Typography variant={'h6'} color={'inherit'}>
                         Search Bar
                     </Typography>
@@ -139,7 +140,7 @@ export const SearchBar = (): JSX.Element => {
                         onClick={(): void => setSearchActive(true)}
                         edge={'end'}
                         data-cy="search-btn"
-                        size="large">
+                    >
                         <Search />
                     </IconButton>
                 </Toolbar>
@@ -157,7 +158,7 @@ export const SearchBar = (): JSX.Element => {
                         edge={'start'}
                         style={{ color: theme.palette.text.secondary }}
                         onClick={(): void => setSearchActive(false)}
-                        size="large">
+                    >
                         <ArrowBack />
                     </IconButton>
                     {searchActive && ( // this is to enable auto focus on mounting
@@ -179,7 +180,7 @@ export const SearchBar = (): JSX.Element => {
                             edge={'end'}
                             data-cy="clear-search-field"
                             style={{ color: theme.palette.text.secondary }}
-                            size="large">
+                        >
                             <Close />
                         </IconButton>
                     )}

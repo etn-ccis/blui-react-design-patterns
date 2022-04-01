@@ -2,7 +2,6 @@ import React, { useCallback, useState } from 'react';
 import {
     AppBar,
     FormControl,
-    Hidden,
     IconButton,
     InputLabel,
     InputProps,
@@ -11,6 +10,7 @@ import {
     TextField,
     Toolbar,
     Typography,
+    useMediaQuery,
 } from '@mui/material';
 import { Menu } from '@mui/icons-material';
 import { Theme, useTheme } from '@mui/material/styles';
@@ -49,7 +49,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         width: '100%',
         maxWidth: 480,
         margin: theme.spacing(4),
-        [theme.breakpoints.down('lg')]: {
+        [theme.breakpoints.down('sm')]: {
             margin: theme.spacing(2),
             maxWidth: '100%',
         },
@@ -71,6 +71,7 @@ export const PhoneNumberFormatValidation = (): JSX.Element => {
     const [phoneNumber, setPhoneNumber] = useState('');
     const [countryCode, setCountryCode] = useState('US');
     const [blurred, setBlurred] = useState(false);
+    const md = useMediaQuery(theme.breakpoints.up('md'));
 
     const isValidPhoneNumber = useCallback(
         (): boolean => checkPhoneNumber(phoneNumber, countryCode),
@@ -122,74 +123,76 @@ export const PhoneNumberFormatValidation = (): JSX.Element => {
         [blurred, countryCode, isValidPhoneNumber]
     );
 
-    return <>
-        <AppBar data-cy={'blui-toolbar'} position={'sticky'} classes={{ root: classes.appbarRoot }}>
-            <Toolbar classes={{ gutters: classes.toolbarGutters }}>
-                <Hidden mdUp>
-                    <IconButton
-                        data-cy={'toolbar-menu'}
-                        color={'inherit'}
-                        onClick={(): void => {
-                            dispatch({ type: TOGGLE_DRAWER, payload: true });
-                        }}
-                        edge={'start'}
-                        style={{ marginRight: 20 }}
-                        size="large">
-                        <Menu />
-                    </IconButton>
-                </Hidden>
-                <Typography variant={'h6'} color={'inherit'}>
-                    Phone Number Format
-                </Typography>
-            </Toolbar>
-        </AppBar>
+    return (
+        <>
+            <AppBar data-cy={'blui-toolbar'} position={'sticky'} classes={{ root: classes.appbarRoot }}>
+                <Toolbar classes={{ gutters: classes.toolbarGutters }}>
+                    {md ? null : (
+                        <IconButton
+                            data-cy={'toolbar-menu'}
+                            color={'inherit'}
+                            onClick={(): void => {
+                                dispatch({ type: TOGGLE_DRAWER, payload: true });
+                            }}
+                            edge={'start'}
+                            style={{ marginRight: 20 }}
+                        >
+                            <Menu />
+                        </IconButton>
+                    )}
+                    <Typography variant={'h6'} color={'inherit'}>
+                        Phone Number Format
+                    </Typography>
+                </Toolbar>
+            </AppBar>
 
-        <div className={classes.containerWrapper}>
-            <div className={classes.container}>
-                <FormControl variant={'filled'} style={{ width: 200, marginRight: theme.spacing(2) }}>
-                    <InputLabel htmlFor={'country-code-label'}>Country Code</InputLabel>
-                    <Select
-                        data-cy={'country-selector'}
-                        fullWidth
-                        value={countryCode}
-                        labelId={'country-code-label'}
+            <div className={classes.containerWrapper}>
+                <div className={classes.container}>
+                    <FormControl variant={'filled'} style={{ width: 200, marginRight: theme.spacing(2) }}>
+                        <InputLabel htmlFor={'country-code-label'}>Country Code</InputLabel>
+                        <Select
+                            data-cy={'country-selector'}
+                            fullWidth
+                            value={countryCode}
+                            labelId={'country-code-label'}
+                            inputProps={{
+                                name: 'Country Code',
+                            }}
+                            onChange={(event): void => {
+                                setCountryCode(String(event.target.value));
+                                setPhoneNumber(transformUserInput(phoneNumber, String(event.target.value)));
+                            }}
+                        >
+                            {countries.map((country) => (
+                                <MenuItem key={country.code} value={country.code}>
+                                    {country.name}
+                                </MenuItem>
+                            ))}
+                        </Select>
+                    </FormControl>
+                    <TextField
+                        style={{ width: '100%', height: 72 }}
+                        label={'Phone Number'}
+                        value={phoneNumber}
+                        placeholder={getPlaceholder()}
+                        onChange={onPhoneNumberChange}
+                        variant={'filled'}
+                        data-cy={'phone-input'}
                         inputProps={{
-                            name: 'Country Code',
+                            inputMode: 'numeric',
+                            maxLength: getMaxLength(),
                         }}
-                        onChange={(event): void => {
-                            setCountryCode(String(event.target.value));
-                            setPhoneNumber(transformUserInput(phoneNumber, String(event.target.value)));
+                        onFocus={(): void => {
+                            setBlurred(false);
                         }}
-                    >
-                        {countries.map((country) => (
-                            <MenuItem key={country.code} value={country.code}>
-                                {country.name}
-                            </MenuItem>
-                        ))}
-                    </Select>
-                </FormControl>
-                <TextField
-                    style={{ width: '100%', height: 72 }}
-                    label={'Phone Number'}
-                    value={phoneNumber}
-                    placeholder={getPlaceholder()}
-                    onChange={onPhoneNumberChange}
-                    variant={'filled'}
-                    data-cy={'phone-input'}
-                    inputProps={{
-                        inputMode: 'numeric',
-                        maxLength: getMaxLength(),
-                    }}
-                    onFocus={(): void => {
-                        setBlurred(false);
-                    }}
-                    onBlur={(): void => {
-                        setBlurred(true);
-                    }}
-                    error={showErrorText()}
-                    helperText={getErrorText()}
-                />
+                        onBlur={(): void => {
+                            setBlurred(true);
+                        }}
+                        error={showErrorText()}
+                        helperText={getErrorText()}
+                    />
+                </div>
             </div>
-        </div>
-    </>;
+        </>
+    );
 };

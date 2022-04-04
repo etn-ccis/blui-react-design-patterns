@@ -6,10 +6,9 @@ import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import { I18N } from '.';
 import { Reducer } from '../../redux/reducers';
-import { Checkbox } from '@mui/material';
 import { InfoListItem } from '@brightlayer-ui/react-components';
 import { english } from './translations/english';
-import { createTheme, ThemeProvider } from '@mui/material';
+import { createTheme, ThemeProvider, Checkbox } from '@mui/material';
 import * as BLUIThemes from '@brightlayer-ui/react-themes';
 const theme = createTheme(BLUIThemes.blue);
 

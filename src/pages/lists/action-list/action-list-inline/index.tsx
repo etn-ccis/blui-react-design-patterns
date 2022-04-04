@@ -42,7 +42,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         flexDirection: 'column',
     },
     toolBarSubtitle: {
-        marginTop: -theme.spacing(1),
+        marginTop: theme.spacing(-1),
     },
     hoveredInfoListItem: {
         backgroundColor: theme.palette.background.default,

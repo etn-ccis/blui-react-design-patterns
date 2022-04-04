@@ -9,6 +9,9 @@ import { Reducer } from '../../redux/reducers';
 import { Checkbox } from '@mui/material';
 import { InfoListItem } from '@brightlayer-ui/react-components';
 import { english } from './translations/english';
+import { createTheme, ThemeProvider } from '@mui/material';
+import * as BLUIThemes from '@brightlayer-ui/react-themes';
+const theme = createTheme(BLUIThemes.blue);
 
 Enzyme.configure({ adapter: new Adapter() });
 const store = createStore(Reducer());
@@ -17,17 +20,21 @@ describe('I18N', () => {
     afterEach(cleanup);
     it('renders without crashing', () => {
         render(
-            <Provider store={store}>
-                <I18N />
-            </Provider>
+            <ThemeProvider theme={theme}>
+                <Provider store={store}>
+                    <I18N />
+                </Provider>
+            </ThemeProvider>
         );
     });
 
     it('should cancel selected items', () => {
         const i18nPattern = mount(
-            <Provider store={store}>
-                <I18N />
-            </Provider>
+            <ThemeProvider theme={theme}>
+                <Provider store={store}>
+                    <I18N />
+                </Provider>
+            </ThemeProvider>
         );
 
         let boxes = i18nPattern.find(Checkbox);

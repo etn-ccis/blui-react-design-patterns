@@ -7,14 +7,19 @@ import { StatusList } from '.';
 import { createStore } from 'redux';
 import { Reducer } from '../../../redux/reducers';
 import { Provider } from 'react-redux';
+import { createTheme, ThemeProvider } from '@mui/material';
+import * as BLUIThemes from '@brightlayer-ui/react-themes';
+const theme = createTheme(BLUIThemes.blue);
 
 Enzyme.configure({ adapter: new Adapter() });
 const store = createStore(Reducer());
 const createRenderer = (): any =>
     render(
-        <Provider store={store}>
-            <StatusList />
-        </Provider>
+        <ThemeProvider theme={theme}>
+            <Provider store={store}>
+                <StatusList />
+            </Provider>
+        </ThemeProvider>
     );
 
 describe('Status list', () => {

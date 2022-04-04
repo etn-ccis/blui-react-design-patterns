@@ -95,12 +95,12 @@ const useStyles = makeStyles((theme: Theme) => ({
     divider: {
         width: `calc(100% + ${theme.spacing(6)})`,
         marginTop: theme.spacing(6),
-        marginLeft: -theme.spacing(3),
-        marginRight: -theme.spacing(3),
+        marginLeft: theme.spacing(-3),
+        marginRight: theme.spacing(-3),
         [theme.breakpoints.down('sm')]: {
             width: `calc(100% + ${theme.spacing(4)})`,
-            marginLeft: -theme.spacing(2),
-            marginRight: -theme.spacing(2),
+            marginLeft: theme.spacing(-2),
+            marginRight: theme.spacing(-2),
         },
     },
     topDivider: {

@@ -5,14 +5,19 @@ import { TreeStructureList } from '.';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import { Reducer } from '../../../redux/reducers';
+import { createTheme, ThemeProvider } from '@mui/material';
+import * as BLUIThemes from '@brightlayer-ui/react-themes';
+const theme = createTheme(BLUIThemes.blue);
 
 const store = createStore(Reducer());
 
 const createRenderer = (): any =>
     render(
-        <Provider store={store}>
-            <TreeStructureList />
-        </Provider>
+        <ThemeProvider theme={theme}>
+            <Provider store={store}>
+                <TreeStructureList />
+            </Provider>
+        </ThemeProvider>
     );
 
 describe('Action list with button panel', () => {

@@ -64,8 +64,8 @@ const useStyles = makeStyles((theme: Theme) => ({
     divider: {
         marginTop: theme.spacing(5),
         marginBottom: theme.spacing(5),
-        marginLeft: -theme.spacing(2),
-        marginRight: -theme.spacing(2),
+        marginLeft: theme.spacing(2),
+        marginRight: theme.spacing(2),
     },
     icon: {
         marginRight: theme.spacing(2),
@@ -500,7 +500,7 @@ export const SectionedFormValidation = (): JSX.Element => {
                     {smUp ? null : (
                         <Divider
                             className={classes.divider}
-                            style={{ marginBottom: -theme.spacing(3), marginTop: theme.spacing(4) }}
+                            style={{ marginBottom: theme.spacing(-3), marginTop: theme.spacing(4) }}
                         />
                     )}
 

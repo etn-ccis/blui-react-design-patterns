@@ -44,7 +44,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
     snackbarAction: {
         margin: 'auto',
-        marginLeft: -theme.spacing(),
+        marginLeft: theme.spacing(-1),
         paddingRight: theme.spacing(2),
         paddingLeft: 0,
     },

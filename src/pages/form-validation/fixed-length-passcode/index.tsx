@@ -161,8 +161,8 @@ export const FixedLengthPasscodeValidation = (): JSX.Element => {
                         style={{
                             marginTop: theme.spacing(5),
                             marginBottom: theme.spacing(4),
-                            marginLeft: -theme.spacing(2),
-                            marginRight: -theme.spacing(2),
+                            marginLeft: theme.spacing(-2),
+                            marginRight: theme.spacing(-2),
                         }}
                     />
                     <TextField

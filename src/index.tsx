@@ -20,7 +20,7 @@ import { App } from './App';
 
 
 declare module '@mui/styles/defaultTheme' {
-  // eslint-disable-next-line @typescript-eslint/no-empty-interface
+  // eslint-disable-next-line
   interface DefaultTheme extends Theme {}
 }
 

@@ -1,9 +1,9 @@
 /// <reference types="cypress" />
 
 
-describe('Dropdown toolbar', () => {
+describe('Toolbar menu', () => {
     beforeEach(() => {
-        cy.visit('http://localhost:3000/dropdown-toolbar');
+        cy.visit('http://localhost:3000/toolbar-menu');
     });
 
     it('should display title and subtitle', () => {

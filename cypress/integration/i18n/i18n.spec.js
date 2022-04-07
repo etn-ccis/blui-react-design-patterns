@@ -13,12 +13,12 @@ describe('i18n international', () => {
     it('should display language in dropdown', () => {
         cy.get('[data-cy=change-language]').click()
         cy.get('.MuiPaper-root > .MuiList-root').should('contain', 'English')
-        .should('contain', 'Spanish')
-        .should('contain', 'German')
         .should('contain', 'Arabic')
-        .should('contain', 'French')
-        .should('contain', 'Portuguese')
         .should('contain', 'Chinese')
+        .should('contain', 'French')
+        .should('contain', 'German')
+        .should('contain', 'Portuguese')
+        .should('contain', 'Spanish')
     });
 
     it('should display list items in english', () => {
@@ -38,7 +38,7 @@ describe('i18n international', () => {
     });
 
     it('should display list items in arabic', () => {
-        cy.get('.MuiSelect-root').click()
+        cy.get('[data-cy=change-language]').click()
         cy.contains('Arabic').click()
         cy.get('#item-list').should('contain', 'تفاحة')
     });

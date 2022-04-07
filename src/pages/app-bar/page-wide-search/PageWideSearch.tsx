@@ -213,7 +213,6 @@ export const PageWideSearch = (): JSX.Element => {
                                         style={{
                                             color: theme.palette.text.secondary,
                                             marginRight: theme.spacing(1),
-                                            borderColor: theme.palette.text.secondary,
                                         }}
                                     />
                                 ),

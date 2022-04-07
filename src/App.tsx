@@ -22,7 +22,7 @@ import { AppState } from './redux/reducers';
 import { TOGGLE_DRAWER } from './redux/actions';
 import { DRAWER_WIDTH } from './assets/constants';
 
-const backgroundImage = require('./assets/topology_40.png').default;
+const backgroundImage = require('./assets/topology_40.png');
 
 const useStyles = makeStyles((theme: Theme) => ({
     header: {

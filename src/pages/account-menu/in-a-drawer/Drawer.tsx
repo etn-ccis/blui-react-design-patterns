@@ -16,7 +16,7 @@ import {
 import CloseIcon from '@mui/icons-material/Close';
 import { Device } from '@brightlayer-ui/icons-mui';
 
-const backgroundImage = require('../../../assets/cubes_tile.png').default;
+const backgroundImage = require('../../../assets/cubes_tile.png');
 const linearGradientOverlayImage = `linear-gradient(to right, rgba(0, 123, 193, 1) 22.4%, rgba(0, 123, 193, 0.2) 100%), url(${backgroundImage})`;
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -59,7 +59,7 @@ type DrawerProps = {
     toggleDrawer: () => void;
 };
 
-const avatarImage = require('../../../assets/avatar_40.png').default;
+const avatarImage = require('../../../assets/avatar_40.png');
 
 export const BluiDrawer = (props: DrawerProps): JSX.Element => {
     const { open, toggleDrawer } = props;

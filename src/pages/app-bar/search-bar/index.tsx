@@ -174,6 +174,7 @@ export const SearchBar = (): JSX.Element => {
                             autoFocus
                             id={'#search-field'}
                             data-cy={'search-field'}
+                            variant="standard"
                         />
                     )}
                     {query && (

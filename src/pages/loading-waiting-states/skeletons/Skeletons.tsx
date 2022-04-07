@@ -12,7 +12,7 @@ import { Hero, HeroBanner, InfoListItem, ScoreCard, Spacer } from '@brightlayer-
 import * as colors from '@brightlayer-ui/colors';
 import { CurrentCircled, GradeA, Temp, Device, Moisture } from '@brightlayer-ui/icons-mui';
 
-const backgroundImage = require('../../../assets/topology_40.png').default;
+const backgroundImage = require('../../../assets/topology_40.png');
 
 const useStyles = makeStyles((theme: Theme) => ({
     root: {

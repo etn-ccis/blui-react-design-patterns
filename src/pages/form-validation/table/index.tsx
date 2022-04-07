@@ -59,7 +59,7 @@ export const TableFormValidation = (): JSX.Element => {
     const classes = useStyles(theme);
     const dispatch = useDispatch();
     const md = useMediaQuery(theme.breakpoints.up('md'));
-    const xsDown = useMediaQuery(theme.breakpoints.down('xs'));
+    const smDown = useMediaQuery(theme.breakpoints.down('sm'));
     const smUp = useMediaQuery(theme.breakpoints.up('sm'));
 
     const getTable = (): JSX.Element => (
@@ -185,6 +185,7 @@ export const TableFormValidation = (): JSX.Element => {
                             }}
                             edge={'start'}
                             style={{ marginRight: 20 }}
+                            size="large"
                         >
                             <Menu />
                         </IconButton>
@@ -194,7 +195,7 @@ export const TableFormValidation = (): JSX.Element => {
                     </Typography>
                 </Toolbar>
             </AppBar>
-            {xsDown ? null : getTable()}
+            {smDown ? null : getTable()}
             {smUp ? null : <div style={{ background: 'white' }}>{getList()}</div>}
             <Typography style={{ padding: theme.spacing(2) }} variant={'body1'}>
                 Remember that in a real application you would need to implement form validations to check, for example,

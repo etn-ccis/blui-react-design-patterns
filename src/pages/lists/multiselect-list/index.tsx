@@ -420,6 +420,7 @@ export const MultiselectList = (): JSX.Element => {
                             }}
                             edge={'start'}
                             style={{ marginRight: 20 }}
+                            size="large"
                         >
                             <MenuIcon />
                         </IconButton>
@@ -429,7 +430,7 @@ export const MultiselectList = (): JSX.Element => {
                     </Typography>
                     <Spacer />
                     {md ? null : selectedItems1.length !== 0 || selectedItems2.length !== 0 ? (
-                        <IconButton data-cy="delete-btn" color={'inherit'} onClick={onDelete} edge={'end'}>
+                        <IconButton data-cy="delete-btn" color={'inherit'} onClick={onDelete} edge={'end'} size="large">
                             <DeleteIcon />
                         </IconButton>
                     ) : (

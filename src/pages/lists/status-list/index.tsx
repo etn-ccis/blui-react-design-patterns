@@ -242,6 +242,7 @@ export const StatusList = (): JSX.Element => {
                             }}
                             edge={'start'}
                             style={{ marginRight: 20 }}
+                            size="large"
                         >
                             <MenuIcon />
                         </IconButton>
@@ -250,7 +251,7 @@ export const StatusList = (): JSX.Element => {
                         Status Lists
                     </Typography>
                     <Spacer />
-                    <IconButton color={'inherit'} edge={'end'}>
+                    <IconButton color={'inherit'} edge={'end'} size="large">
                         <HelpIcon />
                         <Badge classes={{ root: classes.headerIcon }} color="error" badgeContent={88}>
                             <NotificationIcon />

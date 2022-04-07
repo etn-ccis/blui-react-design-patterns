@@ -96,6 +96,7 @@ export const BluiToolbarMenu = (): JSX.Element => {
                                 }}
                                 edge={'start'}
                                 style={{ marginRight: 20 }}
+                                size="large"
                             >
                                 <MenuIcon />
                             </IconButton>
@@ -131,6 +132,7 @@ export const BluiToolbarMenu = (): JSX.Element => {
                                 }}
                                 edge={'start'}
                                 style={{ marginRight: 20 }}
+                                size="large"
                             >
                                 <MenuIcon />
                             </IconButton>

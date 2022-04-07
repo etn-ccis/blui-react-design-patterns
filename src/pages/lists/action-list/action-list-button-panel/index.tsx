@@ -154,6 +154,7 @@ export const ActionListButtonPanel = (): JSX.Element => {
                             }}
                             edge={'start'}
                             style={{ marginRight: 20 }}
+                            size="large"
                         >
                             <MenuIcon />
                         </IconButton>
@@ -176,6 +177,7 @@ export const ActionListButtonPanel = (): JSX.Element => {
                                     color={'inherit'}
                                     aria-label={'Delete'}
                                     onClick={onRemoveAll}
+                                    size="large"
                                 >
                                     <DeleteIcon />
                                 </IconButton>
@@ -187,6 +189,7 @@ export const ActionListButtonPanel = (): JSX.Element => {
                                 aria-label={'add'}
                                 edge={'end'}
                                 onClick={onAddItem}
+                                size="large"
                             >
                                 <AddIcon />
                             </IconButton>

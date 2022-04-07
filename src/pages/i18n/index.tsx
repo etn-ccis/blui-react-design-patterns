@@ -44,7 +44,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
     snackbarAction: {
         margin: 'auto',
-        marginLeft: theme.spacing(-1),
+        marginLeft: -theme.spacing(),
         paddingRight: theme.spacing(2),
         paddingLeft: 0,
     },
@@ -135,6 +135,7 @@ export const I18N = (): JSX.Element => {
                             }}
                             edge={isRTL() ? 'end' : 'start'}
                             style={{ marginRight: isRTL() ? '' : 20, marginLeft: isRTL() ? 20 : '' }}
+                            size="large"
                         >
                             <MenuIcon />
                         </IconButton>
@@ -150,6 +151,7 @@ export const I18N = (): JSX.Element => {
                             onClick={(): void => setDrawerOpen(!drawerOpen)}
                             edge={isRTL() ? 'start' : 'end'}
                             className={clsx(isRTL() && classes.RTL)}
+                            size="large"
                         >
                             <MenuOpenIcon />
                         </IconButton>
@@ -206,7 +208,11 @@ export const I18N = (): JSX.Element => {
                 ))}
             </List>
 
-            <Snackbar open={selectedItems.size > 0} classes={{ root: classes.snackbar }}>
+            <Snackbar
+                open={selectedItems.size > 0}
+                classes={{ root: classes.snackbar }}
+                anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+            >
                 <SnackbarContent
                     action={
                         <>
@@ -218,6 +224,7 @@ export const I18N = (): JSX.Element => {
                                     color={'inherit'}
                                     id={'deselect-all-button'}
                                     data-cy={'snackbar-deselect-all'}
+                                    size="large"
                                 >
                                     <CancelIcon />
                                 </IconButton>

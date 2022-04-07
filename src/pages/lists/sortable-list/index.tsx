@@ -92,7 +92,7 @@ const SortableListItem = SortableElement(({ listItem, classes, ...other }: Sorta
         {...other}
         classes={{ root: classes.sortableInfoListItem, listItemText: classes.listItemText }}
         icon={
-            <IconButton disableRipple classes={{ root: classes.dragHandleIconButton }}>
+            <IconButton disableRipple classes={{ root: classes.dragHandleIconButton }} size="large">
                 <DragHandle />
             </IconButton>
         }
@@ -159,6 +159,7 @@ export const SortableList = (): JSX.Element => {
                             }}
                             edge={'start'}
                             style={{ marginRight: 20 }}
+                            size="large"
                         >
                             <MenuIcon />
                         </IconButton>
@@ -172,6 +173,7 @@ export const SortableList = (): JSX.Element => {
                             data-cy="sort-done"
                             classes={{ root: classes.sortButtonMobile }}
                             onClick={(): void => setSortable(!sortable)}
+                            size="large"
                         >
                             {sortable ? <CheckIcon /> : <SortIcon />}
                         </IconButton>

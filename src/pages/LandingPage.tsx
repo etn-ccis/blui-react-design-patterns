@@ -82,6 +82,7 @@ export const LandingPage = (): JSX.Element => {
                                 dispatch({ type: TOGGLE_DRAWER, payload: true });
                             }}
                             edge={'start'}
+                            size="large"
                         >
                             <MenuIcon />
                         </IconButton>

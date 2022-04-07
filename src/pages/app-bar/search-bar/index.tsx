@@ -127,6 +127,7 @@ export const SearchBar = (): JSX.Element => {
                             }}
                             edge={'start'}
                             style={{ marginRight: 20 }}
+                            size="large"
                         >
                             <MenuIcon />
                         </IconButton>
@@ -140,6 +141,7 @@ export const SearchBar = (): JSX.Element => {
                         onClick={(): void => setSearchActive(true)}
                         edge={'end'}
                         data-cy="search-btn"
+                        size="large"
                     >
                         <Search />
                     </IconButton>
@@ -158,6 +160,7 @@ export const SearchBar = (): JSX.Element => {
                         edge={'start'}
                         style={{ color: theme.palette.text.secondary }}
                         onClick={(): void => setSearchActive(false)}
+                        size="large"
                     >
                         <ArrowBack />
                     </IconButton>
@@ -180,6 +183,7 @@ export const SearchBar = (): JSX.Element => {
                             edge={'end'}
                             data-cy="clear-search-field"
                             style={{ color: theme.palette.text.secondary }}
+                            size="large"
                         >
                             <Close />
                         </IconButton>

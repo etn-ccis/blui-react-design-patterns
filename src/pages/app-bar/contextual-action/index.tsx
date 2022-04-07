@@ -262,6 +262,7 @@ export const ContextualAction = (): JSX.Element => {
                             }}
                             edge={'start'}
                             style={{ marginRight: 20 }}
+                            size="large"
                         >
                             <MenuIcon />
                         </IconButton>
@@ -281,14 +282,20 @@ export const ContextualAction = (): JSX.Element => {
                 color={'default'}
             >
                 <Toolbar classes={{ gutters: classes.secondaryToolbar }}>
-                    <IconButton color={'inherit'} edge={'start'} style={{ marginRight: 20 }} onClick={onClose}>
+                    <IconButton
+                        color={'inherit'}
+                        edge={'start'}
+                        style={{ marginRight: 20 }}
+                        onClick={onClose}
+                        size="large"
+                    >
                         <CloseIcon />
                     </IconButton>
                     <Typography variant={'h6'} color={'inherit'}>
                         {selectedItems.length} selected
                     </Typography>
                     <Spacer />
-                    <IconButton color={'inherit'} edge={'end'} onClick={onDelete}>
+                    <IconButton color={'inherit'} edge={'end'} onClick={onDelete} size="large">
                         <DeleteIcon />
                     </IconButton>
                 </Toolbar>

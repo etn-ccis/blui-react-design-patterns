@@ -102,6 +102,7 @@ export const InAnAppBar = (): JSX.Element => {
                             }}
                             edge={'start'}
                             style={{ marginRight: 20 }}
+                            size="large"
                         >
                             <MenuIcon />
                         </IconButton>
@@ -123,7 +124,7 @@ export const InAnAppBar = (): JSX.Element => {
                     {/* Generic Icon Avatar Example */}
                     <AppBar position="static" color="inherit" className={classes.appBar}>
                         <Toolbar classes={{ gutters: classes.toolbarGutters }}>
-                            <IconButton edge={'start'}>
+                            <IconButton edge={'start'} size="large">
                                 <MenuIcon />
                             </IconButton>
                             <div className={classes.textContainer}>
@@ -178,7 +179,7 @@ export const InAnAppBar = (): JSX.Element => {
                     {/* Basic Letter Avatar Example */}
                     <AppBar position="static" color="inherit" className={classes.appBar}>
                         <Toolbar classes={{ gutters: classes.toolbarGutters }}>
-                            <IconButton edge={'start'}>
+                            <IconButton edge={'start'} size="large">
                                 <MenuIcon />
                             </IconButton>
                             <div className={classes.textContainer}>
@@ -214,7 +215,7 @@ export const InAnAppBar = (): JSX.Element => {
                     {/* Image Avatar Example */}
                     <AppBar position="static" color="inherit" className={classes.appBar}>
                         <Toolbar classes={{ gutters: classes.toolbarGutters }}>
-                            <IconButton edge={'start'}>
+                            <IconButton edge={'start'} size="large">
                                 <MenuIcon />
                             </IconButton>
                             <div className={classes.textContainer}>
@@ -250,7 +251,7 @@ export const InAnAppBar = (): JSX.Element => {
                     {/* Status Avatar Example */}
                     <AppBar position="static" color="inherit" className={classes.appBar}>
                         <Toolbar classes={{ gutters: classes.toolbarGutters }}>
-                            <IconButton edge={'start'}>
+                            <IconButton edge={'start'} size="large">
                                 <MenuIcon />
                             </IconButton>
                             <div className={classes.textContainer}>
@@ -298,7 +299,7 @@ export const InAnAppBar = (): JSX.Element => {
                     {/* Text Menu Example */}
                     <AppBar position="static" color="inherit" className={classes.appBar}>
                         <Toolbar classes={{ gutters: classes.toolbarGutters }}>
-                            <IconButton color={'inherit'} edge={'start'}>
+                            <IconButton color={'inherit'} edge={'start'} size="large">
                                 <MenuIcon />
                             </IconButton>
                             <div className={classes.textContainer}>

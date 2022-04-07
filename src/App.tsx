@@ -118,6 +118,7 @@ export const App: React.FC = () => {
                             onClick={(): void => {
                                 dispatch({ type: TOGGLE_DRAWER, payload: false });
                             }}
+                            size="large"
                         >
                             <CloseIcon />
                         </IconButton>

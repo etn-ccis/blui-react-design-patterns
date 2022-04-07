@@ -41,7 +41,6 @@ const useStyles = makeStyles((theme: Theme) => ({
         zIndex: 4,
         position: 'absolute',
         alignItems: 'center',
-        flexDirection: 'column',
         justifyContent: 'center',
     },
 }));
@@ -72,6 +71,7 @@ export const InADrawer = (): JSX.Element => {
                             }}
                             edge={'start'}
                             style={{ marginRight: 20 }}
+                            size="large"
                         >
                             <MenuIcon />
                         </IconButton>

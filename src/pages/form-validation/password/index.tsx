@@ -288,6 +288,7 @@ export const PasswordFormValidation = (): JSX.Element => {
                             }}
                             edge={'start'}
                             style={{ marginRight: 20 }}
+                            size="large"
                         >
                             <MenuIcon />
                         </IconButton>
@@ -329,6 +330,7 @@ export const PasswordFormValidation = (): JSX.Element => {
                                             <IconButton
                                                 className={classes.visibilityToggle}
                                                 onClick={(): void => setShowCurrentPassword(!showCurrentPassword)}
+                                                size="large"
                                             >
                                                 {showCurrentPassword && <Visibility />}
                                                 {!showCurrentPassword && <VisibilityOff />}
@@ -356,6 +358,7 @@ export const PasswordFormValidation = (): JSX.Element => {
                                             <IconButton
                                                 className={classes.visibilityToggle}
                                                 onClick={(): void => setShowNewPassword(!showNewPassword)}
+                                                size="large"
                                             >
                                                 {showNewPassword && <Visibility />}
                                                 {!showNewPassword && <VisibilityOff />}
@@ -437,6 +440,7 @@ export const PasswordFormValidation = (): JSX.Element => {
                                             <IconButton
                                                 className={classes.visibilityToggle}
                                                 onClick={(): void => setShowConfirmPassword(!showConfirmPassword)}
+                                                size="large"
                                             >
                                                 {showConfirmPassword && <Visibility />}
                                                 {!showConfirmPassword && <VisibilityOff />}

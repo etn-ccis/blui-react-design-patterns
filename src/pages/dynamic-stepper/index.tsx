@@ -120,6 +120,7 @@ export const DynamicStepper = (): JSX.Element => {
                             }}
                             edge={'start'}
                             style={{ marginRight: 20 }}
+                            size="large"
                         >
                             <Menu />
                         </IconButton>
@@ -135,6 +136,7 @@ export const DynamicStepper = (): JSX.Element => {
                             edge={'end'}
                             onClick={(): void => setSteps([])}
                             id={'remove-all'}
+                            size="large"
                         >
                             <DeleteSweep />
                         </IconButton>
@@ -160,7 +162,12 @@ export const DynamicStepper = (): JSX.Element => {
                 )}
                 {!finished && (
                     <>
-                        <Stepper nonLinear activeStep={activeStep} orientation={'vertical'}>
+                        <Stepper
+                            classes={{ root: classes.paddedContainer }}
+                            nonLinear
+                            activeStep={activeStep}
+                            orientation={'vertical'}
+                        >
                             {steps.map((choice, index) => (
                                 <Step
                                     key={`step_${index}_container`}

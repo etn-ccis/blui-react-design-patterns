@@ -127,6 +127,7 @@ export const VerifyOnSubmitValidation = (): JSX.Element => {
                             }}
                             edge={'start'}
                             style={{ marginRight: 20 }}
+                            size="large"
                         >
                             <Menu />
                         </IconButton>

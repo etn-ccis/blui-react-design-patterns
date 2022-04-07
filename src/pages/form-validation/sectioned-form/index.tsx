@@ -153,7 +153,7 @@ export const SectionedFormValidation = (): JSX.Element => {
     const [emailError, setEmailError] = useState('');
     const [showRequiredError, setShowRequiredError] = useState(false);
     const md = useMediaQuery(theme.breakpoints.up('md'));
-    const xsDown = useMediaQuery(theme.breakpoints.down('xs'));
+    const smDown = useMediaQuery(theme.breakpoints.down('sm'));
     const smUp = useMediaQuery(theme.breakpoints.up('sm'));
 
     const nameRef = useRef<HTMLInputElement>(null);
@@ -262,6 +262,7 @@ export const SectionedFormValidation = (): JSX.Element => {
                             }}
                             edge={'start'}
                             style={{ marginRight: 20 }}
+                            size="large"
                         >
                             <Menu />
                         </IconButton>
@@ -313,7 +314,7 @@ export const SectionedFormValidation = (): JSX.Element => {
                                 <MenuItem value={'level III'}>Level III (Regional)</MenuItem>
                             </Select>
                         </FormControl>
-                        {xsDown ? null : (
+                        {smDown ? null : (
                             <>
                                 <FormControlLabel control={<Checkbox name={'checkedC'} />} label={bluiProtection} />
                                 <Tooltip arrow title={bluiProtectionDescription} placement={'top'}>

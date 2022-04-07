@@ -175,6 +175,7 @@ export const ActionListInline = (): JSX.Element => {
                             }}
                             edge={'start'}
                             style={{ marginRight: 20 }}
+                            size="large"
                         >
                             <MenuIcon />
                         </IconButton>
@@ -229,6 +230,7 @@ export const ActionListInline = (): JSX.Element => {
                                                                 }}
                                                                 data-testid="deleteIcon"
                                                                 onClick={(): void => onDeleteItem('Delete', i)}
+                                                                size="large"
                                                             >
                                                                 <DeleteIcon />
                                                             </IconButton>
@@ -239,6 +241,7 @@ export const ActionListInline = (): JSX.Element => {
                                                                     root: classes.iconButton,
                                                                 }}
                                                                 data-testid="saveIcon"
+                                                                size="large"
                                                             >
                                                                 <BookmarkIcon />
                                                             </IconButton>
@@ -249,6 +252,7 @@ export const ActionListInline = (): JSX.Element => {
                                                                     root: classes.iconButton,
                                                                 }}
                                                                 data-testid="archiveIcon"
+                                                                size="large"
                                                             >
                                                                 <ArchiveIcon />
                                                             </IconButton>
@@ -263,6 +267,7 @@ export const ActionListInline = (): JSX.Element => {
                                                         data-cy={'action-menu'}
                                                         onClick={(evt): void => onMenuClick(evt, i)}
                                                         edge={'end'}
+                                                        size="large"
                                                     >
                                                         <MoreVertIcon />
                                                     </IconButton>

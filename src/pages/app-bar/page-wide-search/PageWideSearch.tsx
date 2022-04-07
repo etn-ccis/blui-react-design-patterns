@@ -32,6 +32,9 @@ const useStyles = makeStyles((theme: Theme) => ({
         maxWidth: '900px',
         margin: '0 auto',
         padding: `0 ${theme.spacing(2)}`,
+        [theme.breakpoints.down('sm')]: {
+            padding: 0,
+        },
     },
     toolbarRightContent: {
         display: 'flex',
@@ -66,6 +69,18 @@ const useStyles = makeStyles((theme: Theme) => ({
         margin: `0 ${theme.spacing(4)}`,
         [theme.breakpoints.down('sm')]: {
             marginTop: theme.spacing(4),
+        },
+    },
+    outlined: {
+        '& .MuiOutlinedInput-root': {
+            '& fieldset': {
+                borderRadius: '20px',
+                borderColor: 'red',
+            },
+            '&.Mui-focused fieldset': {
+                borderColor: '#C52328',
+                borderWidth: '2px',
+            },
         },
     },
 }));
@@ -120,6 +135,7 @@ export const PageWideSearch = (): JSX.Element => {
                             color={'inherit'}
                             edge={'start'}
                             style={{ marginRight: 20 }}
+                            size="large"
                         >
                             <MenuIcon />
                         </IconButton>
@@ -129,15 +145,15 @@ export const PageWideSearch = (): JSX.Element => {
                     </Typography>
                     <Spacer />
                     <div className={classes.toolbarRightContent}>
-                        <IconButton color={'inherit'}>
+                        <IconButton color={'inherit'} size="large">
                             <HelpIcon />
                         </IconButton>
-                        <IconButton color={'inherit'}>
+                        <IconButton color={'inherit'} size="large">
                             <Badge color="error" badgeContent={88}>
                                 <NotificationsIcon />
                             </Badge>
                         </IconButton>
-                        <IconButton color={'inherit'}>
+                        <IconButton color={'inherit'} size="large">
                             <MoreVertIcon />
                         </IconButton>
                     </div>
@@ -147,15 +163,18 @@ export const PageWideSearch = (): JSX.Element => {
                 <AppBar variant={'collapsed'} classes={{ root: classes.mobileAppbar }} elevation={0}>
                     <Toolbar className={classes.mobileSearchToolbar} data-cy={'search-field'}>
                         <TextField
+                            className={classes.outlined}
                             placeholder="Search"
-                            variant="standard"
+                            variant="outlined"
                             value={searchTerm}
                             onChange={onSearchTermChange}
                             InputProps={{
-                                disableUnderline: true,
                                 startAdornment: (
                                     <Search
-                                        style={{ marginRight: theme.spacing(4), color: theme.palette.text.secondary }}
+                                        style={{
+                                            marginRight: theme.spacing(4),
+                                            color: theme.palette.text.secondary,
+                                        }}
                                     />
                                 ),
                                 endAdornment: searchTerm.length > 0 && (
@@ -191,7 +210,11 @@ export const PageWideSearch = (): JSX.Element => {
                             InputProps={{
                                 startAdornment: (
                                     <Search
-                                        style={{ color: theme.palette.text.secondary, marginRight: theme.spacing(1) }}
+                                        style={{
+                                            color: theme.palette.text.secondary,
+                                            marginRight: theme.spacing(1),
+                                            borderColor: theme.palette.text.secondary,
+                                        }}
                                     />
                                 ),
                             }}

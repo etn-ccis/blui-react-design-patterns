@@ -108,6 +108,7 @@ export const ActionList = (): JSX.Element => {
                             }}
                             edge={'start'}
                             style={{ marginRight: 20 }}
+                            size="large"
                         >
                             <MenuIcon />
                         </IconButton>
@@ -123,6 +124,7 @@ export const ActionList = (): JSX.Element => {
                             color={'inherit'}
                             aria-label={'Delete'}
                             onClick={onRemoveAll}
+                            size="large"
                         >
                             <DeleteIcon />
                         </IconButton>
@@ -135,6 +137,7 @@ export const ActionList = (): JSX.Element => {
                             aria-label={'add'}
                             edge={'end'}
                             onClick={onAddItem}
+                            size="large"
                         >
                             <AddIcon />
                         </IconButton>
@@ -159,6 +162,7 @@ export const ActionList = (): JSX.Element => {
                                     data-cy={'action-menu'}
                                     onClick={(evt): void => onMenuClick(evt, i)}
                                     edge={'end'}
+                                    size="large"
                                 >
                                     <MoreVertIcon />
                                 </IconButton>

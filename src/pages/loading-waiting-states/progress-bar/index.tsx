@@ -194,6 +194,7 @@ export const ProgressBar = (): JSX.Element => {
                             }}
                             edge={'start'}
                             style={{ marginRight: 20 }}
+                            size="large"
                         >
                             <MenuIcon />
                         </IconButton>
@@ -277,6 +278,7 @@ export const ProgressBar = (): JSX.Element => {
                                                     rightComponent={
                                                         <Button
                                                             variant="outlined"
+                                                            color="inherit"
                                                             style={{ width: 80 }}
                                                             onClick={(): void =>
                                                                 markUploadComplete(item.id, item.status)

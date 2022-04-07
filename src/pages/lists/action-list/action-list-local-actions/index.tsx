@@ -192,6 +192,7 @@ export const ActionListLocalActions = (): JSX.Element => {
                     }}
                     edge={'start'}
                     style={{ marginRight: 20 }}
+                    size="large"
                 >
                     <MenuIcon />
                 </IconButton>
@@ -204,6 +205,7 @@ export const ActionListLocalActions = (): JSX.Element => {
                 onClick={onBackNavigation}
                 edge={'start'}
                 style={{ marginRight: 20 }}
+                size="large"
             >
                 <ArrowBack />
             </IconButton>
@@ -306,7 +308,7 @@ export const ActionListLocalActions = (): JSX.Element => {
                                     hidePadding
                                     rightComponent={
                                         <>
-                                            <IconButton edge={'end'} onClick={openMenu}>
+                                            <IconButton edge={'end'} onClick={openMenu} size="large">
                                                 <MoreVert />
                                             </IconButton>
                                             <Menu
@@ -333,7 +335,7 @@ export const ActionListLocalActions = (): JSX.Element => {
                                     subtitleSeparator={' '}
                                     hidePadding
                                     rightComponent={
-                                        <IconButton edge={'end'} onClick={handleEditDeviceClick}>
+                                        <IconButton edge={'end'} onClick={handleEditDeviceClick} size="large">
                                             <Edit />
                                         </IconButton>
                                     }

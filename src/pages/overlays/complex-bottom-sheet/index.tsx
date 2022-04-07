@@ -186,6 +186,7 @@ export const ComplexBottomSheet = (): JSX.Element => {
                             }}
                             edge={'start'}
                             style={{ marginRight: 20 }}
+                            size="large"
                         >
                             <Menu />
                         </IconButton>
@@ -199,6 +200,7 @@ export const ComplexBottomSheet = (): JSX.Element => {
                         color={'inherit'}
                         onClick={(): void => setShowMenu(true)}
                         edge={'end'}
+                        size="large"
                     >
                         <MoreVert />
                     </IconButton>

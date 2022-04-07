@@ -99,6 +99,7 @@ export const Collapsible = (): JSX.Element => {
                             }}
                             color={'inherit'}
                             edge={'start'}
+                            size="large"
                         >
                             <MenuIcon />
                         </IconButton>
@@ -113,15 +114,15 @@ export const Collapsible = (): JSX.Element => {
                         animationDuration={300}
                     />
                     <div className={classes.toolbarRightContent}>
-                        <IconButton color={'inherit'}>
+                        <IconButton color={'inherit'} size="large">
                             <HelpIcon />
                         </IconButton>
-                        <IconButton color={'inherit'}>
+                        <IconButton color={'inherit'} size="large">
                             <Badge color="error" badgeContent={88}>
                                 <NotificationsIcon />
                             </Badge>
                         </IconButton>
-                        <IconButton color={'inherit'}>
+                        <IconButton color={'inherit'} size="large">
                             <MoreVertIcon />
                         </IconButton>
                     </div>

@@ -58,7 +58,7 @@ export const ResponsiveTable = (): JSX.Element => {
     const classes = useStyles();
     const md = useMediaQuery(theme.breakpoints.up('md'));
     const sm = useMediaQuery(theme.breakpoints.up('sm'));
-    const xsDown = useMediaQuery(theme.breakpoints.down('xs'));
+    const smDown = useMediaQuery(theme.breakpoints.down('sm'));
 
     return (
         <div
@@ -78,6 +78,7 @@ export const ResponsiveTable = (): JSX.Element => {
                             }}
                             edge={'start'}
                             style={{ marginRight: 20 }}
+                            size="large"
                         >
                             <MenuIcon />
                         </IconButton>
@@ -99,7 +100,7 @@ export const ResponsiveTable = (): JSX.Element => {
                     )}
                 </List>
             )}
-            {xsDown ? null : (
+            {smDown ? null : (
                 <Table id="responsive-list-table">
                     <TableHead>
                         <TableRow>

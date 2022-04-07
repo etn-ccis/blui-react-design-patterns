@@ -17,7 +17,7 @@ describe('Sortable list', () => {
 
     it('should drag item in list to location', () => {
       cy.get('[data-cy=sort-btn]').click()
-      cy.get('[data-cy=sortable-row-0] > .MuiListItemAvatar-root > .MuiAvatar-root > .MuiButtonBase-root > .MuiIconButton-label > .MuiSvgIcon-root')
+      cy.get('[data-cy="sortable-row-0"] > .MuiListItemAvatar-root')
       .trigger('mousedown', { which: 1 })
       .trigger('mousemove', { force: true, x: 0, y: 100 })
       .trigger('mouseup', { force: true })

@@ -14,7 +14,8 @@ describe('Form validation phone number', () => {
     it('should display error for each country', () => {
         cy.get('[data-cy=country-selector]').click()
         .should('contain', 'US')
-        cy.get('body').click(top, {force: true})
+        cy.get('.Mui-selected').click()
+        // cy.get('body').click(top, {force: true})
         cy.get('[data-cy=phone-input]').click()
         cy.get('body').click(top, {force: true})
         cy.get('.MuiFormHelperText-root')

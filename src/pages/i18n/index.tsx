@@ -165,6 +165,7 @@ export const I18N = (): JSX.Element => {
                     value={lang}
                     onChange={(event): void => changeLanguage(String(event.target.value))}
                     style={{ padding: theme.spacing(0.5), minWidth: theme.spacing(20), marginLeft: theme.spacing(0.5) }}
+                    variant="standard"
                 >
                     <MenuItem value={'en'}>{t('LANGUAGES.ENGLISH')}</MenuItem>
                     <MenuItem value={'ar'}>{t('LANGUAGES.ARABIC')}</MenuItem>

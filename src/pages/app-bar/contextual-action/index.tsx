@@ -146,7 +146,6 @@ export const ContextualAction = (): JSX.Element => {
     const [selectedItems, setSelectedItems] = useState<ListItemType[]>([]);
     const isMobile = useMediaQuery(theme.breakpoints.down('md'));
     const md = useMediaQuery(theme.breakpoints.up('md'));
-    const smDown = useMediaQuery(theme.breakpoints.down('sm'));
 
     const onSelect = useCallback(
         (item: ListItemType): void => {
@@ -303,7 +302,7 @@ export const ContextualAction = (): JSX.Element => {
             <div>
                 <div className={classes.tableBody}>
                     <div className={classes.tableContainer}>
-                        {smDown ? null : (
+                        {isMobile ? null : (
                             <div className={classes.deleteRow}>
                                 <Typography variant={'caption'} color={'inherit'}>
                                     {selectedItems.length} selected item(s)
@@ -330,7 +329,7 @@ export const ContextualAction = (): JSX.Element => {
                             </Typography>
                         ) : undefined}
 
-                        {smDown ? null : (
+                        {isMobile ? null : (
                             <Typography variant="body2" className={classes.noteText}>
                                 The contextual app bar is for mobile only.
                             </Typography>

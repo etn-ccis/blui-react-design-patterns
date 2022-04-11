@@ -146,7 +146,6 @@ export const MultiselectList = (): JSX.Element => {
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('md'));
     const md = useMediaQuery(theme.breakpoints.up('md'));
-    const smDown = useMediaQuery(theme.breakpoints.down('sm'));
     const [list, setList] = useState<ListItemType[]>(generatedList);
     const result = categorizeList(list);
     const [filteredResult, setFilteredResult] = useState(result);
@@ -439,7 +438,7 @@ export const MultiselectList = (): JSX.Element => {
                 </Toolbar>
             </AppBar>
             <div className={classes.exampleContainer}>
-                {smDown ? null : (
+                {isMobile ? null : (
                     <div className={classes.deleteRow}>
                         <Button
                             data-testid="deleteButton"

@@ -64,8 +64,8 @@ const useStyles = makeStyles((theme: Theme) => ({
     divider: {
         marginTop: theme.spacing(5),
         marginBottom: theme.spacing(5),
-        marginLeft: theme.spacing(2),
-        marginRight: theme.spacing(2),
+        marginLeft: theme.spacing(-2),
+        marginRight: theme.spacing(-2),
     },
     icon: {
         marginRight: theme.spacing(2),

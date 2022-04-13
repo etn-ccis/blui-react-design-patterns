@@ -44,7 +44,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
     snackbarAction: {
         margin: 'auto',
-        marginLeft: -theme.spacing(),
+        marginLeft: theme.spacing(-1),
         paddingRight: theme.spacing(2),
         paddingLeft: 0,
     },
@@ -55,7 +55,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     RTL: { transform: 'scaleX(-1)' },
     RTLButtonStartIcon: {
         marginRight: theme.spacing(-0.5),
-        marginLeft: theme.spacing(),
+        marginLeft: theme.spacing(1),
     },
     rightComponent: {
         marginLeft: 0,
@@ -66,6 +66,9 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
     toolbarGutters: {
         padding: '0 16px',
+    },
+    listItemButtonRoot: {
+        textAlign: 'right',
     },
 }));
 
@@ -204,7 +207,10 @@ export const I18N = (): JSX.Element => {
                                 onChange={(): void => selectFruit(fruit.name)}
                             />
                         }
-                        classes={{ rightComponent: isRTL() ? classes.rightComponent : undefined }}
+                        classes={{
+                            rightComponent: isRTL() ? classes.rightComponent : undefined,
+                            listItemButtonRoot: isRTL() ? classes.listItemButtonRoot : undefined,
+                        }}
                     />
                 ))}
             </List>

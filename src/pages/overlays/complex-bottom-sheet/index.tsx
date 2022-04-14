@@ -1,34 +1,35 @@
 import React, { useEffect, useState } from 'react';
 
-import AppBar from '@material-ui/core/AppBar';
-import Divider from '@material-ui/core/Divider';
-import Drawer from '@material-ui/core/Drawer';
-import Hidden from '@material-ui/core/Hidden';
-import IconButton from '@material-ui/core/IconButton';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
+import AppBar from '@mui/material/AppBar';
+import Divider from '@mui/material/Divider';
+import Drawer from '@mui/material/Drawer';
+import IconButton from '@mui/material/IconButton';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
 import { Hero, HeroBanner, InfoListItem, Spacer } from '@brightlayer-ui/react-components';
 import * as Colors from '@brightlayer-ui/colors';
-import Box from '@material-ui/core/Box';
+import Box from '@mui/material/Box';
 
-import Close from '@material-ui/icons/Close';
-import Menu from '@material-ui/icons/Menu';
-import MoreVert from '@material-ui/icons/MoreVert';
-import Notifications from '@material-ui/icons/Notifications';
-import NotificationsActive from '@material-ui/icons/NotificationsActive';
-import AccessTime from '@material-ui/icons/AccessTime';
-import Info from '@material-ui/icons/Info';
-import Settings from '@material-ui/icons/Settings';
-import Update from '@material-ui/icons/Update';
+import Close from '@mui/icons-material/Close';
+import Menu from '@mui/icons-material/Menu';
+import MoreVert from '@mui/icons-material/MoreVert';
+import Notifications from '@mui/icons-material/Notifications';
+import NotificationsActive from '@mui/icons-material/NotificationsActive';
+import AccessTime from '@mui/icons-material/AccessTime';
+import Info from '@mui/icons-material/Info';
+import Settings from '@mui/icons-material/Settings';
+import Update from '@mui/icons-material/Update';
 
 import { useDispatch } from 'react-redux';
 import { TOGGLE_DRAWER } from '../../../redux/actions';
-import { createStyles, makeStyles, Theme, useTheme } from '@material-ui/core/styles';
+import { Theme, useTheme } from '@mui/material/styles';
+import createStyles from '@mui/styles/createStyles';
+import makeStyles from '@mui/styles/makeStyles';
 import getEvents, { Event, formatDate } from './alarmData';
 import { EmptyState } from './EmptyState';
-import { useMediaQuery } from '@material-ui/core';
+import { useMediaQuery } from '@mui/material';
 
 export const TYPES = {
     TIME: 'time',
@@ -52,7 +53,7 @@ const useStyles = makeStyles((theme: Theme) =>
             padding: '0 16px',
         },
         alarmRow: {
-            borderLeft: `${theme.spacing(0.5)}px solid transparent`,
+            borderLeft: `${theme.spacing(0.5)} solid transparent`,
         },
         avatar: {
             color: theme.palette.text.primary,
@@ -94,7 +95,7 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         emptyStateContainer: {
             display: 'flex',
-            height: `calc(100vh - ${theme.spacing(8)}px)`,
+            height: `calc(100vh - ${theme.spacing(8)})`,
             justifyContent: 'center',
         },
     })
@@ -158,7 +159,8 @@ export const ComplexBottomSheet = (): JSX.Element => {
     const [showActiveAlarms, setShowActiveAlarms] = useState(true);
     const [showSettings, setShowSettings] = useState(true);
     const [showSessions, setShowSessions] = useState(true);
-    const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+    const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+    const md = useMediaQuery(theme.breakpoints.up('md'));
 
     useEffect(() => {
         setList(
@@ -175,7 +177,7 @@ export const ComplexBottomSheet = (): JSX.Element => {
         <div style={{ backgroundColor: theme.palette.background.paper, minHeight: '100vh' }}>
             <AppBar data-cy="blui-toolbar" position={'sticky'} classes={{ root: classes.appbarRoot }}>
                 <Toolbar classes={{ gutters: classes.toolbarGutters }}>
-                    <Hidden mdUp>
+                    {md ? null : (
                         <IconButton
                             data-cy="toolbar-menu"
                             color={'inherit'}
@@ -184,10 +186,11 @@ export const ComplexBottomSheet = (): JSX.Element => {
                             }}
                             edge={'start'}
                             style={{ marginRight: 20 }}
+                            size="large"
                         >
                             <Menu />
                         </IconButton>
-                    </Hidden>
+                    )}
                     <Typography variant={'h6'} color={'inherit'} noWrap>
                         Complex Bottom Sheet
                     </Typography>
@@ -197,6 +200,7 @@ export const ComplexBottomSheet = (): JSX.Element => {
                         color={'inherit'}
                         onClick={(): void => setShowMenu(true)}
                         edge={'end'}
+                        size="large"
                     >
                         <MoreVert />
                     </IconButton>

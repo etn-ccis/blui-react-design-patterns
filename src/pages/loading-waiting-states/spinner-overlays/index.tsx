@@ -10,30 +10,32 @@ import {
     CircularProgress,
     Divider,
     FormControlLabel,
-    Hidden,
+    useMediaQuery,
+    useTheme,
     IconButton,
     Toolbar,
     Typography,
-} from '@material-ui/core';
-import { makeStyles, Theme } from '@material-ui/core/styles';
-import MenuIcon from '@material-ui/icons/Menu';
+} from '@mui/material';
+import { Theme } from '@mui/material/styles';
+import makeStyles from '@mui/styles/makeStyles';
+import MenuIcon from '@mui/icons-material/Menu';
 import { useDispatch } from 'react-redux';
 import { TOGGLE_DRAWER } from '../../../redux/actions';
 import { eulaText } from './eulaText';
 
 const useStyles = makeStyles((theme: Theme) => ({
     container: {
-        padding: `${theme.spacing(2)}px ${theme.spacing(2)}px`,
+        padding: `${theme.spacing(2)} ${theme.spacing(2)}`,
         maxWidth: '450px',
         margin: '0 auto',
-        height: `calc(100vh - ${theme.spacing(8)}px)`,
-        [theme.breakpoints.down('xs')]: {
-            height: `calc(100vh - ${theme.spacing(7)}px)`,
+        height: `calc(100vh - ${theme.spacing(8)})`,
+        [theme.breakpoints.down('sm')]: {
+            height: `calc(100vh - ${theme.spacing(7)})`,
             padding: 0,
         },
     },
     toolbarGutters: {
-        padding: `0 ${theme.spacing(2)}px`,
+        padding: `0 ${theme.spacing(2)}`,
     },
     reloadButton: {
         width: '100%',
@@ -57,16 +59,16 @@ const useStyles = makeStyles((theme: Theme) => ({
         overflow: 'auto',
         display: 'flex',
         flexDirection: 'column',
-        [theme.breakpoints.down('xs')]: {
+        [theme.breakpoints.down('sm')]: {
             maxWidth: 'none',
             maxHeight: 'none',
             borderRadius: 0,
         },
     },
     cardTitle: {
-        padding: `${theme.spacing(4)}px ${theme.spacing(3)}px 0 ${theme.spacing(3)}px`,
-        [theme.breakpoints.down('xs')]: {
-            padding: `${theme.spacing(2)}px ${theme.spacing(2)}px 0 ${theme.spacing(2)}px`,
+        padding: `${theme.spacing(4)} ${theme.spacing(3)} 0 ${theme.spacing(3)}`,
+        [theme.breakpoints.down('sm')]: {
+            padding: `${theme.spacing(2)} ${theme.spacing(2)} 0 ${theme.spacing(2)}`,
         },
     },
     cardContent: {
@@ -75,15 +77,15 @@ const useStyles = makeStyles((theme: Theme) => ({
         display: 'flex',
         flexDirection: 'column',
         position: 'relative',
-        padding: `${theme.spacing(2)}px ${theme.spacing(3)}px`,
-        [theme.breakpoints.down('xs')]: {
-            padding: `${theme.spacing(2)}px ${theme.spacing(2)}px ${theme.spacing(3)}px ${theme.spacing(2)}px`,
+        padding: `${theme.spacing(2)} ${theme.spacing(3)}`,
+        [theme.breakpoints.down('sm')]: {
+            padding: `${theme.spacing(2)} ${theme.spacing(2)} ${theme.spacing(3)} ${theme.spacing(2)}`,
         },
     },
     cardActions: {
         padding: theme.spacing(3),
         justifyContent: 'flex-end',
-        [theme.breakpoints.down('xs')]: {
+        [theme.breakpoints.down('sm')]: {
             padding: theme.spacing(2),
         },
     },
@@ -107,6 +109,8 @@ export const SpinnerOverlays = (): JSX.Element => {
     const classes = useStyles();
     const [eulaAccepted, setEulaAccepted] = useState(false);
     const [eulaLoaded, setEulaLoaded] = useState(false);
+    const theme = useTheme();
+    const md = useMediaQuery(theme.breakpoints.up('md'));
 
     const changeCheckboxState = (event: React.ChangeEvent<HTMLInputElement>): void => {
         setEulaAccepted(event.target.checked);
@@ -133,7 +137,7 @@ export const SpinnerOverlays = (): JSX.Element => {
         <div style={{ minHeight: '100vh' }}>
             <AppBar data-cy="blui-toolbar" position={'sticky'}>
                 <Toolbar classes={{ gutters: classes.toolbarGutters }}>
-                    <Hidden mdUp={true}>
+                    {md ? null : (
                         <IconButton
                             data-cy="toolbar-menu"
                             color={'inherit'}
@@ -142,10 +146,11 @@ export const SpinnerOverlays = (): JSX.Element => {
                             }}
                             edge={'start'}
                             style={{ marginRight: 20 }}
+                            size="large"
                         >
                             <MenuIcon />
                         </IconButton>
-                    </Hidden>
+                    )}
                     <Typography variant={'h6'} color={'inherit'}>
                         Spinner Overlays
                     </Typography>

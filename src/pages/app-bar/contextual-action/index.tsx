@@ -3,7 +3,6 @@ import {
     AppBar,
     Button,
     Checkbox,
-    Hidden,
     IconButton,
     Paper,
     Table,
@@ -15,11 +14,12 @@ import {
     Toolbar,
     Typography,
     useMediaQuery,
-} from '@material-ui/core';
-import { makeStyles, Theme, useTheme } from '@material-ui/core/styles';
-import CloseIcon from '@material-ui/icons/Close';
-import MenuIcon from '@material-ui/icons/Menu';
-import DeleteIcon from '@material-ui/icons/Delete';
+} from '@mui/material';
+import { Theme, useTheme } from '@mui/material/styles';
+import makeStyles from '@mui/styles/makeStyles';
+import CloseIcon from '@mui/icons-material/Close';
+import MenuIcon from '@mui/icons-material/Menu';
+import DeleteIcon from '@mui/icons-material/Delete';
 import { Spacer } from '@brightlayer-ui/react-components';
 import { useDispatch } from 'react-redux';
 import { TOGGLE_DRAWER } from '../../../redux/actions';
@@ -47,7 +47,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         width: 0,
         opacity: 0,
         '&$contextualBarActive': {
-            [theme.breakpoints.down('sm')]: {
+            [theme.breakpoints.down('md')]: {
                 width: '100%',
                 opacity: 1,
             },
@@ -55,10 +55,10 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
     contextualBarActive: {},
     checkboxCell: {
-        padding: `0 0 0 ${theme.spacing(1)}px`,
+        padding: `0 0 0 ${theme.spacing(1)}`,
         minWidth: '56px',
-        [theme.breakpoints.down('sm')]: {
-            padding: `0 0 0 ${theme.spacing(1)}px`,
+        [theme.breakpoints.down('md')]: {
+            padding: `0 0 0 ${theme.spacing(1)}`,
         },
     },
     checkboxIndeterminate: {
@@ -78,16 +78,16 @@ const useStyles = makeStyles((theme: Theme) => ({
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
-        marginBottom: `${theme.spacing(2)}px`,
+        marginBottom: theme.spacing(2),
     },
     noResult: {
-        padding: `${theme.spacing(2)}px`,
+        padding: theme.spacing(2),
         textAlign: 'center',
         backgroundColor: theme.palette.background.paper,
     },
     noteText: {
         color: theme.palette.text.secondary,
-        marginTop: `${theme.spacing(3)}px`,
+        marginTop: theme.spacing(3),
     },
     resetTableLink: {
         textDecoration: 'underline',
@@ -102,7 +102,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         left: 0,
     },
     secondaryToolbar: {
-        padding: `0 ${theme.spacing(2)}px`,
+        padding: `0 ${theme.spacing(2)}`,
     },
     tableBody: {
         display: 'flex',
@@ -113,8 +113,8 @@ const useStyles = makeStyles((theme: Theme) => ({
         overflow: 'auto',
         maxWidth: '800px',
         width: '100%',
-        padding: `${theme.spacing(2)}px`,
-        [theme.breakpoints.down('sm')]: {
+        padding: theme.spacing(2),
+        [theme.breakpoints.down('md')]: {
             maxWidth: 'unset',
             padding: 0,
         },
@@ -144,7 +144,8 @@ export const ContextualAction = (): JSX.Element => {
     const classes = useStyles();
     const [list, setList] = useState<ListItemType[]>(generatedList);
     const [selectedItems, setSelectedItems] = useState<ListItemType[]>([]);
-    const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+    const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+    const md = useMediaQuery(theme.breakpoints.up('md'));
 
     const onSelect = useCallback(
         (item: ListItemType): void => {
@@ -251,7 +252,7 @@ export const ContextualAction = (): JSX.Element => {
                 className={clsx(classes.appbar, selectedItems.length !== 0 && isMobile && classes.contextualBarActive)}
             >
                 <Toolbar classes={{ gutters: classes.toolbarGutters }}>
-                    <Hidden mdUp={true}>
+                    {md ? null : (
                         <IconButton
                             data-cy="toolbar-menu"
                             color={'inherit'}
@@ -260,10 +261,11 @@ export const ContextualAction = (): JSX.Element => {
                             }}
                             edge={'start'}
                             style={{ marginRight: 20 }}
+                            size="large"
                         >
                             <MenuIcon />
                         </IconButton>
-                    </Hidden>
+                    )}
                     <Typography variant={'h6'} color={'inherit'}>
                         Contextual App Bar
                     </Typography>
@@ -279,14 +281,20 @@ export const ContextualAction = (): JSX.Element => {
                 color={'default'}
             >
                 <Toolbar classes={{ gutters: classes.secondaryToolbar }}>
-                    <IconButton color={'inherit'} edge={'start'} style={{ marginRight: 20 }} onClick={onClose}>
+                    <IconButton
+                        color={'inherit'}
+                        edge={'start'}
+                        style={{ marginRight: 20 }}
+                        onClick={onClose}
+                        size="large"
+                    >
                         <CloseIcon />
                     </IconButton>
                     <Typography variant={'h6'} color={'inherit'}>
                         {selectedItems.length} selected
                     </Typography>
                     <Spacer />
-                    <IconButton color={'inherit'} edge={'end'} onClick={onDelete}>
+                    <IconButton color={'inherit'} edge={'end'} onClick={onDelete} size="large">
                         <DeleteIcon />
                     </IconButton>
                 </Toolbar>
@@ -294,7 +302,7 @@ export const ContextualAction = (): JSX.Element => {
             <div>
                 <div className={classes.tableBody}>
                     <div className={classes.tableContainer}>
-                        <Hidden smDown={true}>
+                        {isMobile ? null : (
                             <div className={classes.deleteRow}>
                                 <Typography variant={'caption'} color={'inherit'}>
                                     {selectedItems.length} selected item(s)
@@ -310,7 +318,7 @@ export const ContextualAction = (): JSX.Element => {
                                     Delete selected items
                                 </Button>
                             </div>
-                        </Hidden>
+                        )}
                         <div>{getTable()}</div>
                         {list.length === 0 ? (
                             <Typography className={classes.noResult} data-cy={'empty-table'}>
@@ -321,11 +329,11 @@ export const ContextualAction = (): JSX.Element => {
                             </Typography>
                         ) : undefined}
 
-                        <Hidden smDown={true}>
+                        {isMobile ? null : (
                             <Typography variant="body2" className={classes.noteText}>
                                 The contextual app bar is for mobile only.
                             </Typography>
-                        </Hidden>
+                        )}
                     </div>
                 </div>
             </div>

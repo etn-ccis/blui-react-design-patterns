@@ -7,7 +7,6 @@ import {
     FormControl,
     FormControlLabel,
     FormHelperText,
-    Hidden,
     IconButton,
     InputLabel,
     InputProps,
@@ -17,9 +16,11 @@ import {
     Toolbar,
     Tooltip,
     Typography,
-} from '@material-ui/core';
-import { ContactMail, HelpOutline, LocationOn, Menu } from '@material-ui/icons';
-import { makeStyles, Theme, useTheme } from '@material-ui/core/styles';
+    useMediaQuery,
+} from '@mui/material';
+import { ContactMail, HelpOutline, LocationOn, Menu } from '@mui/icons-material';
+import { Theme, useTheme } from '@mui/material/styles';
+import makeStyles from '@mui/styles/makeStyles';
 import { useDispatch } from 'react-redux';
 import { TOGGLE_DRAWER } from '../../../redux/actions';
 import { Factory } from '@brightlayer-ui/icons-mui';
@@ -40,7 +41,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         alignItems: 'start',
         flex: '1 1 0',
         minHeight: 'calc(100vh - 64px)',
-        [theme.breakpoints.down('xs')]: {
+        [theme.breakpoints.down('sm')]: {
             minHeight: 'calc(100vh - 56px)',
         },
     },
@@ -49,7 +50,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         width: '100%',
         paddingTop: theme.spacing(5),
         paddingBottom: theme.spacing(5),
-        [theme.breakpoints.down('xs')]: {
+        [theme.breakpoints.down('sm')]: {
             maxWidth: '100%',
             padding: theme.spacing(2),
         },
@@ -63,13 +64,13 @@ const useStyles = makeStyles((theme: Theme) => ({
     divider: {
         marginTop: theme.spacing(5),
         marginBottom: theme.spacing(5),
-        marginLeft: -theme.spacing(2),
-        marginRight: -theme.spacing(2),
+        marginLeft: theme.spacing(-2),
+        marginRight: theme.spacing(-2),
     },
     icon: {
         marginRight: theme.spacing(2),
         color: theme.palette.text.secondary,
-        [theme.breakpoints.down('xs')]: {
+        [theme.breakpoints.down('sm')]: {
             marginRight: theme.spacing(4),
         },
     },
@@ -77,7 +78,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         marginTop: theme.spacing(4),
         display: 'flex',
         alignItems: 'center',
-        [theme.breakpoints.down('xs')]: {
+        [theme.breakpoints.down('sm')]: {
             flexDirection: 'column',
             justifyContent: 'center',
             width: '100%',
@@ -87,7 +88,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     selectLevelForm: {
         marginRight: theme.spacing(3),
         width: 200,
-        [theme.breakpoints.down('xs')]: {
+        [theme.breakpoints.down('sm')]: {
             width: '100%',
             marginRight: 0,
         },
@@ -95,7 +96,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     firstNameFormField: {
         width: '50%',
         marginRight: theme.spacing(1),
-        [theme.breakpoints.down('xs')]: {
+        [theme.breakpoints.down('sm')]: {
             marginRight: 0,
             width: '100%',
         },
@@ -103,7 +104,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     lastNameFormField: {
         width: '50%',
         marginLeft: theme.spacing(1),
-        [theme.breakpoints.down('xs')]: {
+        [theme.breakpoints.down('sm')]: {
             width: '100%',
             marginLeft: 0,
             marginTop: theme.spacing(mobileInputMarginSpacing),
@@ -113,20 +114,20 @@ const useStyles = makeStyles((theme: Theme) => ({
         marginTop: theme.spacing(5),
         display: 'flex',
         justifyContent: 'flex-end',
-        [theme.breakpoints.down('xs')]: {
+        [theme.breakpoints.down('sm')]: {
             width: '100%',
         },
     },
     submitButton: {
-        [theme.breakpoints.down('xs')]: {
+        [theme.breakpoints.down('sm')]: {
             width: '100%',
         },
     },
     zipInput: {
         marginRight: theme.spacing(2),
         marginLeft: theme.spacing(2),
-        [theme.breakpoints.down('xs')]: {
-            margin: `${theme.spacing(mobileInputMarginSpacing)}px 0 ${theme.spacing(mobileInputMarginSpacing)}px 0`,
+        [theme.breakpoints.down('sm')]: {
+            margin: `${theme.spacing(mobileInputMarginSpacing)} 0 ${theme.spacing(mobileInputMarginSpacing)} 0`,
         },
     },
     textField: {
@@ -151,6 +152,9 @@ export const SectionedFormValidation = (): JSX.Element => {
     const [zip, setZip] = useState('');
     const [emailError, setEmailError] = useState('');
     const [showRequiredError, setShowRequiredError] = useState(false);
+    const md = useMediaQuery(theme.breakpoints.up('md'));
+    const smDown = useMediaQuery(theme.breakpoints.down('sm'));
+    const smUp = useMediaQuery(theme.breakpoints.up('sm'));
 
     const nameRef = useRef<HTMLInputElement>(null);
     const addressRef = useRef<HTMLInputElement>(null);
@@ -249,7 +253,7 @@ export const SectionedFormValidation = (): JSX.Element => {
         <>
             <AppBar data-cy={'blui-toolbar'} position={'sticky'} classes={{ root: classes.appbarRoot }}>
                 <Toolbar classes={{ gutters: classes.toolbarGutters }}>
-                    <Hidden mdUp>
+                    {md ? null : (
                         <IconButton
                             data-cy={'toolbar-menu'}
                             color={'inherit'}
@@ -258,10 +262,11 @@ export const SectionedFormValidation = (): JSX.Element => {
                             }}
                             edge={'start'}
                             style={{ marginRight: 20 }}
+                            size="large"
                         >
                             <Menu />
                         </IconButton>
-                    </Hidden>
+                    )}
                     <Typography variant={'h6'} color={'inherit'}>
                         Sectioned Form
                     </Typography>
@@ -309,13 +314,15 @@ export const SectionedFormValidation = (): JSX.Element => {
                                 <MenuItem value={'level III'}>Level III (Regional)</MenuItem>
                             </Select>
                         </FormControl>
-                        <Hidden xsDown>
-                            <FormControlLabel control={<Checkbox name={'checkedC'} />} label={bluiProtection} />
-                            <Tooltip arrow title={bluiProtectionDescription} placement={'top'}>
-                                <HelpOutline style={{ color: theme.palette.text.disabled }} />
-                            </Tooltip>
-                        </Hidden>
-                        <Hidden smUp>
+                        {smDown ? null : (
+                            <>
+                                <FormControlLabel control={<Checkbox name={'checkedC'} />} label={bluiProtection} />
+                                <Tooltip arrow title={bluiProtectionDescription} placement={'top'}>
+                                    <HelpOutline style={{ color: theme.palette.text.disabled }} />
+                                </Tooltip>
+                            </>
+                        )}
+                        {smUp ? null : (
                             <div
                                 style={{
                                     display: 'flex',
@@ -336,7 +343,7 @@ export const SectionedFormValidation = (): JSX.Element => {
                                     </Typography>
                                 </div>
                             </div>
-                        </Hidden>
+                        )}
                     </div>
 
                     <Divider className={classes.divider} />
@@ -491,12 +498,12 @@ export const SectionedFormValidation = (): JSX.Element => {
                         />
                     </div>
 
-                    <Hidden smUp>
+                    {smUp ? null : (
                         <Divider
                             className={classes.divider}
-                            style={{ marginBottom: -theme.spacing(3), marginTop: theme.spacing(4) }}
+                            style={{ marginBottom: theme.spacing(-3), marginTop: theme.spacing(4) }}
                         />
-                    </Hidden>
+                    )}
 
                     <div className={classes.submitButtonContainer}>
                         <Button

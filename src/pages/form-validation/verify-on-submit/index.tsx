@@ -3,16 +3,17 @@ import {
     AppBar,
     Button,
     CircularProgress,
-    Hidden,
     IconButton,
     InputProps,
     Slide,
     TextField,
     Toolbar,
     Typography,
-} from '@material-ui/core';
-import { Add, CheckCircle, Menu, Search } from '@material-ui/icons';
-import { makeStyles, Theme, useTheme } from '@material-ui/core/styles';
+    useMediaQuery,
+} from '@mui/material';
+import { Add, CheckCircle, Menu, Search } from '@mui/icons-material';
+import { Theme, useTheme } from '@mui/material/styles';
+import makeStyles from '@mui/styles/makeStyles';
 import { useDispatch } from 'react-redux';
 import { TOGGLE_DRAWER } from '../../../redux/actions';
 import { EmptyState } from '@brightlayer-ui/react-components';
@@ -35,7 +36,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         backgroundColor: 'white',
         height: 'calc(100vh - 64px)',
         overflow: 'hidden',
-        [theme.breakpoints.down('xs')]: {
+        [theme.breakpoints.down('sm')]: {
             height: 'calc(100vh - 56px)',
         },
     },
@@ -44,7 +45,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         width: '100%',
         maxWidth: 480,
         padding: theme.spacing(4),
-        [theme.breakpoints.down('xs')]: {
+        [theme.breakpoints.down('sm')]: {
             padding: theme.spacing(2),
             maxWidth: '100%',
         },
@@ -53,7 +54,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         height: 36,
         marginTop: theme.spacing(4),
         width: 152,
-        [theme.breakpoints.down('xs')]: {
+        [theme.breakpoints.down('sm')]: {
             width: '100%',
         },
     },
@@ -80,6 +81,7 @@ export const VerifyOnSubmitValidation = (): JSX.Element => {
     const [showAddDeviceScreen, setShowAddDeviceScreen] = useState(true);
     const [loading, setLoading] = useState(false);
     const inputEl = useRef<HTMLInputElement>(null);
+    const md = useMediaQuery(theme.breakpoints.up('md'));
 
     useEffect(() => {
         if (showAddDeviceScreen && inputEl.current) {
@@ -116,7 +118,7 @@ export const VerifyOnSubmitValidation = (): JSX.Element => {
         <>
             <AppBar data-cy={'blui-toolbar'} position={'sticky'} classes={{ root: classes.appbarRoot }}>
                 <Toolbar classes={{ gutters: classes.toolbarGutters }}>
-                    <Hidden mdUp>
+                    {md ? null : (
                         <IconButton
                             data-cy={'toolbar-menu'}
                             color={'inherit'}
@@ -125,10 +127,11 @@ export const VerifyOnSubmitValidation = (): JSX.Element => {
                             }}
                             edge={'start'}
                             style={{ marginRight: 20 }}
+                            size="large"
                         >
                             <Menu />
                         </IconButton>
-                    </Hidden>
+                    )}
                     <Typography variant={'h6'} color={'inherit'}>
                         Verify on Submit
                     </Typography>

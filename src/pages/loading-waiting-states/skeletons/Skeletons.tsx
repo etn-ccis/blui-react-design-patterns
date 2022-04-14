@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { makeStyles, useTheme, Theme } from '@material-ui/core/styles';
-import { AppBar, Toolbar, Hidden, IconButton, Typography, Button, ButtonGroup, Card, List } from '@material-ui/core';
+import { useTheme, Theme } from '@mui/material/styles';
+import makeStyles from '@mui/styles/makeStyles';
+import { AppBar, Toolbar, IconButton, Typography, Button, ButtonGroup, Card, List, useMediaQuery } from '@mui/material';
 import { TOGGLE_DRAWER } from '../../../redux/actions';
 import { useDispatch } from 'react-redux';
-import { Cloud, KeyboardArrowRight, ListAlt, Menu, Notifications } from '@material-ui/icons';
+import { Cloud, KeyboardArrowRight, ListAlt, Menu, Notifications } from '@mui/icons-material';
 import { ScorecardPlaceholder } from './components/ScorecardPlaceholder';
 import { ListItemDensePlaceholder, ListItemPlaceholder } from './components/ListItemPlaceholder';
 import { HeroBannerPlaceholder } from './components/HeroBannerPlaceholder';
@@ -11,7 +12,7 @@ import { Hero, HeroBanner, InfoListItem, ScoreCard, Spacer } from '@brightlayer-
 import * as colors from '@brightlayer-ui/colors';
 import { CurrentCircled, GradeA, Temp, Device, Moisture } from '@brightlayer-ui/icons-mui';
 
-const backgroundImage = require('../../../assets/topology_40.png').default;
+const backgroundImage = require('../../../assets/topology_40.png');
 
 const useStyles = makeStyles((theme: Theme) => ({
     root: {
@@ -22,10 +23,10 @@ const useStyles = makeStyles((theme: Theme) => ({
         padding: 0,
     },
     toolbarGutters: {
-        padding: `0 ${theme.spacing(2)}px`,
+        padding: `0 ${theme.spacing(2)}`,
     },
     exampleContainer: {
-        margin: `${theme.spacing(3)}px ${theme.spacing(2)}px`,
+        margin: `${theme.spacing(3)} ${theme.spacing(2)}`,
     },
     buttonRow: {
         display: 'flex',
@@ -62,6 +63,7 @@ export const Skeletons = (): JSX.Element => {
     const dispatch = useDispatch();
     const [isLoading, setIsLoading] = useState(true);
     const [animationStyle, setAnimationStyle] = useState<'pulse' | 'wave'>('pulse');
+    const md = useMediaQuery(theme.breakpoints.up('md'));
     let refreshTimeout: ReturnType<typeof setTimeout>;
     let looperTimeout: ReturnType<typeof setTimeout>;
 
@@ -88,7 +90,7 @@ export const Skeletons = (): JSX.Element => {
         <>
             <AppBar data-cy="blui-toolbar" position={'sticky'} classes={{ root: classes.appbarRoot }}>
                 <Toolbar classes={{ gutters: classes.toolbarGutters }}>
-                    <Hidden mdUp={true}>
+                    {md ? null : (
                         <IconButton
                             data-cy="toolbar-menu"
                             color={'inherit'}
@@ -97,10 +99,11 @@ export const Skeletons = (): JSX.Element => {
                             }}
                             edge={'start'}
                             style={{ marginRight: 20 }}
+                            size="large"
                         >
                             <Menu />
                         </IconButton>
-                    </Hidden>
+                    )}
                     <Typography variant={'h6'} color={'inherit'}>
                         Skeletons
                     </Typography>
@@ -156,19 +159,15 @@ export const Skeletons = (): JSX.Element => {
                                     label={'Temperature'}
                                     iconSize={48}
                                     iconBackgroundColor={colors.white[50]}
-                                    value={98}
-                                    units={'°F'}
-                                    fontSize={'normal'}
+                                    ChannelValueProps={{ value: 98, units: '°F', fontSize: 'normal' }}
                                 />
                                 <Hero
                                     key={'hero2'}
                                     icon={<Moisture fontSize={'inherit'} htmlColor={colors.blue[300]} />}
                                     label={'Humidity'}
-                                    value={54}
                                     iconBackgroundColor={colors.white[50]}
-                                    units={'%'}
                                     iconSize={48}
-                                    fontSize={'normal'}
+                                    ChannelValueProps={{ value: 54, units: '%', fontSize: 'normal' }}
                                 />
                             </HeroBanner>
                         }
@@ -318,23 +317,19 @@ export const Skeletons = (): JSX.Element => {
                                 key={'hero1'}
                                 icon={<GradeA fontSize={'inherit'} htmlColor={colors.green[500]} />}
                                 label={'Healthy'}
-                                value={96}
-                                units={'/100'}
+                                ChannelValueProps={{ value: 96, units: '/100' }}
                             />
                             <Hero
                                 key={'hero2'}
                                 icon={<CurrentCircled fontSize={'inherit'} htmlColor={colors.yellow[500]} />}
                                 label={'Load'}
-                                value={'90'}
-                                units={'%'}
-                                fontSize={'normal'}
+                                ChannelValueProps={{ value: '90', units: '%', fontSize: 'normal' }}
                             />
                             <Hero
                                 key={'hero3'}
                                 icon={<Temp fontSize={'inherit'} htmlColor={colors.green[500]} />}
                                 label={'Temp'}
-                                value={55}
-                                units={'C'}
+                                ChannelValueProps={{ value: 55, units: 'C' }}
                             />
                         </HeroBanner>
                     </Card>

@@ -1,18 +1,19 @@
 import React, { useCallback, useState } from 'react';
-import { AppBar, Avatar, Badge, Hidden, Toolbar, IconButton, Typography } from '@material-ui/core';
-import { makeStyles, Theme } from '@material-ui/core/styles';
-import MenuIcon from '@material-ui/icons/Menu';
-import InfoIcon from '@material-ui/icons/Info';
-import { AccountCircle, Apps, ExitToApp, LockOpen, Settings, VpnKey } from '@material-ui/icons';
-import ExpandMoreOutlinedIcon from '@material-ui/icons/ExpandMoreOutlined';
-import ExpandLessIcon from '@material-ui/icons/ExpandLess';
+import { AppBar, Avatar, Badge, Toolbar, IconButton, Typography, useTheme, useMediaQuery } from '@mui/material';
+import { Theme } from '@mui/material/styles';
+import makeStyles from '@mui/styles/makeStyles';
+import MenuIcon from '@mui/icons-material/Menu';
+import InfoIcon from '@mui/icons-material/Info';
+import { AccountCircle, Apps, ExitToApp, LockOpen, Settings, VpnKey } from '@mui/icons-material';
+import ExpandMoreOutlinedIcon from '@mui/icons-material/ExpandMoreOutlined';
+import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import { Spacer, UserMenu } from '@brightlayer-ui/react-components';
 import { Chip } from './Chip';
 import { useDispatch } from 'react-redux';
 import { TOGGLE_DRAWER } from '../../../redux/actions';
 import * as colors from '@brightlayer-ui/colors';
 
-const avatarImage = require('../../../assets/avatar_40.png').default;
+const avatarImage = require('../../../assets/avatar_40.png');
 const menuGroupItems = [
     {
         items: [
@@ -39,24 +40,24 @@ const avatarSubtitile = 'CThabani@example.com';
 
 const useStyles = makeStyles((theme: Theme) => ({
     toolbarGutters: {
-        padding: `0 ${theme.spacing(2)}px`,
+        padding: `0 ${theme.spacing(2)}`,
     },
     appBarContainer: {
         maxWidth: 960,
         margin: '0 auto',
-        padding: `0 ${theme.spacing(2)}px`,
+        padding: `0 ${theme.spacing(2)}`,
     },
     appBar: {
-        marginBottom: `${theme.spacing(3)}px`,
+        marginBottom: theme.spacing(3),
         '&:last-child': {
             marginBottom: 0,
         },
     },
     appBarHeader: {
         maxWidth: 600,
-        margin: `${theme.spacing(5)}px auto ${theme.spacing(3)}px`,
-        [theme.breakpoints.down('md')]: {
-            padding: `0 ${theme.spacing(2)}px`,
+        margin: `${theme.spacing(5)} auto ${theme.spacing(3)}`,
+        [theme.breakpoints.down('lg')]: {
+            padding: `0 ${theme.spacing(2)}`,
         },
     },
     badge: {
@@ -65,13 +66,13 @@ const useStyles = makeStyles((theme: Theme) => ({
         boxShadow: `0 0 0 2px ${theme.palette.background.paper}`,
     },
     paper: {
-        marginTop: `${theme.spacing(1)}px`,
+        marginTop: theme.spacing(1),
     },
     subtitle: {
-        marginTop: `-${theme.spacing(0.5)}px`,
+        marginTop: theme.spacing(-0.5),
     },
     textContainer: {
-        marginLeft: `${theme.spacing(2.5)}px`,
+        marginLeft: theme.spacing(2.5),
         overflow: 'hidden',
         whiteSpace: 'nowrap',
     },
@@ -81,6 +82,8 @@ export const InAnAppBar = (): JSX.Element => {
     const dispatch = useDispatch();
     const classes = useStyles();
     const [chipToggled, setChipToggled] = useState(false);
+    const theme = useTheme();
+    const md = useMediaQuery(theme.breakpoints.up('md'));
 
     const toggleChip = useCallback((): void => {
         setChipToggled((oldValue) => !oldValue);
@@ -90,7 +93,7 @@ export const InAnAppBar = (): JSX.Element => {
         <div style={{ minHeight: '100vh' }}>
             <AppBar data-cy="toolbar" position={'sticky'}>
                 <Toolbar classes={{ gutters: classes.toolbarGutters }}>
-                    <Hidden mdUp={true}>
+                    {md ? null : (
                         <IconButton
                             data-cy="toolbar-menu"
                             color={'inherit'}
@@ -99,10 +102,11 @@ export const InAnAppBar = (): JSX.Element => {
                             }}
                             edge={'start'}
                             style={{ marginRight: 20 }}
+                            size="large"
                         >
                             <MenuIcon />
                         </IconButton>
-                    </Hidden>
+                    )}
                     <Typography variant={'h6'} color={'inherit'}>
                         In an App Bar
                     </Typography>
@@ -120,7 +124,7 @@ export const InAnAppBar = (): JSX.Element => {
                     {/* Generic Icon Avatar Example */}
                     <AppBar position="static" color="inherit" className={classes.appBar}>
                         <Toolbar classes={{ gutters: classes.toolbarGutters }}>
-                            <IconButton edge={'start'}>
+                            <IconButton edge={'start'} size="large">
                                 <MenuIcon />
                             </IconButton>
                             <div className={classes.textContainer}>
@@ -175,7 +179,7 @@ export const InAnAppBar = (): JSX.Element => {
                     {/* Basic Letter Avatar Example */}
                     <AppBar position="static" color="inherit" className={classes.appBar}>
                         <Toolbar classes={{ gutters: classes.toolbarGutters }}>
-                            <IconButton edge={'start'}>
+                            <IconButton edge={'start'} size="large">
                                 <MenuIcon />
                             </IconButton>
                             <div className={classes.textContainer}>
@@ -211,7 +215,7 @@ export const InAnAppBar = (): JSX.Element => {
                     {/* Image Avatar Example */}
                     <AppBar position="static" color="inherit" className={classes.appBar}>
                         <Toolbar classes={{ gutters: classes.toolbarGutters }}>
-                            <IconButton edge={'start'}>
+                            <IconButton edge={'start'} size="large">
                                 <MenuIcon />
                             </IconButton>
                             <div className={classes.textContainer}>
@@ -247,7 +251,7 @@ export const InAnAppBar = (): JSX.Element => {
                     {/* Status Avatar Example */}
                     <AppBar position="static" color="inherit" className={classes.appBar}>
                         <Toolbar classes={{ gutters: classes.toolbarGutters }}>
-                            <IconButton edge={'start'}>
+                            <IconButton edge={'start'} size="large">
                                 <MenuIcon />
                             </IconButton>
                             <div className={classes.textContainer}>
@@ -262,7 +266,7 @@ export const InAnAppBar = (): JSX.Element => {
                             <UserMenu
                                 avatar={
                                     <Badge
-                                        overlap="circle"
+                                        overlap="circular"
                                         anchorOrigin={{
                                             vertical: 'bottom',
                                             horizontal: 'right',
@@ -295,7 +299,7 @@ export const InAnAppBar = (): JSX.Element => {
                     {/* Text Menu Example */}
                     <AppBar position="static" color="inherit" className={classes.appBar}>
                         <Toolbar classes={{ gutters: classes.toolbarGutters }}>
-                            <IconButton color={'inherit'} edge={'start'}>
+                            <IconButton color={'inherit'} edge={'start'} size="large">
                                 <MenuIcon />
                             </IconButton>
                             <div className={classes.textContainer}>

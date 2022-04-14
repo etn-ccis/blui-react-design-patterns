@@ -1,8 +1,9 @@
 import React from 'react';
-import { AppBar, Card, Hidden, IconButton, Switch, TextField, Toolbar, Typography } from '@material-ui/core';
-import { Dns, Menu, Timeline } from '@material-ui/icons';
-import List from '@material-ui/core/List';
-import { makeStyles, Theme, useTheme } from '@material-ui/core/styles';
+import { AppBar, Card, IconButton, Switch, TextField, Toolbar, Typography, useMediaQuery } from '@mui/material';
+import { Dns, Menu, Timeline } from '@mui/icons-material';
+import List from '@mui/material/List';
+import { Theme, useTheme } from '@mui/material/styles';
+import makeStyles from '@mui/styles/makeStyles';
 import { useDispatch } from 'react-redux';
 import { TOGGLE_DRAWER } from '../../../redux/actions';
 import { InfoListItem } from '@brightlayer-ui/react-components';
@@ -18,7 +19,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         maxWidth: 600,
         margin: theme.spacing(3),
         width: '100%',
-        [theme.breakpoints.down('xs')]: {
+        [theme.breakpoints.down('sm')]: {
             margin: 0,
             borderRadius: 0,
             boxShadow: 'none',
@@ -31,7 +32,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         padding: '0 16px',
     },
     textFieldRoot: {
-        [theme.breakpoints.down('xs')]: {
+        [theme.breakpoints.down('sm')]: {
             width: 138,
         },
     },
@@ -44,12 +45,13 @@ export const ListFormValidation = (): JSX.Element => {
     const theme = useTheme();
     const classes = useStyles(theme);
     const dispatch = useDispatch();
+    const md = useMediaQuery(theme.breakpoints.up('md'));
 
     return (
         <>
             <AppBar data-cy={'blui-toolbar'} position={'sticky'} classes={{ root: classes.appbarRoot }}>
                 <Toolbar classes={{ gutters: classes.toolbarGutters }}>
-                    <Hidden mdUp>
+                    {md ? null : (
                         <IconButton
                             data-cy={'toolbar-menu'}
                             color={'inherit'}
@@ -58,10 +60,11 @@ export const ListFormValidation = (): JSX.Element => {
                             }}
                             edge={'start'}
                             style={{ marginRight: 20 }}
+                            size="large"
                         >
                             <Menu />
                         </IconButton>
-                    </Hidden>
+                    )}
                     <Typography variant={'h6'} color={'inherit'}>
                         In a List
                     </Typography>

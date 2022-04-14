@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
-import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
-import { createStyles, makeStyles, Theme } from '@material-ui/core';
-import Divider from '@material-ui/core/Divider';
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
+import { Theme } from '@mui/material';
+import createStyles from '@mui/styles/createStyles';
+import makeStyles from '@mui/styles/makeStyles';
+import Divider from '@mui/material/Divider';
 import * as colors from '@brightlayer-ui/colors';
 import { Spacer } from '@brightlayer-ui/react-components';
-import useTheme from '@material-ui/styles/useTheme';
+import useTheme from '@mui/styles/useTheme';
 
 type DeviceEditProps = {
     subTitle: string;
@@ -20,7 +22,7 @@ const useStyles = makeStyles((theme: Theme) =>
             flexDirection: 'column',
             backgroundColor: colors.white[50],
             height: 'calc(100vh - 64px)',
-            [theme.breakpoints.down('xs')]: {
+            [theme.breakpoints.down('sm')]: {
                 height: 'calc(100vh - 56px)',
             },
         },

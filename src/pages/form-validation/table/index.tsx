@@ -2,7 +2,6 @@ import React from 'react';
 import {
     AppBar,
     Divider,
-    Hidden,
     IconButton,
     Paper,
     Table,
@@ -14,16 +13,18 @@ import {
     TextField,
     Toolbar,
     Typography,
-} from '@material-ui/core';
-import { Menu } from '@material-ui/icons';
-import { makeStyles, Theme, useTheme } from '@material-ui/core/styles';
+    useMediaQuery,
+} from '@mui/material';
+import { Menu } from '@mui/icons-material';
+import { Theme, useTheme } from '@mui/material/styles';
+import makeStyles from '@mui/styles/makeStyles';
 import { useDispatch } from 'react-redux';
 import { TOGGLE_DRAWER } from '../../../redux/actions';
 import { InfoListItem } from '@brightlayer-ui/react-components';
 
 const useStyles = makeStyles((theme: Theme) => ({
     toolbarGutters: {
-        padding: `0 ${theme.spacing(2)}px`,
+        padding: `0 ${theme.spacing(2)}`,
     },
     appbarRoot: {
         padding: 0,
@@ -57,6 +58,9 @@ export const TableFormValidation = (): JSX.Element => {
     const theme = useTheme();
     const classes = useStyles(theme);
     const dispatch = useDispatch();
+    const md = useMediaQuery(theme.breakpoints.up('md'));
+    const smDown = useMediaQuery(theme.breakpoints.down('sm'));
+    const smUp = useMediaQuery(theme.breakpoints.up('sm'));
 
     const getTable = (): JSX.Element => (
         <TableContainer component={Paper} className={classes.tableContainer}>
@@ -172,7 +176,7 @@ export const TableFormValidation = (): JSX.Element => {
         <>
             <AppBar data-cy={'blui-toolbar'} position={'sticky'} classes={{ root: classes.appbarRoot }}>
                 <Toolbar classes={{ gutters: classes.toolbarGutters }}>
-                    <Hidden mdUp>
+                    {md ? null : (
                         <IconButton
                             data-cy={'toolbar-menu'}
                             color={'inherit'}
@@ -181,20 +185,18 @@ export const TableFormValidation = (): JSX.Element => {
                             }}
                             edge={'start'}
                             style={{ marginRight: 20 }}
+                            size="large"
                         >
                             <Menu />
                         </IconButton>
-                    </Hidden>
+                    )}
                     <Typography variant={'h6'} color={'inherit'}>
                         In a Table
                     </Typography>
                 </Toolbar>
             </AppBar>
-
-            <Hidden xsDown>{getTable()}</Hidden>
-            <Hidden smUp>
-                <div style={{ background: 'white' }}>{getList()}</div>
-            </Hidden>
+            {smDown ? null : getTable()}
+            {smUp ? null : <div style={{ background: 'white' }}>{getList()}</div>}
             <Typography style={{ padding: theme.spacing(2) }} variant={'body1'}>
                 Remember that in a real application you would need to implement form validations to check, for example,
                 &quot;Min&quot; is less than &quot;Max&quot;.

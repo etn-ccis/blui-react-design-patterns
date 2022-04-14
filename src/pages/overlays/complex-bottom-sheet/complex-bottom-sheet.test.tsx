@@ -9,6 +9,10 @@ import { Reducer } from '../../../redux/reducers';
 import { ComplexBottomSheet, sortedEvents, filteredEvents, TYPES } from '.';
 import { Event } from './alarmData';
 
+import { createTheme, ThemeProvider } from '@mui/material';
+import * as BLUIThemes from '@brightlayer-ui/react-themes';
+const theme = createTheme(BLUIThemes.blue);
+
 Enzyme.configure({ adapter: new Adapter() });
 const store = createStore(Reducer());
 
@@ -16,9 +20,11 @@ describe('Complex bottom sheet', () => {
     afterEach(cleanup);
     it('renders without crashing', () => {
         render(
-            <Provider store={store}>
-                <ComplexBottomSheet />
-            </Provider>
+            <ThemeProvider theme={theme}>
+                <Provider store={store}>
+                    <ComplexBottomSheet />
+                </Provider>
+            </ThemeProvider>
         );
     });
 

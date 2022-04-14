@@ -1,8 +1,9 @@
 import React from 'react';
-import { Avatar, IconButton, Typography, makeStyles, Theme, useTheme } from '@material-ui/core';
-import { Dashboard, Notifications, ExitToApp, Settings, VpnKey } from '@material-ui/icons';
-import AssessmentIcon from '@material-ui/icons/Assessment';
-import LocationOnIcon from '@material-ui/icons/LocationOn';
+import { Avatar, IconButton, Typography, Theme, useTheme } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
+import { Dashboard, Notifications, ExitToApp, Settings, VpnKey } from '@mui/icons-material';
+import AssessmentIcon from '@mui/icons-material/Assessment';
+import LocationOnIcon from '@mui/icons-material/LocationOn';
 import {
     Drawer,
     DrawerBody,
@@ -12,10 +13,10 @@ import {
     NavItem,
     Spacer,
 } from '@brightlayer-ui/react-components';
-import CloseIcon from '@material-ui/icons/Close';
+import CloseIcon from '@mui/icons-material/Close';
 import { Device } from '@brightlayer-ui/icons-mui';
 
-const backgroundImage = require('../../../assets/cubes_tile.png').default;
+const backgroundImage = require('../../../assets/cubes_tile.png');
 const linearGradientOverlayImage = `linear-gradient(to right, rgba(0, 123, 193, 1) 22.4%, rgba(0, 123, 193, 0.2) 100%), url(${backgroundImage})`;
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -29,12 +30,12 @@ const useStyles = makeStyles((theme: Theme) => ({
         backgroundPosition: 'right',
     },
     closeIcon: {
-        marginRight: `-${theme.spacing(2)}px`,
-        marginTop: `-${theme.spacing(4)}px`,
+        marginRight: theme.spacing(-2),
+        marginTop: theme.spacing(-4),
     },
     extendedHeader: {
         width: '100%',
-        padding: `${theme.spacing(2)}px ${theme.spacing(2)}px ${theme.spacing(0.5)}px`,
+        padding: `${theme.spacing(2)} ${theme.spacing(2)} ${theme.spacing(0.5)}`,
     },
     header: {
         display: 'flex',
@@ -45,11 +46,11 @@ const useStyles = makeStyles((theme: Theme) => ({
         height: '100%',
     },
     headerDetails: {
-        paddingTop: `${theme.spacing(2)}px`,
+        paddingTop: theme.spacing(2),
         position: 'relative',
     },
     subtitle: {
-        marginTop: `-${theme.spacing(0.5)}px`,
+        marginTop: theme.spacing(-0.5),
     },
 }));
 
@@ -58,7 +59,7 @@ type DrawerProps = {
     toggleDrawer: () => void;
 };
 
-const avatarImage = require('../../../assets/avatar_40.png').default;
+const avatarImage = require('../../../assets/avatar_40.png');
 
 export const BluiDrawer = (props: DrawerProps): JSX.Element => {
     const { open, toggleDrawer } = props;
@@ -131,6 +132,7 @@ export const BluiDrawer = (props: DrawerProps): JSX.Element => {
                     edge={'end'}
                     classes={{ edgeEnd: classes.closeIcon }}
                     onClick={toggleDrawer}
+                    size="large"
                 >
                     <CloseIcon />
                 </IconButton>

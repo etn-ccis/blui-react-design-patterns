@@ -7,6 +7,9 @@ import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import { Reducer } from '../../../redux/reducers';
 import { InfoListItem } from '@brightlayer-ui/react-components';
+import { createTheme, ThemeProvider } from '@mui/material';
+import * as BLUIThemes from '@brightlayer-ui/react-themes';
+const theme = createTheme(BLUIThemes.blue);
 
 Enzyme.configure({ adapter: new Adapter() });
 const store = createStore(Reducer());
@@ -15,26 +18,32 @@ describe('Action list', () => {
     afterEach(cleanup);
     it('renders without crashing', () => {
         render(
-            <Provider store={store}>
-                <ActionList />
-            </Provider>
+            <ThemeProvider theme={theme}>
+                <Provider store={store}>
+                    <ActionList />
+                </Provider>
+            </ThemeProvider>
         );
     });
 
     it('renders 10 items by default', () => {
         const actionList = mount(
-            <Provider store={store}>
-                <ActionList />
-            </Provider>
+            <ThemeProvider theme={theme}>
+                <Provider store={store}>
+                    <ActionList />
+                </Provider>
+            </ThemeProvider>
         );
         expect(actionList.find('.list').hostNodes().children(InfoListItem)).toHaveLength(10);
     });
 
     it('adds an item correctly', () => {
         const actionList = mount(
-            <Provider store={store}>
-                <ActionList />
-            </Provider>
+            <ThemeProvider theme={theme}>
+                <Provider store={store}>
+                    <ActionList />
+                </Provider>
+            </ThemeProvider>
         );
         expect(actionList.find('#add-item-button').hostNodes()).toHaveLength(1);
         actionList.find('#add-item-button').hostNodes().at(0).simulate('click');
@@ -63,9 +72,11 @@ describe('Action list', () => {
 
     it('removes all and clears the list', () => {
         const actionList = mount(
-            <Provider store={store}>
-                <ActionList />
-            </Provider>
+            <ThemeProvider theme={theme}>
+                <Provider store={store}>
+                    <ActionList />
+                </Provider>
+            </ThemeProvider>
         );
         expect(actionList.find('#remove-all-button').hostNodes()).toHaveLength(1);
         actionList.find('#remove-all-button').hostNodes().at(0).simulate('click');

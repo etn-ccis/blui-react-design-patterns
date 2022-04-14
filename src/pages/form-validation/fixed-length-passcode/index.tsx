@@ -4,16 +4,17 @@ import {
     Button,
     CircularProgress,
     Divider,
-    Hidden,
     IconButton,
     InputAdornment,
     InputProps,
     TextField,
     Toolbar,
     Typography,
-} from '@material-ui/core';
-import { Done, Menu, Refresh } from '@material-ui/icons';
-import { makeStyles, Theme, useTheme } from '@material-ui/core/styles';
+    useMediaQuery,
+} from '@mui/material';
+import { Done, Menu, Refresh } from '@mui/icons-material';
+import { Theme, useTheme } from '@mui/material/styles';
+import makeStyles from '@mui/styles/makeStyles';
 import { useDispatch } from 'react-redux';
 import { TOGGLE_DRAWER } from '../../../redux/actions';
 import * as Colors from '@brightlayer-ui/colors';
@@ -39,14 +40,14 @@ const useStyles = makeStyles((theme: Theme) => ({
         width: '100%',
         maxWidth: 480,
         margin: theme.spacing(4),
-        [theme.breakpoints.down('xs')]: {
+        [theme.breakpoints.down('sm')]: {
             margin: theme.spacing(2),
             maxWidth: '100%',
         },
     },
     submitButton: {
         marginTop: theme.spacing(4),
-        [theme.breakpoints.down('xs')]: {
+        [theme.breakpoints.down('sm')]: {
             width: '100%',
         },
     },
@@ -66,6 +67,7 @@ export const FixedLengthPasscodeValidation = (): JSX.Element => {
     const [incorrectPasscode, setIncorrectPasscode] = useState(false);
     const maxLength = 6;
     const inputEl = useRef<HTMLInputElement>(null);
+    const md = useMediaQuery(theme.breakpoints.up('md'));
 
     const onSubmit = (currPasscode: string): void => {
         setLoading(true);
@@ -126,7 +128,7 @@ export const FixedLengthPasscodeValidation = (): JSX.Element => {
         <>
             <AppBar data-cy={'blui-toolbar'} position={'sticky'} classes={{ root: classes.appbarRoot }}>
                 <Toolbar classes={{ gutters: classes.toolbarGutters }}>
-                    <Hidden mdUp>
+                    {md ? null : (
                         <IconButton
                             data-cy={'toolbar-menu'}
                             color={'inherit'}
@@ -135,10 +137,11 @@ export const FixedLengthPasscodeValidation = (): JSX.Element => {
                             }}
                             edge={'start'}
                             style={{ marginRight: 20 }}
+                            size="large"
                         >
                             <Menu />
                         </IconButton>
-                    </Hidden>
+                    )}
                     <Typography variant={'h6'} color={'inherit'}>
                         Fixed Length Passcode
                     </Typography>
@@ -159,8 +162,8 @@ export const FixedLengthPasscodeValidation = (): JSX.Element => {
                         style={{
                             marginTop: theme.spacing(5),
                             marginBottom: theme.spacing(4),
-                            marginLeft: -theme.spacing(2),
-                            marginRight: -theme.spacing(2),
+                            marginLeft: theme.spacing(-2),
+                            marginRight: theme.spacing(-2),
                         }}
                     />
                     <TextField

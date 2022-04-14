@@ -1,16 +1,17 @@
 import React from 'react';
-import { Badge, Hidden, IconButton, Toolbar, useMediaQuery } from '@material-ui/core';
-import { makeStyles, Theme, useTheme } from '@material-ui/core/styles';
-import HelpIcon from '@material-ui/icons/Help';
-import MenuIcon from '@material-ui/icons/Menu';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
-import NotificationsIcon from '@material-ui/icons/Notifications';
+import { Badge, IconButton, Toolbar, useMediaQuery } from '@mui/material';
+import { Theme, useTheme } from '@mui/material/styles';
+import makeStyles from '@mui/styles/makeStyles';
+import HelpIcon from '@mui/icons-material/Help';
+import MenuIcon from '@mui/icons-material/Menu';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+import NotificationsIcon from '@mui/icons-material/Notifications';
 import { AppBar, Spacer, ThreeLiner } from '@brightlayer-ui/react-components';
 import { useDispatch } from 'react-redux';
 import { TOGGLE_DRAWER } from '../../../redux/actions';
 import { getBodyFiller } from '../utils/utils';
 
-const backgroundImage = require('../../../assets/collapsible_app_bar_demo.jpg').default;
+const backgroundImage = require('../../../assets/collapsible_app_bar_demo.jpg');
 const linearGradientOverlayImage = `linear-gradient(to bottom, rgba(0, 123, 193, 1) 22.4%, rgba(0, 123, 193, 0.2) 100%), url(${backgroundImage})`;
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -22,7 +23,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         position: 'absolute',
         flexGrow: 1,
         marginLeft: 0,
-        [theme.breakpoints.down('sm')]: {
+        [theme.breakpoints.down('md')]: {
             marginLeft: 56,
         },
     },
@@ -71,7 +72,9 @@ export const Collapsible = (): JSX.Element => {
     const dispatch = useDispatch();
     const theme = useTheme();
     const classes = useStyles();
-    const isMobile = useMediaQuery(theme.breakpoints.down('xs'));
+    const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+    const md = useMediaQuery(theme.breakpoints.up('md'));
+
     return (
         <div style={{ minHeight: '100vh' }}>
             <AppBar
@@ -88,7 +91,7 @@ export const Collapsible = (): JSX.Element => {
                 }}
             >
                 <Toolbar data-cy={'toolbar'} classes={{ gutters: classes.toolbarGutters }}>
-                    <Hidden mdUp={true}>
+                    {md ? null : (
                         <IconButton
                             data-cy="toolbar-menu"
                             onClick={(): void => {
@@ -96,10 +99,11 @@ export const Collapsible = (): JSX.Element => {
                             }}
                             color={'inherit'}
                             edge={'start'}
+                            size="large"
                         >
                             <MenuIcon />
                         </IconButton>
-                    </Hidden>
+                    )}
                     <Spacer />
                     <ThreeLiner
                         classes={{ title: classes.title, subtitle: classes.subtitle, info: classes.info }}
@@ -110,15 +114,15 @@ export const Collapsible = (): JSX.Element => {
                         animationDuration={300}
                     />
                     <div className={classes.toolbarRightContent}>
-                        <IconButton color={'inherit'}>
+                        <IconButton color={'inherit'} size="large">
                             <HelpIcon />
                         </IconButton>
-                        <IconButton color={'inherit'}>
+                        <IconButton color={'inherit'} size="large">
                             <Badge color="error" badgeContent={88}>
                                 <NotificationsIcon />
                             </Badge>
                         </IconButton>
-                        <IconButton color={'inherit'}>
+                        <IconButton color={'inherit'} size="large">
                             <MoreVertIcon />
                         </IconButton>
                     </div>

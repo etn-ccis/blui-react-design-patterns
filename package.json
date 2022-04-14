@@ -5,9 +5,9 @@
     "dependencies": {
         "@brightlayer-ui/colors": "^3.0.1",
         "@brightlayer-ui/icons-mui": "^3.0.0",
-        "@brightlayer-ui/react-components": "^6.0.0-alpha.3",
+        "@brightlayer-ui/react-components": "^6.0.0",
         "@brightlayer-ui/react-progress-icons": "^2.1.1",
-        "@brightlayer-ui/react-themes": "^7.0.0-alpha.2",
+        "@brightlayer-ui/react-themes": "^7.0.0",
         "@fontsource/noto-sans": "^4.5.4",
         "@mui/material": "^5.5.3",
         "@mui/icons-material": "^5.5.1",

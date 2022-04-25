@@ -5,7 +5,6 @@ import {
     AppBar,
     Button,
     Checkbox,
-    Hidden,
     IconButton,
     List,
     MenuItem,
@@ -15,17 +14,19 @@ import {
     Toolbar,
     Tooltip,
     Typography,
-} from '@material-ui/core';
-import { makeStyles, Theme, useTheme } from '@material-ui/core/styles';
+    useMediaQuery,
+} from '@mui/material';
+import { Theme, useTheme } from '@mui/material/styles';
+import makeStyles from '@mui/styles/makeStyles';
 import { useDispatch } from 'react-redux';
 import { TOGGLE_DRAWER } from '../../redux/actions';
 import { InfoListItem, Spacer } from '@brightlayer-ui/react-components';
 import clsx from 'clsx';
 
-import MenuIcon from '@material-ui/icons/Menu';
-import CartIcon from '@material-ui/icons/AddShoppingCart';
-import CancelIcon from '@material-ui/icons/Cancel';
-import MenuOpenIcon from '@material-ui/icons/MenuOpen';
+import MenuIcon from '@mui/icons-material/Menu';
+import CartIcon from '@mui/icons-material/AddShoppingCart';
+import CancelIcon from '@mui/icons-material/Cancel';
+import MenuOpenIcon from '@mui/icons-material/MenuOpen';
 
 import { english } from './translations/english';
 import { DRAWER_WIDTH } from '../../assets/constants';
@@ -43,7 +44,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
     snackbarAction: {
         margin: 'auto',
-        marginLeft: -theme.spacing(),
+        marginLeft: theme.spacing(-1),
         paddingRight: theme.spacing(2),
         paddingLeft: 0,
     },
@@ -54,7 +55,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     RTL: { transform: 'scaleX(-1)' },
     RTLButtonStartIcon: {
         marginRight: theme.spacing(-0.5),
-        marginLeft: theme.spacing(),
+        marginLeft: theme.spacing(1),
     },
     rightComponent: {
         marginLeft: 0,
@@ -65,6 +66,9 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
     toolbarGutters: {
         padding: '0 16px',
+    },
+    listItemButtonRoot: {
+        textAlign: 'right',
     },
 }));
 
@@ -85,6 +89,7 @@ export const I18N = (): JSX.Element => {
     const isRTL = (): boolean => lang === 'ar';
     const getDirection = (): 'rtl' | 'ltr' => (isRTL() ? 'rtl' : 'ltr');
     const dispatch = useDispatch();
+    const md = useMediaQuery(theme.breakpoints.up('md'));
 
     const changeLanguage = useCallback(
         (lng) => {
@@ -124,7 +129,7 @@ export const I18N = (): JSX.Element => {
                     translator={t}
                 />
                 <Toolbar classes={{ gutters: classes.toolbarGutters }}>
-                    <Hidden mdUp>
+                    {md ? null : (
                         <IconButton
                             data-cy={'toolbar-menu'}
                             color={'inherit'}
@@ -133,10 +138,11 @@ export const I18N = (): JSX.Element => {
                             }}
                             edge={isRTL() ? 'end' : 'start'}
                             style={{ marginRight: isRTL() ? '' : 20, marginLeft: isRTL() ? 20 : '' }}
+                            size="large"
                         >
                             <MenuIcon />
                         </IconButton>
-                    </Hidden>
+                    )}
                     <Typography data-cy={'toolbar-title'} variant={'h6'} color={'inherit'}>
                         {t('I18N')}
                     </Typography>
@@ -148,6 +154,7 @@ export const I18N = (): JSX.Element => {
                             onClick={(): void => setDrawerOpen(!drawerOpen)}
                             edge={isRTL() ? 'start' : 'end'}
                             className={clsx(isRTL() && classes.RTL)}
+                            size="large"
                         >
                             <MenuOpenIcon />
                         </IconButton>
@@ -161,6 +168,7 @@ export const I18N = (): JSX.Element => {
                     value={lang}
                     onChange={(event): void => changeLanguage(String(event.target.value))}
                     style={{ padding: theme.spacing(0.5), minWidth: theme.spacing(20), marginLeft: theme.spacing(0.5) }}
+                    variant="standard"
                 >
                     <MenuItem value={'en'}>{t('LANGUAGES.ENGLISH')}</MenuItem>
                     <MenuItem value={'ar'}>{t('LANGUAGES.ARABIC')}</MenuItem>
@@ -199,12 +207,19 @@ export const I18N = (): JSX.Element => {
                                 onChange={(): void => selectFruit(fruit.name)}
                             />
                         }
-                        classes={{ rightComponent: isRTL() ? classes.rightComponent : undefined }}
+                        classes={{
+                            rightComponent: isRTL() ? classes.rightComponent : undefined,
+                            listItemButtonRoot: isRTL() ? classes.listItemButtonRoot : undefined,
+                        }}
                     />
                 ))}
             </List>
 
-            <Snackbar open={selectedItems.size > 0} classes={{ root: classes.snackbar }}>
+            <Snackbar
+                open={selectedItems.size > 0}
+                classes={{ root: classes.snackbar }}
+                anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+            >
                 <SnackbarContent
                     action={
                         <>
@@ -216,6 +231,7 @@ export const I18N = (): JSX.Element => {
                                     color={'inherit'}
                                     id={'deselect-all-button'}
                                     data-cy={'snackbar-deselect-all'}
+                                    size="large"
                                 >
                                     <CancelIcon />
                                 </IconButton>

@@ -13,7 +13,7 @@ describe('Search bar', () => {
         cy.get('[data-cy=search-btn]').click()
         cy.get('[data-cy=search-field').type('grape')
         cy.get('[data-cy=list-view] > .MuiListItem-root').should('contain', 'Grape').and('have.length', (1))
-        cy.get('[data-cy=clear-search-field] > .MuiIconButton-label > .MuiSvgIcon-root').click()
+        cy.get('[data-cy="clear-search-field"]').click()
         cy.get('[data-cy=search-field').type('water')
         cy.get('[data-cy=list-view] > .MuiListItem-root').should('contain', 'Watermelon').and('have.length', (1))
     });

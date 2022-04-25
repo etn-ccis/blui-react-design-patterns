@@ -27,7 +27,7 @@ import { ContextualSpinner } from '../pages/loading-waiting-states/contextual-sp
 import { Skeletons } from '../pages/loading-waiting-states/skeletons/Skeletons';
 import { InAnAppBar } from '../pages/account-menu/in-an-app-bar';
 import { InADrawer } from '../pages/account-menu/in-a-drawer';
-import { BluiDropdownToolbar } from '../pages/app-bar/dropdown-toolbar';
+import { BluiToolbarMenu } from '../pages/app-bar/toolbar-menu';
 import { ListFormValidation } from '../pages/form-validation/list';
 import { FixedLengthPasscodeValidation } from '../pages/form-validation/fixed-length-passcode';
 import { SectionedFormValidation } from '../pages/form-validation/sectioned-form';
@@ -49,7 +49,7 @@ export const Main = (): JSX.Element => (
         <Route exact path={`/${PAGES.APP_BAR.COLLAPSIBLE.route || ''}`} component={Collapsible} />
         <Route exact path={`/${PAGES.APP_BAR.CONTEXTUAL_ACTION.route || ''}`} component={ContextualAction} />
         <Route exact path={`/${PAGES.APP_BAR.PAGE_WIDE_SEARCH.route || ''}`} component={PageWideSearch} />
-        <Route exact path={`/${PAGES.APP_BAR.DROPDOWN_COLLAPSIBLE.route || ''}`} component={BluiDropdownToolbar} />
+        <Route exact path={`/${PAGES.APP_BAR.DROPDOWN_COLLAPSIBLE.route || ''}`} component={BluiToolbarMenu} />
 
         <Route exact path={`/${PAGES.FORM_VALIDATION.LIST.route || ''}`} component={ListFormValidation} />
         <Route exact path={`/${PAGES.FORM_VALIDATION.PASSWORD.route || ''}`} component={PasswordFormValidation} />

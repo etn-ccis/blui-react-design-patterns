@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { AppBar, Button, Toolbar, Typography, Hidden, IconButton } from '@material-ui/core';
-import { makeStyles, Theme, useTheme } from '@material-ui/core/styles';
-import MenuIcon from '@material-ui/icons/Menu';
-import MenuOpenIcon from '@material-ui/icons/MenuOpen';
+import { AppBar, Button, Toolbar, Typography, IconButton, useMediaQuery } from '@mui/material';
+import { Theme, useTheme } from '@mui/material/styles';
+import makeStyles from '@mui/styles/makeStyles';
+import MenuIcon from '@mui/icons-material/Menu';
+import MenuOpenIcon from '@mui/icons-material/MenuOpen';
 import { useDispatch } from 'react-redux';
 import { TOGGLE_DRAWER } from '../../../redux/actions';
 import { BluiDrawer } from './Drawer';
@@ -12,17 +13,17 @@ const useStyles = makeStyles((theme: Theme) => ({
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        height: `calc(100vh - ${theme.spacing(8)}px)`,
-        [theme.breakpoints.down('xs')]: {
-            height: `calc(100vh - ${theme.spacing(7)}px)`,
+        height: `calc(100vh - ${theme.spacing(8)})`,
+        [theme.breakpoints.down('sm')]: {
+            height: `calc(100vh - ${theme.spacing(7)})`,
         },
     },
     toolbarGutters: {
-        padding: `0px ${theme.spacing(2)}px`,
+        padding: `0px ${theme.spacing(2)}`,
     },
     buttonContainer: {
         width: '100%',
-        height: `calc(100vh - ${theme.spacing(8)}px)`,
+        height: `calc(100vh - ${theme.spacing(8)})`,
         display: 'flex',
         padding: 0,
         overflow: 'auto',
@@ -30,8 +31,8 @@ const useStyles = makeStyles((theme: Theme) => ({
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
-        [theme.breakpoints.down('xs')]: {
-            height: `calc(100vh - ${theme.spacing(7)}px)`,
+        [theme.breakpoints.down('sm')]: {
+            height: `calc(100vh - ${theme.spacing(7)})`,
         },
     },
     centerButton: {
@@ -40,7 +41,6 @@ const useStyles = makeStyles((theme: Theme) => ({
         zIndex: 4,
         position: 'absolute',
         alignItems: 'center',
-        flexDirection: 'column',
         justifyContent: 'center',
     },
 }));
@@ -50,6 +50,7 @@ export const InADrawer = (): JSX.Element => {
     const theme = useTheme();
     const classes = useStyles();
     const [drawerOpen, setDrawerOpen] = useState(false);
+    const md = useMediaQuery(theme.breakpoints.up('md'));
 
     return (
         <div style={{ backgroundColor: theme.palette.background.paper, minHeight: '100vh' }}>
@@ -61,7 +62,7 @@ export const InADrawer = (): JSX.Element => {
                     }}
                 />
                 <Toolbar classes={{ gutters: classes.toolbarGutters }}>
-                    <Hidden mdUp={true}>
+                    {md ? null : (
                         <IconButton
                             data-cy="toolbar-menu"
                             color={'inherit'}
@@ -70,10 +71,11 @@ export const InADrawer = (): JSX.Element => {
                             }}
                             edge={'start'}
                             style={{ marginRight: 20 }}
+                            size="large"
                         >
                             <MenuIcon />
                         </IconButton>
-                    </Hidden>
+                    )}
                     <Typography variant={'h6'} color={'inherit'}>
                         In a Drawer
                     </Typography>

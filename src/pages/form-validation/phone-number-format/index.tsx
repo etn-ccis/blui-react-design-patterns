@@ -2,7 +2,6 @@ import React, { useCallback, useState } from 'react';
 import {
     AppBar,
     FormControl,
-    Hidden,
     IconButton,
     InputLabel,
     InputProps,
@@ -11,9 +10,11 @@ import {
     TextField,
     Toolbar,
     Typography,
-} from '@material-ui/core';
-import { Menu } from '@material-ui/icons';
-import { makeStyles, Theme, useTheme } from '@material-ui/core/styles';
+    useMediaQuery,
+} from '@mui/material';
+import { Menu } from '@mui/icons-material';
+import { Theme, useTheme } from '@mui/material/styles';
+import makeStyles from '@mui/styles/makeStyles';
 import { useDispatch } from 'react-redux';
 import { TOGGLE_DRAWER } from '../../../redux/actions';
 import { checkPhoneNumber, transformUserInput } from './phone-number-utils';
@@ -48,7 +49,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         width: '100%',
         maxWidth: 480,
         margin: theme.spacing(4),
-        [theme.breakpoints.down('xs')]: {
+        [theme.breakpoints.down('sm')]: {
             margin: theme.spacing(2),
             maxWidth: '100%',
         },
@@ -70,6 +71,7 @@ export const PhoneNumberFormatValidation = (): JSX.Element => {
     const [phoneNumber, setPhoneNumber] = useState('');
     const [countryCode, setCountryCode] = useState('US');
     const [blurred, setBlurred] = useState(false);
+    const md = useMediaQuery(theme.breakpoints.up('md'));
 
     const isValidPhoneNumber = useCallback(
         (): boolean => checkPhoneNumber(phoneNumber, countryCode),
@@ -125,7 +127,7 @@ export const PhoneNumberFormatValidation = (): JSX.Element => {
         <>
             <AppBar data-cy={'blui-toolbar'} position={'sticky'} classes={{ root: classes.appbarRoot }}>
                 <Toolbar classes={{ gutters: classes.toolbarGutters }}>
-                    <Hidden mdUp>
+                    {md ? null : (
                         <IconButton
                             data-cy={'toolbar-menu'}
                             color={'inherit'}
@@ -134,10 +136,11 @@ export const PhoneNumberFormatValidation = (): JSX.Element => {
                             }}
                             edge={'start'}
                             style={{ marginRight: 20 }}
+                            size="large"
                         >
                             <Menu />
                         </IconButton>
-                    </Hidden>
+                    )}
                     <Typography variant={'h6'} color={'inherit'}>
                         Phone Number Format
                     </Typography>

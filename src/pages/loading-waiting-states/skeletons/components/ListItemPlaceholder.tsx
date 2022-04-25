@@ -1,9 +1,9 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Skeleton from '@material-ui/lab/Skeleton';
+import makeStyles from '@mui/styles/makeStyles';
+import Skeleton from '@mui/material/Skeleton';
 import { InfoListItem } from '@brightlayer-ui/react-components';
 import * as colors from '@brightlayer-ui/colors';
-import { KeyboardArrowRight } from '@material-ui/icons';
+import { KeyboardArrowRight } from '@mui/icons-material';
 import Color from 'color';
 
 const useStyles = makeStyles(() => ({
@@ -25,7 +25,7 @@ export const ListItemPlaceholder = (props: { animation?: 'pulse' | 'wave'; divid
             icon={
                 <Skeleton
                     animation={animation}
-                    variant="circle"
+                    variant="circular"
                     width={40}
                     height={40}
                     classes={{ root: classes.skeletonRoot }}
@@ -74,7 +74,7 @@ export const ListItemDensePlaceholder = (props: { animation?: 'pulse' | 'wave'; 
             icon={
                 <Skeleton
                     animation={animation}
-                    variant="circle"
+                    variant="circular"
                     width={24}
                     height={24}
                     classes={{ root: classes.skeletonRoot }}

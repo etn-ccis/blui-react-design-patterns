@@ -1,26 +1,26 @@
 import React from 'react';
 
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import Hidden from '@material-ui/core/Hidden';
-import IconButton from '@material-ui/core/IconButton';
-import List from '@material-ui/core/List';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import { useTheme } from '@material-ui/core/styles';
+import AppBar from '@mui/material/AppBar';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
+import IconButton from '@mui/material/IconButton';
+import List from '@mui/material/List';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import { useTheme } from '@mui/material/styles';
+import { useMediaQuery } from '@mui/material';
 
-import { Menu as MenuIcon } from '@material-ui/icons';
+import { Menu as MenuIcon } from '@mui/icons-material';
 
 import { useDispatch } from 'react-redux';
 import { TOGGLE_DRAWER } from '../../../redux/actions';
 import { InfoListItem } from '@brightlayer-ui/react-components';
 
 import './index.css';
-import { makeStyles } from '@material-ui/core';
+import makeStyles from '@mui/styles/makeStyles';
 
 export type Item = {
     id: number;
@@ -56,6 +56,9 @@ export const ResponsiveTable = (): JSX.Element => {
     const theme = useTheme();
     const dispatch = useDispatch();
     const classes = useStyles();
+    const md = useMediaQuery(theme.breakpoints.up('md'));
+    const sm = useMediaQuery(theme.breakpoints.up('sm'));
+    const smDown = useMediaQuery(theme.breakpoints.down('sm'));
 
     return (
         <div
@@ -66,7 +69,7 @@ export const ResponsiveTable = (): JSX.Element => {
         >
             <AppBar data-cy="blui-toolbar" position="sticky" classes={{ root: classes.appbarRoot }}>
                 <Toolbar classes={{ gutters: classes.toolbarGutters }}>
-                    <Hidden mdUp>
+                    {md ? null : (
                         <IconButton
                             data-cy="toolbar-menu"
                             color={'inherit'}
@@ -75,10 +78,11 @@ export const ResponsiveTable = (): JSX.Element => {
                             }}
                             edge={'start'}
                             style={{ marginRight: 20 }}
+                            size="large"
                         >
                             <MenuIcon />
                         </IconButton>
-                    </Hidden>
+                    )}
                     <Typography variant="h6" color="inherit">
                         Responsive Table
                     </Typography>
@@ -87,7 +91,7 @@ export const ResponsiveTable = (): JSX.Element => {
             <Typography variant="body1" color="inherit" style={{ textAlign: 'center', padding: '1.5rem 0 0.5rem' }}>
                 Resize your browser to view responsiveness
             </Typography>
-            <Hidden smUp>
+            {sm ? null : (
                 <List disablePadding component="nav">
                     {list.map(
                         (item, i): JSX.Element => (
@@ -95,8 +99,8 @@ export const ResponsiveTable = (): JSX.Element => {
                         )
                     )}
                 </List>
-            </Hidden>
-            <Hidden xsDown>
+            )}
+            {smDown ? null : (
                 <Table id="responsive-list-table">
                     <TableHead>
                         <TableRow>
@@ -117,7 +121,7 @@ export const ResponsiveTable = (): JSX.Element => {
                         )}
                     </TableBody>
                 </Table>
-            </Hidden>
+            )}
         </div>
     );
 };

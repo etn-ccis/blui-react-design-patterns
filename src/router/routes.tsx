@@ -21,8 +21,8 @@ export const PAGES: Routes = {
             route: 'contextual-action',
         },
         DROPDOWN_COLLAPSIBLE: {
-            title: 'Dropdown Toolbar',
-            route: 'dropdown-toolbar',
+            title: 'Toolbar Menu',
+            route: 'toolbar-menu',
         },
         SEARCH: {
             title: 'Search',

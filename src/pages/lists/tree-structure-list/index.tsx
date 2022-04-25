@@ -1,15 +1,13 @@
 import React, { useCallback, useState } from 'react';
-import IconButton from '@material-ui/core/IconButton';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import Hidden from '@material-ui/core/Hidden';
-import Card from '@material-ui/core/Card';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
-import MenuIcon from '@material-ui/icons/Menu';
-import useTheme from '@material-ui/core/styles/useTheme';
-import { Theme } from '@material-ui/core/styles/createTheme';
-import makeStyles from '@material-ui/core/styles/makeStyles';
+import IconButton from '@mui/material/IconButton';
+import AppBar from '@mui/material/AppBar';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
+import Card from '@mui/material/Card';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import MenuIcon from '@mui/icons-material/Menu';
+import { useTheme, Theme } from '@mui/material/styles';
+import makeStyles from '@mui/styles/makeStyles';
 import { useDispatch } from 'react-redux';
 import { TOGGLE_DRAWER } from '../../../redux/actions';
 import { TreeItem, TreeItemComponent } from './tree-item-component';
@@ -17,7 +15,7 @@ import { TreeItem, TreeItemComponent } from './tree-item-component';
 const useStyles = makeStyles((theme: Theme) => ({
     container: {
         minHeight: '100vh',
-        [theme.breakpoints.down('sm')]: {
+        [theme.breakpoints.down('md')]: {
             display: 'flex',
             flexDirection: 'column',
         },
@@ -26,20 +24,20 @@ const useStyles = makeStyles((theme: Theme) => ({
         padding: 0,
     },
     toolbarGutters: {
-        padding: `0 ${theme.spacing(2)}px`,
+        padding: `0 ${theme.spacing(2)}`,
     },
     toolbarTextContainer: {
         display: 'flex',
         flexDirection: 'column',
     },
     toolBarSubtitle: {
-        marginTop: -theme.spacing(1),
+        marginTop: theme.spacing(-1),
     },
     contentContainer: {
         maxWidth: 768,
         padding: theme.spacing(3),
         margin: '0 auto',
-        [theme.breakpoints.down('sm')]: {
+        [theme.breakpoints.down('md')]: {
             maxWidth: '100%',
             padding: 0,
             margin: 0,
@@ -95,8 +93,9 @@ export const TreeStructureList = (): JSX.Element => {
     const dispatch = useDispatch();
     const theme = useTheme();
     const classes = useStyles(theme);
-    const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+    const isMobile = useMediaQuery(theme.breakpoints.down('md'));
     const [selectedItem, setSelectedItem] = useState<number | null>(null);
+    const md = useMediaQuery(theme.breakpoints.up('md'));
 
     const renderTreeList = useCallback(
         (): JSX.Element => (
@@ -124,7 +123,7 @@ export const TreeStructureList = (): JSX.Element => {
         <div className={classes.container}>
             <AppBar data-cy={'blui-toolbar'} position={'sticky'} classes={{ root: classes.appbarRoot }}>
                 <Toolbar classes={{ gutters: classes.toolbarGutters }}>
-                    <Hidden mdUp={true}>
+                    {md ? null : (
                         <IconButton
                             data-cy="toolbar-menu"
                             color={'inherit'}
@@ -133,10 +132,11 @@ export const TreeStructureList = (): JSX.Element => {
                             }}
                             edge={'start'}
                             style={{ marginRight: 20 }}
+                            size="large"
                         >
                             <MenuIcon />
                         </IconButton>
-                    </Hidden>
+                    )}
                     <div className={classes.toolbarTextContainer}>
                         <Typography variant={'h6'} color={'inherit'}>
                             Tree Structure

@@ -6,7 +6,9 @@ import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import { Reducer } from '../../redux/reducers';
 import { DynamicStepper } from '.';
-import { StepButton } from '@material-ui/core';
+import { createTheme, ThemeProvider, StepButton } from '@mui/material';
+import * as BLUIThemes from '@brightlayer-ui/react-themes';
+const theme = createTheme(BLUIThemes.blue);
 
 Enzyme.configure({ adapter: new Adapter() });
 const store = createStore(Reducer());
@@ -15,17 +17,21 @@ describe('Dynamic stepper', () => {
     afterEach(cleanup);
     it('renders without crashing', () => {
         render(
-            <Provider store={store}>
-                <DynamicStepper />
-            </Provider>
+            <ThemeProvider theme={theme}>
+                <Provider store={store}>
+                    <DynamicStepper />
+                </Provider>
+            </ThemeProvider>
         );
     });
 
     it('removes all the steps when the remove all button is clicked', () => {
         const dynamicStepper = mount(
-            <Provider store={store}>
-                <DynamicStepper />
-            </Provider>
+            <ThemeProvider theme={theme}>
+                <Provider store={store}>
+                    <DynamicStepper />
+                </Provider>
+            </ThemeProvider>
         );
         // on init, there is an expanded button waiting for user input
         // and an "add a step" button at the bottom

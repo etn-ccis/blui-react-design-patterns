@@ -6,6 +6,9 @@ import { createStore } from 'redux';
 import { Reducer } from '../../../redux/reducers';
 import { Provider } from 'react-redux';
 import { VerifyOnSubmitValidation } from '.';
+import { createTheme, ThemeProvider } from '@mui/material';
+import * as BLUIThemes from '@brightlayer-ui/react-themes';
+const theme = createTheme(BLUIThemes.blue);
 
 Enzyme.configure({ adapter: new Adapter() });
 const store = createStore(Reducer());
@@ -14,9 +17,11 @@ describe('Verify on submit validation', () => {
     afterEach(cleanup);
     it('renders without crashing', () => {
         render(
-            <Provider store={store}>
-                <VerifyOnSubmitValidation />
-            </Provider>
+            <ThemeProvider theme={theme}>
+                <Provider store={store}>
+                    <VerifyOnSubmitValidation />
+                </Provider>
+            </ThemeProvider>
         );
     });
 });

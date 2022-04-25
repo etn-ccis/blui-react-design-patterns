@@ -2,8 +2,11 @@ import React from 'react';
 import * as Colors from '@brightlayer-ui/colors';
 import { Hero, HeroBanner, ScoreCard } from '@brightlayer-ui/react-components';
 import { GradeA, Temp, Moisture as Humidity } from '@brightlayer-ui/icons-mui';
-import Button from '@material-ui/core/Button';
-import { createStyles, makeStyles, Theme, useTheme } from '@material-ui/core';
+import Button from '@mui/material/Button';
+import { Theme, useTheme } from '@mui/material';
+
+import createStyles from '@mui/styles/createStyles';
+import makeStyles from '@mui/styles/makeStyles';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -56,26 +59,20 @@ export const LocalActionsScoreCard = (): JSX.Element => {
                     <Hero
                         icon={<Humidity fontSize={'inherit'} htmlColor={Colors.blue[200]} />}
                         label={'Humidity'}
-                        value={54}
-                        units={'%'}
                         iconSize={48}
-                        fontSize={'normal'}
+                        ChannelValueProps={{ value: 54, units: '%', fontSize: 'normal' }}
                     />
                     <Hero
                         icon={<Temp fontSize={'inherit'} htmlColor={Colors.red[500]} />}
                         label={'Temperature'}
                         iconSize={48}
-                        value={97}
-                        units={'°F'}
-                        fontSize={'normal'}
+                        ChannelValueProps={{ value: 97, units: '°F', fontSize: 'normal' }}
                     />
                     <Hero
                         icon={<GradeA fontSize={'inherit'} htmlColor={Colors.green[500]} />}
                         label={'Overall'}
-                        value={96}
-                        units={'/100'}
                         iconSize={48}
-                        fontSize={'normal'}
+                        ChannelValueProps={{ value: 96, units: '/100', fontSize: 'normal' }}
                     />
                 </HeroBanner>
             }

@@ -1,9 +1,9 @@
 import React from 'react';
-import Button from '@material-ui/core/Button';
+import Button from '@mui/material/Button';
 import { EmptyState as BLUIEmptyState } from '@brightlayer-ui/react-components';
-import { useTheme } from '@material-ui/core';
-import ErrorIcon from '@material-ui/icons/Error';
-import AddIcon from '@material-ui/icons/Add';
+import { useTheme } from '@mui/material';
+import ErrorIcon from '@mui/icons-material/Error';
+import AddIcon from '@mui/icons-material/Add';
 
 type EmptyStateProps = { onAddItem: () => void };
 
@@ -14,7 +14,7 @@ export const EmptyState: React.FC<EmptyStateProps> = (props) => {
             style={{
                 display: 'flex',
                 flexDirection: 'column',
-                height: `calc(100vh - ${theme.spacing(8)}px)`,
+                height: `calc(100vh - ${theme.spacing(8)})`,
             }}
         >
             <BLUIEmptyState

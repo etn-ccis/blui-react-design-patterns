@@ -12,13 +12,6 @@ describe('Complex bottom sheet', () => {
         cy.get('[data-cy=blui-toolbar]').should('contain', 'Complex Bottom Sheet');
     });
 
-    it('should dismiss overlay when page is selected', () => {
-        cy.get('[data-cy=action-menu]').click()
-        cy.get('[data-cy=btm-sheet-sort]').should('be.visible')
-        cy.get('body').click(top, {force: true})
-        cy.get('[data-cy=btm-sheet-sort]').should('not.be.visible')
-    });
-
     it('should open overlay and action items display', () => {
         cy.get('[data-cy=action-menu]').click()
         cy.get('[data-cy=btm-sheet-sort]').should('contain', 'Sort By')
@@ -40,5 +33,12 @@ describe('Complex bottom sheet', () => {
         cy.get('[data-cy=sessions]').click()
         cy.get('[data-cy=btm-sheet-cancel]').click()
         cy.get('[data-test=frame]').should('contain', 'No Events Available')
+    });
+
+    it('should dismiss overlay when page is selected', () => {
+        cy.get('[data-cy=action-menu]').click()
+        cy.get('[data-cy=btm-sheet-sort]').should('be.visible')
+        cy.get('body').click(0,0);
+        cy.get('[data-cy=btm-sheet-sort]').should('not.be.visible')
     });
 });

@@ -1,19 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import MenuIcon from '@material-ui/icons/Menu';
-import {
-    IconButton,
-    Hidden,
-    useTheme,
-    makeStyles,
-    Theme,
-    createStyles,
-    Fade,
-    Divider,
-    Button,
-} from '@material-ui/core';
+import AppBar from '@mui/material/AppBar';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
+import MenuIcon from '@mui/icons-material/Menu';
+import { IconButton, useTheme, Theme, Fade, Divider, Button, useMediaQuery } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
+import createStyles from '@mui/styles/createStyles';
 import { useDispatch } from 'react-redux';
 import { TOGGLE_DRAWER } from '../redux/actions';
 import clsx from 'clsx';
@@ -48,7 +40,7 @@ const useStyles = makeStyles((theme: Theme) =>
                 marginBottom: theme.spacing(1),
                 verticalAlign: 'top',
             },
-            [theme.breakpoints.down('xs')]: {
+            [theme.breakpoints.down('sm')]: {
                 columnCount: 1,
                 '& > *': {
                     display: 'block',
@@ -65,6 +57,7 @@ export const LandingPage = (): JSX.Element => {
     const [displayTitle, setDisplayTitle] = useState(false);
     const [displayBody, setDisplayBody] = useState(false);
     const [displayLinks, setDisplayLinks] = useState(false);
+    const md = useMediaQuery(theme.breakpoints.up('md'));
 
     useEffect((): void => {
         setTimeout((): void => {
@@ -80,7 +73,7 @@ export const LandingPage = (): JSX.Element => {
 
     return (
         <div className={classes.pageBackground}>
-            <Hidden mdUp>
+            {md ? null : (
                 <AppBar position={'sticky'}>
                     <Toolbar>
                         <IconButton
@@ -89,6 +82,7 @@ export const LandingPage = (): JSX.Element => {
                                 dispatch({ type: TOGGLE_DRAWER, payload: true });
                             }}
                             edge={'start'}
+                            size="large"
                         >
                             <MenuIcon />
                         </IconButton>
@@ -97,7 +91,7 @@ export const LandingPage = (): JSX.Element => {
                         </Typography>
                     </Toolbar>
                 </AppBar>
-            </Hidden>
+            )}
             <div className={classes.body}>
                 <div className={clsx(classes.content, classes.spaced)}>
                     <Fade in={displayTitle} timeout={500}>
@@ -113,14 +107,13 @@ export const LandingPage = (): JSX.Element => {
                                 behavior from the Material Design system. Brightlayer UI design patterns are patterns
                                 that extend/modify those from Material or are specific to Brightlayer UI applications.
                             </Typography>
-
                             <Typography variant={'body1'}>
                                 While everyone is encouraged to interact with the design pattern demos to become
                                 familiar with the interactions and behaviors, this application is primarily intended for
                                 <strong> React developers </strong> to provide examples of how to implement these
                                 patterns in their own applications.
                             </Typography>
-                            <Hidden mdUp>
+                            {md ? null : (
                                 <Button
                                     variant={'outlined'}
                                     disableElevation
@@ -131,7 +124,7 @@ export const LandingPage = (): JSX.Element => {
                                 >
                                     Explore Brightlayer UI Design Patterns
                                 </Button>
-                            </Hidden>
+                            )}
                         </div>
                     </Fade>
                     <Fade in={displayLinks} timeout={1000}>

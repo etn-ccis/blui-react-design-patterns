@@ -1,23 +1,21 @@
 import React, { ReactNode, useState, useEffect, useRef, useCallback } from 'react';
-import { AppBar, Slide } from '@material-ui/core';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import List from '@material-ui/core/List';
-import Hidden from '@material-ui/core/Hidden';
-import IconButton from '@material-ui/core/IconButton';
-import { Theme } from '@material-ui/core/styles/createMuiTheme';
-import useTheme from '@material-ui/core/styles/useTheme';
-import makeStyles from '@material-ui/core/styles/makeStyles';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
-import Accordion from '@material-ui/core/Accordion';
-import AccordionSummary from '@material-ui/core/AccordionSummary';
-import AccordionDetails from '@material-ui/core/AccordionDetails';
-import MenuIcon from '@material-ui/icons/Menu';
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
-import Switch from '@material-ui/core/Switch';
-import ExpandMore from '@material-ui/icons/ExpandMore';
-import { Language, Email, Sms, MoreVert, Edit, ArrowBack } from '@material-ui/icons';
+import { AppBar, Slide } from '@mui/material';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
+import List from '@mui/material/List';
+import IconButton from '@mui/material/IconButton';
+import { Theme, useTheme } from '@mui/material/styles';
+import makeStyles from '@mui/styles/makeStyles';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import Accordion from '@mui/material/Accordion';
+import AccordionSummary from '@mui/material/AccordionSummary';
+import AccordionDetails from '@mui/material/AccordionDetails';
+import MenuIcon from '@mui/icons-material/Menu';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import Switch from '@mui/material/Switch';
+import ExpandMore from '@mui/icons-material/ExpandMore';
+import { Language, Email, Sms, MoreVert, Edit, ArrowBack } from '@mui/icons-material';
 import { useDispatch } from 'react-redux';
 import { TOGGLE_DRAWER } from '../../../../redux/actions';
 import { InfoListItem, Spacer } from '@brightlayer-ui/react-components';
@@ -32,7 +30,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         padding: 0,
     },
     toolbarGutters: {
-        padding: `0 ${theme.spacing(2)}px`,
+        padding: `0 ${theme.spacing(2)}`,
         display: 'flex',
         justifyContent: 'space-between',
     },
@@ -42,10 +40,10 @@ const useStyles = makeStyles((theme: Theme) => ({
     accordionContainer: {
         maxWidth: 768,
         margin: '0 auto',
-        padding: `${theme.spacing(3)}px ${theme.spacing(2)}px`,
-        [theme.breakpoints.down('sm')]: {
+        padding: `${theme.spacing(3)} ${theme.spacing(2)}`,
+        [theme.breakpoints.down('md')]: {
             maxWidth: '100%',
-            margin: `0 auto ${theme.spacing(3)}px auto`,
+            margin: `0 auto ${theme.spacing(3)} auto`,
             padding: 0,
         },
     },
@@ -65,7 +63,7 @@ const useStyles = makeStyles((theme: Theme) => ({
                 borderBottom: `1px solid ${theme.palette.divider}`,
             },
         },
-        [theme.breakpoints.down('sm')]: {
+        [theme.breakpoints.down('md')]: {
             maxWidth: '100%',
             boxShadow: 'none',
             borderRadius: 0,
@@ -100,7 +98,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         display: 'flex',
         flexDirection: 'column',
         height: 'calc(100vh - 64px)',
-        [theme.breakpoints.down('xs')]: {
+        [theme.breakpoints.down('sm')]: {
             height: 'calc(100vh - 56px)',
         },
     },
@@ -140,7 +138,8 @@ type Screens =
 export const ActionListLocalActions = (): JSX.Element => {
     const dispatch = useDispatch();
     const theme = useTheme();
-    const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+    const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+    const md = useMediaQuery(theme.breakpoints.up('md'));
     const classes = useStyles(theme);
 
     const [isEmailNotificationsEnabled, setIsEmailNotificationsEnabled] = useState(false);
@@ -184,20 +183,19 @@ export const ActionListLocalActions = (): JSX.Element => {
 
     const getToolbarIcon = useCallback((): ReactNode => {
         if (activeScreen === 'localItemActionScreen') {
-            return (
-                <Hidden mdUp={true}>
-                    <IconButton
-                        data-cy="toolbar-menu"
-                        color={'inherit'}
-                        onClick={(): void => {
-                            dispatch({ type: TOGGLE_DRAWER, payload: true });
-                        }}
-                        edge={'start'}
-                        style={{ marginRight: 20 }}
-                    >
-                        <MenuIcon />
-                    </IconButton>
-                </Hidden>
+            return md ? null : (
+                <IconButton
+                    data-cy="toolbar-menu"
+                    color={'inherit'}
+                    onClick={(): void => {
+                        dispatch({ type: TOGGLE_DRAWER, payload: true });
+                    }}
+                    edge={'start'}
+                    style={{ marginRight: 20 }}
+                    size="large"
+                >
+                    <MenuIcon />
+                </IconButton>
             );
         }
         return (
@@ -207,6 +205,7 @@ export const ActionListLocalActions = (): JSX.Element => {
                 onClick={onBackNavigation}
                 edge={'start'}
                 style={{ marginRight: 20 }}
+                size="large"
             >
                 <ArrowBack />
             </IconButton>
@@ -309,7 +308,7 @@ export const ActionListLocalActions = (): JSX.Element => {
                                     hidePadding
                                     rightComponent={
                                         <>
-                                            <IconButton edge={'end'} onClick={openMenu}>
+                                            <IconButton edge={'end'} onClick={openMenu} size="large">
                                                 <MoreVert />
                                             </IconButton>
                                             <Menu
@@ -336,7 +335,7 @@ export const ActionListLocalActions = (): JSX.Element => {
                                     subtitleSeparator={' '}
                                     hidePadding
                                     rightComponent={
-                                        <IconButton edge={'end'} onClick={handleEditDeviceClick}>
+                                        <IconButton edge={'end'} onClick={handleEditDeviceClick} size="large">
                                             <Edit />
                                         </IconButton>
                                     }

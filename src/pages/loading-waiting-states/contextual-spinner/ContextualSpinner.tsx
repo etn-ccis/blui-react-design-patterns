@@ -1,19 +1,20 @@
 import React, { useCallback, useState, useEffect } from 'react';
-import { makeStyles, useTheme, Theme } from '@material-ui/core/styles';
-import { AppBar, Toolbar, Hidden, IconButton, Typography, Button, Fab, CircularProgress } from '@material-ui/core';
+import { useTheme, Theme } from '@mui/material/styles';
+import makeStyles from '@mui/styles/makeStyles';
+import { AppBar, Toolbar, useMediaQuery, IconButton, Typography, Button, Fab, CircularProgress } from '@mui/material';
 import { TOGGLE_DRAWER } from '../../../redux/actions';
 import { useDispatch } from 'react-redux';
-import { Menu, PlayArrow } from '@material-ui/icons';
+import { Menu, PlayArrow } from '@mui/icons-material';
 
 const useStyles = makeStyles((theme: Theme) => ({
     appbarRoot: {
         padding: 0,
     },
     toolbarGutters: {
-        padding: `0 ${theme.spacing(2)}px`,
+        padding: `0 ${theme.spacing(2)}`,
     },
     exampleContainer: {
-        margin: `${theme.spacing(3)}px ${theme.spacing(2)}px`,
+        margin: `${theme.spacing(3)} ${theme.spacing(2)}`,
     },
     description: {
         marginBottom: theme.spacing(2),
@@ -72,6 +73,7 @@ export const ContextualSpinner = (): JSX.Element => {
     const [isLoginLoading, setIsLoginLoading] = useState(false);
     const [isStartRoutineLoading, setIsStartRoutineLoading] = useState(false);
     const [shouldAnimate, setShouldAnimate] = useState(false);
+    const md = useMediaQuery(theme.breakpoints.up('md'));
     let loginTimeout: ReturnType<typeof setTimeout>;
     let startRoutineTimeout: ReturnType<typeof setTimeout>;
 
@@ -104,7 +106,7 @@ export const ContextualSpinner = (): JSX.Element => {
         <div>
             <AppBar data-cy="blui-toolbar" position={'sticky'} classes={{ root: classes.appbarRoot }}>
                 <Toolbar classes={{ gutters: classes.toolbarGutters }}>
-                    <Hidden mdUp={true}>
+                    {md ? null : (
                         <IconButton
                             data-cy="toolbar-menu"
                             color={'inherit'}
@@ -113,10 +115,11 @@ export const ContextualSpinner = (): JSX.Element => {
                             }}
                             edge={'start'}
                             style={{ marginRight: 20 }}
+                            size="large"
                         >
                             <Menu />
                         </IconButton>
-                    </Hidden>
+                    )}
                     <Typography variant={'h6'} color={'inherit'}>
                         Contextual Spinner
                     </Typography>
@@ -138,7 +141,7 @@ export const ContextualSpinner = (): JSX.Element => {
                 <br />
                 <Fab
                     data-cy={'start-btn'}
-                    variant={isStartRoutineLoading ? 'round' : 'extended'}
+                    variant={isStartRoutineLoading ? 'circular' : 'extended'}
                     color="primary"
                     className={isStartRoutineLoading ? classes.startRoutineLoadingButton : classes.startRoutineButton}
                     onClick={handleStartRoutineClick}

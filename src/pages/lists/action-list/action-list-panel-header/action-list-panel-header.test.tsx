@@ -5,14 +5,19 @@ import { ActionListPanelHeader } from '.';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import { Reducer } from '../../../../redux/reducers';
+import { createTheme, ThemeProvider } from '@mui/material';
+import * as BLUIThemes from '@brightlayer-ui/react-themes';
+const theme = createTheme(BLUIThemes.blue);
 
 const store = createStore(Reducer());
 
 const createRenderer = (): any =>
     render(
-        <Provider store={store}>
-            <ActionListPanelHeader />
-        </Provider>
+        <ThemeProvider theme={theme}>
+            <Provider store={store}>
+                <ActionListPanelHeader />
+            </Provider>
+        </ThemeProvider>
     );
 
 describe('Action list with panel header', () => {
@@ -32,7 +37,7 @@ describe('Action list with panel header', () => {
         createRenderer();
         expect(screen.getByText('30 Days')).toBeInTheDocument();
         expect(screen.queryByText('15 Days')).not.toBeInTheDocument();
-        fireEvent.mouseDown(screen.getByRole('button'));
+        fireEvent.mouseDown(screen.getByText('30 Days'));
 
         expect(screen.getByText('15 Days')).toBeInTheDocument();
         fireEvent.click(screen.getByText('15 Days'));

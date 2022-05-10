@@ -1,28 +1,30 @@
 import React, { useEffect, useState } from 'react';
 
-import AppBar from '@material-ui/core/AppBar';
-import Hidden from '@material-ui/core/Hidden';
-import IconButton from '@material-ui/core/IconButton';
-import List from '@material-ui/core/List';
-import TextField from '@material-ui/core/TextField';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
+import AppBar from '@mui/material/AppBar';
+import IconButton from '@mui/material/IconButton';
+import List from '@mui/material/List';
+import TextField from '@mui/material/TextField';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
+import { useMediaQuery } from '@mui/material';
 
 // Material Icons
-import Close from '@material-ui/icons/Close';
-import MenuIcon from '@material-ui/icons/Menu';
-import Search from '@material-ui/icons/Search';
+import Close from '@mui/icons-material/Close';
+import MenuIcon from '@mui/icons-material/Menu';
+import Search from '@mui/icons-material/Search';
 
 // Handles Drawer
 import { TOGGLE_DRAWER } from '../../../redux/actions';
 import { useDispatch } from 'react-redux';
 
 // Other
-import { createStyles, makeStyles, Theme, useTheme } from '@material-ui/core/styles';
+import { Theme, useTheme } from '@mui/material/styles';
+import createStyles from '@mui/styles/createStyles';
+import makeStyles from '@mui/styles/makeStyles';
 import { InfoListItem, Spacer } from '@brightlayer-ui/react-components';
 import { DRAWER_WIDTH } from '../../../assets/constants';
 import clsx from 'clsx';
-import { ArrowBack } from '@material-ui/icons';
+import { ArrowBack } from '@mui/icons-material';
 
 const list = ['Apple', 'Grape', 'Orange', 'Pineapple', 'Watermelon'];
 
@@ -53,7 +55,7 @@ const useStyles = makeStyles((theme: Theme) =>
             },
             '&$searchActive': {
                 width: `calc(100% - ${DRAWER_WIDTH}px)`,
-                [theme.breakpoints.down('sm')]: {
+                [theme.breakpoints.down('md')]: {
                     width: '100%',
                 },
             },
@@ -87,6 +89,7 @@ export const SearchBar = (): JSX.Element => {
     const [filteredList, setFilteredList] = useState(list);
     const [searchActive, setSearchActive] = useState(false);
     const [query, setQuery] = useState('');
+    const md = useMediaQuery(theme.breakpoints.up('md'));
 
     useEffect(() => {
         if (searchActive) {
@@ -115,7 +118,7 @@ export const SearchBar = (): JSX.Element => {
                 className={clsx(classes.appbar, classes.regularBar, searchActive && classes.searchActive)}
             >
                 <Toolbar classes={{ gutters: classes.toolbarGutters }}>
-                    <Hidden mdUp={true}>
+                    {md ? null : (
                         <IconButton
                             data-cy="toolbar-menu"
                             color={'inherit'}
@@ -124,10 +127,11 @@ export const SearchBar = (): JSX.Element => {
                             }}
                             edge={'start'}
                             style={{ marginRight: 20 }}
+                            size="large"
                         >
                             <MenuIcon />
                         </IconButton>
-                    </Hidden>
+                    )}
                     <Typography variant={'h6'} color={'inherit'}>
                         Search Bar
                     </Typography>
@@ -137,6 +141,7 @@ export const SearchBar = (): JSX.Element => {
                         onClick={(): void => setSearchActive(true)}
                         edge={'end'}
                         data-cy="search-btn"
+                        size="large"
                     >
                         <Search />
                     </IconButton>
@@ -155,6 +160,7 @@ export const SearchBar = (): JSX.Element => {
                         edge={'start'}
                         style={{ color: theme.palette.text.secondary }}
                         onClick={(): void => setSearchActive(false)}
+                        size="large"
                     >
                         <ArrowBack />
                     </IconButton>
@@ -168,6 +174,7 @@ export const SearchBar = (): JSX.Element => {
                             autoFocus
                             id={'#search-field'}
                             data-cy={'search-field'}
+                            variant="standard"
                         />
                     )}
                     {query && (
@@ -177,6 +184,7 @@ export const SearchBar = (): JSX.Element => {
                             edge={'end'}
                             data-cy="clear-search-field"
                             style={{ color: theme.palette.text.secondary }}
+                            size="large"
                         >
                             <Close />
                         </IconButton>

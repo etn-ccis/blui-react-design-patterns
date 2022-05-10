@@ -1,23 +1,21 @@
 import React, { useCallback, useState } from 'react';
-import IconButton from '@material-ui/core/IconButton';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import Hidden from '@material-ui/core/Hidden';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import Tooltip from '@material-ui/core/Tooltip';
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
-import MenuIcon from '@material-ui/icons/Menu';
-import DeleteIcon from '@material-ui/icons/Delete';
-import BookmarkIcon from '@material-ui/icons/Bookmark';
-import ArchiveIcon from '@material-ui/icons/Archive';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
-import useTheme from '@material-ui/core/styles/useTheme';
-import { Theme } from '@material-ui/core/styles/createMuiTheme';
-import makeStyles from '@material-ui/core/styles/makeStyles';
+import IconButton from '@mui/material/IconButton';
+import AppBar from '@mui/material/AppBar';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import Tooltip from '@mui/material/Tooltip';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import MenuIcon from '@mui/icons-material/Menu';
+import DeleteIcon from '@mui/icons-material/Delete';
+import BookmarkIcon from '@mui/icons-material/Bookmark';
+import ArchiveIcon from '@mui/icons-material/Archive';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+import { useTheme, Theme } from '@mui/material/styles';
+import makeStyles from '@mui/styles/makeStyles';
 import { InfoListItem, ListItemTag } from '@brightlayer-ui/react-components';
 import { useDispatch } from 'react-redux';
 import { TOGGLE_DRAWER } from '../../../../redux/actions';
@@ -37,14 +35,14 @@ const useStyles = makeStyles((theme: Theme) => ({
         padding: 0,
     },
     toolbarGutters: {
-        padding: `0 ${theme.spacing(2)}px`,
+        padding: `0 ${theme.spacing(2)}`,
     },
     toolbarTextContainer: {
         display: 'flex',
         flexDirection: 'column',
     },
     toolBarSubtitle: {
-        marginTop: -theme.spacing(1),
+        marginTop: theme.spacing(-1),
     },
     hoveredInfoListItem: {
         backgroundColor: theme.palette.background.default,
@@ -53,7 +51,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         maxWidth: 818,
         padding: theme.spacing(3),
         margin: '0 auto',
-        [theme.breakpoints.down('sm')]: {
+        [theme.breakpoints.down('md')]: {
             maxWidth: '100%',
             padding: 0,
             margin: 0,
@@ -61,7 +59,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
     card: {
         borderRadius: 4,
-        [theme.breakpoints.down('sm')]: {
+        [theme.breakpoints.down('md')]: {
             marginTop: 0,
             boxShadow: 'none',
             borderRadius: 0,
@@ -87,7 +85,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         padding: 0,
     },
     noListItemText: {
-        [theme.breakpoints.down('sm')]: {
+        [theme.breakpoints.down('md')]: {
             marginLeft: theme.spacing(2),
         },
     },
@@ -127,11 +125,12 @@ export const ActionListInline = (): JSX.Element => {
     const dispatch = useDispatch();
     const theme = useTheme();
     const classes = useStyles(theme);
-    const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+    const isMobile = useMediaQuery(theme.breakpoints.down('md'));
     const [list, setList] = useState(itemList.slice());
     const [hoveredItem, setHoveredItem] = useState(0);
     const [menuPosition, setMenuPosition] = useState<null | HTMLElement>(null);
     const [activeIndex, setActiveIndex] = useState<number>(-1);
+    const md = useMediaQuery(theme.breakpoints.up('md'));
     const options: string[] = ['Delete', 'Save', 'Archive'];
 
     const onMenuClick = useCallback(
@@ -167,7 +166,7 @@ export const ActionListInline = (): JSX.Element => {
         <div className={classes.actionList}>
             <AppBar data-cy={'blui-toolbar'} position={'sticky'} classes={{ root: classes.appbarRoot }}>
                 <Toolbar classes={{ gutters: classes.toolbarGutters }}>
-                    <Hidden mdUp={true}>
+                    {md ? null : (
                         <IconButton
                             data-cy="toolbar-menu"
                             color={'inherit'}
@@ -176,10 +175,11 @@ export const ActionListInline = (): JSX.Element => {
                             }}
                             edge={'start'}
                             style={{ marginRight: 20 }}
+                            size="large"
                         >
                             <MenuIcon />
                         </IconButton>
-                    </Hidden>
+                    )}
                     <div className={classes.toolbarTextContainer}>
                         <Typography variant={'h6'} color={'inherit'}>
                             Local Item Actions
@@ -230,6 +230,7 @@ export const ActionListInline = (): JSX.Element => {
                                                                 }}
                                                                 data-testid="deleteIcon"
                                                                 onClick={(): void => onDeleteItem('Delete', i)}
+                                                                size="large"
                                                             >
                                                                 <DeleteIcon />
                                                             </IconButton>
@@ -240,6 +241,7 @@ export const ActionListInline = (): JSX.Element => {
                                                                     root: classes.iconButton,
                                                                 }}
                                                                 data-testid="saveIcon"
+                                                                size="large"
                                                             >
                                                                 <BookmarkIcon />
                                                             </IconButton>
@@ -250,6 +252,7 @@ export const ActionListInline = (): JSX.Element => {
                                                                     root: classes.iconButton,
                                                                 }}
                                                                 data-testid="archiveIcon"
+                                                                size="large"
                                                             >
                                                                 <ArchiveIcon />
                                                             </IconButton>
@@ -264,6 +267,7 @@ export const ActionListInline = (): JSX.Element => {
                                                         data-cy={'action-menu'}
                                                         onClick={(evt): void => onMenuClick(evt, i)}
                                                         edge={'end'}
+                                                        size="large"
                                                     >
                                                         <MoreVertIcon />
                                                     </IconButton>
@@ -286,7 +290,6 @@ export const ActionListInline = (): JSX.Element => {
                                                             vertical: 'top',
                                                             horizontal: 'right',
                                                         }}
-                                                        getContentAnchorEl={null}
                                                     >
                                                         {options.map((option) => (
                                                             <MenuItem

@@ -1,23 +1,24 @@
 import React from 'react';
-import { Chip as MuiChip, ChipProps as MuiChipProps, Typography, makeStyles, Theme, useTheme } from '@material-ui/core';
+import { Chip as MuiChip, ChipProps as MuiChipProps, Typography, Theme, useTheme } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
 import * as colors from '@brightlayer-ui/colors';
 
 const useStyles = makeStyles((theme: Theme) => ({
     userMenuChip: {
-        height: `${theme.spacing(4)}px`,
+        height: theme.spacing(4),
         cursor: 'pointer',
     },
     chipIcon: {
-        height: `${theme.spacing(3)}px`,
-        width: `${theme.spacing(3)}px`,
+        height: theme.spacing(3),
+        width: theme.spacing(3),
     },
     chipLabelContainer: {
         display: 'flex',
         alignItems: 'center',
-        marginRight: `-${theme.spacing(1)}px`,
+        marginRight: theme.spacing(-1),
     },
     chipLabelText: {
-        marginRight: `${theme.spacing(1)}px`,
+        marginRight: theme.spacing(1),
     },
     enableHighlight: {
         backgroundColor: colors.white[500],

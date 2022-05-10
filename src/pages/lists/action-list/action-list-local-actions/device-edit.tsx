@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import { createStyles, makeStyles, Theme } from '@material-ui/core';
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogTitle from '@mui/material/DialogTitle';
+import { Theme } from '@mui/material';
+
+import createStyles from '@mui/styles/createStyles';
+import makeStyles from '@mui/styles/makeStyles';
 
 type DialogProps = {
     open: boolean;
@@ -21,7 +24,7 @@ const useStyles = makeStyles((theme: Theme) =>
             height: 600,
         },
         dialogTitle: {
-            padding: `${theme.spacing(4)}px ${theme.spacing(3)}px`,
+            padding: `${theme.spacing(4)} ${theme.spacing(3)}`,
         },
         dialogActions: {
             padding: theme.spacing(3),

@@ -1,29 +1,27 @@
 import React, { useCallback, useState } from 'react';
-import IconButton from '@material-ui/core/IconButton';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import Hidden from '@material-ui/core/Hidden';
-import Button from '@material-ui/core/Button';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
-import MenuIcon from '@material-ui/icons/Menu';
-import useTheme from '@material-ui/core/styles/useTheme';
-import { Theme } from '@material-ui/core/styles/createMuiTheme';
-import makeStyles from '@material-ui/core/styles/makeStyles';
+import IconButton from '@mui/material/IconButton';
+import AppBar from '@mui/material/AppBar';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import MenuIcon from '@mui/icons-material/Menu';
+import { useTheme, Theme } from '@mui/material/styles';
+import makeStyles from '@mui/styles/makeStyles';
 import { EmptyState, InfoListItem, Spacer } from '@brightlayer-ui/react-components';
 import { useDispatch } from 'react-redux';
 import { TOGGLE_DRAWER } from '../../../../redux/actions';
-import AddIcon from '@material-ui/icons/Add';
-import DeleteIcon from '@material-ui/icons/Delete';
+import AddIcon from '@mui/icons-material/Add';
+import DeleteIcon from '@mui/icons-material/Delete';
 // @TODO: MUI v5 - Update the warning icon to use WarningAmber instead of Warning
-import WarningIcon from '@material-ui/icons/Warning';
-import Dialog from '@material-ui/core/Dialog';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogActions from '@material-ui/core/DialogActions';
+import WarningAmberIcon from '@mui/icons-material/WarningAmber';
+import Dialog from '@mui/material/Dialog';
+import DialogTitle from '@mui/material/DialogTitle';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogActions from '@mui/material/DialogActions';
 
 type Item = {
     id: number;
@@ -38,20 +36,20 @@ const useStyles = makeStyles((theme: Theme) => ({
         padding: 0,
     },
     toolbarGutters: {
-        padding: `0 ${theme.spacing(2)}px`,
+        padding: `0 ${theme.spacing(2)}`,
     },
     toolbarTextContainer: {
         display: 'flex',
         flexDirection: 'column',
     },
     toolBarSubtitle: {
-        marginTop: -theme.spacing(1),
+        marginTop: theme.spacing(-1),
     },
     contentContainer: {
         maxWidth: 800,
         padding: theme.spacing(3),
         margin: '0 auto',
-        [theme.breakpoints.down('sm')]: {
+        [theme.breakpoints.down('md')]: {
             maxWidth: '100%',
             padding: 0,
             margin: 0,
@@ -65,7 +63,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
     card: {
         borderRadius: 4,
-        [theme.breakpoints.down('sm')]: {
+        [theme.breakpoints.down('md')]: {
             marginTop: 0,
             boxShadow: 'none',
             borderRadius: 0,
@@ -83,7 +81,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     emptyStateContainer: {
         display: 'flex',
         flexDirection: 'column',
-        height: `calc(100vh - ${theme.spacing(8)}px)`,
+        height: `calc(100vh - ${theme.spacing(8)})`,
         alignItems: 'center',
         backgroundColor: theme.palette.background.paper,
     },
@@ -113,7 +111,8 @@ export const ActionListButtonPanel = (): JSX.Element => {
     const dispatch = useDispatch();
     const theme = useTheme();
     const classes = useStyles(theme);
-    const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+    const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+    const md = useMediaQuery(theme.breakpoints.up('md'));
 
     const [list, setList] = useState(itemList);
     const [open, setOpen] = React.useState(false);
@@ -146,7 +145,7 @@ export const ActionListButtonPanel = (): JSX.Element => {
         <div className={classes.container}>
             <AppBar data-cy={'blui-toolbar'} position={'sticky'} classes={{ root: classes.appbarRoot }}>
                 <Toolbar classes={{ gutters: classes.toolbarGutters }}>
-                    <Hidden mdUp={true}>
+                    {md ? null : (
                         <IconButton
                             data-cy="toolbar-menu"
                             color={'inherit'}
@@ -155,10 +154,11 @@ export const ActionListButtonPanel = (): JSX.Element => {
                             }}
                             edge={'start'}
                             style={{ marginRight: 20 }}
+                            size="large"
                         >
                             <MenuIcon />
                         </IconButton>
-                    </Hidden>
+                    )}
                     <div className={classes.toolbarTextContainer}>
                         <Typography variant={'h6'} color={'inherit'}>
                             Global Action List
@@ -177,6 +177,7 @@ export const ActionListButtonPanel = (): JSX.Element => {
                                     color={'inherit'}
                                     aria-label={'Delete'}
                                     onClick={onRemoveAll}
+                                    size="large"
                                 >
                                     <DeleteIcon />
                                 </IconButton>
@@ -188,6 +189,7 @@ export const ActionListButtonPanel = (): JSX.Element => {
                                 aria-label={'add'}
                                 edge={'end'}
                                 onClick={onAddItem}
+                                size="large"
                             >
                                 <AddIcon />
                             </IconButton>
@@ -253,7 +255,7 @@ export const ActionListButtonPanel = (): JSX.Element => {
                 <div className={classes.emptyStateContainer}>
                     <EmptyState
                         style={{ maxWidth: 365 }}
-                        icon={<WarningIcon style={{ fontSize: 'inherit' }} />}
+                        icon={<WarningAmberIcon style={{ fontSize: 'inherit' }} />}
                         title={'No Items Found'}
                         description={'No items added to a list. You can add an item and create a list of items.'}
                         actions={

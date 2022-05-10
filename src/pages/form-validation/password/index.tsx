@@ -9,14 +9,15 @@ import {
     List,
     ListItem,
     InputProps,
-    Hidden,
     Divider,
     Button,
     Card,
-} from '@material-ui/core';
-import MenuIcon from '@material-ui/icons/Menu';
-import { Done, Visibility, VisibilityOff } from '@material-ui/icons';
-import { makeStyles, useTheme, Theme } from '@material-ui/core/styles';
+    useMediaQuery,
+} from '@mui/material';
+import MenuIcon from '@mui/icons-material/Menu';
+import { Done, Visibility, VisibilityOff } from '@mui/icons-material';
+import { useTheme, Theme } from '@mui/material/styles';
+import makeStyles from '@mui/styles/makeStyles';
 import { useDispatch } from 'react-redux';
 import { TOGGLE_DRAWER } from '../../../redux/actions';
 import * as Colors from '@brightlayer-ui/colors';
@@ -50,7 +51,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         height: '100%',
         maxHeight: 'calc(100vh - 64px)',
         overflow: 'auto',
-        [theme.breakpoints.down('xs')]: {
+        [theme.breakpoints.down('sm')]: {
             width: '100%',
             maxWidth: 600,
             height: 'unset',
@@ -63,7 +64,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     sectionHeader: {
         width: '100%',
         marginBottom: 16,
-        [theme.breakpoints.down('xs')]: {
+        [theme.breakpoints.down('sm')]: {
             display: 'none',
         },
     },
@@ -92,26 +93,26 @@ const useStyles = makeStyles((theme: Theme) => ({
         padding: '0 16px',
     },
     divider: {
-        width: `calc(100% + ${theme.spacing(6)}px)`,
+        width: `calc(100% + ${theme.spacing(6)})`,
         marginTop: theme.spacing(6),
-        marginLeft: -theme.spacing(3),
-        marginRight: -theme.spacing(3),
-        [theme.breakpoints.down('xs')]: {
-            width: `calc(100% + ${theme.spacing(4)}px)`,
-            marginLeft: -theme.spacing(2),
-            marginRight: -theme.spacing(2),
+        marginLeft: theme.spacing(-3),
+        marginRight: theme.spacing(-3),
+        [theme.breakpoints.down('sm')]: {
+            width: `calc(100% + ${theme.spacing(4)})`,
+            marginLeft: theme.spacing(-2),
+            marginRight: theme.spacing(-2),
         },
     },
     topDivider: {
         marginTop: theme.spacing(6),
         marginBottom: theme.spacing(4),
-        [theme.breakpoints.down('xs')]: {
+        [theme.breakpoints.down('sm')]: {
             marginTop: theme.spacing(2),
         },
     },
     bottomDivider: {
         marginTop: theme.spacing(3),
-        [theme.breakpoints.down('xs')]: {
+        [theme.breakpoints.down('sm')]: {
             marginTop: theme.spacing(1),
         },
     },
@@ -120,7 +121,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         paddingTop: theme.spacing(3),
         paddingBottom: theme.spacing(3),
         display: 'flex',
-        [theme.breakpoints.down('xs')]: {
+        [theme.breakpoints.down('sm')]: {
             display: 'none',
         },
     },
@@ -166,6 +167,7 @@ export const PasswordFormValidation = (): JSX.Element => {
     const theme = useTheme();
     const classes = useStyles(theme);
     const dispatch = useDispatch();
+    const md = useMediaQuery(theme.breakpoints.up('md'));
     const PASSWORD_MISMATCH = 'Passwords do not match';
 
     const getPasswordCriteriaIcon = (error: boolean): JSX.Element => (
@@ -277,7 +279,7 @@ export const PasswordFormValidation = (): JSX.Element => {
         <div className={classes.root}>
             <AppBar data-cy={'blui-toolbar'} position={'sticky'} classes={{ root: classes.appbarRoot }}>
                 <Toolbar classes={{ gutters: classes.toolbarGutters }}>
-                    <Hidden mdUp>
+                    {md ? null : (
                         <IconButton
                             data-cy={'toolbar-menu'}
                             color={'inherit'}
@@ -286,10 +288,11 @@ export const PasswordFormValidation = (): JSX.Element => {
                             }}
                             edge={'start'}
                             style={{ marginRight: 20 }}
+                            size="large"
                         >
                             <MenuIcon />
                         </IconButton>
-                    </Hidden>
+                    )}
                     <Typography variant={'h6'} color={'inherit'}>
                         Change Password
                     </Typography>
@@ -327,6 +330,7 @@ export const PasswordFormValidation = (): JSX.Element => {
                                             <IconButton
                                                 className={classes.visibilityToggle}
                                                 onClick={(): void => setShowCurrentPassword(!showCurrentPassword)}
+                                                size="large"
                                             >
                                                 {showCurrentPassword && <Visibility />}
                                                 {!showCurrentPassword && <VisibilityOff />}
@@ -354,6 +358,7 @@ export const PasswordFormValidation = (): JSX.Element => {
                                             <IconButton
                                                 className={classes.visibilityToggle}
                                                 onClick={(): void => setShowNewPassword(!showNewPassword)}
+                                                size="large"
                                             >
                                                 {showNewPassword && <Visibility />}
                                                 {!showNewPassword && <VisibilityOff />}
@@ -435,6 +440,7 @@ export const PasswordFormValidation = (): JSX.Element => {
                                             <IconButton
                                                 className={classes.visibilityToggle}
                                                 onClick={(): void => setShowConfirmPassword(!showConfirmPassword)}
+                                                size="large"
                                             >
                                                 {showConfirmPassword && <Visibility />}
                                                 {!showConfirmPassword && <VisibilityOff />}

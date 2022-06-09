@@ -14,7 +14,7 @@ jobs:
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
           firebaseServiceAccount: >-
-            ${{ secrets.FIREBASE_SERVICE_ACCOUNT_BLUI_REACT_DESIGN_PATTER_78ADE
+            ${{ secrets.FIREBASE_SERVICE_ACCOUNT_BLUI_REACT_PATTERNS
             }}
           expires: 2d
           projectId: blui-react-patterns

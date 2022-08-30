@@ -104,16 +104,16 @@ workflows:
             - cypress_tests:
                     requires:
                         - build_project
-                    # filters:
-                    #     branches:
-                    #         only:
-                    #             - master
-                    #             - dev
+                    filters:
+                        branches:
+                            only:
+                                - master
+                                - dev
             - coverage_reports:
                    requires:
                         - build_project
                         - cypress_tests
-                #    filters:
-                #         branches:
-                #             only:
-                #                 - master
+                   filters:
+                        branches:
+                            only:
+                                - master

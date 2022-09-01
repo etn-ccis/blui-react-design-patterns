@@ -1,6 +1,6 @@
 version: 2.1
 orbs:
-    codecov: codecov/codecov@1.1.3
+    codecov: codecov/codecov@3.2.2
     browser-tools: circleci/browser-tools@1.2.4
 jobs:
     build_project:
@@ -91,10 +91,10 @@ jobs:
                 at: .
             - codecov/upload:
                 file: './coverage/clover.xml'
-                token: 74ebd8f2-0b51-4873-972a-82c2b3509b37
+                token: CODECOV_TOKEN
             - codecov/upload:
                 file: './cypress-coverage/clover.xml'
-                token: 74ebd8f2-0b51-4873-972a-82c2b3509b37
+                token: CODECOV_TOKEN
 
 workflows:
     version: 2

@@ -13,7 +13,7 @@ import {
 import { OpenInNew } from '@mui/icons-material';
 import CloseIcon from '@mui/icons-material/Close';
 import React, { useEffect, useState } from 'react';
-import { useHistory } from 'react-router';
+import { useNavigate } from 'react-router';
 import { Main } from './router/main';
 import './style.css';
 import { PAGES, RouteMetaData, Routes } from './router/routes';
@@ -47,7 +47,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 export const App: React.FC = () => {
     const classes = useStyles();
-    const history = useHistory();
+    const navigation = useNavigate();
     const open = useSelector((state: AppState) => state.app.drawerOpen);
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('md'));
@@ -56,7 +56,7 @@ export const App: React.FC = () => {
     const [selected, setSelected] = useState('');
 
     const navigate = (id: string): void => {
-        history.push(id);
+        navigation(id);
         setSelected(id);
     };
 

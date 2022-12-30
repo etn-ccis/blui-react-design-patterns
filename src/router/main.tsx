@@ -1,5 +1,5 @@
 import React from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 
 // Different App Pages/Routes
 import { LandingPage } from '../pages/LandingPage';
@@ -42,87 +42,62 @@ import { TreeStructureList } from '../pages/lists/tree-structure-list';
 The main page body, which contains the route definitions
 */
 export const Main = (): JSX.Element => (
-    <Switch>
-        <Route exact path={'/'} component={LandingPage} />
+    <Routes>
+        <Route path={'/'} element={<LandingPage />} />
 
-        <Route exact path={`/${PAGES.APP_BAR.SEARCH.route || ''}`} component={SearchBar} />
-        <Route exact path={`/${PAGES.APP_BAR.COLLAPSIBLE.route || ''}`} component={Collapsible} />
-        <Route exact path={`/${PAGES.APP_BAR.CONTEXTUAL_ACTION.route || ''}`} component={ContextualAction} />
-        <Route exact path={`/${PAGES.APP_BAR.PAGE_WIDE_SEARCH.route || ''}`} component={PageWideSearch} />
-        <Route exact path={`/${PAGES.APP_BAR.DROPDOWN_COLLAPSIBLE.route || ''}`} component={BluiToolbarMenu} />
+        <Route path={`/${PAGES.APP_BAR.SEARCH.route || ''}`} element={<SearchBar />} />
+        <Route path={`/${PAGES.APP_BAR.COLLAPSIBLE.route || ''}`} element={<Collapsible />} />
+        <Route path={`/${PAGES.APP_BAR.CONTEXTUAL_ACTION.route || ''}`} element={<ContextualAction />} />
+        <Route path={`/${PAGES.APP_BAR.PAGE_WIDE_SEARCH.route || ''}`} element={<PageWideSearch />} />
+        <Route path={`/${PAGES.APP_BAR.DROPDOWN_COLLAPSIBLE.route || ''}`} element={<BluiToolbarMenu />} />
 
-        <Route exact path={`/${PAGES.FORM_VALIDATION.LIST.route || ''}`} component={ListFormValidation} />
-        <Route exact path={`/${PAGES.FORM_VALIDATION.PASSWORD.route || ''}`} component={PasswordFormValidation} />
+        <Route path={`/${PAGES.FORM_VALIDATION.LIST.route || ''}`} element={<ListFormValidation />} />
+        <Route path={`/${PAGES.FORM_VALIDATION.PASSWORD.route || ''}`} element={<PasswordFormValidation />} />
         <Route
-            exact
             path={`/${PAGES.FORM_VALIDATION.PHONE_NUMBER_FORMAT.route || ''}`}
-            component={PhoneNumberFormatValidation}
+            element={<PhoneNumberFormatValidation />}
         />
+        <Route path={`/${PAGES.FORM_VALIDATION.SECTIONED_FORM.route || ''}`} element={<SectionedFormValidation />} />
+        <Route path={`/${PAGES.FORM_VALIDATION.TABLE.route || ''}`} element={<TableFormValidation />} />
         <Route
-            exact
-            path={`/${PAGES.FORM_VALIDATION.SECTIONED_FORM.route || ''}`}
-            component={SectionedFormValidation}
-        />
-        <Route exact path={`/${PAGES.FORM_VALIDATION.TABLE.route || ''}`} component={TableFormValidation} />
-        <Route
-            exact
             path={`/${PAGES.FORM_VALIDATION.FIXED_LENGTH_PASSCODE.route || ''}`}
-            component={FixedLengthPasscodeValidation}
+            element={<FixedLengthPasscodeValidation />}
         />
-        <Route
-            exact
-            path={`/${PAGES.FORM_VALIDATION.VERIFY_ON_SUBMIT.route || ''}`}
-            component={VerifyOnSubmitValidation}
-        />
-        <Route exact path={`/${PAGES.I18N.route || ''}`} component={I18N} />
+        <Route path={`/${PAGES.FORM_VALIDATION.VERIFY_ON_SUBMIT.route || ''}`} element={<VerifyOnSubmitValidation />} />
+        <Route path={`/${PAGES.I18N.route || ''}`} element={<I18N />} />
 
-        <Route exact path={`/${PAGES.LISTS.ACTION_LIST.route || ''}`} component={ActionList} />
+        <Route path={`/${PAGES.LISTS.ACTION_LIST.route || ''}`} element={<ActionList />} />
+        <Route path={`/${PAGES.LISTS.ACTION_LIST.IN_PANEL_HEADER.route || ''}`} element={<ActionListPanelHeader />} />
+        <Route path={`/${PAGES.LISTS.ACTION_LIST.INLINE.route || ''}`} element={<ActionListInline />} />
+        <Route path={`/${PAGES.LISTS.ACTION_LIST.IN_BUTTON_PANEL.route || ''}`} element={<ActionListButtonPanel />} />
         <Route
-            exact
-            path={`/${PAGES.LISTS.ACTION_LIST.IN_PANEL_HEADER.route || ''}`}
-            component={ActionListPanelHeader}
-        />
-        <Route exact path={`/${PAGES.LISTS.ACTION_LIST.INLINE.route || ''}`} component={ActionListInline} />
-        <Route
-            exact
-            path={`/${PAGES.LISTS.ACTION_LIST.IN_BUTTON_PANEL.route || ''}`}
-            component={ActionListButtonPanel}
-        />
-        <Route
-            exact
             path={`/${PAGES.LISTS.ACTION_LIST.WITH_LOCAL_ACTIONS.route || ''}`}
-            component={ActionListLocalActions}
+            element={<ActionListLocalActions />}
         />
-        <Route exact path={`/${PAGES.LISTS.DATA_LIST.route || ''}`} component={DataList} />
-        <Route exact path={`/${PAGES.LISTS.MULTISELECT_LIST.route || ''}`} component={MultiselectList} />
-        <Route exact path={`/${PAGES.LISTS.STATUS_LIST.route || ''}`} component={StatusList} />
-        <Route exact path={`/${PAGES.LISTS.SORTABLE_LIST.route || ''}`} component={SortableList} />
-        <Route exact path={`/${PAGES.LISTS.RESPONSIVE_TABLE.route || ''}`} component={ResponsiveTable} />
-        <Route exact path={`/${PAGES.LISTS.TREE_STRUCTURE.route || ''}`} component={TreeStructureList} />
+        <Route path={`/${PAGES.LISTS.DATA_LIST.route || ''}`} element={<DataList />} />
+        <Route path={`/${PAGES.LISTS.MULTISELECT_LIST.route || ''}`} element={<MultiselectList />} />
+        <Route path={`/${PAGES.LISTS.STATUS_LIST.route || ''}`} element={<StatusList />} />
+        <Route path={`/${PAGES.LISTS.SORTABLE_LIST.route || ''}`} element={<SortableList />} />
+        <Route path={`/${PAGES.LISTS.RESPONSIVE_TABLE.route || ''}`} element={<ResponsiveTable />} />
+        <Route path={`/${PAGES.LISTS.TREE_STRUCTURE.route || ''}`} element={<TreeStructureList />} />
 
-        <Route exact path={`/${PAGES.OVERLAYS.BASIC_BOTTOM_SHEET.route || ''}`} component={BasicBottomSheet} />
-        <Route exact path={`/${PAGES.OVERLAYS.COMPLEX_BOTTOM_SHEET.route || ''}`} component={ComplexBottomSheet} />
+        <Route path={`/${PAGES.OVERLAYS.BASIC_BOTTOM_SHEET.route || ''}`} element={<BasicBottomSheet />} />
+        <Route path={`/${PAGES.OVERLAYS.COMPLEX_BOTTOM_SHEET.route || ''}`} element={<ComplexBottomSheet />} />
 
-        <Route exact path={`/${PAGES.DYNAMIC_STEPPER.route || ''}`} component={DynamicStepper} />
-        <Route exact path={`/${PAGES.DYNAMIC_STEPPER.route || ''}`} component={DynamicStepper} />
-        <Route exact path={`/${PAGES.LOADING_WAITING_STATES.PROGRESS_BAR.route || ''}`} component={ProgressBar} />
+        <Route path={`/${PAGES.DYNAMIC_STEPPER.route || ''}`} element={<DynamicStepper />} />
+        <Route path={`/${PAGES.DYNAMIC_STEPPER.route || ''}`} element={<DynamicStepper />} />
+        <Route path={`/${PAGES.LOADING_WAITING_STATES.PROGRESS_BAR.route || ''}`} element={<ProgressBar />} />
         <Route
-            exact
             path={`/${PAGES.LOADING_WAITING_STATES.PROGRESS_BAR_INDETERMINATE.route || ''}`}
-            component={ProgressBarIndeterminate}
+            element={<ProgressBarIndeterminate />}
         />
         <Route
-            exact
             path={`/${PAGES.LOADING_WAITING_STATES.CONTEXTUAL_SPINNER.route || ''}`}
-            component={ContextualSpinner}
+            element={<ContextualSpinner />}
         />
-        <Route exact path={`/${PAGES.LOADING_WAITING_STATES.SKELETONS.route || ''}`} component={Skeletons} />
-        <Route
-            exact
-            path={`/${PAGES.LOADING_WAITING_STATES.SPINNER_OVERLAYS.route || ''}`}
-            component={SpinnerOverlays}
-        />
-        <Route exact path={`/${PAGES.ACCOUNT_MENU.IN_AN_APP_BAR.route || ''}`} component={InAnAppBar} />
-        <Route exact path={`/${PAGES.ACCOUNT_MENU.IN_A_DRAWER.route || ''}`} component={InADrawer} />
-    </Switch>
+        <Route path={`/${PAGES.LOADING_WAITING_STATES.SKELETONS.route || ''}`} element={<Skeletons />} />
+        <Route path={`/${PAGES.LOADING_WAITING_STATES.SPINNER_OVERLAYS.route || ''}`} element={<SpinnerOverlays />} />
+        <Route path={`/${PAGES.ACCOUNT_MENU.IN_AN_APP_BAR.route || ''}`} element={<InAnAppBar />} />
+        <Route path={`/${PAGES.ACCOUNT_MENU.IN_A_DRAWER.route || ''}`} element={<InADrawer />} />
+    </Routes>
 );

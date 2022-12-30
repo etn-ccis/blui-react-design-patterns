@@ -175,7 +175,7 @@ export const DynamicStepper = (): JSX.Element => {
                                 >
                                     <StepButton
                                         onClick={(): void => {
-                                            setActiveStep(index);
+                                            setActiveStep(index === activeStep ? -1 : index);
                                         }}
                                     >
                                         <div style={{ display: 'flex', alignItems: 'center' }}>
@@ -233,7 +233,14 @@ export const DynamicStepper = (): JSX.Element => {
                                     }
                                     onClick={addStep}
                                 >
-                                    <Typography variant={'body1'}>Add a Step</Typography>
+                                    <Typography
+                                        variant={'body1'}
+                                        className={
+                                            steps.length > 0 && steps[steps.length - 1] === -1 ? ' disabled' : ''
+                                        }
+                                    >
+                                        Add a Step
+                                    </Typography>
                                 </StepButton>
                             </Step>
                         </Stepper>

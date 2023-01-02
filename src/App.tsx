@@ -69,12 +69,12 @@ export const App: React.FC = () => {
 
     const navItems: NavItem[] = [];
 
-    const createRoute = (page: RouteMetaData, itemKey: string): NavItem => {
+    const createRoute = (page: RouteMetaData, itemKey: string, isSubItem = false): NavItem => {
         const subItems: NavItem[] = [];
         Object.keys(page).forEach((key: string): JSX.Element | null => {
             const subRoute = page[key as keyof RouteMetaData];
             if (typeof subRoute === 'object') {
-                subItems.push(createRoute(subRoute, key));
+                subItems.push(createRoute(subRoute, key, true));
             }
             return null;
         });
@@ -82,6 +82,7 @@ export const App: React.FC = () => {
             title: page.title,
             itemID: page.route || itemKey,
             items: subItems.length > 0 ? subItems : undefined,
+            hidePadding: !(Object.keys(page).includes('route') && isSubItem),
             onClick: page.route
                 ? (): void => {
                       if (page.route) navigate(page.route); // this extra if shouldn't be necessary, but TS doesn't understand that it can't be undefined because of the ternary operator.

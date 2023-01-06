@@ -82,7 +82,7 @@ export const App: React.FC = () => {
             title: page.title,
             itemID: page.route || itemKey,
             items: subItems.length > 0 ? subItems : undefined,
-            hidePadding: !(Object.keys(page).includes('route') && isSubItem),
+            hidePadding: !isSubItem,
             onClick: page.route
                 ? (): void => {
                       if (page.route) navigate(page.route); // this extra if shouldn't be necessary, but TS doesn't understand that it can't be undefined because of the ternary operator.

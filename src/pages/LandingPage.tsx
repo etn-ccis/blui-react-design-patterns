@@ -143,7 +143,7 @@ export const LandingPage = (): JSX.Element => {
                                 <Button target={'_blank'} href={'https://brightlayer-ui-components.github.io/react/'}>
                                     Brightlayer UI React Component Library
                                 </Button>
-                                <Button target={'_blank'} href={'https://github.com/brightlayer-ui'}>
+                                <Button target={'_blank'} href={'https://github.com/etn-ccis?q=blui'}>
                                     Visit Us on GitHub
                                 </Button>
                                 <Button

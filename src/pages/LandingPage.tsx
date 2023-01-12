@@ -148,7 +148,7 @@ export const LandingPage = (): JSX.Element => {
                                 </Button>
                                 <Button
                                     target={'_blank'}
-                                    href={'https://github.com/brightlayer-ui/react-design-patterns'}
+                                    href={'https://github.com/etn-ccis/blui-react-design-patterns'}
                                 >
                                     Design Pattern Source on GitHub
                                 </Button>

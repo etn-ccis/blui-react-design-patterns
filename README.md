@@ -49,7 +49,7 @@ To run this project (with all patterns) locally, first clone the repository:
 
 ```
 git clone https://github.com/etn-ccis/blui-react-design-patterns.git
-cd react-design-patterns
+cd blui-react-design-patterns
 ```
 
 Then you may run `yarn && yarn start` to start a local server.

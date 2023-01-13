@@ -183,7 +183,7 @@ export const App: React.FC = () => {
                 >
                     <img
                         src={
-                            'https://raw.githubusercontent.com/brightlayer-ui/react-design-patterns/master/src/assets/EatonLogo.svg'
+                            'https://raw.githubusercontent.com/etn-ccis/blui-react-design-patterns/master/src/assets/EatonLogo.svg'
                         }
                         style={{ margin: '10px' }}
                         alt={'Eaton Logo'}

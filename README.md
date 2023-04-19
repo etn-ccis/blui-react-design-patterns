@@ -1,5 +1,6 @@
 # fork test
 # fork test 2nd commit
+# 3rd commit
 ## React Design Patterns
 
 [![](https://img.shields.io/circleci/project/github/etn-ccis/blui-react-design-patterns/master.svg?style=flat)](https://circleci.com/gh/etn-ccis/blui-react-design-patterns/tree/master) [![codecov](https://codecov.io/gh/etn-ccis/blui-react-design-patterns/branch/master/graph/badge.svg?token=GG1T9203PD)](https://codecov.io/gh/etn-ccis/blui-react-design-patterns)

@@ -15,5 +15,5 @@ jobs:
     secrets: inherit
 
   pr-comment:
-    uses: etn-ccis/blui-automation/.github/workflows/pr-comment.yml@dev
+    uses: etn-ccis/blui-automation/.github/workflows/pr-comment2.yml@dev
     secrets: inherit

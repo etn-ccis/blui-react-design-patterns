@@ -13,7 +13,7 @@ import {
 import { OpenInNew } from '@mui/icons-material';
 import CloseIcon from '@mui/icons-material/Close';
 import React, { useEffect, useState } from 'react';
-import { useHistory } from 'react-router';
+import { useNavigate } from 'react-router';
 import { Main } from './router/main';
 import './style.css';
 import { PAGES, RouteMetaData, Routes } from './router/routes';
@@ -47,7 +47,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 export const App: React.FC = () => {
     const classes = useStyles();
-    const history = useHistory();
+    const navigation = useNavigate();
     const open = useSelector((state: AppState) => state.app.drawerOpen);
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('md'));
@@ -56,7 +56,7 @@ export const App: React.FC = () => {
     const [selected, setSelected] = useState('');
 
     const navigate = (id: string): void => {
-        history.push(id);
+        navigation(id);
         setSelected(id);
     };
 
@@ -69,12 +69,12 @@ export const App: React.FC = () => {
 
     const navItems: NavItem[] = [];
 
-    const createRoute = (page: RouteMetaData, itemKey: string): NavItem => {
+    const createRoute = (page: RouteMetaData, itemKey: string, isSubItem = false): NavItem => {
         const subItems: NavItem[] = [];
         Object.keys(page).forEach((key: string): JSX.Element | null => {
             const subRoute = page[key as keyof RouteMetaData];
             if (typeof subRoute === 'object') {
-                subItems.push(createRoute(subRoute, key));
+                subItems.push(createRoute(subRoute, key, true));
             }
             return null;
         });
@@ -82,6 +82,7 @@ export const App: React.FC = () => {
             title: page.title,
             itemID: page.route || itemKey,
             items: subItems.length > 0 ? subItems : undefined,
+            hidePadding: !isSubItem,
             onClick: page.route
                 ? (): void => {
                       if (page.route) navigate(page.route); // this extra if shouldn't be necessary, but TS doesn't understand that it can't be undefined because of the ternary operator.
@@ -182,7 +183,7 @@ export const App: React.FC = () => {
                 >
                     <img
                         src={
-                            'https://raw.githubusercontent.com/brightlayer-ui/react-design-patterns/master/src/assets/EatonLogo.svg'
+                            'https://raw.githubusercontent.com/etn-ccis/blui-react-design-patterns/master/src/assets/EatonLogo.svg'
                         }
                         style={{ margin: '10px' }}
                         alt={'Eaton Logo'}

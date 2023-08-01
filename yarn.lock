@@ -12152,10 +12152,10 @@ pkg-up@^3.1.0:
   dependencies:
     find-up "^3.0.0"
 
-placeholder-loading@^0.5.0:
-  version "0.5.0"
-  resolved "https://registry.yarnpkg.com/placeholder-loading/-/placeholder-loading-0.5.0.tgz#eab6f164c58eb8e462d39fcf83628ad0e2535cf9"
-  integrity sha512-7nhBjcdyhj/mdNiom0k3UBbwVL7M8jJj9uz9nODsWS319KJ+yWyhgFSc+Mwzf/oR/sprcQlcmEw43iqZ/I6rPw==
+placeholder-loading@^0.6.0:
+  version "0.6.0"
+  resolved "https://registry.yarnpkg.com/placeholder-loading/-/placeholder-loading-0.6.0.tgz#32310c02b8aa1a24cf87958dc50aa1f695135cb1"
+  integrity sha512-KdUnwa3AEuXlem7QeSi4qtny+QfiACUh0P0iYskJBwfg3LtAUMQFyd9L21ysdBQ65KbK6tZ4VsKPkcF3mULwMQ==
 
 portfinder@^1.0.23, portfinder@^1.0.28:
   version "1.0.28"

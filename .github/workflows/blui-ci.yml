@@ -1,13 +1,10 @@
-name: CI
+name: CI Run
 
 on:
+  push:
+    branches: [ "dev" ]
   pull_request:
-    types:
-      - opened
-      - edited
-      - synchronize
-    branches:
-      - '*/*'
+    branches: [ "dev" ]
 
 jobs:
   build:

@@ -26,5 +26,13 @@ jobs:
     - run: yarn
     - run: yarn prettier
     - run: yarn lint
-    - run: yarn test
+    - run: yarn test --coverage
+    - name: Upload to Codecov
+      uses: codecov/codecov-action@v3
+      with:
+        directory: ./coverage
+        files: ./clover.xml
+        flags: unittests
+        name: codecov-report
+        verbose: true
     - run: yarn build

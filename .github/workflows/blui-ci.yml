@@ -67,3 +67,42 @@ jobs:
         cache: 'yarn'
     - run: yarn
     - run: yarn build
+    - name: Save build
+        uses: actions/upload-artifact@v3
+        with:
+          name: build
+          if-no-files-found: error
+          path: build
+
+  # install_cy:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v3
+  #     - name: Cypress install
+  #       uses: cypress-io/github-action@v5
+  #       with:
+  #         # Disable running of tests within install job
+  #         runTests: false
+
+  cypress-run:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Cypress install
+        uses: cypress-io/github-action@v5
+
+      - name: Download the build folder
+        uses: actions/download-artifact@v3
+        with:
+          name: build
+          path: build
+
+      - name: Cypress run
+        uses: cypress-io/github-action@v5
+        with:
+          start: yarn start
+          browser: chrome

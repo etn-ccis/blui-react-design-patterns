@@ -7,7 +7,7 @@ on:
     branches: [ "dev" ]
 
 jobs:
-  build:
+  prettier_lint:
     runs-on: ubuntu-latest
 
     strategy:
@@ -24,6 +24,22 @@ jobs:
     - run: yarn
     - run: yarn prettier
     - run: yarn lint
+
+  unit_test:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [16.x]
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'yarn'
+    - run: yarn
     - run: yarn test --coverage
     - name: Upload to Codecov
       uses: codecov/codecov-action@v3

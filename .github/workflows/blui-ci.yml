@@ -76,10 +76,18 @@ jobs:
 
   cypress-run:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [16.x]
     needs: build
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'yarn'
 
       - name: Cypress install
         uses: cypress-io/github-action@v5
@@ -96,5 +104,5 @@ jobs:
         uses: cypress-io/github-action@v5
         with:
           start: yarn start
-          wait-on: 'http://localhost:3000'
+          wait-on: ${{ matrix.node-version == 16 && 'http://[::1]:3000' || 'http://localhost:3000' }}
           browser: chrome

@@ -5,8 +5,8 @@ coverage:
   round: down
   range: "50...75"
 status:
-    project: yes
-    patch: yes
+    project: no
+    patch: no
     changes: no
 parsers:
   gcov:

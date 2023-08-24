@@ -7,7 +7,7 @@ on:
     branches: [ "dev" ]
 
 jobs:
-  install:
+  install_dependencies:
     runs-on: ubuntu-latest
 
     strategy:
@@ -24,9 +24,13 @@ jobs:
     - run: yarn
   prettier_lint:
     runs-on: ubuntu-latest
-    needs: install
+    needs: install_dependencies
     steps:
     - uses: actions/checkout@v3
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
     - run: yarn prettier
     - run: yarn lint
     - run: yarn test --coverage

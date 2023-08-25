@@ -79,7 +79,7 @@ jobs:
     strategy:
       matrix:
         node-version: [16.x]
-    # needs: build
+    needs: build
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -94,16 +94,16 @@ jobs:
         with:
           runTests: false
 
-      # - name: Download the build folder
-      #   uses: actions/download-artifact@v3
-      #   with:
-      #     name: build
-      #     path: build
+      - name: Download the build folder
+        uses: actions/download-artifact@v3
+        with:
+          name: build
+          path: build
 
       - name: Cypress run
         uses: cypress-io/github-action@v5
         with:
-          start: start:cytest
+          start: yarn start
           wait-on: ${{ matrix.node-version == 16 && 'http://[::1]:3000' || 'http://localhost:3000' }}
           wait-on-timeout: 300
           browser: chrome

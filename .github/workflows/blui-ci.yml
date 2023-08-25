@@ -103,7 +103,7 @@ jobs:
       - name: Cypress run
         uses: cypress-io/github-action@v5
         with:
-          start: yarn start
+          start: yarn start -r @cypress/instrument-cra start
           wait-on: ${{ matrix.node-version == 16 && 'http://[::1]:3000' || 'http://localhost:3000' }}
           wait-on-timeout: 300
           browser: chrome

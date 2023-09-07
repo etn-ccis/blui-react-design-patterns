@@ -107,3 +107,10 @@ jobs:
           wait-on: ${{ matrix.node-version == 16 && 'http://[::1]:3000' || 'http://localhost:3000' }}
           wait-on-timeout: 300
           browser: chrome
+          
+      - name: Save cypress coverage
+        uses: actions/upload-artifact@v3
+        with:
+          name: cypress-coverage
+          if-no-files-found: error
+          path: cypress-coverage

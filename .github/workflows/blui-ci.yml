@@ -103,8 +103,7 @@ jobs:
       - name: Cypress run
         uses: cypress-io/github-action@v6
         with:
-          start: yarn start:cytest
-          start: cy:run
+          start: yarn start:cytest && yarn cy:run
           wait-on: ${{ matrix.node-version == 16 && 'http://[::1]:3000' || 'http://localhost:3000' }}
           wait-on-timeout: 300
           browser: chrome

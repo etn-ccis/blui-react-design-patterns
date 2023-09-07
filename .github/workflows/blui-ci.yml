@@ -118,7 +118,7 @@ jobs:
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3
         with:
-          directory: ./cypress-coverage/
-          files: ./clover.xml
+          directory: cypress-coverage
+          files: clover.xml
           name: codecov-umbrella
           verbose: true

@@ -113,5 +113,6 @@ jobs:
         with:
           directory: cypress-coverage
           files: clover.xml
-          name: codecov-umbrella
+          flags: uitests
+          name: codecov-report
           verbose: true

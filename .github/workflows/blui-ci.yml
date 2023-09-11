@@ -2,9 +2,9 @@ name: CI Run
 
 on:
   push:
-    branches: [ "dev" ]
-  pull_request:
-    branches: [ "dev" ]
+    branches: [ "dev", "master" ]
+  pull_request_target:
+    branches: [ "dev", "master" ]
 
 jobs:
   prettier_lint:

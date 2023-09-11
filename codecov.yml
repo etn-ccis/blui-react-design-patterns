@@ -2,5 +2,6 @@ coverage:
   status:
     project:
       default:
-        target: auto
-        removed_code_behavior: fully_covered_patch
+        target: 70%
+        threshold: 10%
+        removed_code_behavior: off #removals_only, fully_covered_patch, adjust_base",

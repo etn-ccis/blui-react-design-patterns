@@ -4,4 +4,7 @@ coverage:
       default:
         target: 70%
         threshold: 10%
-        removed_code_behavior: off #removals_only, fully_covered_patch, adjust_base",
+    patch:
+      default:
+        target: 70%
+        threshold: 10%

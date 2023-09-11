@@ -5,6 +5,15 @@ on:
     branches: [ "dev", "master" ]
   pull_request:
     branches: [ "dev", "master" ]
+  pull_request_target:
+    types:
+      - opened
+    branches:
+      - '*/*'
+
+permissions:
+  pull-requests: write
+  contents: read
 
 jobs:
   prettier_lint:

@@ -49,7 +49,6 @@ jobs:
         flags: unittests
         name: codecov-report
         verbose: true
-    - run: yarn build
 
   build:
     runs-on: ubuntu-latest
@@ -107,8 +106,6 @@ jobs:
           wait-on: ${{ matrix.node-version == 16 && 'http://[::1]:3000' || 'http://localhost:3000' }}
           wait-on-timeout: 300
           browser: chrome
-          record: false
-          parallel: true
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3

@@ -11,7 +11,7 @@
         "@emotion/react": "^11.8.2",
         "@emotion/styled": "^11.8.1",
         "@fontsource/noto-sans": "^4.5.4",
-        "@mui/icons-material": "^5.5.1",
+        "@mui/icons-material": "^5.15.11",
         "@mui/lab": "5.0.0-alpha.75",
         "@mui/material": "^5.5.3",
         "@mui/styles": "^5.5.3",

@@ -95,7 +95,7 @@
         "enzyme": "^3.10.0",
         "enzyme-adapter-react-16": "^1.14.0",
         "eslint": "^7.0.0",
-        "eslint-config-prettier": "^8.4.0",
+        "eslint-config-prettier": "^9.1.0",
         "eslint-plugin-react": "^7.28.0",
         "mocha": "^9.2.1",
         "prettier": "^3.2.5",

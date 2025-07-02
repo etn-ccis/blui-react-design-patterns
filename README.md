@@ -2,6 +2,10 @@
 
 [![Build](https://github.com/etn-ccis/blui-react-design-patterns/actions/workflows/blui-ci.yml/badge.svg?branch=master)](https://github.com/etn-ccis/blui-react-design-patterns/actions/workflows/blui-ci.yml) [![codecov](https://codecov.io/gh/etn-ccis/blui-react-design-patterns/branch/master/graph/badge.svg?token=GG1T9203PD)](https://codecov.io/gh/etn-ccis/blui-react-design-patterns)
 
+> **Important Migration Notice:**
+>
+> This repository has been migrated to a monorepo to consolidate all the React libraries developed by Brightlayer UI team into a single workspace. Future development and updates will now occur in [this location](https://github.com/etn-ccis/blui-react/tree/dev/apps/design-patterns). Please update your bookmarks and contribute to the monorepo for the latest changes.
+
 This repository holds the source code examples for [Brightlayer UI design patterns](https://brightlayer-ui.github.io/patterns), written in React. The code is organized to make it easy to copy and paste the examples into your own projects.
 
 ## Current Patterns
